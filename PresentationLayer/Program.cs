@@ -2,6 +2,7 @@ using DataAccessLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// DataAccess katmani icin yazilan Extensions'lar
 builder.Services.LoadDataLayerExtension(builder.Configuration);
 
 // Add services to the container.

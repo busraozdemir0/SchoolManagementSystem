@@ -9,9 +9,6 @@
   <ItemGroup>
     <Folder Include="Abstract\" />
     <Folder Include="EntityFramework\" />
-    <Folder Include="Repository\Abstract\" />
-    <Folder Include="Repository\Concrete\" />
-    <Folder Include="UnitOfWork\" />
   </ItemGroup>
 
   <ItemGroup>

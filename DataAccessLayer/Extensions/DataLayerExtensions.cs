@@ -1,4 +1,7 @@
 ﻿using DataAccessLayer.Context;
+using DataAccessLayer.Repository.Abstract;
+using DataAccessLayer.Repository.Concrete;
+using DataAccessLayer.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +18,10 @@ namespace DataAccessLayer.Extensions
         public static IServiceCollection LoadDataLayerExtension(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("DefaultConnection"))); // Baglanti stringinin servis olarak belirtilmesi
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); // IUnitOfWork istendiginde UnitOfWork'u kullanacak.
 
             return services;
         }
