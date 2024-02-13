@@ -1,9 +1,11 @@
+using BusinessLayer.Extensions;
 using DataAccessLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // DataAccess katmani icin yazilan Extensions'lar
 builder.Services.LoadDataLayerExtension(builder.Configuration);
+builder.Services.LoadBusinessLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
