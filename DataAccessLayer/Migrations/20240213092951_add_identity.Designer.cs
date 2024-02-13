@@ -4,6 +4,7 @@ using DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240213092951_add_identity")]
+    partial class addidentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,36 +117,6 @@ namespace DataAccessLayer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c54083a8-1ff1-43d0-9b51-c2fea5b3e60d"),
-                            ConcurrencyStamp = "89024944-2914-483f-bfe8-dde691035710",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = new Guid("23420044-c9ae-462e-8317-88db8c734de1"),
-                            ConcurrencyStamp = "1d5f305b-69fd-45a5-9de2-7a4b957672c6",
-                            Name = "Teacher",
-                            NormalizedName = "TEACHER"
-                        },
-                        new
-                        {
-                            Id = new Guid("2157a98d-0223-4ae6-afb9-5f586e9ba4ae"),
-                            ConcurrencyStamp = "e83c80f0-bf80-4c7f-9778-82ce74ca481e",
-                            Name = "Student",
-                            NormalizedName = "STUDENT"
-                        },
-                        new
-                        {
-                            Id = new Guid("8db4507c-ee16-4f5f-82a6-d187a2acb21d"),
-                            ConcurrencyStamp = "e528f92e-b56c-41c2-94a2-a1fbac603ecd",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("EntityLayer.Entities.AppUser", b =>
@@ -167,6 +140,7 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("GradeID")
@@ -216,6 +190,7 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserAbout")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -235,65 +210,6 @@ namespace DataAccessLayer.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a61f597b-2c8d-4cb4-80a6-6822178322a8"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "bdbebaeb-e346-4f27-9b81-f3a57c4cc096",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            Name = "Admin",
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEgnkEnA2Naz5DqYQY9uU9mK+PrtnRzpFQ36RiM3W8HUWjKoyj73R+Qr5G6Ith00gw==",
-                            PhoneNumber = "+901111111111",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "f1357844-3e1f-46ae-a4fa-0ce47953ccbf",
-                            Surname = "Admin",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("97b90210-a67f-426d-be2c-8adcab3100fb"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "6e8db8df-82b0-4d50-96d8-1a6194383dcd",
-                            Email = "ogretmen@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            Name = "Öğretmen",
-                            NormalizedEmail = "OGRETMEN@GMAIL.COM",
-                            NormalizedUserName = "OGRETMEN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGC7YIrkIQdIOHIPW7IJ5jDoE+ZGX6BkwCXV22ubWCtt/NrSuoIY/7XL8pwnryFxnw==",
-                            PhoneNumber = "+902222222222",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "d466cb1b-4435-46ac-9a8c-74cc004b08f8",
-                            Surname = "Öğretmen",
-                            TwoFactorEnabled = false,
-                            UserName = "ogretmen"
-                        },
-                        new
-                        {
-                            Id = new Guid("a9949a78-7413-484e-a62a-eb0fb01b7f76"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "38b14f87-e512-4cd1-8a98-d37adfe38ba8",
-                            Email = "ogrenci@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            Name = "Öğrenci",
-                            NormalizedEmail = "OGRENCİ@GMAIL.COM",
-                            NormalizedUserName = "OGRENCİ",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFneWvHeEPtIM38I0+Fws6CjP8m0y/5RLNWN+qHVVtGMPmkmWTqsLmg9rShauY66zw==",
-                            PhoneNumber = "+903333333333",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "17602b8b-31d4-47e5-9f27-b1edb680450d",
-                            Surname = "Öğrenci",
-                            TwoFactorEnabled = false,
-                            UserName = "ogrenci"
-                        });
                 });
 
             modelBuilder.Entity("EntityLayer.Entities.Contact", b =>
@@ -409,7 +325,7 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f10666f1-c56a-4057-acbb-7a5118cfb410"),
+                            Id = new Guid("5fb550f9-a9c6-4c85-9042-a115628e5417"),
                             GradeId = 1,
                             IsDeleted = false,
                             LessonCode = "B100",
@@ -418,7 +334,7 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("99e4216a-32ec-4c51-b5ce-900a7b30710a"),
+                            Id = new Guid("9bb3e61e-8bf6-4653-a79a-30c72fe2f0b7"),
                             GradeId = 2,
                             IsDeleted = false,
                             LessonCode = "M102",
@@ -427,7 +343,7 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e6b781e8-2b6a-403d-9cb8-c619ebb0adf9"),
+                            Id = new Guid("9f0e2f3a-6662-4713-8716-30c7a00560a7"),
                             GradeId = 3,
                             IsDeleted = false,
                             LessonCode = "F205",
@@ -436,7 +352,7 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9e270e61-2867-450b-8aa0-711c2e62d185"),
+                            Id = new Guid("68a72de0-8c59-44a3-97f2-78361b547c73"),
                             GradeId = 4,
                             IsDeleted = false,
                             LessonCode = "B101",
@@ -469,7 +385,7 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c9bc945e-4587-436e-81dd-f5366d7d3ddc"),
+                            Id = new Guid("71e8407a-13ae-4b9e-9666-d288f5a603d4"),
                             DocumentPath = "test",
                             IsDeleted = false,
                             Title = "Deneme"

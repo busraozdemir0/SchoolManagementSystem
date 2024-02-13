@@ -12,7 +12,9 @@ namespace EntityLayer.Entities
         public double Score1 { get; set; } // Dersin 1. puani
         public double Score2 { get; set; } // Dersin 2. puani
         public double PerformanceScore { get; set; } // Dersin performans/degerlendirme puani
-        public Guid LessonId { get; set; }
+        public Guid LessonId { get; set; } // Hangi derse ait puan girilecegi bilgisi
         public Lesson Lesson { get; set; }
+        public Guid UserId { get; set; } // Hangi ogrenciye ait puan girilecegi bilgisi
+        public AppUser User { get; set; }
     }
 }

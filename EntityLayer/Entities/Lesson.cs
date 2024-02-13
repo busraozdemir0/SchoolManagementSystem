@@ -19,6 +19,8 @@ namespace EntityLayer.Entities
         public LessonDocument LessonDocument { get; set; }
         public Guid? LessonVideoId { get; set; }
         public LessonVideo LessonVideo { get; set; }
+        public Guid? UserId { get; set; } // Bu dersi hangi ogretmenin verdigi bilgisi
+        public AppUser User { get; set; }
         public ICollection<LessonScore> LessonScores { get; set; }
 
     }
