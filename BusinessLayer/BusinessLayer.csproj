@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="FluentValidations\" />
     <Folder Include="AutoMapper\" />
   </ItemGroup>
 

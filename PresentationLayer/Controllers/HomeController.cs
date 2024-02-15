@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Context;
+using EntityLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLayer.Models;
 using System.Diagnostics;
@@ -9,20 +11,17 @@ namespace PresentationLayer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAddressService _addressService;
-
         public HomeController(ILogger<HomeController> logger, IAddressService addressService)
         {
             _logger = logger;
             _addressService = addressService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var address= await _addressService.GetListAsync();
-            return View(address);
+            return View();
         }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
