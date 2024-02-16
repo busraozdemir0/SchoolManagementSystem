@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.UnitOfWorks;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace BusinessLayer.Services.Concrete
 {
     public class ContactManager : IContactService
     {
-        IContactDal _contactDal;
+        private readonly IContactDal _contactDal;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ContactManager(IContactDal contactDal)
+        public ContactManager(IContactDal contactDal, IUnitOfWork unitOfWork)
         {
             _contactDal = contactDal;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<Contact>> GetListAsync()
@@ -26,11 +29,13 @@ namespace BusinessLayer.Services.Concrete
         public async Task TAddAsync(Contact t)
         {
             await _contactDal.AddAsync(t);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task TDeleteAsync(Contact t)
         {
             await _contactDal.DeleteAsync(t);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<Contact> TGetByGuidAsync(Guid id)
@@ -41,6 +46,7 @@ namespace BusinessLayer.Services.Concrete
         public async Task TUpdateAsync(Contact t)
         {
             await _contactDal.UpdateAsync(t);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

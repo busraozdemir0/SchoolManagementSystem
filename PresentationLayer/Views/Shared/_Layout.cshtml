@@ -32,13 +32,13 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Ana Sayfa</a>
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Haberler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">İletişim</a>
+                            <a class="nav-link" asp-controller="Contact" asp-action="Index">İletişim</a>
                         </li>
                     </ul>
                     <!-- search-right -->
@@ -83,35 +83,7 @@
     </header>
     <!-- //header -->
 
-    <!-- banner section -->
-    <section id="home" class="w3l-banner py-5">
-        <div class="banner-content">
-            <div class="container py-4">
-                <div class="row align-items-center pt-sm-5 pt-4">
-                    <div class="col-md-6">
-                        <h3 class="mb-lg-4 mb-3">
-                            <span class="d-block"> Çocuklarınız </span> en iyi eğitimi <span class="d-block"> almayı hak ediyor</span>
-                        </h3>
-                        <p class="banner-sub">Aktif Öğrenme, Uzman Öğretmenler ve Güvenli Ortam</p>
-                        <div class="d-flex align-items-center buttons-banner">
-                            <a href="#" class="btn btn-style mt-lg-5 mt-4">Hemen İletişime Geçin</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 right-banner-2 text-end position-relative mt-md-0 mt-5">
-                        <div class="sub-banner-image mx-auto">
-                            <img src="~/EduSchool/assets/images/banner.png" class="img-fluid position-relative" alt=" ">
-                        </div>
-                        <div class="banner-style-1 position-absolute">
-                            <div class="banner-style-2 position-relative">
-                                <h4>Okula dönüş</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- //banner section -->
+   
     @RenderBody()
 
 
