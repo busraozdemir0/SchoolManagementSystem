@@ -1,0 +1,44 @@
+﻿@model AddressDto
+
+<div class="col-md-5 ps-lg-5 mt-md-0 mt-5">
+    <div class="contact-left">
+        <div class="cont-details">
+            <div class="d-flex contact-grid">
+                <div class="cont-left text-center me-3">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="cont-right">
+                    <h6>Adres</h6>
+                    <p>@Model.AddressInfo</p>
+                </div>
+            </div>
+            <div class="d-flex contact-grid mt-4 pt-lg-2">
+                <div class="cont-left text-center me-3">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="cont-right">
+                    <h6>Bizi Arayın</h6>
+                    <p><a href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a></p>
+                </div>
+            </div>
+            <div class="d-flex contact-grid mt-4 pt-lg-2">
+                <div class="cont-left text-center me-3">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                <div class="cont-right">
+                    <h6>E-Mail</h6>
+                    <p><a href="mailto:@Model.EMail" class="mail">@Model.EMail</a></p>
+                </div>
+            </div>
+            <div class="d-flex contact-grid mt-4 pt-lg-2">
+                <div class="cont-left text-center me-3">
+                    <i class="fas fa-headphones-alt"></i>
+                </div>
+                <div class="cont-right">
+                    <h6>Müşteri Desteği</h6>
+                    <p><a href="mailto:@Model.SupportEMail" class="mail">@Model.SupportEMail</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
