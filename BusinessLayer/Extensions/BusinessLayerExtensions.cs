@@ -28,12 +28,22 @@ namespace BusinessLayer.Extensions
             services.AddScoped<IAddressService, AddressManager>();
             services.AddScoped<IAddressDal, EfAddressRepository>();
 
+            services.AddScoped<INewsService, NewsManager>();
+            services.AddScoped<INewsDal, EfNewsRepository>();
+
             services.AddAutoMapper(assembly);
 
             // Fluent validation hata mesajlarinin turkcelestirilmesi
             services.AddControllersWithViews().AddFluentValidation(option =>
             {
                 option.RegisterValidatorsFromAssemblyContaining<LessonValidator>();
+                option.DisableDataAnnotationsValidation = true;
+                option.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
+            });
+
+            services.AddControllersWithViews().AddFluentValidation(option =>
+            {
+                option.RegisterValidatorsFromAssemblyContaining<ContactValidator>();
                 option.DisableDataAnnotationsValidation = true;
                 option.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
             });

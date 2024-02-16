@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.UnitOfWorks;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace BusinessLayer.Services.Concrete
 {
     public class AddressManager : IAddressService
     {
-        IAddressDal _addressDal;
+        private readonly IAddressDal _addressDal;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AddressManager(IAddressDal addressDal)
+        public AddressManager(IAddressDal addressDal, IUnitOfWork unitOfWork)
         {
             _addressDal = addressDal;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<Address>> GetListAsync()
@@ -26,11 +29,13 @@ namespace BusinessLayer.Services.Concrete
         public async Task TAddAsync(Address t)
         {
             await _addressDal.AddAsync(t);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task TDeleteAsync(Address t)
         {
             await _addressDal.DeleteAsync(t);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<Address> TGetByGuidAsync(Guid id)
@@ -41,6 +46,7 @@ namespace BusinessLayer.Services.Concrete
         public async Task TUpdateAsync(Address t)
         {
             await _addressDal.UpdateAsync(t);
+            await _unitOfWork.SaveAsync();
         }
     }
 }
