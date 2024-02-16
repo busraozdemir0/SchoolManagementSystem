@@ -1,5 +1,9 @@
+using BusinessLayer.Describers;
 using BusinessLayer.Extensions;
+using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
+using EntityLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,21 @@ builder.Services.LoadBusinessLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+// * Identity yapilandirmasi
+builder.Services.AddIdentity<AppUser, AppRole>(option =>
+{
+    // Sifre olusturulurken buyuk kucuk harf zorunlulugu vb gibi zorunluluklarý kaldirarak burada yonetebiliriz.
+    option.Password.RequireNonAlphanumeric = false;
+    option.Password.RequireUppercase = false;
+    option.Password.RequireLowercase = false;
+
+})
+.AddRoleManager<RoleManager<AppRole>>()
+.AddErrorDescriber<CustomIdentityErrorDescriber>()
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -25,6 +44,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 //app.MapControllerRoute(
