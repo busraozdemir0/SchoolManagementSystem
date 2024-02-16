@@ -12,7 +12,8 @@ builder.Services.LoadDataLayerExtension(builder.Configuration);
 builder.Services.LoadBusinessLayerExtension();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
 
 
 // * Identity yapilandirmasi

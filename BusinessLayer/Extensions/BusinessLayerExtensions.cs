@@ -28,6 +28,7 @@ namespace BusinessLayer.Extensions
             services.AddScoped<IAddressService, AddressManager>();
             services.AddScoped<IAddressDal, EfAddressRepository>();
 
+            services.AddAutoMapper(assembly);
 
             // Fluent validation hata mesajlarinin turkcelestirilmesi
             services.AddControllersWithViews().AddFluentValidation(option =>
