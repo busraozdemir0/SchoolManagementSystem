@@ -33,6 +33,9 @@ namespace BusinessLayer.Extensions
             services.AddScoped<INewsService, NewsManager>();
             services.AddScoped<INewsDal, EfNewsRepository>();
 
+            services.AddScoped<INewsLetterService, NewsLetterManager>();
+            services.AddScoped<INewsLetterDal, EfNewsLetterRepository>();
+
             services.AddAutoMapper(assembly);
 
           //  services.AddValidatorsFromAssembly(assembly);

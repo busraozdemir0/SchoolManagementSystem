@@ -11,13 +11,11 @@ namespace PresentationLayer.Controllers
     {
         private readonly INewsService _newsService;
         private readonly IMapper _mapper;
-        private readonly IValidator<News> _validator;
 
-        public NewsController(INewsService newsService, IMapper mapper, IValidator<News> validator)
+        public NewsController(INewsService newsService, IMapper mapper)
         {
             _newsService = newsService;
             _mapper = mapper;
-            _validator = validator;
         }
 
         public async Task<IActionResult> Index()

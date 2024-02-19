@@ -1,0 +1,15 @@
+﻿@model NewsLetterDto
+
+<div class="col-lg-4 col-md-6 col-sm-8 footer-list-29 mt-lg-0 mt-4 ps-lg-5">
+    <h6 class="footer-title-29">Subscribe</h6>
+    <form asp-controller="NewsLetter" asp-action="NewsLetterMail" class="subscribe d-flex" method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <input asp-for=EMail type="email" name="email" placeholder="Email Adresi" required="">
+        <span asp-validation-for="EMail" class="text-danger"></span>
+        <button type="submit" class="button-style">
+            <span class="fa fa-paper-plane"
+                  aria-hidden="true"></span>
+        </button>
+    </form>
+    <p class="mt-3">Haber bültenimize abone olun ve okulumuzla ilgili güncellemeler alın.</p>
+</div>
