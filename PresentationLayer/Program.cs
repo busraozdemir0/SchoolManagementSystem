@@ -5,6 +5,7 @@ using DataAccessLayer.Extensions;
 using EntityLayer.Entities;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,12 @@ builder.Services.LoadBusinessLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
+     .AddNToastNotifyNoty(new NotyOptions()  // Toastr bildirimleri icin configurasyon
+     {
+         Layout = "bottomRight",  // Bildirimin sag alt kosede cikmasi icin
+         Timeout = 3000   // Bildirim kac ms gosterilsin (3 sn olarak belirttik)
+     })
+     .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
 
 
 // * Identity yapilandirmasi
@@ -41,6 +47,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseNToastNotify();  // Ornegin haber eklendiginde bicimli bir sekilde bildirim mesaji verebilmek icin NToastNotify adli kutuphaneyi kullaniyoruz.
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

@@ -147,6 +147,8 @@
     <button onclick="topFunction()" id="movetop" title="Go to top">
         <span class="fas fa-level-up-alt" aria-hidden="true"></span>
     </button>
+
+    
     <script>
         // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function () {
@@ -167,6 +169,8 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
+
+   
     <!-- //move top -->
     <!-- common jquery plugin -->
     <script src="~/EduSchool/assets/js/jquery-3.3.1.min.js"></script>
@@ -213,11 +217,15 @@
             })
         });
     </script>
+
     <!-- //disable body scroll which navbar is in active -->
     <!-- bootstrap -->
     <script src="~/EduSchool/assets/js/bootstrap.min.js"></script>
     <!-- //bootstrap -->
     <!-- //Js scripts -->
+    @await RenderSectionAsync("Scripts", false)
+
+    @await Component.InvokeAsync("NToastNotify")
 </body>
 
 </html>
