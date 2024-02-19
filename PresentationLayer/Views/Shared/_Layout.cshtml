@@ -13,7 +13,7 @@
     <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Template CSS Style link -->
     <link rel="stylesheet" href="~/EduSchool/assets/css/style-starter.css">
-   @*  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    @*  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
 </head>
 
 <body>
@@ -21,11 +21,12 @@
     <header id="site-header" class="fixed-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i>Atlas Koleji
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-graduation-cap"></i>Atlas Koleji
                 </a>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
                     <span class="navbar-toggler-icon fa icon-close fa-times"></span>
                 </button>
@@ -45,15 +46,18 @@
                     <div class="header-search position-relative">
                         <div class="search-right mx-lg-2">
                             <a href="#search" class="btn search-btn p-0" title="search">
-                                <i class="fas fa-search"></i></a>
+                                <i class="fas fa-search"></i>
+                            </a>
                             <!-- search popup -->
                             <div id="search" class="pop-overlay">
                                 <div class="popup">
                                     <form action="#search" method="GET" class="search-box">
                                         <input type="search" placeholder="Enter Keyword..." name="search"
-                                            required="required" autofocus="">
-                                        <button type="submit" class="btn"><span class="fas fa-search"
-                                                aria-hidden="true"></span></button>
+                                               required="required" autofocus="">
+                                        <button type="submit" class="btn">
+                                            <span class="fas fa-search"
+                                                  aria-hidden="true"></span>
+                                        </button>
                                     </form>
                                 </div>
                                 <a class="close" href="#close">×</a>
@@ -82,8 +86,6 @@
         </div>
     </header>
     <!-- //header -->
-
-   
     @RenderBody()
 
 
@@ -92,46 +94,54 @@
         <div class="footer-29 pt-5 pb-4">
             <div class="container pt-md-4">
                 <div class="row footer-top-29">
-                    <div class="col-lg-4 col-md-6 footer-list-29">
-                        <h6 class="footer-title-29">Contact Info </h6>
-                        <p class="mb-2 pe-xl-5">Address : Edu School, 10001, 5th Avenue, #06 lane street, NY - 62617.
-                        </p>
-                        <p class="mb-2">Phone Number : <a href="tel:+1(21) 234 4567">+1(21) 234 4567</a></p>
-                        <p class="mb-2">Email : <a href="mailto:info@example.com">info@example.com</a></p>
-                    </div>
+
+                    @await Component.InvokeAsync("FooterContact")
+
                     <div class="col-lg-2 col-md-3 col-6 footer-list-29 mt-md-0 mt-4">
                         <ul>
-                            <h6 class="footer-title-29">Quick Links</h6>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="courses.html">Courses</a></li>
-                            <li><a href="#become-teacher">Become a Teacher</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
-                            <li><a href="#career">Career</a></li>
+                            <h6 class="footer-title-29">Hızlı Linkler</h6>
+                            <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                            <li><a href="#">Hakkımızda</a></li>
+                            <li><a asp-controller="News" asp-action="Index">Haberler</a></li>
+                            <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
+                            <li><a href="#">Eğitmenler</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4">
-                        <ul>
-                            <h6 class="footer-title-29">Explore</h6>
-                            <li><a href="#blog">Blog Posts</a></li>
-                            <li><a href="#privacy">Privacy policy</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
-                            <li><a href="#license">License & uses</a></li>
-                            <li><a href="#tutorials">Tutorials</a></li>
-                        </ul>
-                    </div>
+                        @*   <ul>
+                        <h6 class="footer-title-29">Explore</h6>
+                        <li><a href="#blog">Blog Posts</a></li>
+                        <li><a href="#privacy">Privacy policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#license">License & uses</a></li>
+                        <li><a href="#tutorials">Tutorials</a></li>
+                        </ul> *@
+
+                        <h6 class="footer-title-29">Bizi Takip Edin</h6>
+
+                        <ul style="text-align:center;">
+                            <li><a href="https://busraozdemir.netlify.app/" target="_blank" title="WebSite"><i class="fab fa-blogger fa-2x "></i></a></li>
+                            <li><a href="https://www.instagram.com/busra.0zdemir/  " target="_blank" title="İnstagram"><i class="fab fa-instagram fa-2x"></i></a></li>
+                            <li><a href="https://www.linkedin.com/in/busra0zdemir/" target="_blank" title="Linkedin"><i class="fab fa-linkedin fa-2x"></i></a></li>
+                            <li><a href="https://github.com/busraozdemir0" target="_blank" title="GitHub"><i class="fab fa-github fa-2x"></i></a></li>
+                    </ul>
+                </div>
+
+
 
                     @await Html.PartialAsync("~/Views/NewsLetter/NewsLetterMail.cshtml")
 
-                </div>
-                <!-- copyright -->
-                <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">© 2021 Edu School. All rights reserved. Design
-                    by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a></p>
-                <!-- //copyright -->
             </div>
+            <!-- copyright -->
+            <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">
+                © @DateTime.Now.Year Atlas Koleji. Tüm Hakları Saklıdır. Design
+                by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a>
+            </p>
+            <!-- //copyright -->
+        </div>
         </div>
     </footer>
     <!-- //footer block -->
-
     <!-- Js scripts -->
     <!-- move top -->
     <button onclick="topFunction()" id="movetop" title="Go to top">
@@ -158,19 +168,15 @@
         }
     </script>
     <!-- //move top -->
-
     <!-- common jquery plugin -->
     <script src="~/EduSchool/assets/js/jquery-3.3.1.min.js"></script>
     <!-- //common jquery plugin -->
-
     <!-- /counter-->
     <script src="~/EduSchool/assets/js/counter.js"></script>
     <!-- //counter-->
-
     <!-- theme switch js (light and dark)-->
     <script src="~/EduSchool/assets/js/theme-change.js"></script>
     <!-- //theme switch js (light and dark)-->
-
     <!-- MENU-JS -->
     <script>
         $(window).on("scroll", function () {
@@ -199,7 +205,6 @@
         });
     </script>
     <!-- //MENU-JS -->
-
     <!-- disable body scroll which navbar is in active -->
     <script>
         $(function () {
@@ -209,7 +214,6 @@
         });
     </script>
     <!-- //disable body scroll which navbar is in active -->
-
     <!-- bootstrap -->
     <script src="~/EduSchool/assets/js/bootstrap.min.js"></script>
     <!-- //bootstrap -->
