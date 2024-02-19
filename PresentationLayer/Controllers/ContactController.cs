@@ -33,7 +33,7 @@ namespace PresentationLayer.Controllers
             if(result.IsValid)
             {
                 await _contactService.TAddAsync(map);
-                return RedirectToAction("Index","Contact");
+                return RedirectToAction("Index", "Contact");
             }
             else
             {
@@ -41,5 +41,6 @@ namespace PresentationLayer.Controllers
             }
             return RedirectToAction("Index", "Contact");
         }
+        
     }
 }

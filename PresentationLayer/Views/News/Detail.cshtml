@@ -1,0 +1,61 @@
+﻿@model NewsDto
+
+@{
+    ViewData["Title"] = "Haber "+Model.Title;
+}
+
+<!-- inner banner -->
+<section class="inner-banner py-5">
+    <div class="w3l-breadcrumb py-lg-5">
+        <div class="container pt-4 pb-sm-4">
+            <h4 class="inner-text-title pt-5">Haberler</h4>
+            <ul class="breadcrumbs-custom-path">
+                <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
+                <li class="active"><i class="fas fa-angle-right"></i>@Model.Title</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- //inner banner -->
+<!-- courses section -->
+<div class="w3l-grids-block-5 py-5">
+    <div class="container py-md-5 py-4">
+        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
+           @*  <p class="text-uppercase">Okulumuz Hakkında</p> *@
+            <h3 class="title-style">@Model.Title</h3>
+        </div>
+        <div class="row justify-content-center">
+           
+                <div class="col-lg-12 col-md-8 mt-8">
+                    <div class="coursecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="~/EduSchool/assets/images/c1.jpg" alt="" class="img-fluid" />
+                            @* <div class="meta-list">
+                        <a href="courses.html">Art & Design</a>
+                        </div> *@
+                        </div>
+                        <div class="content-main-top">
+                            <div class="content-top mb-4 mt-3">
+                                <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                    <li> <i class="fas fa-calendar" style="color:gray;"></i> @(((DateTime)Model.CreatedDate).ToString("dd-MM-yyyy"))</li>
+                                    @* <li> <i class="fas fa-star"></i> 4.5</li> *@
+                                </ul>
+                            </div>
+                        <h4 style="text-align:center;"><a href="#">@Model.Title</a></h4>
+                        <p>@Model.Content</p>
+                            <div class="top-content-border align-items-center justify-content-between mt-4 pt-4">
+                                <h6></h6>
+                                <a class="btn btn-style-primary" href="#">
+                                    Geri dön<i class="fas fa-arrow-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+
+        </div>
+
+    </div>
+</div>
+<!-- //courses section -->

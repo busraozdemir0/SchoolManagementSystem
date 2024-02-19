@@ -3,6 +3,8 @@ using BusinessLayer.Services.Abstract;
 using BusinessLayer.Services.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Entities;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -32,6 +34,9 @@ namespace BusinessLayer.Extensions
             services.AddScoped<INewsDal, EfNewsRepository>();
 
             services.AddAutoMapper(assembly);
+
+          //  services.AddValidatorsFromAssembly(assembly);
+          //  services.AddTransient<IValidator<Contact>, ContactValidator>();
 
             // Fluent validation hata mesajlarinin turkcelestirilmesi
             services.AddControllersWithViews().AddFluentValidation(option =>

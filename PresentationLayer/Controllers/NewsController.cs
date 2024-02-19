@@ -26,5 +26,11 @@ namespace PresentationLayer.Controllers
             var map = _mapper.Map<List<NewsDto>>(news);
             return View(map);
         }
+        public async Task<IActionResult> Detail(Guid newsId)
+        {
+            var news=await _newsService.TGetByGuidAsync(newsId);
+            var map=_mapper.Map<NewsDto>(news);
+            return View(map);
+        }
     }
 }

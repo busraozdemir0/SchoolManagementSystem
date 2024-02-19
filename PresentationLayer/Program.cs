@@ -3,6 +3,7 @@ using BusinessLayer.Extensions;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using EntityLayer.Entities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);

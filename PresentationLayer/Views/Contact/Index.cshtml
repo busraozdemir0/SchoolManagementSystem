@@ -42,17 +42,17 @@
                             </div>
                         </div>
                         <input asp-for="Subject" type="text" id="w3lSubect" placeholder="Konu"
-                               class="contact-input" required="" />
+                               class="contact-input"  />
                         <span asp-validation-for="Subject" class="text-danger"></span>
 
                     </div>
                     <div class="form-input">
                         <textarea asp-for="Message" id="w3lMessage" placeholder="Mesaj"
-                                  required=""></textarea>
+                                  ></textarea>
                         <span asp-validation-for="Message" class="text-danger"></span>
                     </div>
                     <div class="text-start">
-                        <button class="btn btn-style btn-style-3">Gönder</button>
+                        <button type="submit" class="btn btn-style btn-style-3">Gönder</button>
                     </div>
                 </form>
             </div>
