@@ -16,6 +16,7 @@ namespace DataAccessLayer.Context
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+        public DbSet<About> Abouts { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Contact> Contacts { get; set; }

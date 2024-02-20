@@ -1,0 +1,31 @@
+﻿@model AboutDto
+
+<section class="w3l-servicesblock pt-lg-5 pt-4 pb-5 mb-lg-5" id="about">
+    <div class="container pb-md-5 pb-4">
+        <div class="row pb-xl-5 align-items-center">
+            <div class="col-lg-6 position-relative home-block-3-left pb-lg-0 pb-5">
+                <div class="position-relative">
+                    <img src="~/EduSchool/assets/images/img1.jpg" alt="" class="img-fluid radius-image">
+                </div>
+                @*   <div class="imginfo__box">
+                <h6 class="imginfo__title">Get a Appointment Today!</h6>
+                <p>Nemo enim ipsam oluptatem quia oluptas<br> sit aspernatur aut odit aut fugit. </p>
+                <a href="tel:http://1(800)7654321"><i class="fas fa-phone-alt"></i> 1-800-654-3210</a>
+                </div> *@
+            </div>
+            <div class="col-xl-5 col-lg-6 offset-xl-1 mt-lg-0 mt-5 pt-lg-0 pt-5">
+                <p class="text-uppercase" style="text-align:center;">MİSYONUMUZ & VİZYONUMUZ</p>
+                <h3 class="title-style" style="text-align:center;">@Model.Title</h3>
+                <p class="mt-4">
+                    @Model.Content
+                </p>
+                @*  <ul class="mt-4 list-style-lis pt-lg-1">
+                <li><i class="fas fa-check-circle"></i>Özel Eğitim</li>
+                <li><i class="fas fa-check-circle"></i>Birbirinden Farklı Soru Çözümleri</li>
+                <li><i class="fas fa-check-circle"></i>Geleneksel Deneme Sınavları</li>
+                </ul> *@
+                <a asp-controller="Contact" asp-action="Index" class="btn btn-style mt-5">İletişim</a>
+            </div>
+        </div>
+    </div>
+</section>
