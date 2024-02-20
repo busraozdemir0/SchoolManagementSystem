@@ -10,6 +10,8 @@
     @*icon*@
     <link rel="icon" type="image/png" href="~/icons/home.png" />
     <!-- Google fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Template CSS Style link -->
     <link rel="stylesheet" href="~/EduSchool/assets/css/style-starter.css">
@@ -43,7 +45,7 @@
                         </li>
                     </ul>
                     <!-- search-right -->
-                    <div class="header-search position-relative">
+                    <div class="header-search position-relative ml-2">
                         <div class="search-right mx-lg-2">
                             <a href="#search" class="btn search-btn p-0" title="search">
                                 <i class="fas fa-search"></i>
@@ -66,8 +68,11 @@
                         </div>
                     </div>
                     <!--//search-right-->
+
+
                 </div>
-                <!-- toggle switch for light and dark theme -->
+
+      <!-- toggle switch for light and dark theme -->
                 <div class="cont-ser-position">
                     <nav class="navigation">
                         <div class="theme-switch-wrapper">
@@ -81,6 +86,15 @@
                         </div>
                     </nav>
                 </div>
+
+                <div class="btn-group" style="margin-left:12px;">
+                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton" aria-expanded="false"><i class="fa-regular fa-user" aria-hidden="true" style="font-size:1.2em"></i><span class="caret">▾</span></a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item nav-link" href="#">● Giriş Yap</a></li>
+                        <li><a class="dropdown-item nav-link" href="#">● Kayıt Ol</a></li>
+                    </ul>
+                </div>
+
                 <!-- //toggle switch for light and dark theme -->
             </nav>
         </div>
@@ -101,10 +115,10 @@
                         <ul>
                             <h6 class="footer-title-29">Hızlı Linkler</h6>
                             <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
-                            <li><a href="#">Hakkımızda</a></li>
+                            <li><a href="#about">Hakkımızda</a></li>
                             <li><a asp-controller="News" asp-action="Index">Haberler</a></li>
                             <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
-                            <li><a href="#">Eğitmenler</a></li>
+                            @* <li><a href="#">Eğitmenler</a></li> *@
                         </ul>
                     </div>
                     <div class="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4">
@@ -120,25 +134,25 @@
                         <h6 class="footer-title-29">Bizi Takip Edin</h6>
 
                         <ul style="text-align:center;">
-                            <li><a href="https://busraozdemir.netlify.app/" target="_blank" title="WebSite"><i class="fab fa-blogger fa-2x "></i></a></li>
+                            <li><a href="https://busraozdemir.netlify.app/" target="_blank" title="WebSite"><i class="fab"><img src="~/icons/web.png" /></i></a></li>
                             <li><a href="https://www.instagram.com/busra.0zdemir/  " target="_blank" title="İnstagram"><i class="fab fa-instagram fa-2x"></i></a></li>
                             <li><a href="https://www.linkedin.com/in/busra0zdemir/" target="_blank" title="Linkedin"><i class="fab fa-linkedin fa-2x"></i></a></li>
                             <li><a href="https://github.com/busraozdemir0" target="_blank" title="GitHub"><i class="fab fa-github fa-2x"></i></a></li>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
 
 
 
                     @await Html.PartialAsync("~/Views/NewsLetter/NewsLetterMail.cshtml")
 
+                </div>
+                <!-- copyright -->
+                <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">
+                    © @DateTime.Now.Year Atlas Koleji. Tüm Hakları Saklıdır. Design
+                    by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a>
+                </p>
+                <!-- //copyright -->
             </div>
-            <!-- copyright -->
-            <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">
-                © @DateTime.Now.Year Atlas Koleji. Tüm Hakları Saklıdır. Design
-                by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a>
-            </p>
-            <!-- //copyright -->
-        </div>
         </div>
     </footer>
     <!-- //footer block -->
@@ -148,7 +162,7 @@
         <span class="fas fa-level-up-alt" aria-hidden="true"></span>
     </button>
 
-    
+
     <script>
         // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function () {
@@ -170,7 +184,7 @@
         }
     </script>
 
-   
+
     <!-- //move top -->
     <!-- common jquery plugin -->
     <script src="~/EduSchool/assets/js/jquery-3.3.1.min.js"></script>

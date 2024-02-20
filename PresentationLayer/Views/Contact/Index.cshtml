@@ -26,41 +26,45 @@
         </div>
         <div class="row contact-block">
             <div class="col-md-7 contact-right">
-                <form asp-controller="Contact" asp-action="Add" method="post" class="signin-form">
-                    <div asp-validation-summary="ModelOnly"></div>
-                    <div class="input-grids">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input asp-for="NameSurname" type="text" id="w3lName" placeholder="Ad Soyad"
-                                       class="contact-input" required="" />
-                                <span asp-validation-for="NameSurname" class="text-danger"></span>
+                <form asp-controller="Contact" asp-action="Add" method="post" class="signin-form" enctype="multipart/form-data">
+                    <div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="input-grids">
+                            <div class="row">
+                                
+                                <div class="form-group col-sm-6">
+                                    <input asp-for="NameSurname" type="text" id="w3lName" placeholder="Ad Soyad"
+                                           class="contact-input" />
+                                    <span asp-validation-for="NameSurname" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input asp-for="EMail" type="email" id="w3lSender" placeholder="E-Mail"
+                                           class="contact-input" />
+                                    <span asp-validation-for="EMail" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <input asp-for="EMail" type="email" id="w3lSender" placeholder="E-Mail"
-                                       class="contact-input" required="" />
-                                <span asp-validation-for="EMail" class="text-danger"></span>
+                            <div class="form-group">
+                            <input asp-for="Subject" type="text" id="w3lSubect" placeholder="Konu"
+                                   class="contact-input" />
+                            <span asp-validation-for="Subject" class="text-danger"></span>
                             </div>
-                        </div>
-                        <input asp-for="Subject" type="text" id="w3lSubect" placeholder="Konu"
-                               class="contact-input"  />
-                        <span asp-validation-for="Subject" class="text-danger"></span>
 
-                    </div>
-                    <div class="form-input">
-                        <textarea asp-for="Message" id="w3lMessage" placeholder="Mesaj"
-                                  ></textarea>
-                        <span asp-validation-for="Message" class="text-danger"></span>
-                    </div>
-                    <div class="text-start">
-                        <button type="submit" class="btn btn-style btn-style-3">Gönder</button>
+                        </div>
+                        <div class="form-group form-input">
+                            <textarea asp-for="Message" id="w3lMessage" placeholder="Mesaj"></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-start">
+                            <button type="submit" class="btn btn-style btn-style-3">Gönder</button>
+                        </div>
                     </div>
                 </form>
             </div>
-          @await Component.InvokeAsync("HomeAddress")
+            @await Component.InvokeAsync("HomeAddress")
         </div>
     </div>
 </section>
 <!-- map -->
-
 @await Component.InvokeAsync("HomeMapLocation")
 <!-- //contact block -->

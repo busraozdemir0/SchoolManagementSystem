@@ -1,4 +1,5 @@
-﻿using EntityLayer.Entities;
+﻿using EntityLayer.DTOs.Contacts;
+using EntityLayer.Entities;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

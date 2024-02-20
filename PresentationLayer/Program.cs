@@ -1,8 +1,10 @@
 using BusinessLayer.Describers;
 using BusinessLayer.Extensions;
+using BusinessLayer.FluentValidations;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using EntityLayer.Entities;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
@@ -21,7 +23,6 @@ builder.Services.AddControllersWithViews()
          Timeout = 3000   // Bildirim kac ms gosterilsin (3 sn olarak belirttik)
      })
      .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
-
 
 // * Identity yapilandirmasi
 builder.Services.AddIdentity<AppUser, AppRole>(option =>
