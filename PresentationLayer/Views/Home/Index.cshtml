@@ -1,149 +1,27 @@
 ﻿
-
 @{
     ViewData["Title"] = "Ana Sayfa";
 }
 
 <!-- banner section -->
-<section id="home" class="w3l-banner py-5">
-    <div class="banner-content">
-        <div class="container py-4">
-            <div class="row align-items-center pt-sm-5 pt-4">
-                <div class="col-md-6">
-                    <h3 class="mb-lg-4 mb-3">
-                        <span class="d-block"> Çocuklarınız </span> en iyi eğitimi <span class="d-block"> almayı hak ediyor</span>
-                    </h3>
-                    <p class="banner-sub">Aktif Öğrenme, Uzman Öğretmenler ve Güvenli Ortam</p>
-                    <div class="d-flex align-items-center buttons-banner">
-                        <a asp-controller="Contact" asp-action="Index" class="btn btn-style mt-lg-5 mt-4">Hemen İletişime Geçin</a>
-                    </div>
-                </div>
-                <div class="col-md-6 right-banner-2 text-end position-relative mt-md-0 mt-5">
-                    <div class="sub-banner-image mx-auto">
-                        <img src="~/EduSchool/assets/images/banner.png" class="img-fluid position-relative" alt=" ">
-                    </div>
-                    <div class="banner-style-1 position-absolute">
-                        <div class="banner-style-2 position-relative">
-                            <h4>Okula dönüş</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@await Component.InvokeAsync("HomeBanner")
 <!-- //banner section -->
 
 <!-- home 4grids block -->
-<section class="services-w3l-block py-5" id="features">
-    <div class="container py-md-5 py-4">
-        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-            <p class="text-uppercase">EN İYİ ÖZELLİKLER</p>
-            <h3 class="title-style">Atlas Koleji ile Hedeflerinize Ulaşın</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
-                <div class="icon-box icon-box-clr-1">
-                    <div class="icon"><i class="fas fa-user-friends"></i></div>
-                    <h4 class="title"><a href="#about">Uzman Öğretmenler</a></h4>
-                    <p>Her zaman ve her yerde bir araya gelerek etkili bir şekilde öğretmenden yararlanabilirsiniz.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mt-md-0 mt-4">
-                <div class="icon-box icon-box-clr-2">
-                    <div class="icon"><i class="fas fa-book-reader"></i></div>
-                    <h4 class="title"><a href="#about">Kaliteli Eğitim</a></h4>
-                    <p>Sık sık yapılan deneme sınavlarıyla başarıyı yakalama fırsatı edinebilir ve hayallerinize kavuşabilirsiniz.</p>
-                </div>
-            </div>     
-            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mt-lg-0 mt-4">
-                <div class="icon-box icon-box-clr-4">
-                    <div class="icon"><i class="fas fa-university"></i></div>
-                    <h4 class="title"><a href="#about">En İyi Etütler</a></h4>
-                    <p>Etütler ile ders konularını tekrar edebilme ve soru çözümleriyle konuyu pekiştirme imkanına sahip olabilirsiniz.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 d-flex align-items-stretch mt-lg-0 mt-4">
-                <div class="icon-box icon-box-clr-3">
-                    <div class="icon"><i class="fas fa-user-graduate"></i></div>
-                    <h4 class="title"><a href="#about">Yaşam Boyu Destek</a></h4>
-                    <p>Mezun olsanız dahi Atlas Koleji her zaman yanınızdadır.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@await Component.InvokeAsync("HomeBestFeatures")
 <!-- home 4grids block -->
+
 <!-- home image with content block -->
 
-    @await Component.InvokeAsync("HomeAbout")
+@await Component.InvokeAsync("HomeAbout")
 
 <!-- //home image with content block -->
 
-<!-- why choose block -->
-<section class="w3l-service-1 py-5">
-    <div class="container py-md-5 py-4">
-        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-            <p class="text-uppercase">Why Choose Us</p>
-            <h3 class="title-style">Tools For Teachers And Learners</h3>
-        </div>
-        <div class="row content23-col-2 text-center">
-            <div class="col-md-6">
-                <div class="content23-grid content23-grid1">
-                    <h4><a href="about.html">Expert Teachers</a></h4>
-                </div>
-            </div>
-            <div class="col-md-6 mt-md-0 mt-4">
-                <div class="content23-grid content23-grid2">
-                    <h4><a href="about.html">Safe Environment</a></h4>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- //why choose block -->
 <!-- stats block -->
-<section class="w3-stats pt-4 pb-5" id="stats">
-    <div class="container pb-md-5 pb-4">
-        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-            <p class="text-uppercase">İstatiklerimiz</p>
-            <h3 class="title-style">Sizlerle Paylaşmaktan Gurur Duyuyoruz</h3>
-        </div>
-        <div class="row text-center pt-4">
-            <div class="col-md-3 col-6">
-                <div class="counter">
-                    <img src="~/EduSchool/assets/images/icon-1.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-sm-1" data-to="36076" data-speed="1500"></div>
-                    <p class="count-text">Kayıtlı Öğrenciler</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="counter">
-                    <img src="~/icons/teachers.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-3" data-to="786" data-speed="1500"></div>
-                    <p class="count-text">Uzman Öğretmenler</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mt-md-0 mt-5">
-                <div class="counter">
-                    <img src="~/EduSchool/assets/images/icon-3.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-3" data-to="3630" data-speed="1500"></div>
-                    <p class="count-text">Toplam Dersler</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mt-md-0 mt-5">
-                <div class="counter">
-                    <img src="~/EduSchool/assets/images/icon-4.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-3" data-to="6300" data-speed="1500"></div>
-                    <p class="count-text">Kazanılan Ödüller</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@await Component.InvokeAsync("HomeStatistics")
 <!-- //stats block -->
-<!-- testimonials block -->
+
+<!-- testimonials block --> <!-- * Kolej hakkindaki yorumlar * -->
 @* <section class="w3l-index4 py-5" id="testimonials">
     <div class="container py-md-5 py-4">
         <div class="content-slider text-center">
@@ -228,30 +106,11 @@
     </div>
 </section> *@
 <!-- //testimonials block -->
+
 <!-- blog block -->
 @await Component.InvokeAsync("HomeLastThreeNews")
-
 <!-- //blog block -->
+
 <!-- call block -->
-<section class="w3l-call-to-action-6">
-    <div class="container py-md-5 py-sm-4 py-5">
-        <div class="d-lg-flex align-items-center justify-content-between">
-            <div class="left-content-call">
-                <h3 class="title-big">ÇOCUĞUNUZU KAYIT ETMEK İÇİN ARAYIN</h3>
-                <p class="text-white mt-1">Değişime bugün başlayın!</p>
-            </div>
-            <div class="right-content-call mt-lg-0 mt-4">
-                <ul class="buttons">
-                    <li class="phone-sec me-lg-4">
-                        <i class="fas fa-phone-volume"></i>
-                        <a class="call-style-w3" href="tel:+1(23) 456 789 0000">+1(23) 456 789 0000</a>
-                    </li>
-                   @*  <li>
-                        <a href="contact.html" class="btn btn-style btn-style-2 mt-lg-0 mt-3">Join for free</a>
-                    </li> *@
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+@await Component.InvokeAsync("HomeCallBlock")
 <!-- //call block -->

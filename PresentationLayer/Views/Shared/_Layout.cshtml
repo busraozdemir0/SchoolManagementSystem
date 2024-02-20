@@ -3,243 +3,27 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlas Koleji - @ViewData["Title"]</title>
-    @*icon*@
-    <link rel="icon" type="image/png" href="~/icons/home.png" />
-    <!-- Google fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Template CSS Style link -->
-    <link rel="stylesheet" href="~/EduSchool/assets/css/style-starter.css">
-    @*  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    @await Html.PartialAsync("/Views/LayoutPartial/_HeaderPartial.cshtml")
 </head>
 
 <body>
     <!-- header -->
-    <header id="site-header" class="fixed-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="#">
-                    <i class="fas fa-graduation-cap"></i>Atlas Koleji
-                </a>
-                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
-                    <span class="navbar-toggler-icon fa icon-close fa-times"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="News" asp-action="Index">Haberler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Contact" asp-action="Index">İletişim</a>
-                        </li>
-                    </ul>
-                    <!-- search-right -->
-                    <div class="header-search position-relative ml-2">
-                        <div class="search-right mx-lg-2">
-                            <a href="#search" class="btn search-btn p-0" title="search">
-                                <i class="fas fa-search"></i>
-                            </a>
-                            <!-- search popup -->
-                            <div id="search" class="pop-overlay">
-                                <div class="popup">
-                                    <form action="#search" method="GET" class="search-box">
-                                        <input type="search" placeholder="Enter Keyword..." name="search"
-                                               required="required" autofocus="">
-                                        <button type="submit" class="btn">
-                                            <span class="fas fa-search"
-                                                  aria-hidden="true"></span>
-                                        </button>
-                                    </form>
-                                </div>
-                                <a class="close" href="#close">×</a>
-                            </div>
-                            <!-- //search popup -->
-                        </div>
-                    </div>
-                    <!--//search-right-->
-
-
-                </div>
-
-      <!-- toggle switch for light and dark theme -->
-                <div class="cont-ser-position">
-                    <nav class="navigation">
-                        <div class="theme-switch-wrapper">
-                            <label class="theme-switch" for="checkbox">
-                                <input type="checkbox" id="checkbox">
-                                <div class="mode-container">
-                                    <i class="gg-sun"></i>
-                                    <i class="gg-moon"></i>
-                                </div>
-                            </label>
-                        </div>
-                    </nav>
-                </div>
-
-                <div class="btn-group" style="margin-left:12px;">
-                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton" aria-expanded="false"><i class="fa-regular fa-user" aria-hidden="true" style="font-size:1.2em"></i><span class="caret">▾</span></a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item nav-link" href="#">● Giriş Yap</a></li>
-                        <li><a class="dropdown-item nav-link" href="#">● Kayıt Ol</a></li>
-                    </ul>
-                </div>
-
-                <!-- //toggle switch for light and dark theme -->
-            </nav>
-        </div>
-    </header>
+    @await Html.PartialAsync("/Views/LayoutPartial/_NavbarPartial.cshtml")
     <!-- //header -->
+
     @RenderBody()
 
-
     <!-- footer block -->
-    <footer class="w3l-footer-29-main">
-        <div class="footer-29 pt-5 pb-4">
-            <div class="container pt-md-4">
-                <div class="row footer-top-29">
-
-                    @await Component.InvokeAsync("FooterContact")
-
-                    <div class="col-lg-2 col-md-3 col-6 footer-list-29 mt-md-0 mt-4">
-                        <ul>
-                            <h6 class="footer-title-29">Hızlı Linkler</h6>
-                            <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
-                            <li><a href="#about">Hakkımızda</a></li>
-                            <li><a asp-controller="News" asp-action="Index">Haberler</a></li>
-                            <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
-                            @* <li><a href="#">Eğitmenler</a></li> *@
-                        </ul>
-                    </div>
-                    <div class="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4">
-                        @*   <ul>
-                        <h6 class="footer-title-29">Explore</h6>
-                        <li><a href="#blog">Blog Posts</a></li>
-                        <li><a href="#privacy">Privacy policy</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="#license">License & uses</a></li>
-                        <li><a href="#tutorials">Tutorials</a></li>
-                        </ul> *@
-
-                        <h6 class="footer-title-29">Bizi Takip Edin</h6>
-
-                        <ul style="text-align:center;">
-                            <li><a href="https://busraozdemir.netlify.app/" target="_blank" title="WebSite"><i class="fab"><img src="~/icons/web.png" /></i></a></li>
-                            <li><a href="https://www.instagram.com/busra.0zdemir/  " target="_blank" title="İnstagram"><i class="fab fa-instagram fa-2x"></i></a></li>
-                            <li><a href="https://www.linkedin.com/in/busra0zdemir/" target="_blank" title="Linkedin"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                            <li><a href="https://github.com/busraozdemir0" target="_blank" title="GitHub"><i class="fab fa-github fa-2x"></i></a></li>
-                        </ul>
-                    </div>
-
-
-
-                    @await Html.PartialAsync("~/Views/NewsLetter/NewsLetterMail.cshtml")
-
-                </div>
-                <!-- copyright -->
-                <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">
-                    © @DateTime.Now.Year Atlas Koleji. Tüm Hakları Saklıdır. Design
-                    by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a>
-                </p>
-                <!-- //copyright -->
-            </div>
-        </div>
-    </footer>
+    @await Html.PartialAsync("/Views/LayoutPartial/_FooterPartial.cshtml")
     <!-- //footer block -->
+
+
     <!-- Js scripts -->
-    <!-- move top -->
-    <button onclick="topFunction()" id="movetop" title="Go to top">
-        <span class="fas fa-level-up-alt" aria-hidden="true"></span>
-    </button>
-
-
-    <script>
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function () {
-            scrollFunction()
-        };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("movetop").style.display = "block";
-            } else {
-                document.getElementById("movetop").style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-
-
-    <!-- //move top -->
-    <!-- common jquery plugin -->
-    <script src="~/EduSchool/assets/js/jquery-3.3.1.min.js"></script>
-    <!-- //common jquery plugin -->
-    <!-- /counter-->
-    <script src="~/EduSchool/assets/js/counter.js"></script>
-    <!-- //counter-->
-    <!-- theme switch js (light and dark)-->
-    <script src="~/EduSchool/assets/js/theme-change.js"></script>
-    <!-- //theme switch js (light and dark)-->
-    <!-- MENU-JS -->
-    <script>
-        $(window).on("scroll", function () {
-            var scroll = $(window).scrollTop();
-
-            if (scroll >= 80) {
-                $("#site-header").addClass("nav-fixed");
-            } else {
-                $("#site-header").removeClass("nav-fixed");
-            }
-        });
-
-        //Main navigation Active Class Add Remove
-        $(".navbar-toggler").on("click", function () {
-            $("header").toggleClass("active");
-        });
-        $(document).on("ready", function () {
-            if ($(window).width() > 991) {
-                $("header").removeClass("active");
-            }
-            $(window).on("resize", function () {
-                if ($(window).width() > 991) {
-                    $("header").removeClass("active");
-                }
-            });
-        });
-    </script>
-    <!-- //MENU-JS -->
-    <!-- disable body scroll which navbar is in active -->
-    <script>
-        $(function () {
-            $('.navbar-toggler').click(function () {
-                $('body').toggleClass('noscroll');
-            })
-        });
-    </script>
-
-    <!-- //disable body scroll which navbar is in active -->
-    <!-- bootstrap -->
-    <script src="~/EduSchool/assets/js/bootstrap.min.js"></script>
-    <!-- //bootstrap -->
+    @await Html.PartialAsync("/Views/LayoutPartial/_ScriptsPartial.cshtml")
     <!-- //Js scripts -->
+
     @await RenderSectionAsync("Scripts", false)
 
     @await Component.InvokeAsync("NToastNotify")
 </body>
-
 </html>
