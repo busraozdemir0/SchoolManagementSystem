@@ -229,81 +229,8 @@
 </section> *@
 <!-- //testimonials block -->
 <!-- blog block -->
-<div class="w3l-blog-block-5 py-5" id="blog">
-    <div class="container py-md-5 py-4">
-        <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-            <p class="text-uppercase">Haberlerimiz</p>
-            <h3 class="title-style">Son Yayınlanan Haberler</h3>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6">
-                <div class="blog-card-single">
-                    <div class="grids5-info">
-                        <a href="#blog"><img src="~/EduSchool/assets/images/blog2.jpg" alt="" /></a>
-                        <div class="blog-info">
-                            <h4><a href="#blog">Education Programs...</a></h4>
-                            <p>
-                                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sunt inc
-                                officia deserunt.
-                            </p>
-                            <div class="d-flex align-items-center justify-content-between mt-4">
-                                <a class="d-flex align-items-center" href="#blog" title="23k followers">
-                                    <img class="img-fluid" src="~/EduSchool/assets/images/testi2.jpg" alt="admin"
-                                         style="max-width:40px"> <span class="small ms-2">Eetey Cruis</span>
-                                </a>
-                                <p class="date-text"><i class="far fa-calendar-alt me-1"></i>Oct 06, 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
-                <div class="blog-card-single">
-                    <div class="grids5-info">
-                        <a href="#blog"><img src="~/EduSchool/assets/images/blog1.jpg" alt="" /></a>
-                        <div class="blog-info">
-                            <h4><a href="#blog">Games Programs...</a></h4>
-                            <p>
-                                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sunt inc
-                                officia deserunt.
-                            </p>
-                            <div class="d-flex align-items-center justify-content-between mt-4">
-                                <a class="d-flex align-items-center" href="#blog" title="23k followers">
-                                    <img class="img-fluid" src="~/EduSchool/assets/images/testi1.jpg" alt="admin"
-                                         style="max-width:40px"> <span class="small ms-2">Molive Joe</span>
-                                </a>
-                                <p class="date-text"><i class="far fa-calendar-alt me-1"></i>Oct 10, 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
-                <div class="blog-card-single">
-                    <div class="grids5-info">
-                        <a href="#blog"><img src="~/EduSchool/assets/images/blog3.jpg" alt="" /></a>
-                        <div class="blog-info">
-                            <h4><a href="#blog">Articles Programs...</a></h4>
-                            <p>
-                                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, sunt inc
-                                officia deserunt.
-                            </p>
-                            <div class="d-flex align-items-center justify-content-between mt-4">
-                                <a class="d-flex align-items-center" href="#blog" title="23k followers">
-                                    <img class="img-fluid" src="~/EduSchool/assets/images/testi3.jpg" alt="admin"
-                                         style="max-width:40px"> <span class="small ms-2">
-                                        Turne Leo
-                                    </span>
-                                </a>
-                                <p class="date-text"><i class="far fa-calendar-alt me-1"></i>Oct 12, 2021</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@await Component.InvokeAsync("HomeLastThreeNews")
+
 <!-- //blog block -->
 <!-- call block -->
 <section class="w3l-call-to-action-6">
