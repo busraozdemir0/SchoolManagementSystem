@@ -619,7 +619,7 @@ progress {
 }
 
 .img-fluid {
-  max-width: 100%;
+ /* max-width: 100%;*/
   height: auto;
 }
 
@@ -19418,8 +19418,11 @@ p.banner-sub {
 
 .sub-banner-image img {
   position: absolute;
-  top: -162px;
+  top: -40px;
   right: 0px;
+  left:10px;
+  width:550px;
+  height:450px;
 }
 
 .banner-style-1 {

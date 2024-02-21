@@ -12,5 +12,6 @@ namespace BusinessLayer.Services.Abstract
     public interface IReportService : IGenericService<Report>
     {
         Task<ReportListDto> TGetAllByPagingAsync(int currentPage = 1, int pageSize = 6, bool isAscending = false);
+        Task<ReportListDto> TSearchAsync(string keyword, int currentPage = 1, int pageSize = 6, bool isAscending = false);
     }
 }

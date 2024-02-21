@@ -49,6 +49,11 @@ namespace BusinessLayer.Services.Concrete
             return await _reportDal.GetByGuidAsync(id);
         }
 
+        public async Task<ReportListDto> TSearchAsync(string keyword, int currentPage = 1, int pageSize = 6, bool isAscending = false)
+        {
+            return await _reportDal.SearchAsync(keyword,currentPage,pageSize,isAscending);
+        }
+
         public async Task TUpdateAsync(Report t)
         {
             await _reportDal.UpdateAsync(t);
