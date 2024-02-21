@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface INewsDal:IRepository<News>
+    public interface IReportDal:IRepository<Report>
     {
     }
 }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.FluentValidations
 {
-    public class NewsValidator:AbstractValidator<News>
+    public class ReportValidator:AbstractValidator<Report>
     {
-        public NewsValidator()
+        public ReportValidator()
         {
             RuleFor(x => x.Title)
                 .NotNull()

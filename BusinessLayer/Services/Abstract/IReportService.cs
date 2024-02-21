@@ -1,4 +1,5 @@
-﻿using EntityLayer.Entities;
+﻿using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Services.Abstract
 {
-    public interface INewsService : IGenericService<News>
+    public interface IReportService : IGenericService<Report>
     {
     }
 }

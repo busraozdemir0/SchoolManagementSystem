@@ -1,4 +1,4 @@
-﻿@model NewsDto
+﻿@model ReportDto
 
 @{
     ViewData["Title"] = "Haber "+Model.Title;
@@ -45,7 +45,7 @@
                         <p>@Model.Content</p>
                             <div class="top-content-border align-items-center justify-content-between mt-4 pt-4">
                                 <h6></h6>
-                                <a class="btn btn-style-primary" href="#">
+                                <a class="btn btn-style-primary" asp-controller="Report" asp-action="Index">
                                     Geri dön<i class="fas fa-arrow-left"></i>
                                 </a>
                             </div>

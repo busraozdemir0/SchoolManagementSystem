@@ -1,4 +1,4 @@
-﻿@model List<NewsDto>
+﻿@model List<ReportDto>
 
 <div class="w3l-blog-block-5 py-5" id="blog">
     <div class="container py-md-5 py-4">
@@ -7,23 +7,23 @@
             <h3 class="title-style">Son Yayınlanan Haberler</h3>
         </div>
         <div class="row justify-content-center">
-            @foreach (var news in Model)
+            @foreach (var report in Model)
             {
                 <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
                     <div class="blog-card-single">
                         <div class="grids5-info">
                             <a href="#blog"><img src="~/EduSchool/assets/images/blog2.jpg" alt="" /></a>
                             <div class="blog-info">
-                                <h4><a data-id="@news.Id" asp-controller="News" asp-action="Detail" asp-route-newsId="@news.Id">@news.Title</a></h4>
+                                <h4><a data-id="@report.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@report.Title</a></h4>
                                 <p>
-                                    @news.Content ...
+                                    @report.Content ...
                                 </p>
                                 <div class="d-flex align-items-center justify-content-between mt-4">
                                     <a class="d-flex align-items-center" href="#blog" title="23k followers">
                                         <img class="img-fluid" src="~/EduSchool/assets/images/testi2.jpg" alt="admin"
                                              style="max-width:40px"> <span class="small ms-2">Eetey Cruis</span>
                                     </a>
-                                    <p class="date-text"><i class="far fa-calendar-alt me-1"></i>@(((DateTime)news.CreatedDate).ToString("dd-MM-yyyy"))</p>
+                                    <p class="date-text"><i class="far fa-calendar-alt me-1"></i>@(((DateTime)report.CreatedDate).ToString("dd-MM-yyyy"))</p>
                                 </div>
                             </div>
                         </div>

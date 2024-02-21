@@ -25,7 +25,7 @@ namespace DataAccessLayer.Context
         public DbSet<LessonDocument> LessonDocuments { get; set; }
         public DbSet<LessonScore> LessonScores { get; set; }
         public DbSet<LessonVideo> LessonVideos { get; set; }
-        public DbSet<News> News { get; set; }
+        public DbSet<Report> Reports { get; set; } // Haberler tablosu (News)
         public DbSet<NewsLetter> NewsLetters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

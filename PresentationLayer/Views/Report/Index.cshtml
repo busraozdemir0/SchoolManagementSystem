@@ -1,4 +1,4 @@
-﻿@model List<NewsDto>
+﻿@model List<ReportDto>
 
 @{
     ViewData["Title"] = "Haberler";
@@ -44,8 +44,8 @@
                         <h4><a href="courses.html">@item.Title</a></h4>
                         <p>@item.Content</p>
                         <div class="top-content-border d-flex align-items-center justify-content-between mt-4 pt-4">
-                             <h6></h6> 
-                                <a class="btn btn-style-primary" data-id="@item.Id" asp-controller="News" asp-action="Detail" asp-route-newsId="@item.Id">
+                             <h6></h6>
+                                <a class="btn btn-style-primary" data-id="@item.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@item.Id">
                                 Detayları gör<i class="fas fa-arrow-right"></i>
                             </a>
                         </div>

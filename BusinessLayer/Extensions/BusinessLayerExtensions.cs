@@ -30,8 +30,8 @@ namespace BusinessLayer.Extensions
             services.AddScoped<IAddressService, AddressManager>();
             services.AddScoped<IAddressDal, EfAddressRepository>();
 
-            services.AddScoped<INewsService, NewsManager>();
-            services.AddScoped<INewsDal, EfNewsRepository>();
+            services.AddScoped<IReportService, ReportManager>();
+            services.AddScoped<IReportDal, EfReportRepository>();
 
             services.AddScoped<INewsLetterService, NewsLetterManager>();
             services.AddScoped<INewsLetterDal, EfNewsLetterRepository>();

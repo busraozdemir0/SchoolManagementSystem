@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.EntityFramework
 {
-    public class EfNewsRepository:Repository<News>, INewsDal
+    public class EfReportRepository:Repository<Report>, IReportDal
     {
-        public EfNewsRepository(AppDbContext context) : base(context) // base(context) ile turetilmis sinifin yapici metoduna veritabani baglamini iletiyor.
+        public EfReportRepository(AppDbContext context) : base(context) // base(context) ile turetilmis sinifin yapici metoduna veritabani baglamini iletiyor.
         {
             
         }
