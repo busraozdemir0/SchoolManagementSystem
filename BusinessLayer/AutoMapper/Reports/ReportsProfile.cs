@@ -14,6 +14,7 @@ namespace BusinessLayer.AutoMapper.Reports
         public ReportsProfile()
         {
             CreateMap<Report, ReportDto>().ReverseMap();
+            CreateMap<Report, ReportListDto>().ReverseMap();
         }
     }
 }

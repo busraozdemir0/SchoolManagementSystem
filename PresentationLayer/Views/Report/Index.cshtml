@@ -1,4 +1,4 @@
-﻿@model List<ReportDto>
+﻿@model ReportListDto
 
 @{
     ViewData["Title"] = "Haberler";
@@ -25,56 +25,66 @@
             <h3 class="title-style">Güncel Haberler</h3>
         </div>
         <div class="row justify-content-center">
-            @foreach(var item in Model){
+            @foreach (var item in Model.Reports)
+            {
                 <div class="col-lg-4 col-md-6 mt-4">
-                <div class="coursecard-single">
-                    <div class="grids5-info position-relative">
-                        <img src="~/EduSchool/assets/images/c1.jpg" alt="" class="img-fluid" />
-                        @* <div class="meta-list">
-                            <a href="courses.html">Art & Design</a>
+                    <div class="coursecard-single">
+                        <div class="grids5-info position-relative">
+                            <img src="~/EduSchool/assets/images/c1.jpg" alt="" class="img-fluid" />
+                            @* <div class="meta-list">
+                        <a href="courses.html">Art & Design</a>
                         </div> *@
-                    </div>
-                    <div class="content-main-top">
-                        <div class="content-top mb-4 mt-3">
-                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
-                                    <li> <i class="fas fa-calendar" style="color:gray;"></i> @(((DateTime)item.CreatedDate).ToString("dd-MM-yyyy"))</li>
-                                @* <li> <i class="fas fa-star"></i> 4.5</li> *@
-                            </ul>
                         </div>
-                        <h4><a href="courses.html">@item.Title</a></h4>
-                        <p>@item.Content</p>
-                        <div class="top-content-border d-flex align-items-center justify-content-between mt-4 pt-4">
-                             <h6></h6>
+                        <div class="content-main-top">
+                            <div class="content-top mb-4 mt-3">
+                                <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                    <li> <i class="fas fa-calendar" style="color:gray;"></i> @(((DateTime)item.CreatedDate).ToString("dd-MM-yyyy"))</li>
+                                    @* <li> <i class="fas fa-star"></i> 4.5</li> *@
+                                </ul>
+                            </div>
+                            <h4><a href="courses.html">@item.Title</a></h4>
+                            <p>@item.Content</p>
+                            <div class="top-content-border d-flex align-items-center justify-content-between mt-4 pt-4">
+                                <h6></h6>
                                 <a class="btn btn-style-primary" data-id="@item.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@item.Id">
-                                Detayları gör<i class="fas fa-arrow-right"></i>
-                            </a>
+                                    Detayları gör<i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             }
 
         </div>
         <!-- pagination -->
         <div class="pagination-style text-center mt-5">
             <ul>
-                <li>
-                    <a href="#none" class="not-allowed" disabled="">
-                        <span class="fa fa-angle-double-left" aria-hidden="true"></span>
-                    </a>
-                </li>
-                <li><a class="active" href="#page">1</a></li>
-                <li>
-                    <a href="#page">2</a>
-                </li>
-                <li>
-                    <a href="#page">3</a>
-                </li>
-                <li>
-                    <a href="#page">
-                        <span class="fa fa-angle-double-right" aria-hidden="true"></span>
-                    </a>
-                </li>
+                @if (Model.ShowPrevious)
+                {
+                    <li>
+                        @* currentPage yazim sekli Controller'daki ile ayni olmasi lazim. Cunku o sekilde baglayacak *@
+                        <a class="" asp-route-currentPage="@(Model.CurrentPage-1)" asp-route-pageSize="@(Model.PageSize)">
+                            <span class="fa fa-angle-double-left" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i < Model.TotalPages; i++)
+                {
+                    <li>
+                        @* Bulunan sayfaya esitse o sayfanin kutucugunu aktif halde gostermek icin*@
+                        <a class="@(i == Model.CurrentPage ? "active" : "")" asp-route-currentPage="@i" asp-route-pageSize="@Model.PageSize">@i</a>
+                    </li>
+                }
+
+                @if (Model.ShowNext) @* True gelirse sonraki sayfa var anlamina gelir *@
+                {
+                    <li>
+                        <a class="" asp-route-currentPage="@(Model.CurrentPage + 1)" asp-route-pageSize="@(Model.PageSize)">
+                            <span class="fa fa-angle-double-right" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
         <!-- //pagination -->

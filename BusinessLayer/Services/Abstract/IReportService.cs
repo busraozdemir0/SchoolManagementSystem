@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Abstract;
+using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace BusinessLayer.Services.Abstract
 {
     public interface IReportService : IGenericService<Report>
     {
+        Task<ReportListDto> TGetAllByPagingAsync(int currentPage = 1, int pageSize = 6, bool isAscending = false);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,11 @@ namespace BusinessLayer.Services.Concrete
         {
             await _reportDal.DeleteAsync(t);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<ReportListDto> TGetAllByPagingAsync(int currentPage = 1, int pageSize = 6, bool isAscending = false)
+        {
+            return await _reportDal.GetAllByPagingAsync(currentPage,pageSize,isAscending);
         }
 
         public async Task<Report> TGetByGuidAsync(Guid id)

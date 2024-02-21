@@ -18,11 +18,12 @@ namespace PresentationLayer.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int currentPage=1, int pageSize=6, bool isAscending=false)
         {
-            var report = await _reportService.GetListAsync();
-            var map = _mapper.Map<List<ReportDto>>(report);
-            return View(map);
+            var reports = await _reportService.TGetAllByPagingAsync(currentPage,pageSize,isAscending);
+          //  var map = _mapper.Map<ReportListDto>(reports);
+            return View(reports);
+
         }
         public async Task<IActionResult> Detail(Guid reportId)
         {
