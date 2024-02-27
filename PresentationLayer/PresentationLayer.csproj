@@ -25,6 +25,8 @@
     <Folder Include="Areas\Member\Controllers\" />
     <Folder Include="Areas\Member\Models\" />
     <Folder Include="Areas\Member\Views\" />
+    <Folder Include="wwwroot\images\post-images\" />
+    <Folder Include="wwwroot\images\user-images\" />
   </ItemGroup>
 
   <ItemGroup>

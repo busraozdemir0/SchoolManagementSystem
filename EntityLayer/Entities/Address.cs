@@ -9,6 +9,18 @@ namespace EntityLayer.Entities
 {
     public class Address : BaseEntity<int>
     {
+        public Address()
+        {
+            
+        }
+        public Address(string addressInfo, string eMail, string supportEmail, string phoneNumber, string mapLocation)
+        {
+            AddressInfo = addressInfo;
+            EMail = eMail;
+            SupportEMail = supportEmail;
+            PhoneNumber = phoneNumber;
+            MapLocation = mapLocation;
+        }
         public string AddressInfo { get; set; }
         public string EMail { get; set; }
         public string SupportEMail { get; set; }

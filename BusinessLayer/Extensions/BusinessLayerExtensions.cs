@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.FluentValidations;
+using BusinessLayer.Helpers.Images;
 using BusinessLayer.Services.Abstract;
 using BusinessLayer.Services.Concrete;
 using DataAccessLayer.Abstract;
@@ -38,6 +39,8 @@ namespace BusinessLayer.Extensions
 
             services.AddScoped<IAboutService, AboutManager>();
             services.AddScoped<IAboutDal, EfAboutRepository>();
+
+            services.AddScoped<IImageHelper, ImageHelper>();
 
             services.AddAutoMapper(assembly);
 

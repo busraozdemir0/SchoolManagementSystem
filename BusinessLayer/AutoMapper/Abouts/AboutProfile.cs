@@ -14,6 +14,7 @@ namespace BusinessLayer.AutoMapper.Abouts
         public AboutProfile()
         {
             CreateMap<About, AboutDto>().ReverseMap();
+            CreateMap<About, AboutUpdateDto>().ReverseMap();
         }
     }
 }

@@ -20,7 +20,6 @@ namespace DataAccessLayer.EntityFramework
         {
             _unitOfWork = unitOfWork;
         }
-
         public async Task<ReportListDto> GetAllByPagingAsync(int currentPage = 1, int pageSize = 6, bool isAscending = false)
         {
             pageSize = pageSize > 20 ? 20 : pageSize; // Sayfa sayisi 20'den buyuk mu?

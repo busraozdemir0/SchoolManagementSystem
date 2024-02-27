@@ -9,6 +9,14 @@ namespace EntityLayer.Entities
 {
     public class Grade:BaseEntity<int>
     {
+        public Grade()
+        {
+            
+        }
+        public Grade(string name)
+        {
+            Name = name;
+        }
         public string Name { get; set; }
         public ICollection<Lesson> Lessons { get; set; }
         public ICollection<AppUser> Users { get; set; }

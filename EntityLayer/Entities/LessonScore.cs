@@ -9,6 +9,18 @@ namespace EntityLayer.Entities
 {
     public class LessonScore:BaseEntity<Guid> // Ogrencinin Ders Notu
     {
+        public LessonScore()
+        {
+            
+        }
+        public LessonScore(double score1,double score2, double performanceScore, Guid lessonId, Guid userId)
+        {
+            Score1 = score1;
+            Score2 = score2;
+            PerformanceScore = performanceScore;
+            LessonId = lessonId;
+            UserId = userId;
+        }
         public double Score1 { get; set; } // Dersin 1. puani
         public double Score2 { get; set; } // Dersin 2. puani
         public double PerformanceScore { get; set; } // Dersin performans/degerlendirme puani

@@ -9,6 +9,16 @@ namespace EntityLayer.Entities
 {
     public class Announcement : BaseEntity<Guid>
     {
+        public Announcement()
+        {
+            
+        }
+        public Announcement(string title, string content, DateTime createdDate)
+        {
+            Title = title;
+            Content = content;
+            CreatedDate=createdDate;
+        }
         public string Title { get; set; }
         public string Content { get; set; }
         public Guid UserId { get; set; } // Duyuruyu kim yaptigi bilgisi

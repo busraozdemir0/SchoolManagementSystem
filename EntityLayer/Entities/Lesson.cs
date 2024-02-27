@@ -9,6 +9,17 @@ namespace EntityLayer.Entities
 {
     public class Lesson:BaseEntity<Guid>
     {
+        public Lesson()
+        {
+            
+        }
+        public Lesson(string lessonCode,string lessonName, int lessonCredit,int gradeId)
+        {
+            LessonCode = lessonCode;
+            LessonName = lessonName;
+            LessonCredit = lessonCredit;
+            GradeId = gradeId;
+        }
         public string LessonCode { get; set; }
         public string LessonName { get; set; }
         public int LessonCredit { get; set; }
