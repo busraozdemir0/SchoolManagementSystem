@@ -619,7 +619,7 @@ progress {
 }
 
 .img-fluid {
- /* max-width: 100%;*/
+  max-width: 100%;
   height: auto;
 }
 
@@ -19458,7 +19458,8 @@ p.banner-sub {
   }
 
   .sub-banner-image img {
-    width: 94%;
+    width: 100%;
+    height:auto;
   }
 }
 
@@ -19507,7 +19508,7 @@ p.banner-sub {
   }
 
   .sub-banner-image img {
-    top: -130px;
+    top: -20px;
   }
 
   .banner-style-1 {

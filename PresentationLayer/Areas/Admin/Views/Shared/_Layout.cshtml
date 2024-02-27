@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+
+    @await Html.PartialAsync("/Areas/Admin/Views/_LayoutPartial/_HeaderPartial.cshtml")
+</head>
+
+<body>
+    <div id="wrapper">
+
+        @await Html.PartialAsync("/Areas/Admin/Views/_LayoutPartial/_SidebarPartial.cshtml")
+
+
+        <div id="page-wrapper" class="gray-bg">
+
+            @await Html.PartialAsync("/Areas/Admin/Views/_LayoutPartial/_NavbarPartial.cshtml")
+
+            @RenderBody()
+
+            @await Html.PartialAsync("/Areas/Admin/Views/_LayoutPartial/_FooterPartial.cshtml")
+
+
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+
+    @await Html.PartialAsync("/Areas/Admin/Views/_LayoutPartial/_ScriptsPartial.cshtml")
+
+
+</body>
+
+</html>

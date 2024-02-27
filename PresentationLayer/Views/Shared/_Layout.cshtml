@@ -3,23 +3,23 @@
 <html lang="en">
 
 <head>
-    @await Html.PartialAsync("/Views/LayoutPartial/_HeaderPartial.cshtml")
+    @await Html.PartialAsync("/Views/_LayoutPartial/_HeaderPartial.cshtml")
 </head>
 
 <body>
     <!-- header -->
-    @await Html.PartialAsync("/Views/LayoutPartial/_NavbarPartial.cshtml")
+    @await Html.PartialAsync("/Views/_LayoutPartial/_NavbarPartial.cshtml")
     <!-- //header -->
 
     @RenderBody()
 
     <!-- footer block -->
-    @await Html.PartialAsync("/Views/LayoutPartial/_FooterPartial.cshtml")
+    @await Html.PartialAsync("/Views/_LayoutPartial/_FooterPartial.cshtml")
     <!-- //footer block -->
 
 
     <!-- Js scripts -->
-    @await Html.PartialAsync("/Views/LayoutPartial/_ScriptsPartial.cshtml")
+    @await Html.PartialAsync("/Views/_LayoutPartial/_ScriptsPartial.cshtml")
     <!-- //Js scripts -->
 
     @await RenderSectionAsync("Scripts", false)
