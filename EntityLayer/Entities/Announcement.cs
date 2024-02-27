@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Entities
 {
-    public class Announcement
+    public class Announcement : BaseEntity<Guid>
     {
-        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public bool IsDeleted { get; set; } = false;
         public Guid UserId { get; set; } // Duyuruyu kim yaptigi bilgisi
         public virtual AppUser User { get; set; }
     }

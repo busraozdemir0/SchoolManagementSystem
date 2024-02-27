@@ -25,12 +25,12 @@ namespace DataAccessLayer.EntityFramework
         {
             pageSize = pageSize > 20 ? 20 : pageSize; // Sayfa sayisi 20'den buyuk mu?
 
-            var reports = await _unitOfWork.GetRepository<Report>().GetAllAsync(x => !x.IsDeleted); // Silinmemis olan haberleri (IsDeleted=false olanlari) getir
+            var reports = await _unitOfWork.GetRepository<Report>().GetAllAsync(x => !x.IsDeleted); 
+            // Silinmemis olan haberleri (IsDeleted=false olanlari) getir
 
             var sortedReports = isAscending
                 ? reports.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
                 : reports.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-
 
             return new ReportListDto
             {
@@ -40,7 +40,6 @@ namespace DataAccessLayer.EntityFramework
                 TotalCount = reports.Count,
                 IsAscending = isAscending
             };
-
         }
 
         public async Task<ReportListDto> SearchAsync(string keyword, int currentPage = 1, int pageSize = 6, bool isAscending = false)
