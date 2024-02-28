@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using DataAccessLayer.Abstract;
+﻿using DataAccessLayer.Abstract;
 using DataAccessLayer.Context;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
+using EntityLayer.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +24,13 @@ namespace DataAccessLayer.EntityFramework
         {
             pageSize = pageSize > 20 ? 20 : pageSize; // Sayfa sayisi 20'den buyuk mu?
 
-            var reports = await _unitOfWork.GetRepository<Report>().GetAllAsync(x => !x.IsDeleted); 
+            var reports = await _unitOfWork.GetRepository<Report>().GetAllAsync(x => !x.IsDeleted,i=>i.Image); 
             // Silinmemis olan haberleri (IsDeleted=false olanlari) getir
 
             var sortedReports = isAscending
                 ? reports.OrderBy(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList()
                 : reports.OrderByDescending(x => x.CreatedDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
 
             return new ReportListDto
             {
@@ -60,5 +61,6 @@ namespace DataAccessLayer.EntityFramework
                 IsAscending = isAscending
             };
         }
+
     }
 }

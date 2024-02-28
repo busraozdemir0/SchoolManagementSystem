@@ -12,6 +12,5 @@ namespace EntityLayer.DTOs.Reports
         public string Title { get; set; }
         public string Content { get; set; }
         public IFormFile Image { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

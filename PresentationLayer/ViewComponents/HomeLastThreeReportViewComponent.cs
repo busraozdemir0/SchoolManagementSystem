@@ -19,7 +19,7 @@ namespace PresentationLayer.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var report = await _unitOfWork.GetRepository<Report>().GetAllAsync();
+            var report = await _unitOfWork.GetRepository<Report>().GetAllAsync(x=>!x.IsDeleted,i=>i.Image);
 
             var reportLastThree = report.OrderByDescending(x => x.CreatedDate).Take(3); // Haberleri tarihe gore azalan bicimde siralar ve ilk 3 haberi alir.
 

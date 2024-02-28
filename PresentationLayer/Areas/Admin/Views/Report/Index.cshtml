@@ -1,0 +1,82 @@
+﻿@model List<ReportDto>
+
+@{
+    ViewData["Title"] = "Haberler";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Haberler</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Haberler</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="table-responsive text-nowrap m-5">
+
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Report" asp-action="Add">
+                            Haber Ekle <i class="fa fa-plus"></i>
+                        </a>
+
+                        <table class="table table-bordered" id="reportsTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>İçerik</th>
+                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>İçerik</th>
+                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var report in Model)
+                                {
+                                    <tr name="@report.Id">
+                                        <td>@report.Title</td>
+                                        <td>@report.Content</td>
+                                        <td>@report.CreatedDate.ToShortDateString()</td>
+                                        <td class=" @(report.IsDeleted ? "text-danger" : "text-success")">@(report.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">
+                                            @*  asp-route-articleId => articleId Controller tarafindaki get metodunda yer alan degisken adi ile ayni olmalidir *@
+                                            <a class="btn btn-primary btn-sm" data-id="@report.Id" asp-area="Admin" asp-controller="Report" asp-action="Update" asp-route-articleId="@report.Id"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@report.Id" asp-area="Admin" asp-controller="Report" asp-action="Delete" asp-route-articleId="@report.Id"><i class="fa fa-minus"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/reportIndex.js" type="application/ecmascript"></script>
+}

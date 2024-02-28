@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityLayer.DTOs.Reports;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace BusinessLayer.Services.Abstract
         Task<List<T>> GetListAsync();
         //Task<T> TGetByIdAsync(int id);
         Task<T> TGetByGuidAsync(Guid id);
+       
     }
 }

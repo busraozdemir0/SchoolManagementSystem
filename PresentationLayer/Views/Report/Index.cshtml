@@ -30,7 +30,14 @@
                 <div class="col-lg-4 col-md-6 mt-4">
                     <div class="coursecard-single">
                         <div class="grids5-info position-relative">
-                            <img src="~/EduSchool/assets/images/c1.jpg" alt="" class="img-fluid" />
+                            @if (item.ImageId is not null)
+                            {
+                                <img src="~/images/@item.Image.FileName" style="width:374px; height:248.94px;" alt="" class="img-fluid" />
+                            }
+                            else
+                            {
+                                <img src="~/EduSchool/assets/images/c1.jpg" alt="" class="img-fluid" />
+                            }
                             @* <div class="meta-list">
                         <a href="courses.html">Art & Design</a>
                         </div> *@
@@ -42,8 +49,8 @@
                                     @* <li> <i class="fas fa-star"></i> 4.5</li> *@
                                 </ul>
                             </div>
-                            <h4><a href="courses.html">@item.Title</a></h4>
-                            <p>@item.Content</p>
+                            <h4><a href="#">@item.Title</a></h4>
+                            <p>@item.Content.Substring(0,10)...</p>
                             <div class="top-content-border d-flex align-items-center justify-content-between mt-4 pt-4">
                                 <h6></h6>
                                 <a class="btn btn-style-primary" data-id="@item.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@item.Id">

@@ -15,16 +15,16 @@ builder.Services.LoadBusinessLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-     .AddNToastNotifyNoty(new NotyOptions()  // Toastr bildirimleri icin configurasyon
-     {
-         Layout = "bottomRight",  // Bildirimin sag alt kosede cikmasi icin
-         Timeout = 3000   // Bildirim kac ms gosterilsin (3 sn olarak belirttik)
-     })
-     //.AddNToastNotifyToastr(new ToastrOptions()
+     //.AddNToastNotifyNoty(new NotyOptions()  // Toastr bildirimleri icin configurasyon
      //{
-     //    PositionClass = ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
-     //    TimeOut = 3000   // bildirim kac ms gosterilsin (3 sn olarak belirttik)
+     //    Layout = "bottomRight",  // Bildirimin sag alt kosede cikmasi icin
+     //    Timeout = 3000   // Bildirim kac ms gosterilsin (3 sn olarak belirttik)
      //})
+     .AddNToastNotifyToastr(new ToastrOptions() // Toastr bildirimleri icin configurasyon
+     {
+         PositionClass = ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
+         TimeOut = 3000   // bildirim kac ms gosterilsin (3 sn olarak belirttik)
+     })
      .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
 
 // * Identity yapilandirmasi

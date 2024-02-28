@@ -28,8 +28,15 @@
            
                 <div class="col-lg-12 col-md-8 mt-8">
                     <div class="coursecard-single">
-                        <div class="grids5-info position-relative">
-                            <img src="~/EduSchool/assets/images/c1.jpg" alt="" class="img-fluid" />
+                    <div class="grids5-info position-relative d-flex justify-content-center">
+                        @if (Model.ImageId is not null)
+                        {
+                            <img src="~/images/@Model.Image.FileName" style="width:750px; height:450px;" alt="" class="img-fluid" />
+                        }
+                        else
+                        {
+                            <img src="~/EduSchool/assets/images/c1.jpg" style="width:750px; height:450px;" alt="" class="img-fluid" />
+                        }
                             @* <div class="meta-list">
                         <a href="courses.html">Art & Design</a>
                         </div> *@

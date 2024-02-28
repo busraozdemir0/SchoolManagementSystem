@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.FluentValidations
 {
-    public class ReportValidator:AbstractValidator<Report>
+    public class ReportAddDtoValidator:AbstractValidator<ReportAddDto>
     {
-        public ReportValidator()
+        public ReportAddDtoValidator()
         {
             RuleFor(x => x.Title)
                 .NotNull()

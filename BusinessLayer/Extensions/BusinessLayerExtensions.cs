@@ -45,22 +45,7 @@ namespace BusinessLayer.Extensions
 
             services.AddAutoMapper(assembly);
 
-            //services.AddScoped<IValidator<Contact>, ContactValidator>();
-
-            //services.AddFluentValidationAutoValidation();
-            //services.AddFluentValidationClientsideAdapters();
-            //services.AddValidatorsFromAssembly(assembly);
-
-            // services.AddValidatorsFromAssemblyContaining<ContactValidator>();
-
             // Fluent validation hata mesajlarinin turkcelestirilmesi
-            //services.AddControllersWithViews().AddFluentValidation(option =>
-            //{
-            //    option.RegisterValidatorsFromAssemblyContaining<ContactValidator>();
-            //    option.DisableDataAnnotationsValidation = true;
-            //    option.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
-            //});
-
             services.AddControllersWithViews().AddFluentValidation(opt =>
             {
                 opt.RegisterValidatorsFromAssemblyContaining<ContactValidator>();

@@ -12,7 +12,16 @@
                 <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
                     <div class="blog-card-single">
                         <div class="grids5-info">
-                            <a href="#blog"><img src="~/EduSchool/assets/images/blog2.jpg" alt="" /></a>
+                            <a href="#blog">
+                                @if (report.ImageId is not null)
+                                {
+                                    <img src="~/images/@report.Image.FileName" style="width:372px; height:248px;" alt="" />
+                                }
+                                else
+                                {
+                                    <img src="~/EduSchool/assets/images/blog2.jpg" alt="" />
+                                }
+                                </a>
                             <div class="blog-info">
                                 <h4><a data-id="@report.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@report.Title</a></h4>
                                 <p>
@@ -20,8 +29,8 @@
                                 </p>
                                 <div class="d-flex align-items-center justify-content-between mt-4">
                                     <a class="d-flex align-items-center" href="#blog" title="23k followers">
-                                        <img class="img-fluid" src="~/EduSchool/assets/images/testi2.jpg" alt="admin"
-                                             style="max-width:40px"> <span class="small ms-2">Eetey Cruis</span>
+                                        @* <img class="img-fluid" src="~/EduSchool/assets/images/testi2.jpg" alt="admin"
+                                             style="max-width:40px"> <span class="small ms-2">Eetey Cruis</span> *@
                                     </a>
                                     <p class="date-text"><i class="far fa-calendar-alt me-1"></i>@(((DateTime)report.CreatedDate).ToString("dd-MM-yyyy"))</p>
                                 </div>

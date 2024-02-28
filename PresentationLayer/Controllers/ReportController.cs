@@ -21,7 +21,6 @@ namespace PresentationLayer.Controllers
         public async Task<IActionResult> Index(int currentPage=1, int pageSize=6, bool isAscending=false)
         {
             var reports = await _reportService.TGetAllByPagingAsync(currentPage,pageSize,isAscending);
-          //  var map = _mapper.Map<ReportListDto>(reports);
             return View(reports);
 
         }
