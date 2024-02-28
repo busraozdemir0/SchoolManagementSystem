@@ -14,24 +14,24 @@ namespace BusinessLayer.FluentValidations
         public ContactValidator()
         {
             RuleFor(x => x.NameSurname)
-                .NotEmpty()
+                .NotNull()
                 .MinimumLength(3)
                 .MaximumLength(150)
                 .WithName("İsim Soyisim");
 
             RuleFor(x => x.EMail)
-                .NotEmpty()
+                .NotNull()
                 .EmailAddress()
                 .WithName("E-Mail");
             
             RuleFor(x => x.Subject)
-                .NotEmpty()
+                .NotNull()
                 .MinimumLength(3)
                 .MaximumLength(150)
                 .WithName("Konu");
 
             RuleFor(x => x.Message)
-                .NotEmpty()
+                .NotNull()
                 .MinimumLength(3)
                 .WithName("Mesaj");
 

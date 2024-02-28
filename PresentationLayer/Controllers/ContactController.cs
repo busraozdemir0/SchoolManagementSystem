@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
-using BusinessLayer.FluentValidations;
 using BusinessLayer.Services.Abstract;
 using EntityLayer.DTOs.Contacts;
 using EntityLayer.Entities;
@@ -41,10 +40,11 @@ namespace PresentationLayer.Controllers
                 return RedirectToAction("Index", "Home");
             }
             else
-            {             
-                _toast.AddErrorToastMessage("Mesaj gönderilirken bir hata oluştu.", new ToastrOptions { Title = "Başarısız!" });
+            {
+                result.AddToModelState(this.ModelState);
+                _toast.AddErrorToastMessage("Mesaj gönderilirken bir hata oluştu.", new ToastrOptions { Title = "Başarısız!" });   
             }
-            result.AddToModelState(this.ModelState);
+            
             return RedirectToAction("Index", "Contact");
         }
         

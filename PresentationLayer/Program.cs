@@ -1,13 +1,11 @@
 using BusinessLayer.Describers;
 using BusinessLayer.Extensions;
-using BusinessLayer.FluentValidations;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using EntityLayer.Entities;
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +20,11 @@ builder.Services.AddControllersWithViews()
          Layout = "bottomRight",  // Bildirimin sag alt kosede cikmasi icin
          Timeout = 3000   // Bildirim kac ms gosterilsin (3 sn olarak belirttik)
      })
+     //.AddNToastNotifyToastr(new ToastrOptions()
+     //{
+     //    PositionClass = ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
+     //    TimeOut = 3000   // bildirim kac ms gosterilsin (3 sn olarak belirttik)
+     //})
      .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
 
 // * Identity yapilandirmasi
@@ -64,17 +67,13 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-});
+    endpoints.MapAreaControllerRoute(
+        name: "Admin",
+        areaName: "Admin",
+        pattern: "Admin/{controller=Home}/{action=Dashboard}/{id?}"  // id? => null olabilir anlamina gelir
+        );
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+    endpoints.MapDefaultControllerRoute();
 });
 
 app.Run();
