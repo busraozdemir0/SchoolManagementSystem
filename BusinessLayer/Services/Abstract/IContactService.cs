@@ -9,5 +9,7 @@ namespace BusinessLayer.Services.Abstract
 {
     public interface IContactService:IGenericService<Contact>
     {
+        Task<string> TSafeDeleteContactAsync(Guid contactId);
+        Task<string> TUndoDeleteContactAsync(Guid contactId);
     }
 }

@@ -10,5 +10,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IContactDal:IRepository<Contact>
     {
+        Task<string> SafeDeleteContactAsync(Guid contactId);
+        Task<string> UndoDeleteContactAsync(Guid contactId);
     }
 }

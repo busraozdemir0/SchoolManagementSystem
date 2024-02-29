@@ -11,7 +11,7 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a class="dropdown-item" href="profile.html">Profil</a></li>
                         <li><a class="dropdown-item" href="contacts.html">İletişim</a></li>
-                        <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
+                        <li><a class="dropdown-item" href="mailbox.html">Mail Kutusu</a></li>
                         <li class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="login.html">Çıkış Yap</a></li>
                     </ul>
@@ -22,19 +22,21 @@
             </li>
 
             <li>
-                <a asp-controller="Home" asp-action="Dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
             </li>
             <li>
-                <a href="layouts.html"><i class="fa fa-gear"></i> <span class="nav-label">Ayarlar</span></a>
+                <a href="layouts.html"><i class="fa fa-gear"></i> <span class="nav-label">Profil Ayarları</span></a>
             </li>
             <li>
-                <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mesajlar </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>
+                <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Mesajlar </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="mailbox.html">Inbox</a></li>
-                    <li><a href="mail_detail.html">Email view</a></li>
-                    <li><a href="mail_compose.html">Compose email</a></li>
-                    <li><a href="email_template.html">Email templates</a></li>
+                    <li><a href="#">Gelen Mesajlar</a></li>
+                    <li><a href="#">Giden Mesajlar</a></li>
+                    <li><a href="#">Çöp Kutusu</a></li>
                 </ul>
+            </li>
+            <li>
+                <a asp-area="Admin" asp-controller="Contact" asp-action="Index"><i class="fa fa-phone"></i> <span class="nav-label">İletişim Sayfası</span></a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-group"></i> <span class="nav-label">Kullanıcılar</span><span class="fa arrow"></span></a>
@@ -46,18 +48,15 @@
             <li>
                 <a href="widgets.html"><i class="fa fa-lock"></i> <span class="nav-label">&nbsp;Roller</span></a>
             </li>
-           
+            <li>
+                <a asp-area="Admin" asp-controller="Report" asp-action="Index"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Haberler</span>  </a>
+            </li>
             <li>
                 <a href="metrics.html"><i class="fa fa-bell"></i> <span class="nav-label">Duyurular</span>  </a>
             </li>
+            
             <li>
-                <a asp-area="Admin" asp-controller="Report" asp-action="Index"><i class="fa fa-list-alt"></i> <span class="nav-label">Haberler</span>  </a>
-            </li>
-            <li>
-                <a href="widgets.html"><i class="fa fa-diamond"></i> <span class="nav-label">Hakkımızda</span></a>
-            </li>
-            <li>
-                <a href="widgets.html"><i class="fa fa-file-text"></i> <span class="nav-label">Dersler</span></a>
+                <a href="widgets.html"><i class="fa fa-book"></i> <span class="nav-label">Dersler</span></a>
             </li>
             <li>
                 <a href="widgets.html"><i class="fa fa-flask"></i> <span class="nav-label">Sınıflar</span></a>
@@ -66,10 +65,22 @@
                 <a href="widgets.html"><i class="fa fa-user-plus"></i> <span class="nav-label">Aboneler</span></a>
             </li>
             <li>
-                <a href="widgets.html"><i class="fa fa-phone"></i> <span class="nav-label">İletişim</span></a>
+                <a href="widgets.html"><i class="fa fa-map"></i> <span class="nav-label">Hakkımızda</span></a>
+            </li>
+            
+            <li>
+                <a href="widgets.html"><i class="fa fa-map-marker"></i> <span class="nav-label">Adres Bilgisi</span></a>
             </li>
             <li>
-                <a href="widgets.html"><i class="fa fa-address-book"></i> <span class="nav-label">Adres Bilgisi</span></a>
+                <a href="#"><i class="fa fa-trash"></i> <span class="nav-label">Silinmiş Öğeler </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="#">Haberler</a></li>
+                    <li><a href="#">Duyurular</a></li>
+                    <li><a href="#">Aboneler</a></li>
+                    <li><a href="#">Dersler</a></li>
+                    <li><a href="#">Sınıflar</a></li>
+                    <li><a href="#">İletişim Mesajları</a></li>
+                </ul>
             </li>
             <li>
                 <a href="#"><i class="fa fa-sign-out"></i> <span class="nav-label">Ana Sayfaya Git</span></a>

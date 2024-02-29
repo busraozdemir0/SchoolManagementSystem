@@ -23,7 +23,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<Contact>> GetListAsync()
         {
-            return await _contactDal.GetAllAsync();
+            return await _contactDal.GetAllAsync(x=>!x.IsDeleted);
         }
 
         public async Task TAddAsync(Contact t)
@@ -41,6 +41,16 @@ namespace BusinessLayer.Services.Concrete
         public async Task<Contact> TGetByGuidAsync(Guid id)
         {
             return await _contactDal.GetByGuidAsync(id);
+        }
+
+        public async Task<string> TSafeDeleteContactAsync(Guid contactId)
+        {
+            return await _contactDal.SafeDeleteContactAsync(contactId);
+        }
+
+        public async Task<string> TUndoDeleteContactAsync(Guid contactId)
+        {
+            return await _contactDal.UndoDeleteContactAsync(contactId);
         }
 
         public async Task TUpdateAsync(Contact t)

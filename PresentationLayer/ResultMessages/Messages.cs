@@ -21,5 +21,21 @@
                 return $"{reportTitle} başlıklı haber başarıyla geri alındı.";
             }
         }
+
+        public static class Contact
+        {
+            public static string Add(string contactTitle)
+            {
+                return $"{contactTitle} konulu mesaj başarıyla gönderildi.";
+            }
+            public static string Delete(string contactTitle)
+            {
+                return $"{contactTitle} konulu mesaj başarıyla silindi.";
+            }
+            public static string UndoDelete(string contactTitle)
+            {
+                return $"{contactTitle} konulu mesaj başarıyla geri alındı.";
+            }
+        }
     }
 }

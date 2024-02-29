@@ -1,0 +1,80 @@
+﻿@model List<ContactDto>
+
+@{
+    ViewData["Title"] = "İletişim Sayfası";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>İletişim Sayfası</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Mesajlar</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="table-responsive text-nowrap m-5">
+
+                        <table class="table table-bordered" id="contactsTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Adı Soyadı</th>
+                                    <th>E-Mail</th>
+                                    <th>Konu</th>
+                                    <th>Gönderilme Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Adı Soyadı</th>
+                                    <th>E-Mail</th>
+                                    <th>Konu</th>
+                                    <th>Gönderilme Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var contact in Model)
+                                {
+                                    <tr name="@contact.Id">
+                                        <td>@contact.NameSurname</td>
+                                        <td>@contact.EMail</td>
+                                        <td>@contact.Subject</td>
+                                        <td>@contact.CreatedDate.ToShortDateString()</td>
+                                        <td>@(contact.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm" data-id="@contact.Id" asp-area="Admin" asp-controller="Contact" asp-action="Detail" asp-route-contactId="@contact.Id"><i class="fa fa-folder-open"></i> Detay</a>
+                                            <a class="btn btn-danger btn-sm" data-id="@contact.Id" asp-area="Admin" asp-controller="Contact" asp-action="Delete" asp-route-contactId="@contact.Id"><i class="fa fa-minus-circle"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/contactIndex.js" type="application/ecmascript"></script>
+}

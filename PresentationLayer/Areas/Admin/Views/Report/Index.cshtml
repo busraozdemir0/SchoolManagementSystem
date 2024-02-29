@@ -57,11 +57,11 @@
                                         <td>@report.Title</td>
                                         <td>@report.Content</td>
                                         <td>@report.CreatedDate.ToShortDateString()</td>
-                                        <td class=" @(report.IsDeleted ? "text-danger" : "text-success")">@(report.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td>@(report.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             @*  asp-route-articleId => articleId Controller tarafindaki get metodunda yer alan degisken adi ile ayni olmalidir *@
                                             <a class="btn btn-primary btn-sm" data-id="@report.Id" asp-area="Admin" asp-controller="Report" asp-action="Update" asp-route-reportId="@report.Id"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@report.Id" asp-area="Admin" asp-controller="Report" asp-action="Delete" asp-route-reportId="@report.Id"><i class="fa fa-minus"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@report.Id" asp-area="Admin" asp-controller="Report" asp-action="Delete" asp-route-reportId="@report.Id"><i class="fa fa-minus-circle"></i></a>
 
                                         </td>
 
