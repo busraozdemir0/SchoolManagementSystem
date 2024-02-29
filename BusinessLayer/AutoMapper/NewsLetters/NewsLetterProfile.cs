@@ -14,6 +14,7 @@ namespace BusinessLayer.AutoMapper.NewsLetters
         public NewsLetterProfile()
         {
             CreateMap<NewsLetter, NewsLetterDto>().ReverseMap();
+            CreateMap<NewsLetter, NewsLetterListDto>().ReverseMap();
         }
     }
 }

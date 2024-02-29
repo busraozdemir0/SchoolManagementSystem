@@ -1,0 +1,65 @@
+﻿@model List<NewsLetterListDto>
+
+@{
+    ViewData["Title"] = "Aboneler";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Aboneler</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Aboneler</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="table-responsive text-nowrap m-5">
+
+
+                        <table class="table table-bordered" id="newsLettersTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>E-Mail</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>E-Mail</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var newsLetter in Model)
+                                {
+                                    <tr name="@newsLetter.Id">
+                                        <td>@newsLetter.EMail</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm" href="mailto:@newsLetter.EMail"><i class="fa fa-envelope"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="Delete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-minus-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/newsLetterIndex.js" type="application/ecmascript"></script>
+}
