@@ -32,9 +32,9 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<Report>> GetListAsync()
         {
-            return await _reportDal.GetAllAsync();
+            return await _reportDal.GetAllAsync(x=>!x.IsDeleted); // Silinmemis olan haberler
         }
-        public async Task TAddReportAndImageAsync(ReportAddDto reportAddDto)
+        public async Task<string> TAddReportAndImageAsync(ReportAddDto reportAddDto)
         {
             if (reportAddDto.Image != null) // Eger resim secmisse
             {
@@ -48,6 +48,8 @@ namespace BusinessLayer.Services.Concrete
 
                 await _unitOfWork.GetRepository<Report>().AddAsync(report);
                 await _unitOfWork.SaveAsync();
+
+                return report.Title;
             }
             else // Resim secmemisse
             {
@@ -58,7 +60,11 @@ namespace BusinessLayer.Services.Concrete
                 };
                 await _reportDal.AddAsync(report); // ve bu report nesnesini kaydet
                 await _unitOfWork.SaveAsync();
+
+                return report.Title;
             }
+
+            
         }
         public async Task TAddAsync(Report t)
         {
@@ -89,17 +95,21 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task TUpdateAsync(Report t)
         {
-            var reportUpdateDto = _mapper.Map<ReportUpdateDto>(t); // Once gelen Report nesnesini Dto'ya esliyoruz
+            await _reportDal.UpdateAsync(t);
+            await _unitOfWork.SaveAsync();
+        }
 
+        public async Task<string> TUpdateReportAndImageAsync(ReportUpdateDto reportUpdateDto)
+        {
             var report = await _unitOfWork.GetRepository<Report>().GetAsync(x => x.Id == reportUpdateDto.Id, i => i.Image);
 
-            if (reportUpdateDto.Image != null) // Eger bir resim secilmisse
+            if (reportUpdateDto.Photo != null) // Eger bir resim secilmisse
             {
                 _imageHelper.Delete(report.Image.FileName); // Once haber'de var olan resmi silecek
 
                 // Ardindan yeni bir image yukleme islemi
-                var imageUpload = await _imageHelper.Upload(reportUpdateDto.Title, reportUpdateDto.Image, ImageType.Post);
-                Image image = new(imageUpload.FullName, reportUpdateDto.Image.ContentType);
+                var imageUpload = await _imageHelper.Upload(reportUpdateDto.Title, reportUpdateDto.Photo, ImageType.Post);
+                Image image = new(imageUpload.FullName, reportUpdateDto.Photo.ContentType);
                 await _unitOfWork.GetRepository<Image>().AddAsync(image);
 
                 report.ImageId = image.Id;
@@ -111,6 +121,18 @@ namespace BusinessLayer.Services.Concrete
 
             await _unitOfWork.GetRepository<Report>().UpdateAsync(report);
             await _unitOfWork.SaveAsync();
+
+            return report.Title;
+        }
+
+        public async Task<string> TSafeDeleteReportAsync(Guid reportId)
+        {
+           return await _reportDal.SafeDeleteReportAsync(reportId);
+        }
+
+        public async Task<string> TUndoDeleteReportAsync(Guid reportId)
+        {
+            return await _reportDal.UndoDeleteReportAsync(reportId);
         }
     }
 }

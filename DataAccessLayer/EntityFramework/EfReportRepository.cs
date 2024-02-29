@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace DataAccessLayer.EntityFramework
 {
@@ -62,5 +63,30 @@ namespace DataAccessLayer.EntityFramework
             };
         }
 
+        public async Task<string> SafeDeleteReportAsync(Guid reportId)
+        {
+            var report= await _unitOfWork.GetRepository<Report>().GetByGuidAsync(reportId);
+
+            report.IsDeleted = true;
+            report.DeletedDate = DateTime.Now;
+
+            await _unitOfWork.GetRepository<Report>().UpdateAsync(report);
+            await _unitOfWork.SaveAsync();
+
+            return report.Title;
+        }
+
+        public async Task<string> UndoDeleteReportAsync(Guid reportId)
+        {
+            var report = await _unitOfWork.GetRepository<Report>().GetByGuidAsync(reportId);
+
+            report.IsDeleted = false;
+            report.DeletedDate = null;
+
+            await _unitOfWork.GetRepository<Report>().UpdateAsync(report);
+            await _unitOfWork.SaveAsync();
+
+            return report.Title;
+        }
     }
 }

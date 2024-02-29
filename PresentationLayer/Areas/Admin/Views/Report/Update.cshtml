@@ -1,0 +1,92 @@
+﻿@model ReportUpdateDto
+
+@{
+    ViewData["Title"] = "Haber Güncelleme";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Haberler</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Report" asp-action="Index">Haberler</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>@Model.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <form asp-controller="Report" asp-action="Update" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <div class="card-body">
+
+                                <input type="hidden" asp-for="Id" />
+
+                                <div class="form-group">
+                                    <label asp-for="Title" class="form-label">Başlık</label>
+                                    <input asp-for="Title" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen başlık giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Content" class="form-label">İçerik</label>
+                                    <textarea asp-for="Content" type="text"
+                                              class="form-control mb-3"
+                                              id="defaultFormControlInput"
+                                              placeholder="Haber içeriği..."
+                                              aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group col-md-4">
+                                        @if (Model.ImageId is not null)
+                                        { 
+                                            <label asp-for="Image.FileName" class="form-label d-block">Mevcut Resim</label>
+                                            <img style="height:20em; width:30em;" class="mb-3" src="~/images/@Model.Image.FileName" alt="@Model.Title" />
+                                        }
+                                        else
+                                        {
+                                            <img style="height:20em; width:30em;" class="mb-3" src="~/icons/empty_image.jpg" alt="Empty" />
+                                        }
+                                    </div>
+
+                                    <div class="form-group col-md-8">
+                                        <label asp-for="Photo" class="form-label">Resim seçiniz</label>
+                                        <input asp-for="Photo" type="file" accept="image/*"
+                                               class="form-control mb-3"
+                                               id="defaultFormControlInput"
+                                               aria-describedby="defaultFormControlHelp" />
+                                         @* accept="image/*" => sadece image tipindeki dosyalari kabul etmesi icin *@
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

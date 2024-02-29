@@ -13,5 +13,7 @@ namespace DataAccessLayer.Abstract
     {
         Task<ReportListDto> GetAllByPagingAsync(int currentPage=1, int pageSize=6, bool isAscending=false);
         Task<ReportListDto> SearchAsync(string keyword, int currentPage=1, int pageSize=6, bool isAscending=false);
+        Task<string> SafeDeleteReportAsync(Guid reportId); // IsDeleted=True yaparak silme
+        Task<string> UndoDeleteReportAsync(Guid reportId); // Silinen haberi geri alma
     }
 }

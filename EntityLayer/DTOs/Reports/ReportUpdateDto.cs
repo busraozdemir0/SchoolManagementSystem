@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EntityLayer.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace EntityLayer.DTOs.Reports
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public IFormFile Image { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public Guid? ImageId { get; set; }
+        public Image Image { get; set; }
+        public IFormFile? Photo { get; set; }
     }
 }

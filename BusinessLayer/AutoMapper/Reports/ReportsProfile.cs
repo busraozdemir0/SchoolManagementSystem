@@ -17,6 +17,7 @@ namespace BusinessLayer.AutoMapper.Reports
             CreateMap<Report, ReportListDto>().ReverseMap();
             CreateMap<Report, ReportAddDto>().ReverseMap();
             CreateMap<Report, ReportUpdateDto>().ReverseMap();
+            CreateMap<ReportUpdateDto, ReportAddDto>().ReverseMap();
         }
     }
 }

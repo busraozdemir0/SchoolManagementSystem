@@ -5,7 +5,9 @@ using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NToastNotify;
+using PresentationLayer.ResultMessages;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
@@ -44,7 +46,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 await _reportService.TAddReportAndImageAsync(reportAddDto);
-                _toast.AddSuccessToastMessage("Haber başarıyla eklendi", new ToastrOptions { Title = "Başarılı!" });
+                _toast.AddSuccessToastMessage(Messages.Report.Add(reportAddDto.Title), new ToastrOptions { Title = "Başarılı!" });
 
                 return RedirectToAction("Index", "Report", new {Area="Admin"});
             }
@@ -55,6 +57,48 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             }
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid reportId)
+        {
+            var report = await _reportService.TGetByGuidAsync(reportId);
+            var mapReport=_mapper.Map<ReportUpdateDto>(report);
+            return View(mapReport);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(ReportUpdateDto reportUpdateDto)
+        {
+            var mapReportAddDto=_mapper.Map<ReportAddDto>(reportUpdateDto);
+            var result = await _validator.ValidateAsync(mapReportAddDto);
+
+            if (result.IsValid)
+            {
+                await _reportService.TUpdateReportAndImageAsync(reportUpdateDto);
+                _toast.AddSuccessToastMessage(Messages.Report.Update(reportUpdateDto.Title), new ToastrOptions { Title = "Başarılı!" });
+
+                return RedirectToAction("Index", "Report", new { Area = "Admin" });
+            }
+            else
+            {
+                result.AddToModelState(this.ModelState);
+                _toast.AddErrorToastMessage("Haber güncellenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> Delete(Guid reportId)
+        {
+            var reportTitle = await _reportService.TSafeDeleteReportAsync(reportId);
+
+            _toast.AddSuccessToastMessage(Messages.Report.Delete(reportTitle), new ToastrOptions { Title = "Başarılı!"});
+            return RedirectToAction("Index", "Report", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> UndoDelete(Guid reportId)
+        {
+            var reportTitle = await _reportService.TUndoDeleteReportAsync(reportId);
+
+            _toast.AddSuccessToastMessage(Messages.Report.UndoDelete(reportTitle), new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("Index", "Report", new { Area = "Admin" });
         }
     }
 }

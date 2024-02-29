@@ -13,6 +13,9 @@ namespace BusinessLayer.Services.Abstract
     {
         Task<ReportListDto> TGetAllByPagingAsync(int currentPage = 1, int pageSize = 6, bool isAscending = false);
         Task<ReportListDto> TSearchAsync(string keyword, int currentPage = 1, int pageSize = 6, bool isAscending = false);
-        Task TAddReportAndImageAsync(ReportAddDto reportAddDto);
+        Task<string> TAddReportAndImageAsync(ReportAddDto reportAddDto);
+        Task<string> TUpdateReportAndImageAsync(ReportUpdateDto reportUpdateDto);
+        Task<string> TSafeDeleteReportAsync(Guid reportId);
+        Task<string> TUndoDeleteReportAsync(Guid reportId);
     }
 }
