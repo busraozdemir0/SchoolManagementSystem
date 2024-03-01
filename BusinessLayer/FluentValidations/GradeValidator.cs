@@ -14,6 +14,7 @@ namespace BusinessLayer.FluentValidations
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
+                .MinimumLength(1)
                 .MaximumLength(30)
                 .WithName("Sınıf Adı");
         }

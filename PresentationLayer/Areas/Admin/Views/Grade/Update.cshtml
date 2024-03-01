@@ -1,0 +1,55 @@
+﻿@model GradeUpdateDto
+
+@{
+    ViewData["Title"] = "Sınıf Güncelleme";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Sınıflar</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Grade" asp-action="Index">Sınıflar</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Sınıf Güncelleme @Model.Name</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <form asp-controller="Grade" asp-action="Update" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <div class="card-body">
+                                <input type="hidden" asp-for="Id"/>
+
+                                <div class="form-group">
+                                    <label asp-for="Name" class="form-label">Sınıf Adı</label>
+                                    <input asp-for="Name" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen sınıf adını giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
