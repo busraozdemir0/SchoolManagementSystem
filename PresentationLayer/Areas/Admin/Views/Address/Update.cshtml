@@ -1,0 +1,101 @@
+﻿@model AddressDto
+
+@{
+    ViewData["Title"] = "Adres Bilgisi";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Adres Bilgisi</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Adres Bilgisi Güncelle</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+
+                <div class="col-md-12">
+                    <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Home" asp-action="Dashboard">
+                        <i class="fa fa-arrow-left"></i> Geri Dön
+                    </a>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form asp-area="Admin" asp-controller="Address" asp-action="Update" method="post" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <div class="form-group">
+                                    <label asp-for="AddressInfo" class="form-label">Adres Bilgisi</label>
+                                    <textarea asp-for="AddressInfo" type="text"
+                                              class="form-control mb-3"
+                                              id="defaultFormControlInput"
+                                              placeholder="Adres Bilgisi..."
+                                              aria-describedby="defaultFormControlHelp" style="min-height:200px"></textarea>
+                                    <span asp-validation-for="AddressInfo" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="EMail" class="form-label">E-Mail</label>
+                                    <input asp-for="EMail" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="E-Mail..."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="EMail" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="SupportEMail" class="form-label">Destek E-Mail</label>
+                                    <input asp-for="SupportEMail" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Destek E-Mail..."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="SupportEMail" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PhoneNumber" class="form-label">Telefon Numarası</label>
+                                    <input asp-for="PhoneNumber" type="tel" pattern="[(][0-9]{3}[)] [0-9]{3} [0-9]{4}"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="(123) 456 7890"
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <small>Format: (123) 456 7890</small>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="MapLocation" class="form-label">Harita Adresi - İframe</label>
+                                    <textarea asp-for="MapLocation" type="text"
+                                              class="form-control mb-3"
+                                              id="defaultFormControlInput"
+                                              placeholder="Harita..."
+                                              aria-describedby="defaultFormControlHelp" style="min-height:150px"></textarea>
+                                    <span asp-validation-for="MapLocation" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Güncelle</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

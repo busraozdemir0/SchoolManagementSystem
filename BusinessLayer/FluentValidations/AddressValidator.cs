@@ -31,7 +31,7 @@ namespace BusinessLayer.FluentValidations
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
                 .MinimumLength(10)
-                .MaximumLength(11)
+                .MaximumLength(14)
                 .WithName("Telefon Numarası");
 
         }

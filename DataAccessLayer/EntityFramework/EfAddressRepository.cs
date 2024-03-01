@@ -14,6 +14,7 @@ namespace DataAccessLayer.EntityFramework
     {
         public EfAddressRepository(AppDbContext context) : base(context)
         {
+         
         }
     }
 }
