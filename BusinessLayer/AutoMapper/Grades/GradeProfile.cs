@@ -16,6 +16,7 @@ namespace BusinessLayer.AutoMapper.Grades
             CreateMap<Grade, GradeListDto>().ReverseMap();
             CreateMap<Grade, GradeAddDto>().ReverseMap();
             CreateMap<Grade, GradeUpdateDto>().ReverseMap();
+            CreateMap<Grade, GradeDto>().ReverseMap();
         }
     }
 }

@@ -25,6 +25,10 @@ namespace BusinessLayer.FluentValidations
             RuleFor(x => x.LessonCredit)
                 .NotEmpty()
                 .WithName("Ders Saati");
+
+            RuleFor(x => x.GradeId)
+                .NotEmpty()
+                .WithMessage("Lütfen sınıf bilgisini seçiniz.");
         }
     }
 }

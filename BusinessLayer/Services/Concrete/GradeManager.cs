@@ -23,7 +23,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<Grade>> GetListAsync()
         {
-            return await _gradeDal.GetAllAsync(x=>!x.IsDeleted);
+            return await _gradeDal.GetAllAsync(x=>!x.IsDeleted); // Silinmemis olan siniflari listele
         }
 
         public async Task TAddAsync(Grade t)
