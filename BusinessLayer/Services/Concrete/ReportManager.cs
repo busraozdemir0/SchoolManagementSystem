@@ -134,5 +134,10 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _reportDal.UndoDeleteReportAsync(reportId);
         }
+
+        public async Task<List<Report>> GetDeletedListAsync()
+        {
+            return await _reportDal.GetAllAsync(x => x.IsDeleted); // Silinmis olan haberler
+        }
     }
 }

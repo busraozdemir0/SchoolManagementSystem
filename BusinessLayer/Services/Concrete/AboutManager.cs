@@ -29,9 +29,14 @@ namespace BusinessLayer.Services.Concrete
             _mapper = mapper;
         }
 
+        public async Task<List<About>> GetDeletedListAsync()
+        {
+            return await _aboutDal.GetAllAsync(x => x.IsDeleted, i => i.Image);
+        }
+
         public async Task<List<About>> GetListAsync()
         {
-            return await _aboutDal.GetAllAsync(null, i=>i.Image);
+            return await _aboutDal.GetAllAsync(x=>!x.IsDeleted, i=>i.Image);
         }
 
         public Task TAddAsync(About t)

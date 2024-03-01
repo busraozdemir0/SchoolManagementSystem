@@ -11,5 +11,7 @@ namespace DataAccessLayer.Abstract
     public interface INewsLetterDal:IRepository<NewsLetter>
     {
         Task<NewsLetter> GetByIdAsync(int id);
+        Task<string> SafeDeleteNewsLetterAsync(int newsLetterId);
+        Task<string> UndoDeleteNewsLetterAsync(int newsLetterId);
     }
 }

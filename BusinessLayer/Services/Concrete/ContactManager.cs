@@ -21,6 +21,11 @@ namespace BusinessLayer.Services.Concrete
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<List<Contact>> GetDeletedListAsync()
+        {
+            return await _contactDal.GetAllAsync(x => x.IsDeleted);
+        }
+
         public async Task<List<Contact>> GetListAsync()
         {
             return await _contactDal.GetAllAsync(x=>!x.IsDeleted);

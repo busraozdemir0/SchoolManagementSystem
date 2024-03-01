@@ -13,7 +13,7 @@ namespace BusinessLayer.Services.Abstract
         Task TDeleteAsync(T t);
         Task TUpdateAsync(T t);
         Task<List<T>> GetListAsync();
-        //Task<T> TGetByIdAsync(int id);
+        Task<List<T>> GetDeletedListAsync();
         Task<T> TGetByGuidAsync(Guid id);
        
     }

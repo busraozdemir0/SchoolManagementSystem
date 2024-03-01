@@ -10,5 +10,6 @@ namespace EntityLayer.DTOs.NewsLetters
     {
         public int Id { get; set; }
         public string EMail { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

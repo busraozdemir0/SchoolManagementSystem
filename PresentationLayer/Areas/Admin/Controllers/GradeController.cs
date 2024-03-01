@@ -33,6 +33,12 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapGrades=_mapper.Map<List<GradeListDto>>(grades);
             return View(mapGrades);
         }
+        public async Task<IActionResult> DeletedGrades()
+        {
+            var grades = await _gradeService.GetDeletedListAsync();
+            var mapGrades = _mapper.Map<List<GradeListDto>>(grades);
+            return View(mapGrades);
+        }
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -93,7 +99,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             var gradeName = await _gradeService.TUndoDeleteGradeAsync(gradeId);
             _toast.AddSuccessToastMessage(gradeName + " adlı sınıf başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("Index", "Grade", new { Area = "Admin" });
+            return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
         }
     }
 }

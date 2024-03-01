@@ -1,18 +1,18 @@
-﻿@model List<NewsLetterListDto>
+﻿@model List<GradeListDto>
 
 @{
-    ViewData["Title"] = "Aboneler";
+    ViewData["Title"] = "Silinmiş Sınıflar";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Aboneler</h2>
+        <h2>Silinmiş Sınıflar</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                <a href="#">Silinmiş Öğeler</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Aboneler</strong>
+                <strong>Sınıflar</strong>
             </li>
         </ol>
     </div>
@@ -25,32 +25,33 @@
             <div class="ibox ">
                 <div class="card">
                     <div class="table-responsive text-nowrap m-5">
-
-
-                        <table class="table table-bordered" id="newsLettersTable" width="100%" cellspacing="0">
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Grade" asp-action="Add">
+                            Sınıf Ekle <i class="fa fa-plus"></i>
+                        </a>
+                        <table class="table table-bordered" id="gradesTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>E-Mail</th>
+                                    <th>Sınıf Adı</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>E-Mail</th>
+                                    <th>Sınıf Adı</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </tfoot>
                             <tbody class="table-border-bottom-0">
-                                @foreach (var newsLetter in Model)
+                                @foreach (var grade in Model)
                                 {
-                                    <tr name="@newsLetter.Id">
-                                        <td>@newsLetter.EMail</td>
-                                        <td>@(newsLetter.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                    <tr name="@grade.Id">
+                                        <td>@grade.Name</td>
+                                        <td>@(grade.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
-                                            <a class="btn btn-primary btn-sm" href="mailto:@newsLetter.EMail"><i class="fa fa-envelope"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="Delete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-minus-circle"></i></a>
+                                          
+                                            <a class="btn btn-warning btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="UndoDelete" asp-route-gradeId="@grade.Id"><i class="fa fa-undo"></i></a>
                                         </td>
                                     </tr>
                                 }
@@ -64,5 +65,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/newsLetterIndex.js" type="application/ecmascript"></script>
+    <script src="~/js/gradeIndex.js" type="application/ecmascript"></script>
 }

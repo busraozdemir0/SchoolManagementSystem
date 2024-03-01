@@ -34,6 +34,12 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapLessons=_mapper.Map<List<LessonListDto>>(lessons);
             return View(mapLessons);
         }
+        public async Task<IActionResult> DeletedLessons()
+        {
+            var lessons = await _lessonService.GetDeletedListAsync();
+            var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
+            return View(mapLessons);
+        }
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -107,7 +113,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             var lessonName = await _lessonService.TUndoDeleteLessonAsync(lessonId);
             _toast.AddSuccessToastMessage(lessonName + " adlı ders başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("Index", "Lesson", new { Area = "Admin" });
+            return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
         }
     }
 }

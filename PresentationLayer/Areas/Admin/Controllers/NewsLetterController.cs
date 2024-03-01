@@ -28,13 +28,23 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapNewsLetters = _mapper.Map<List<NewsLetterListDto>>(newsLetters);
             return View(mapNewsLetters);
         }
+        public async Task<IActionResult> DeletedNewsLetters()
+        {
+            var newsLetters = await _newsletterService.GetDeletedListAsync();
+            var mapNewsLetters = _mapper.Map<List<NewsLetterListDto>>(newsLetters);
+            return View(mapNewsLetters);
+        }
         public async Task<IActionResult> Delete(int newsLetterId)
         {
-            var newsLetter = await _newsletterService.TGetByIdAsync(newsLetterId);
-            await _newsletterService.TDeleteAsync(newsLetter);
-
-            _toast.AddSuccessToastMessage("Mail başarıyla silindi", new ToastrOptions { Title = "Başarılı!" });
+            var newsLetterEMail= await _newsletterService.TSafeDeleteNewsLetterAsync(newsLetterId);
+            _toast.AddSuccessToastMessage(newsLetterEMail+" adlı mail başarıyla silindi", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index","NewsLetter", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> UndoDelete(int newsLetterId)
+        {
+            var newsLetterEMail = await _newsletterService.TUndoDeleteNewsLetterAsync(newsLetterId);
+            _toast.AddSuccessToastMessage(newsLetterEMail + " adlı mail başarıyla geri alındı", new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("DeletedNewsLetters", "NewsLetter", new { Area = "Admin" });
         }
     }
 }

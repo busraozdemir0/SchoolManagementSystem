@@ -1,24 +1,25 @@
-﻿@model List<NewsLetterListDto>
+﻿@model List<ContactDto>
 
 @{
-    ViewData["Title"] = "Aboneler";
+    ViewData["Title"] = "Silinen Mesajlar";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Aboneler</h2>
+        <h2>Silinen İletişim Mesajları</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                <a href="#">Silinmiş Öğeler</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Aboneler</strong>
+                <strong>Mesajlar</strong>
             </li>
         </ol>
     </div>
     <div class="col-lg-2">
     </div>
 </div>
+
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -26,32 +27,40 @@
                 <div class="card">
                     <div class="table-responsive text-nowrap m-5">
 
-
-                        <table class="table table-bordered" id="newsLettersTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="contactsTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>Adı Soyadı</th>
                                     <th>E-Mail</th>
+                                    <th>Konu</th>
+                                    <th>Gönderilme Tarihi</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th>Adı Soyadı</th>
                                     <th>E-Mail</th>
+                                    <th>Konu</th>
+                                    <th>Gönderilme Tarihi</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </tfoot>
                             <tbody class="table-border-bottom-0">
-                                @foreach (var newsLetter in Model)
+                                @foreach (var contact in Model)
                                 {
-                                    <tr name="@newsLetter.Id">
-                                        <td>@newsLetter.EMail</td>
-                                        <td>@(newsLetter.IsDeleted ? "Aktif Değil" : "Aktif")</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-primary btn-sm" href="mailto:@newsLetter.EMail"><i class="fa fa-envelope"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="Delete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-minus-circle"></i></a>
+                                    <tr name="@contact.Id">
+                                        <td>@contact.NameSurname</td>
+                                        <td>@contact.EMail</td>
+                                        <td>@contact.Subject</td>
+                                        <td>@contact.CreatedDate.ToShortDateString()</td>
+                                        <td>@(contact.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">                                         
+                                            <a class="btn btn-warning btn-sm" data-id="@contact.Id" asp-area="Admin" asp-controller="Contact" asp-action="UndoDelete" asp-route-contactId="@contact.Id"><i class="fa fa-undo"></i></a>
                                         </td>
+
                                     </tr>
                                 }
                             </tbody>
@@ -63,6 +72,7 @@
     </div>
 </div>
 
+
 @section Scripts {
-    <script src="~/js/newsLetterIndex.js" type="application/ecmascript"></script>
+    <script src="~/js/contactIndex.js" type="application/ecmascript"></script>
 }

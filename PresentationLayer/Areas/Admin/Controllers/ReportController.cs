@@ -33,6 +33,12 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapReports = _mapper.Map<List<ReportDto>>(reports);
             return View(mapReports);
         }
+        public async Task<IActionResult> DeletedReports()
+        {
+            var reports = await _reportService.GetDeletedListAsync();
+            var mapReports = _mapper.Map<List<ReportDto>>(reports);
+            return View(mapReports);
+        }
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -98,7 +104,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var reportTitle = await _reportService.TUndoDeleteReportAsync(reportId);
 
             _toast.AddSuccessToastMessage(Messages.Report.UndoDelete(reportTitle), new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("Index", "Report", new { Area = "Admin" });
+            return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
         }
     }
 }

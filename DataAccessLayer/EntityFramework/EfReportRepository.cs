@@ -88,5 +88,6 @@ namespace DataAccessLayer.EntityFramework
 
             return report.Title;
         }
+
     }
 }

@@ -21,9 +21,14 @@ namespace BusinessLayer.Services.Concrete
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<List<NewsLetter>> GetDeletedListAsync()
+        {
+            return await _newsLetterDal.GetAllAsync(x=>x.IsDeleted);
+        }
+
         public async Task<List<NewsLetter>> GetListAsync()
         {
-            return await _newsLetterDal.GetAllAsync();
+            return await _newsLetterDal.GetAllAsync(x => !x.IsDeleted);
         }
 
         public async Task TAddAsync(NewsLetter t)
@@ -46,6 +51,16 @@ namespace BusinessLayer.Services.Concrete
         public async Task<NewsLetter> TGetByIdAsync(int id)
         {
             return await _newsLetterDal.GetByIdAsync(id);
+        }
+
+        public async Task<string> TSafeDeleteNewsLetterAsync(int newsLetterId)
+        {
+            return await _newsLetterDal.SafeDeleteNewsLetterAsync(newsLetterId);
+        }
+
+        public async Task<string> TUndoDeleteNewsLetterAsync(int newsLetterId)
+        {
+            return await _newsLetterDal.UndoDeleteNewsLetterAsync(newsLetterId);
         }
 
         public Task TUpdateAsync(NewsLetter t)

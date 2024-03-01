@@ -21,6 +21,11 @@ namespace BusinessLayer.Services.Concrete
             _lessonDal = lessonDal;
         }
 
+        public async Task<List<Lesson>> GetDeletedListAsync()
+        {
+            return await _lessonDal.GetAllAsync(x => x.IsDeleted, g => g.Grade);
+        }
+
         public async Task<List<Lesson>> GetListAsync()
         {
             return await _lessonDal.GetAllAsync(x=>!x.IsDeleted, g=>g.Grade);

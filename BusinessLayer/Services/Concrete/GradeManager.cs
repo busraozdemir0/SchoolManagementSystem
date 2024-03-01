@@ -21,6 +21,11 @@ namespace BusinessLayer.Services.Concrete
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<List<Grade>> GetDeletedListAsync()
+        {
+            return await _gradeDal.GetAllAsync(x => x.IsDeleted); // Silinmis olan siniflari listele
+        }
+
         public async Task<List<Grade>> GetListAsync()
         {
             return await _gradeDal.GetAllAsync(x=>!x.IsDeleted); // Silinmemis olan siniflari listele

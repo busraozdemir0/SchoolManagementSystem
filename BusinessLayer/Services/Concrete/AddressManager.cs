@@ -21,6 +21,11 @@ namespace BusinessLayer.Services.Concrete
             _unitOfWork = unitOfWork;
         }
 
+        public Task<List<Address>> GetDeletedListAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Address>> GetListAsync()
         {
             return await _addressDal.GetAllAsync();

@@ -1,15 +1,15 @@
 ﻿@model List<NewsLetterListDto>
 
 @{
-    ViewData["Title"] = "Aboneler";
+    ViewData["Title"] = "Silinmiş Aboneler";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Aboneler</h2>
+        <h2>Silinmiş Aboneler</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                <a href="#">Silinmiş Öğeler</a>
             </li>
             <li class="breadcrumb-item active">
                 <strong>Aboneler</strong>
@@ -49,8 +49,7 @@
                                         <td>@newsLetter.EMail</td>
                                         <td>@(newsLetter.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
-                                            <a class="btn btn-primary btn-sm" href="mailto:@newsLetter.EMail"><i class="fa fa-envelope"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="Delete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-minus-circle"></i></a>
+                                            <a class="btn btn-warning btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="UndoDelete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-undo"></i></a>
                                         </td>
                                     </tr>
                                 }
