@@ -14,6 +14,7 @@ namespace BusinessLayer.AutoMapper.Addresses
         public AddressProfile()
         {
             CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<AddressUpdateDto, Address>().ReverseMap();
         }
     }
 }

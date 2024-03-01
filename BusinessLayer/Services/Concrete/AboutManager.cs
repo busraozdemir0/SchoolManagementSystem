@@ -31,7 +31,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<About>> GetListAsync()
         {
-            return await _aboutDal.GetAllAsync();
+            return await _aboutDal.GetAllAsync(null, i=>i.Image);
         }
 
         public Task TAddAsync(About t)
@@ -53,30 +53,33 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _aboutDal.GetByIdAsync(id);
         }
-
-        public async Task TUpdateAsync(About t)
+        public async Task TUpdateAboutAndImage(AboutUpdateDto aboutUpdateDto)
         {
-            var aboutUpdateDto = _mapper.Map<AboutUpdateDto>(t); // Once gelen About nesnesini Dto'ya esliyoruz
             var about = await _unitOfWork.GetRepository<About>().GetAsync(x => x.Id == aboutUpdateDto.Id, i => i.Image); // Gelen nesneyi id'sine göre cek ve Image tablosunu entegre et
 
-            if (aboutUpdateDto.Image != null)
+            if (aboutUpdateDto.Photo != null)
             {
                 _imageHelper.Delete(about.Image.FileName);  // Once about tablosunda var olan resmi silecek
                                                             // Ardindan yeni resim yukleme islemleri
 
-                var imageUpload = await _imageHelper.Upload(aboutUpdateDto.Title, aboutUpdateDto.Image, ImageType.Post);
-                Image image = new(imageUpload.FullName, aboutUpdateDto.Image.ContentType);
+                var imageUpload = await _imageHelper.Upload(aboutUpdateDto.Title, aboutUpdateDto.Photo, ImageType.Post);
+                Image image = new(imageUpload.FullName, aboutUpdateDto.Photo.ContentType);
                 await _unitOfWork.GetRepository<Image>().AddAsync(image);
 
                 about.ImageId = image.Id;
             }
-            
-            about.Title=aboutUpdateDto.Title;
+
+            about.Title = aboutUpdateDto.Title;
             about.Content = aboutUpdateDto.Content;
 
             await _unitOfWork.GetRepository<About>().UpdateAsync(about);
             await _unitOfWork.SaveAsync();
+        }
 
+        public async Task TUpdateAsync(About t)
+        {
+            await _aboutDal.UpdateAsync(t);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

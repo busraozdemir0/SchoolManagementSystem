@@ -1,4 +1,5 @@
-﻿using EntityLayer.Entities;
+﻿using EntityLayer.DTOs.Abouts;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace BusinessLayer.Services.Abstract
     public interface IAboutService:IGenericService<About>
     {
         Task<About> TGetByIdAsync(int id);
+        Task TUpdateAboutAndImage(AboutUpdateDto aboutUpdateDto);
     }
 }

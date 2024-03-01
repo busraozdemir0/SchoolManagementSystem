@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Addresses;
@@ -29,14 +30,14 @@ namespace PresentationLayer.Areas.Admin.Controllers
         public async Task<IActionResult> Update()
         {
            var addresses = await _addressService.GetListAsync(); // Address tablosunu listele
-           var mapAddress = _mapper.Map<AddressDto>(addresses.First()); // İlk kaydi AddressDto'ya map'le
-           return View(mapAddress);
+           var mapAddress = _mapper.Map<AddressUpdateDto>(addresses.First()); // İlk kaydi AddressUpdateDto'ya map'le
+            return View(mapAddress);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(AddressDto addressDto)
+        public async Task<IActionResult> Update(AddressUpdateDto addressUpdateDto)
         {
-            var mapAddress = _mapper.Map<Address>(addressDto);
+            var mapAddress = _mapper.Map<Address>(addressUpdateDto);
             var result = await _validator.ValidateAsync(mapAddress);
 
             if (result.IsValid)
@@ -48,6 +49,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             else
             {
+                result.AddToModelState(this.ModelState);
                 _toast.AddErrorToastMessage("Adres bilgisi güncellenirken bir hata oluştu.", new ToastrOptions { Title = "Başarısız!" });
             }
             return View();

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.DTOs.Addresses
 {
-    public class AddressDto
+    public class AddressUpdateDto
     {
+        public int Id { get; set; }
         public string AddressInfo { get; set; }
         public string EMail { get; set; }
         public string SupportEMail { get; set; }

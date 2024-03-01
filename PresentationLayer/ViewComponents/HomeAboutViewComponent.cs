@@ -11,21 +11,19 @@ namespace PresentationLayer.ViewComponents
     public class HomeAboutViewComponent:ViewComponent
     {
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAboutService _aboutService;
 
-        public HomeAboutViewComponent(IMapper mapper, IUnitOfWork unitOfWork)
+        public HomeAboutViewComponent(IMapper mapper, IAboutService aboutService)
         {
             _mapper = mapper;
-            _unitOfWork = unitOfWork;
+            _aboutService = aboutService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var abouts = await _unitOfWork.GetRepository<About>().GetAllAsync();
-            var aboutFirst = abouts.First();
-
-            var map = _mapper.Map<AboutDto>(aboutFirst);
-            return View(map);
+            var about = await _aboutService.GetListAsync();
+            var mapAbout = _mapper.Map<AboutDto>(about.First());
+            return View(mapAbout);
         }
     }
 }
