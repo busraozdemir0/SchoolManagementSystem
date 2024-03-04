@@ -9,6 +9,8 @@ namespace BusinessLayer.Describers
 {
     public class CustomIdentityErrorDescriber:IdentityErrorDescriber
     {
+        // Identity mesajlarinin turkcelestirilmesi
+
         // Identity yapisi icin tanimlamalar: 
            // Ornegin vt'de var olan ayni email ya da kullanici adiyla bir hesap tekrar kaydolmaya calisirsa bu sinif sayesinde uyari verecektir.
         public override IdentityError PasswordRequiresUniqueChars(int uniqueChars)
@@ -17,27 +19,27 @@ namespace BusinessLayer.Describers
         }
         public override IdentityError DuplicateEmail(string email)
         {
-            return new IdentityError { Code = "DublicateEmail", Description = $"Bu email {email} adresine ait bir hesap zaten var." };
+            return new IdentityError { Code = "DublicateEmail", Description = $"Bu {email} email adresine ait bir hesap zaten var." };
         }
         public override IdentityError DuplicateUserName(string userName)
         {
-            return new IdentityError { Code = "DuplicateUserName", Description = $"Bu email {userName} adresine ait bir hesap zaten var." };
+            return new IdentityError { Code = "DuplicateUserName", Description = $"Bu {userName} kullanıcı adına ait bir hesap zaten var." };
         }
         public override IdentityError DuplicateRoleName(string role)
         {
-            return new IdentityError { Code = "DublicateRoleName", Description = $"Bu rol {role} ismi zaten mevcut." };
+            return new IdentityError { Code = "DublicateRoleName", Description = $"Bu {role} rol ismi zaten mevcut." };
         }
         public override IdentityError InvalidEmail(string email)
         {
-            return new IdentityError { Code = "InvalidEmail", Description = $"Belirtilen email {email} adresi geçersizdir." };
+            return new IdentityError { Code = "InvalidEmail", Description = $"Belirtilen {email} email adresi geçersizdir." };
         }
         public override IdentityError InvalidRoleName(string role)
         {
-            return new IdentityError { Code = "InvalidRoleName", Description = $"Belirtilen rol {role} ismi geçersizdir." };
+            return new IdentityError { Code = "InvalidRoleName", Description = $"Belirtilen {role} rol ismi geçersizdir." };
         }
         public override IdentityError InvalidUserName(string userName)
         {
-            return new IdentityError { Code = "InvalidUserName", Description = $"Belirtilen email {userName} adresi geçersizdir." };
+            return new IdentityError { Code = "InvalidUserName", Description = $"Belirtilen {userName} email adresi geçersizdir." };
         }
         public override IdentityError PasswordTooShort(int lenght)
         {

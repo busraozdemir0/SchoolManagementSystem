@@ -37,5 +37,21 @@
                 return $"{contactTitle} konulu mesaj başarıyla geri alındı.";
             }
         }
+
+        public static class User
+        {
+            public static string Add(string userName)
+            {
+                return $"{userName} kullanıcısı başarıyla eklendi.";
+            }
+            public static string Update(string userName)
+            {
+                return $"{userName} kullanıcısı başarıyla güncellendi.";
+            }
+            public static string Delete(string userName)
+            {
+                return $"{userName} kullanıcısı başarıyla silindi.";
+            }
+        }
     }
 }
