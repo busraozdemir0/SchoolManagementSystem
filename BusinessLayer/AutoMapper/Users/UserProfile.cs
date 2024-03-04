@@ -15,6 +15,7 @@ namespace BusinessLayer.AutoMapper.Users
         {
             CreateMap<AppUser, UserAddDto>().ReverseMap();
             CreateMap<AppUser, UserListDto>().ReverseMap();
+            CreateMap<AppUser, UserUpdateDto>().ReverseMap();
         }
     }
 }

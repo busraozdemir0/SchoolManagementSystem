@@ -1,0 +1,103 @@
+﻿@model UserUpdateDto
+
+@{
+    ViewData["Title"] = "Kullanıcı Güncelleme";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Kullanıcılar</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="User" asp-action="Index">Kullanıcı Yönetimi</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Kullanıcı Güncelleme</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <form asp-controller="User" asp-action="Update" method="post" enctype="multipart/form-data">
+                            <div class="mt-4" asp-validation-summary="ModelOnly"></div>
+                            <div class="card-body">
+                                <input type="hidden" asp-for="Id" />
+
+                                <div class="form-group">
+                                    <label asp-for="Name" class="form-label">İsim</label>
+                                    <input asp-for="Name" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı ismini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Surname" class="form-label">Soyisim</label>
+                                    <input asp-for="Surname" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı soyismini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Email" class="form-label">E-Mail</label>
+                                    <input asp-for="Email" type="email"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı e-mailini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PhoneNumber" class="form-label">Telefon Numarası</label>
+                                    <input asp-for="PhoneNumber" type="tel" pattern="[(][0-9]{3}[)] [0-9]{3} [0-9]{4}"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="(123) 456 7890"
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <small class="text-muted">Format: (123) 456 7890</small>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+                                    <input asp-for="UserName" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı adını giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="RoleId" class="form-label">Kullanıcının Rolü</label>
+                                    <select asp-for="RoleId" data="RoleName" class="form-control mb-3" asp-items="@(new SelectList(Model.Roles,"Id","Name"))"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

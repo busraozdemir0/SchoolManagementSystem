@@ -10,5 +10,6 @@ namespace BusinessLayer.Services.Abstract
     public interface IRoleService
     {
         Task<List<AppRole>> TGetAllRolesAsync();
+        Task<Guid> TGetByIdRoleAsync(string roleName);
     }
 }

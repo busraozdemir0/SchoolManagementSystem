@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.DTOs.Users;
+using EntityLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,29 @@ namespace BusinessLayer.Services.Concrete
             return await _userDal.CreateUserAsync(userAddDto);
         }
 
+        public async Task<(IdentityResult identityResult, string? userName)> TDeleteUserAsync(Guid userId)
+        {
+            return await _userDal.DeleteUserAsync(userId);
+        }
+
         public async Task<List<UserListDto>> TGetAllUsersWithRoleAsync()
         {
             return await _userDal.GetAllUsersWithRoleAsync();
+        }
+
+        public async Task<AppUser> TGetAppUserByIdAsync(Guid userId)
+        {
+            return await _userDal.GetAppUserByIdAsync(userId);
+        }
+
+        public async Task<string> TGetUserRoleAsync(AppUser user)
+        {
+            return await _userDal.GetUserRoleAsync(user);
+        }
+
+        public async Task<IdentityResult> TUpdateUserAsync(UserUpdateDto userUpdateDto)
+        {
+            return await _userDal.UpdateUserAsync(userUpdateDto);
         }
     }
 }

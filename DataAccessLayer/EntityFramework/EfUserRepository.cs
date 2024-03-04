@@ -41,6 +41,17 @@ namespace DataAccessLayer.EntityFramework
                 return result;
         }
 
+        public async Task<(IdentityResult identityResult, string? userName)> DeleteUserAsync(Guid userId)
+        {
+            var user = await GetAppUserByIdAsync(userId);
+            var result=await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+                return (result, user.UserName); // Birden fazla veri dondurme islemi bu sekilde yapilir.
+            else
+                return (result, null);
+        }
+
         public async Task<List<UserListDto>> GetAllUsersWithRoleAsync()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -55,6 +66,34 @@ namespace DataAccessLayer.EntityFramework
             }
 
             return mapUser;
+        }
+
+        public async Task<AppUser> GetAppUserByIdAsync(Guid userId)
+        {
+            return await _userManager.FindByIdAsync(userId.ToString());
+        }
+
+        public async Task<string> GetUserRoleAsync(AppUser user)
+        {
+            return string.Join("", await _userManager.GetRolesAsync(user));
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto)
+        {
+            var user = await GetAppUserByIdAsync(userUpdateDto.Id);
+            var userRole = await GetUserRoleAsync(user);
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                await _userManager.RemoveFromRoleAsync(user, userRole); // Oncelikle kullanici uzerine tanimlanmis olan rolu kaldiriyoruz.
+                var findRole = await _roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString()); // View tarafinda SelectList uzerinden secilmis olan rolun id'sine gore rolu bul
+                await _userManager.AddToRoleAsync(user, findRole.Name); // Bulunan rolu guncellenecek olan kullaniciya ata
+
+                return result;
+            }
+            else
+                return result;
         }
     }
 }

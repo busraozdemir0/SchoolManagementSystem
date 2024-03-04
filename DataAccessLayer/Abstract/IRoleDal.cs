@@ -10,5 +10,7 @@ namespace DataAccessLayer.Abstract
     public interface IRoleDal
     {
         Task<List<AppRole>> GetAllRolesAsync();
+        Task<Guid> GetByIdRoleAsync(string roleName);
+
     }
 }

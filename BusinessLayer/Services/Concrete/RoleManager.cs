@@ -22,5 +22,10 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _roleDal.GetAllRolesAsync();
         }
+
+        public async Task<Guid> TGetByIdRoleAsync(string roleName)
+        {
+            return await _roleDal.GetByIdRoleAsync(roleName);
+        }
     }
 }
