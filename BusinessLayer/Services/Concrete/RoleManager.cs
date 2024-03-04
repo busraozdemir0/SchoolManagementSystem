@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
+using EntityLayer.DTOs.Roles;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,21 @@ namespace BusinessLayer.Services.Concrete
             _roleDal = roleDal;
         }
 
+        public async Task<IdentityResult> TCreateRoleAsync(RoleAddDto roleAddDto)
+        {
+            return await _roleDal.CreateRoleAsync(roleAddDto);
+        }
+
+        public async Task<(IdentityResult identityResult, string? roleName)> TDeleteRoleAsync(Guid roleId)
+        {
+            return await _roleDal.DeleteRoleAsync(roleId);
+        }
+
+        public async Task<AppRole> TFindByIdRoleAsync(Guid roleId)
+        {
+            return await _roleDal.FindByIdRoleAsync(roleId);
+        }
+
         public async Task<List<AppRole>> TGetAllRolesAsync()
         {
             return await _roleDal.GetAllRolesAsync();
@@ -26,6 +43,11 @@ namespace BusinessLayer.Services.Concrete
         public async Task<Guid> TGetByIdRoleAsync(string roleName)
         {
             return await _roleDal.GetByIdRoleAsync(roleName);
+        }
+
+        public Task<IdentityResult> TUpdateRoleAsync(RoleUpdateDto roleUpdateDto)
+        {
+            return _roleDal.UpdateRoleAsync(roleUpdateDto);
         }
     }
 }

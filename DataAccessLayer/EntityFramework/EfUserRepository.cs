@@ -44,7 +44,7 @@ namespace DataAccessLayer.EntityFramework
         public async Task<(IdentityResult identityResult, string? userName)> DeleteUserAsync(Guid userId)
         {
             var user = await GetAppUserByIdAsync(userId);
-            var result=await _userManager.DeleteAsync(user);
+            var result = await _userManager.DeleteAsync(user);
 
             if (result.Succeeded)
                 return (result, user.UserName); // Birden fazla veri dondurme islemi bu sekilde yapilir.
@@ -81,12 +81,14 @@ namespace DataAccessLayer.EntityFramework
         public async Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto)
         {
             var user = await GetAppUserByIdAsync(userUpdateDto.Id);
-            var userRole = await GetUserRoleAsync(user);
+            var userRole = await GetUserRoleAsync(user); // Kullanicinin rolu
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                await _userManager.RemoveFromRoleAsync(user, userRole); // Oncelikle kullanici uzerine tanimlanmis olan rolu kaldiriyoruz.
+                if (userRole != "") // Eger kullaniya atanmis rol varsa(userRole degiskeninden bir deger donerse) oncelikle kullanicinin rolunu kaldiriyoruz.
+                    await _userManager.RemoveFromRoleAsync(user, userRole);
+
                 var findRole = await _roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString()); // View tarafinda SelectList uzerinden secilmis olan rolun id'sine gore rolu bul
                 await _userManager.AddToRoleAsync(user, findRole.Name); // Bulunan rolu guncellenecek olan kullaniciya ata
 

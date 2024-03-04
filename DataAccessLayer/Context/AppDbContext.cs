@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Context
 {
-    public class AppDbContext:IdentityDbContext<AppUser,AppRole,Guid>
+    public class AppDbContext:IdentityDbContext<AppUser, AppRole, Guid, AppUserClaim, AppUserRole, AppUserLogin, AppRoleClaim, AppUserToken>
     {
         protected AppDbContext() { }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

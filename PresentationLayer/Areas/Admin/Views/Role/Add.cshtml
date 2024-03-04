@@ -1,0 +1,56 @@
+﻿@model RoleAddDto
+
+@{
+    ViewData["Title"] = "Rol Ekleme";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Roller</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Role" asp-action="Index">Rol Yönetimi</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Rol Ekleme</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <form asp-controller="Role" asp-action="Add" method="post" enctype="multipart/form-data">
+                            <div class="mt-4" asp-validation-summary="ModelOnly"></div>
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label asp-for="Name" class="form-label">Rol Adı</label>
+                                    <input asp-for="Name" type="text"
+                                           class="form-control mb-3"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen rol adını giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Rolü Oluştur</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 ﻿namespace PresentationLayer.ResultMessages
 {
+    // Toastr bildirimlerinin mesajlari bu class'ta yapilandiriliyor.
     public static class Messages
     {
         public static class Report
@@ -51,6 +52,22 @@
             public static string Delete(string userName)
             {
                 return $"{userName} kullanıcısı başarıyla silindi.";
+            }
+        }
+
+        public static class Role
+        {
+            public static string Add(string roleName)
+            {
+                return $"{roleName} rolü başarıyla eklendi.";
+            }
+            public static string Update(string roleName)
+            {
+                return $"{roleName} rolü başarıyla güncellendi.";
+            }
+            public static string Delete(string roleName)
+            {
+                return $"{roleName} rolü başarıyla silindi.";
             }
         }
     }

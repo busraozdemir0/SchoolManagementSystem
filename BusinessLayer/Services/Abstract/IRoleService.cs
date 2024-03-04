@@ -1,4 +1,6 @@
-﻿using EntityLayer.Entities;
+﻿using EntityLayer.DTOs.Roles;
+using EntityLayer.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,9 @@ namespace BusinessLayer.Services.Abstract
     {
         Task<List<AppRole>> TGetAllRolesAsync();
         Task<Guid> TGetByIdRoleAsync(string roleName);
+        Task<AppRole> TFindByIdRoleAsync(Guid roleId);
+        Task<IdentityResult> TCreateRoleAsync(RoleAddDto roleAddDto);
+        Task<IdentityResult> TUpdateRoleAsync(RoleUpdateDto roleUpdateDto);
+        Task<(IdentityResult identityResult, string? roleName)> TDeleteRoleAsync(Guid roleId);
     }
 }

@@ -61,7 +61,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 else
                 {
                     result.AddToIdentityModelState(this.ModelState);
-                    _toast.AddErrorToastMessage(userAddDto.UserName + "adlı kullanıcı eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                    _toast.AddErrorToastMessage("Kullanıcı eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
 
                     validation.AddToModelState(this.ModelState);
                     return View(new UserAddDto { Roles = roles });
@@ -117,7 +117,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                         else
                         {
                             result.AddToIdentityModelState(this.ModelState);
-                            _toast.AddErrorToastMessage(userUpdateDto.UserName+"adlı kullanıcı güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                            _toast.AddErrorToastMessage("Kullanıcı güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
                             return View(new UserUpdateDto { Roles = roles });
                         }
                     }
@@ -126,9 +126,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                         validation.AddToModelState(this.ModelState);
                         return View(new UserUpdateDto { Roles = roles });
                     }
-
-                }
-                
+                }               
             }
             return NotFound(); // User'ı bulamazsa NotFound donecek.
         }
@@ -145,9 +143,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
             else
             {
                 result.identityResult.AddToIdentityModelState(this.ModelState);
-                _toast.AddErrorToastMessage(result.userName+" adlı kullanıcı silinirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                _toast.AddErrorToastMessage("Kullanıcı silinirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
             }
-            return NotFound();
+            return View();
         }
     }
 }
