@@ -34,6 +34,16 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var users = await _userService.TGetAllUsersWithRoleAsync();
             return View(users);
         }
+        public async Task<IActionResult> GetAllTeachers()
+        {
+            var users = await _userService.TGetAllUsersWithRoleAsync();
+            return View(users);
+        }
+        public async Task<IActionResult> GetAllStudents()
+        {
+            var users = await _userService.TGetAllUsersWithRoleAsync();
+            return View(users);
+        }
 
         [HttpGet]
         public async Task<IActionResult> Add()

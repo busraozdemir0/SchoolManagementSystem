@@ -1,0 +1,68 @@
+﻿
+<div class="row">
+    <div class="col-lg-4">
+        <div class="widget-head-color-box navy-bg p-xs text-center">
+            <div class="m-b-xs">
+                <h2 class="font-bold no-margins">
+                    Admin
+                </h2>
+
+            </div>
+            @* style="width:85px; height:100px" *@
+            <img src="~/Admin/img/a4.jpg" class="rounded-circle circle-border m-b-xs" alt="profile">
+        </div>
+        <div class="widget-text-box">
+            <p>Admin tüm sisteme müdahale edebilir.</p>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget navy-bg p-lg text-center">
+            <div class="m-b-md pb-3 pt-4">
+                <i class="fa fa-flask fa-4x"></i>
+                <h1 class="m-xs">@ViewBag.TotalGradeCount</h1>
+                <h3 class="font-bold no-margins">
+                    Sınıf
+                </h3>
+                <small>Sayısı</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="widget lazur-bg p-xl">
+
+            <h2 class="font-bold">
+                Admin
+            </h2>
+            <ul class="list-unstyled m-t-md pb-3 pt-2">
+                <li>
+                    <span class="fa fa-envelope m-r-xs"></span>
+                    <label>E-Mail:</label>
+                    admin@gmail.com
+                </li>
+                <li>
+                    <span class="fa fa-home m-r-xs"></span>
+                    <label>Adres:</label>
+                    Düzce, Merkez
+                </li>
+                <li>
+                    <span class="fa fa-phone m-r-xs"></span>
+                    <label>İletişim:</label>
+                    +90 (222) 222 22 22
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="widget yellow-bg p-lg text-center">
+            <div class="m-b-md pb-3 pt-4">
+                <i class="fa fa-file-text fa-4x"></i>
+                <h1 class="m-xs">@ViewBag.TotalReportCount</h1>
+                <h3 class="font-bold no-margins">
+                    Haber
+                </h3>
+                <small>&nbsp; &nbsp; &nbsp; &nbsp;</small>
+            </div>
+        </div>
+    </div>
+</div>

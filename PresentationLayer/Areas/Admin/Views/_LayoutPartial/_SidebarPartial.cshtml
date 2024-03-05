@@ -42,8 +42,8 @@
                 <a href="#"><i class="fa fa-group"></i> <span class="nav-label">Kullanıcılar</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a asp-area="Admin" asp-controller="User" asp-action="Index">Kullanıcı Yönetimi</a></li>
-                    <li><a href="form_basic.html">Öğretmenler</a></li>
-                    <li><a href="form_advanced.html">Öğrenciler</a></li>
+                    <li><a asp-area="Admin" asp-controller="User" asp-action="GetAllTeachers">Öğretmenler</a></li>
+                    <li><a asp-area="Admin" asp-controller="User" asp-action="GetAllStudents">Öğrenciler</a></li>
                 </ul>
             </li>
             <li>

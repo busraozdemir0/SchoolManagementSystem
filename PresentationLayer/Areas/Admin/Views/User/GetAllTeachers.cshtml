@@ -1,0 +1,88 @@
+﻿@model List<UserListDto>
+
+@{
+    ViewData["Title"] = "Öğretmenler";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Kullanıcılar</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="User" asp-action="Index">Kullanıcılar</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Öğretmen Listesi</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="table-responsive text-nowrap m-5">
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="User" asp-action="Add">
+                            Öğretmen Ekle <i class="fa fa-plus"></i>
+                        </a>
+                        <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Adı</th>
+                                    <th>Soyadı</th>
+                                    <th>E-Mail</th>
+                                    <th>Telefon Numarası</th>
+                                    <th>Kullanıcı Adı</th>
+                                    <th>Rolü</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Adı</th>
+                                    <th>Soyadı</th>
+                                    <th>E-Mail</th>
+                                    <th>Telefon Numarası</th>
+                                    <th>Kullanıcı Adı</th>
+                                    <th>Rolü</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var user in Model)
+                                {
+                                    if (user.Role == RoleConsts.Teacher)
+                                    {
+                                        <tr name="@user.Id">
+                                            <td>@user.Name</td>
+                                            <td>@user.Surname</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.PhoneNumber</td>
+                                            <td>@user.UserName</td>
+                                            <td>@user.Role</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-userId="@user.Id"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id"><i class="fa fa-minus-circle"></i></a>
+
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/userIndex.js" type="application/ecmascript"></script>
+}

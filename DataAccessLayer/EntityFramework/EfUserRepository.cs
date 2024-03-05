@@ -67,7 +67,6 @@ namespace DataAccessLayer.EntityFramework
 
             return mapUser;
         }
-
         public async Task<AppUser> GetAppUserByIdAsync(Guid userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());
