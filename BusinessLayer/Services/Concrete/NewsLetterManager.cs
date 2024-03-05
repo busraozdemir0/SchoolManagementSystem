@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.NewsLetters;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,11 @@ namespace BusinessLayer.Services.Concrete
         public async Task<string> TSafeDeleteNewsLetterAsync(int newsLetterId)
         {
             return await _newsLetterDal.SafeDeleteNewsLetterAsync(newsLetterId);
+        }
+
+        public void TSendingBulkEmails(NewsLetterSendEmailDto newsLetterSendEmailDto, List<NewsLetterDto> Emails)
+        {
+             _newsLetterDal.SendingBulkEmails(newsLetterSendEmailDto, Emails);
         }
 
         public async Task<string> TUndoDeleteNewsLetterAsync(int newsLetterId)

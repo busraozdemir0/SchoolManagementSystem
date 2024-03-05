@@ -1,4 +1,5 @@
-﻿using EntityLayer.Entities;
+﻿using EntityLayer.DTOs.NewsLetters;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace BusinessLayer.Services.Abstract
         Task<NewsLetter> TGetByIdAsync(int id);
         Task<string> TSafeDeleteNewsLetterAsync(int newsLetterId);
         Task<string> TUndoDeleteNewsLetterAsync(int newsLetterId);
+        void TSendingBulkEmails(NewsLetterSendEmailDto newsLetterSendEmailDto, List<NewsLetterDto> Emails);
     }
 }
