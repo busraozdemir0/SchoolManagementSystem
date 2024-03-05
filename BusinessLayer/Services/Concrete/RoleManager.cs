@@ -19,7 +19,6 @@ namespace BusinessLayer.Services.Concrete
         {
             _roleDal = roleDal;
         }
-
         public async Task<IdentityResult> TCreateRoleAsync(RoleAddDto roleAddDto)
         {
             return await _roleDal.CreateRoleAsync(roleAddDto);

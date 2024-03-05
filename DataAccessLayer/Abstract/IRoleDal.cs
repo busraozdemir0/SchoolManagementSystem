@@ -17,6 +17,5 @@ namespace DataAccessLayer.Abstract
         Task<IdentityResult> CreateRoleAsync(RoleAddDto roleAddDto);
         Task<IdentityResult> UpdateRoleAsync(RoleUpdateDto roleUpdateDto);
         Task<(IdentityResult identityResult, string? roleName)> DeleteRoleAsync(Guid roleId);
-
     }
 }

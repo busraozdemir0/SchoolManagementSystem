@@ -4,6 +4,7 @@ using BusinessLayer.Services.Abstract;
 using EntityLayer.DTOs.Roles;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
@@ -109,18 +110,18 @@ namespace PresentationLayer.Areas.Admin.Controllers
             {
                 validation.AddToModelState(this.ModelState);
                 _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
-               
+
                 return View();
             }
         }
 
         public async Task<IActionResult> Delete(Guid roleId)
         {
-            var result=await _roleService.TDeleteRoleAsync(roleId);
+            var result = await _roleService.TDeleteRoleAsync(roleId);
 
-            if(result.identityResult.Succeeded)
+            if (result.identityResult.Succeeded)
             {
-                _toast.AddSuccessToastMessage(Messages.User.Delete(result.roleName), new ToastrOptions { Title = "Başarılı!" });
+                _toast.AddSuccessToastMessage(Messages.Role.Delete(result.roleName), new ToastrOptions { Title = "Başarılı!" });
                 return RedirectToAction("Index", "Role", new { Area = "Admin" });
             }
             else
@@ -129,6 +130,36 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 _toast.AddErrorToastMessage("Rol silinirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
             }
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddWithAjax([FromBody] RoleAddDto roleAddDto)
+        {
+            var mapRole = _mapper.Map<AppRole>(roleAddDto);
+            var validation = await _validator.ValidateAsync(mapRole);
+
+            if (validation.IsValid)
+            {
+                var result = await _roleService.TCreateRoleAsync(roleAddDto);
+
+                if (result.Succeeded)
+                {
+                    _toast.AddSuccessToastMessage(Messages.Role.Add(roleAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
+                    return Json(Messages.Role.Add(roleAddDto.Name));
+                }
+                else
+                {
+                    result.AddToIdentityModelState(this.ModelState);
+                    _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+
+                    return Json(result.Errors.First().Description);
+                }
+            }
+            else
+            {
+                _toast.AddErrorToastMessage(validation.Errors.First().ErrorMessage, new ToastrOptions { Title = "Başarısız!" });
+                return Json(validation.Errors.First().ErrorMessage);
+            }
         }
     }
 }

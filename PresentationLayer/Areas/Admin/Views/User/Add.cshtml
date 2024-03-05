@@ -83,8 +83,19 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="RoleId" class="form-label">Kullanıcının Rolü</label>
+                                    <div class="row">
+                                        <div class="col-xl-11 col-lg-10 col-md-9 col-sm-9 ">
+                                            <label asp-for="RoleId" class="form-label">Kullanıcının Rolü</label>
+                                        </div>
+                                        <div class="col-xl-1 col-lg-2 col-md-3 col-sm-3 ">
+                                            <a class="btn link-primary mb-2" style="color:dodgerblue;" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                                @* data- ile baslayan kisimlara bs eklersek bootstrapten gelecegini anlar ve projedeki digerleriyle cakismaz *@
+                                                Rol Ekle <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                     <select asp-for="RoleId" class="form-control mb-3" asp-items="@(new SelectList(Model.Roles,"Id","Name"))"></select>
+
                                 </div>
 
                                 <div class="form-group">
@@ -109,3 +120,44 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Rol Ekleme</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="d-block form-label">Rol İsmi</label>
+                        <input class="form-control" type="text" id="roleName" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* AJAX - Bootstrap modal ile rol ekleme islemi *@
+
+    <script src="~/js/roleAdd.js"></script>
+
+    <script>
+        var app = app || [];
+        app.Urls = app.Urls || [];
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.roleAddUrl = "@(Url.Action("AddWithAjax", "Role"))";
+        app.Urls.userAddUrl = "@(Url.Action("Add", "User"))";
+    </script>
+}
