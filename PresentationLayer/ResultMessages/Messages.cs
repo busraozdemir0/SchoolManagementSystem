@@ -70,5 +70,25 @@
                 return $"{roleName} rolü başarıyla silindi.";
             }
         }
+
+        public static class Announcement
+        {
+            public static string Add(string announcementTitle)
+            {
+                return $"{announcementTitle} başlıklı duyuru başarıyla eklendi.";
+            }
+            public static string Update(string announcementTitle)
+            {
+                return $"{announcementTitle} başlıklı duyuru başarıyla güncellendi.";
+            }
+            public static string Delete(string announcementTitle)
+            {
+                return $"{announcementTitle} başlıklı duyuru başarıyla silindi.";
+            }
+            public static string UndoDelete(string announcementTitle)
+            {
+                return $"{announcementTitle} başlıklı duyuru başarıyla geri alındı.";
+            }
+        }
     }
 }

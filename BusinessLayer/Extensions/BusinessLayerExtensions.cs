@@ -53,7 +53,10 @@ namespace BusinessLayer.Extensions
             services.AddScoped<IUserDal, EfUserRepository>();
 
             services.AddScoped<IRoleService, RoleManager>();
-            services.AddScoped<IRoleDal, EfRoleRepository>();
+            services.AddScoped<IRoleDal, EfRoleRepository>(); 
+
+            services.AddScoped<IAnnouncementService, AnnouncementManager>();
+            services.AddScoped<IAnnouncementDal, EfAnnouncementRepository>();
 
             services.AddAutoMapper(assembly);
 

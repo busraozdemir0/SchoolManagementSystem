@@ -1,0 +1,77 @@
+﻿@model List<AnnouncementListDto>
+
+@{
+    ViewData["Title"] = "Silinmiş Duyurular";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Silinmiş Duyurular</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Silinmiş Öğeler</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Duyurular</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="table-responsive text-nowrap m-5">
+
+                        <table class="table table-bordered" id="announcementsTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>İçerik</th>
+                                    <th>Alıcılar</th>
+                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>İçerik</th>
+                                    <th>Alıcılar</th>
+                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var announcement in Model)
+                                {
+                                    <tr name="@announcement.Id">
+                                        <td>@announcement.Title</td>
+                                        <td>@announcement.Content</td>
+                                        <td>@announcement.Role.Name</td>
+                                        <td>@announcement.CreatedDate.ToShortDateString()</td>
+                                        <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-warning btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="UndoDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-undo"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/announcementIndex.js" type="application/ecmascript"></script>
+}

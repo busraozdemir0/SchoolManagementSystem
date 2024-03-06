@@ -53,7 +53,7 @@
                 <a asp-area="Admin" asp-controller="Report" asp-action="Index"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Haberler</span>  </a>
             </li>
             <li>
-                <a href="metrics.html"><i class="fa fa-bell"></i> <span class="nav-label">Duyurular</span>  </a>
+                <a asp-area="Admin" asp-controller="Announcement" asp-action="Index"><i class="fa fa-bell"></i> <span class="nav-label">Duyurular</span>  </a>
             </li>
             
             <li>
@@ -76,7 +76,7 @@
                 <a href="#"><i class="fa fa-trash"></i> <span class="nav-label">Silinmiş Öğeler </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>
                 <ul class="nav nav-second-level collapse">
                     <li><a asp-area="Admin" asp-controller="Report" asp-action="DeletedReports">Haberler</a></li>
-                    <li><a href="#">Duyurular</a></li>
+                    <li><a asp-area="Admin" asp-controller="Announcement" asp-action="DeletedAnnouncements">Duyurular</a></li>
                     <li><a asp-area="Admin" asp-controller="NewsLetter" asp-action="DeletedNewsLetters">Aboneler</a></li>
                     <li><a asp-area="Admin" asp-controller="Lesson" asp-action="DeletedLessons">Dersler</a></li>
                     <li><a asp-area="Admin" asp-controller="Grade" asp-action="DeletedGrades">Sınıflar</a></li>

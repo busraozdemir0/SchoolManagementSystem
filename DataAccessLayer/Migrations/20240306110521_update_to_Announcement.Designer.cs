@@ -4,6 +4,7 @@ using DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240306110521_update_to_Announcement")]
+    partial class updatetoAnnouncement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace DataAccessLayer.Migrations
                             Id = 1,
                             Content = "Atlas Koleji olarak 2009 yılında başladığımız yolculuğumuzda, ortaokul ve lise öğrencilerimizin başarıya ulaşmasını hedefliyor aynı zamanda hayalindeki lise ve üniversiteleri kazanmaları için elimizden geleni yapıyoruz. Okulda yapılan eğitimin yanı sıra web sitemiz sayesinde konuları pekiştirebilme ve birebir öğretmenle iletişime geçme imkanına sahip olabilecekler. Bu güne kadar mezunlarımızın çoğuna Türkiye'de oldukça ünlü okulları kazanabilmelerine vesile olduk. Hemen siz de iletişime geçin ve uygun fiyatlarla kolejimize kaydolarak hayallerinize ulaşın.",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 12, 886, DateTimeKind.Local).AddTicks(4224),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 663, DateTimeKind.Local).AddTicks(7903),
                             IsDeleted = false,
                             Title = "Çocuğunuz İçin En İyi Seçim Biziz"
                         });
@@ -147,7 +150,10 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("RoleId")
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -197,28 +203,28 @@ namespace DataAccessLayer.Migrations
                         new
                         {
                             Id = new Guid("c54083a8-1ff1-43d0-9b51-c2fea5b3e60d"),
-                            ConcurrencyStamp = "26c23a69-6a3e-405c-ba2a-629fc435c2ac",
+                            ConcurrencyStamp = "b023c3ed-5520-499a-835e-2e0a9ba6d1ba",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("23420044-c9ae-462e-8317-88db8c734de1"),
-                            ConcurrencyStamp = "990d5470-0ef0-43a9-b107-6a5b42005e13",
+                            ConcurrencyStamp = "e2656ef4-ece7-4b13-9d89-70d4d5f8b020",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = new Guid("2157a98d-0223-4ae6-afb9-5f586e9ba4ae"),
-                            ConcurrencyStamp = "753e9a08-5f5b-4178-8da2-1c21668b2593",
+                            ConcurrencyStamp = "f1c892d4-5511-494a-929e-a5d6063bd04a",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
                             Id = new Guid("8db4507c-ee16-4f5f-82a6-d187a2acb21d"),
-                            ConcurrencyStamp = "95d106d9-ff25-4427-abcf-2213217c2ace",
+                            ConcurrencyStamp = "b71eca89-14d4-48ee-ac1c-949be818e09f",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -345,17 +351,17 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = new Guid("a61f597b-2c8d-4cb4-80a6-6822178322a8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "debc0d19-e2da-462a-aa2a-38760568efb6",
+                            ConcurrencyStamp = "fff6250e-8f10-43f7-88cd-b694f1f1e5fb",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG7V29t1dhC9/lfco5XxYymA7yzWQ8RZkJwRJn7iMYqbiZomKVqbg5MocUOWP4HfSA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP+T6D/4hXBqjJfI+FjYhzHDZiZGtQXflGRvFkM6JYqteEjM6NUAxZHIZjUbRf66Yg==",
                             PhoneNumber = "+901111111111",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "543c93f4-4da1-4d83-b07e-6014b3b3e61e",
+                            SecurityStamp = "458a33f1-93c3-4ac9-b470-a39ec361991f",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -364,17 +370,17 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = new Guid("97b90210-a67f-426d-be2c-8adcab3100fb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ec2b04aa-5a92-407d-9673-c054dac40a61",
+                            ConcurrencyStamp = "a30575b4-39f4-4442-a9d9-9664271eb45a",
                             Email = "ogretmen@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Öğretmen",
                             NormalizedEmail = "OGRETMEN@GMAIL.COM",
                             NormalizedUserName = "OGRETMEN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFD23krncSpuBHHOTC/0CVx0p5cCkw49baizQn2uqyA3ZTe42Pr6prSzlBQyfg7nLw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENulbP/6DMg6IKZVj3S+tUGzcO4f2tgTjSIWQQGp3vXcKsRh7dMHxjG+U+FKsSOrpg==",
                             PhoneNumber = "+902222222222",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "d1d2bde3-e1c1-421d-83f6-da55c3ee8807",
+                            SecurityStamp = "90c6a13f-7e74-4966-8b35-7471d6c6fb19",
                             Surname = "Öğretmen",
                             TwoFactorEnabled = false,
                             UserName = "ogretmen"
@@ -383,17 +389,17 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = new Guid("a9949a78-7413-484e-a62a-eb0fb01b7f76"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "96be7221-3863-444f-8f7e-0661c7af8d68",
+                            ConcurrencyStamp = "2b39ad6d-a7da-4956-ac0b-1fab73bdd782",
                             Email = "ogrenci@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Öğrenci",
                             NormalizedEmail = "OGRENCİ@GMAIL.COM",
                             NormalizedUserName = "OGRENCİ",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN+F12O0e55p8NRVti9c291Cq/6dZQkoJ2uT+xp3iqi4TmOCTzFnFnepUm8cg3t4zw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE6Fk+5eoCa39QSBBNhkaI7suNZiMi4Bu8N3u6qXsjl4LSDvBkIoun/uJnXz5VBW5A==",
                             PhoneNumber = "+903333333333",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "8b4e0dbf-d83b-4695-86f0-412252e739ac",
+                            SecurityStamp = "37d1aeab-eae2-47cd-a64e-714f9dc89034",
                             Surname = "Öğrenci",
                             TwoFactorEnabled = false,
                             UserName = "ogrenci"
@@ -574,7 +580,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(133),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 963, DateTimeKind.Local).AddTicks(7672),
                             IsDeleted = false,
                             Name = "9. Sınıf"
                         },
@@ -582,7 +588,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 2,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(157),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 963, DateTimeKind.Local).AddTicks(7694),
                             IsDeleted = false,
                             Name = "10. Sınıf"
                         },
@@ -590,7 +596,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 3,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(158),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 963, DateTimeKind.Local).AddTicks(7695),
                             IsDeleted = false,
                             Name = "11. Sınıf"
                         },
@@ -598,7 +604,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 4,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(159),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 963, DateTimeKind.Local).AddTicks(7696),
                             IsDeleted = false,
                             Name = "12. Sınıf"
                         });
@@ -697,9 +703,9 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("99f26f35-8bd0-4bcb-8326-73ec522983c0"),
+                            Id = new Guid("fd25f205-4714-4cde-a64d-c0f90d66760b"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(3323),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 964, DateTimeKind.Local).AddTicks(546),
                             GradeId = 1,
                             IsDeleted = false,
                             LessonCode = "B100",
@@ -708,9 +714,9 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f642e262-f9e4-454c-b32d-68170b3d29ef"),
+                            Id = new Guid("44ef292b-9317-4a68-a2da-5fc8fae0ba07"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(3339),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 964, DateTimeKind.Local).AddTicks(644),
                             GradeId = 2,
                             IsDeleted = false,
                             LessonCode = "M102",
@@ -719,9 +725,9 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("45faf426-7593-47f8-b924-644284e88376"),
+                            Id = new Guid("0ec1da68-ad68-4894-82ab-321e2c67f709"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(3348),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 964, DateTimeKind.Local).AddTicks(649),
                             GradeId = 3,
                             IsDeleted = false,
                             LessonCode = "F205",
@@ -730,9 +736,9 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bda4a05f-778a-41f6-8dc0-1213e3074772"),
+                            Id = new Guid("b7fbb974-afb0-45b1-8937-77de61d7278c"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(3351),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 964, DateTimeKind.Local).AddTicks(652),
                             GradeId = 4,
                             IsDeleted = false,
                             LessonCode = "B101",
@@ -777,9 +783,9 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5dc921f3-0a71-47a8-abcd-77f913a0525c"),
+                            Id = new Guid("3f26e199-9c8d-4c80-a906-27dc212aa116"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 3, 6, 14, 53, 13, 187, DateTimeKind.Local).AddTicks(1749),
+                            CreatedDate = new DateTime(2024, 3, 6, 14, 5, 20, 963, DateTimeKind.Local).AddTicks(9133),
                             DocumentPath = "test",
                             IsDeleted = false,
                             Title = "Deneme"
@@ -949,7 +955,9 @@ namespace DataAccessLayer.Migrations
                 {
                     b.HasOne("EntityLayer.Entities.AppRole", "Role")
                         .WithMany("Announcements")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EntityLayer.Entities.AppUser", "User")
                         .WithMany("Announcements")

@@ -9,5 +9,6 @@ namespace EntityLayer.Entities
 {
     public class AppRole:IdentityRole<Guid>
     {
+        public ICollection<Announcement> Announcements { get; set; }
     }
 }

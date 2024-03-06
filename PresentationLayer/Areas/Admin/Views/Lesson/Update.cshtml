@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <label asp-for="LessonCode" class="form-label">Ders Kodu</label>
                                     <input asp-for="LessonCode" type="text"
-                                           class="form-control mb-3"
+                                           class="form-control mb-1"
                                            id="defaultFormControlInput"
                                            placeholder="Lütfen ders kodunu giriniz."
                                            aria-describedby="defaultFormControlHelp" />
@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <label asp-for="LessonName" class="form-label">Ders Adı</label>
                                     <input asp-for="LessonName" type="text"
-                                           class="form-control mb-3"
+                                           class="form-control mb-1"
                                            id="defaultFormControlInput"
                                            placeholder="Lütfen ders adını giriniz."
                                            aria-describedby="defaultFormControlHelp" />
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label asp-for="LessonCredit" class="form-label">Haftalık Ders Saati</label>
                                     <input asp-for="LessonCredit" type="text"
-                                           class="form-control mb-3"
+                                           class="form-control mb-1"
                                            id="defaultFormControlInput"
                                            placeholder="Lütfen haftalık ders saatini giriniz."
                                            aria-describedby="defaultFormControlHelp" />
@@ -66,7 +66,6 @@
                                     <label asp-for="GradeId" class="form-label">Sınıf Bilgisi</label>
                                     <select id="gradeList" class="form-control mb-3" asp-for="GradeId" asp-items="@(new SelectList(Model.Grades,"Id","Name"))"></select>
                                     <span asp-validation-for="GradeId" class="text-danger"></span>
-
                                 </div>
 
                                 <div class="form-group">

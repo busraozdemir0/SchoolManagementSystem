@@ -21,8 +21,6 @@ namespace BusinessLayer.FluentValidations
                 .NotEmpty()
                 .MinimumLength(3)
                 .WithName("İçerik");
-
-            
         }
     }
 }

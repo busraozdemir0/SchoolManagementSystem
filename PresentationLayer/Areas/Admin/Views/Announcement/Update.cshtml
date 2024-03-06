@@ -1,18 +1,18 @@
-﻿@model ReportAddDto
+﻿@model AnnouncementUpdateDto
 
 @{
-    ViewData["Title"] = "Haber Ekleme";
+    ViewData["Title"] = "Duyuru Güncelleme";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Haberler</h2>
+        <h2>Duyurular</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a asp-area="Admin" asp-controller="Report" asp-action="Index">Haberler</a>
+                <a asp-area="Admin" asp-controller="Announcement" asp-action="Index">Duyurular</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Haber Ekleme</strong>
+                <strong>Duyuru Güncelleme</strong>
             </li>
         </ol>
     </div>
@@ -27,16 +27,23 @@
 
                 <div class="col-md-12">
                     <div class="card mb-4">
-                        <form asp-controller="Report" asp-action="Add" method="post" enctype="multipart/form-data">
+                        <form asp-controller="Announcement" asp-action="Update" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly"></div>
                             <div class="card-body">
+                                <input type="hidden" asp-for="Id" />
+
+                                <div class="form-group">
+                                    <label asp-for="RoleId" class="form-label">Bu Duyuruyu Kime Yapacağınızı Seçin <span style="color:red;">*</span></label>
+                                    <select id="receiverList" class="form-control mb-1" asp-for="RoleId" asp-items="@(new SelectList(Model.Roles,"Id","Name"))"></select>
+                                    <small class="text-muted">Tüm Kullanıcılara Duyuru Yapabilmek İçin User Seçeneğini Seçin</small>
+                                </div>
 
                                 <div class="form-group">
                                     <label asp-for="Title" class="form-label">Başlık</label>
                                     <input asp-for="Title" type="text"
                                            class="form-control mb-1"
                                            id="defaultFormControlInput"
-                                           placeholder="Lütfen başlık giriniz."
+                                           placeholder="Lütfen duyuru başlığını giriniz."
                                            aria-describedby="defaultFormControlHelp" />
                                     <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
@@ -46,18 +53,9 @@
                                     <textarea asp-for="Content" type="text"
                                               class="form-control mb-1"
                                               id="defaultFormControlInput"
-                                              placeholder="Haber içeriği..."
+                                              placeholder="Duyuru içeriği..."
                                               aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
                                     <span asp-validation-for="Content" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="Image" class="form-label">Resim seçiniz</label>
-                                    <input asp-for="Image" type="file" accept="image/*"
-                                           class="form-control mb-1"
-                                           id="defaultFormControlInput"
-                                           aria-describedby="defaultFormControlHelp" />
-                                    <span asp-validation-for="Image" class="text-danger"></span>  @* accept="image/*" => sadece image tipindeki dosyalari kabul etmesi icin *@
                                 </div>
 
                                 <div class="form-group">

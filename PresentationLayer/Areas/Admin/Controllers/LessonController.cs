@@ -64,7 +64,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 _toast.AddErrorToastMessage(lessonAddDto.LessonName + " adlı ders eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
                 result.AddToModelState(this.ModelState);
             }
-            return View();
+            var grades = await _gradeService.GetListAsync();
+            var mapGrades = _mapper.Map<List<GradeDto>>(grades);
+            return View(new LessonAddDto { Grades = mapGrades });
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid lessonId)
@@ -101,7 +103,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 _toast.AddErrorToastMessage(lessonUpdateDto.LessonName + " adlı ders güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
                 result.AddToModelState(this.ModelState);
             }
-            return View();
+            var grades = await _gradeService.GetListAsync();
+            var mapGrades = _mapper.Map<List<GradeDto>>(grades);
+            return View(new LessonUpdateDto { Grades = mapGrades });
         }
         public async Task<IActionResult> Delete(Guid lessonId)
         {
