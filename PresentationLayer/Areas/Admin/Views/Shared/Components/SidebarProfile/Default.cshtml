@@ -1,0 +1,15 @@
+﻿
+@if (@ViewBag.GetLoggedInImageId is not null)
+{
+    <img src="~/images/@ViewBag.GetLoggedInImage" style="height:4em; width:4em;" class="rounded-circle" alt="profile">
+}
+else
+{
+    <img src="~/icons/@ViewBag.GetLoggedInImage" style="height:4em; width:4em;" alt="image" class="rounded-circle" />
+
+}
+
+<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+    <span class="block m-t-xs font-bold">Admin Paneli</span>
+    <span class="text-muted text-xs block">@ViewBag.GetLoggedInUserName <b class="caret"></b></span>
+</a>

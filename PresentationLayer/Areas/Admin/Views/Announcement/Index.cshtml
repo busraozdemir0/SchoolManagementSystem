@@ -36,6 +36,7 @@
                                 <tr>
                                     <th>Başlık</th>
                                     <th>İçerik</th>
+                                    <th>Duyuruyu Yapan Kullanıcı</th>
                                     <th>Alıcılar</th>
                                     <th>Oluşturulma Tarihi</th>
                                     <th>Durum</th>
@@ -46,6 +47,7 @@
                                 <tr>
                                     <th>Başlık</th>
                                     <th>İçerik</th>
+                                    <th>Duyuruyu Yapan Kullanıcı</th>
                                     <th>Alıcılar</th>
                                     <th>Oluşturulma Tarihi</th>
                                     <th>Durum</th>
@@ -58,6 +60,7 @@
                                     <tr name="@announcement.Id">
                                         <td>@announcement.Title</td>
                                         <td>@announcement.Content</td>
+                                        <td>@announcement.CreatedBy</td>
                                         <td>@announcement.Role.Name</td>
                                         <td>@announcement.CreatedDate.ToShortDateString()</td>
                                         <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>

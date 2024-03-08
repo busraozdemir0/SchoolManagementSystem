@@ -4,15 +4,32 @@
         <div class="widget-head-color-box navy-bg p-xs text-center">
             <div class="m-b-xs">
                 <h2 class="font-bold no-margins">
-                    Admin
+                    @ViewBag.GetLoggedInNameSurname
                 </h2>
 
             </div>
             @* style="width:85px; height:100px" *@
-            <img src="~/Admin/img/a4.jpg" class="rounded-circle circle-border m-b-xs" alt="profile">
+            @if (@ViewBag.GetLoggedInImageId is not null) @* Profil resmi bos degilse o resmi gosterecek. Bossa varsayilan resim gosterilecek.*@
+            {
+                <img src="~/images/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
+            }
+            else
+            {
+                <img src="~/icons/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
+            }
         </div>
         <div class="widget-text-box">
-            <p>Admin tüm sisteme müdahale edebilir.</p>
+            @if (ViewBag.GetLoggedInAbout is not null) @*Eger hakkımda yazisi yazilmamizsa varsayilan yazi gelsin.*@
+            {
+                <p>@ViewBag.GetLoggedInAbout</p>
+            }
+            else
+            {
+                <p>Atlas Koleji okulunun web sitesinde Admin kullanıcısı olarak görev almaktadır.
+                    Admin rolü sistemdeki tüm her şeye müdahale edebilmektedir.
+                </p>
+            }
+
         </div>
     </div>
     <div class="col-lg-2">
@@ -28,16 +45,21 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="widget lazur-bg p-xl">
+        <div class="widget lazur-bg p-md">
 
             <h2 class="font-bold">
-                Admin
+                @ViewBag.GetLoggedInNameSurname
             </h2>
             <ul class="list-unstyled m-t-md pb-3 pt-2">
                 <li>
+                    <span class="fa fa-user m-r-xs"></span>
+                    <label>Kullanıcı Adı:</label>
+                    @ViewBag.GetLoggedInUserName
+                </li>
+                <li>
                     <span class="fa fa-envelope m-r-xs"></span>
                     <label>E-Mail:</label>
-                    admin@gmail.com
+                    @ViewBag.GetLoggedInEmail
                 </li>
                 <li>
                     <span class="fa fa-home m-r-xs"></span>
@@ -47,7 +69,7 @@
                 <li>
                     <span class="fa fa-phone m-r-xs"></span>
                     <label>İletişim:</label>
-                    +90 (222) 222 22 22
+                    +90 @ViewBag.GetLoggedInPhone
                 </li>
             </ul>
 

@@ -7,6 +7,7 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace BusinessLayer.Extensions
         public static IServiceCollection LoadBusinessLayerExtension(this IServiceCollection services)
         {
             var assembly = Assembly.GetExecutingAssembly();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // Login olan kullaniciyi bulmamizi saglayacak olan kisim.
 
             services.AddScoped<IContactService, ContactManager>();
             services.AddScoped<IContactDal, EfContactRepository>();

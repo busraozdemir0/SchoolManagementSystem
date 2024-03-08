@@ -3,11 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="image" class="rounded-circle" src="~/Admin/img/profile_small.jpg" />
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="block m-t-xs font-bold">Admin Paneli</span>
-                        <span class="text-muted text-xs block">Admin <b class="caret"></b></span>
-                    </a>
+                    @await Component.InvokeAsync("SidebarProfile")
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a class="dropdown-item" href="profile.html">Profil</a></li>
                         <li><a class="dropdown-item" href="contacts.html">İletişim</a></li>
