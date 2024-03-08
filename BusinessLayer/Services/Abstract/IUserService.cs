@@ -21,5 +21,7 @@ namespace BusinessLayer.Services.Abstract
                                                                                                // Controller'da Item1, Item2 cikmasi yerine identityResult, email seklinde cikacak.
         Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto);
         Task LogOutUserAsync();
+        Task<UserProfileDto> GetUserProfileAsync();
+        Task<bool> UserProfileUpdateAsync(UserProfileDto userProfileDto); // Login olan kullanicinin profil guncelleme islemleri
     }
 }

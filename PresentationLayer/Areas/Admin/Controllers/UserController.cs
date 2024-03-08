@@ -157,5 +157,45 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var profile = await _userService.GetUserProfileAsync();
+            ViewBag.DefaultProfileImage = "user-avatar-profile.png"; // Eger hic profil resmi yuklenmemisse varsayilan resim gosterilecek.
+
+            return View(profile);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Profile(UserProfileDto userProfileDto)
+        {
+            var mapUser = _mapper.Map<AppUser>(userProfileDto);
+            var validation =await _validator.ValidateAsync(mapUser);
+
+            if (validation.IsValid)
+            {
+                var result = await _userService.UserProfileUpdateAsync(userProfileDto);
+                if (result)
+                {
+                    _toast.AddSuccessToastMessage("Profil güncelleme işlemi başarıyla tamamlandı.", new ToastrOptions { Title = "İşlem Başarılı!" });
+                    return RedirectToAction("Profile", "User", new { Area = "Admin" });
+                }
+                else
+                {
+                    var profile = await _userService.GetUserProfileAsync();
+
+                    _toast.AddErrorToastMessage("Profil güncelleme işlemi tamamlanamadı.", new ToastrOptions { Title = "İşlem Başarısız!" });
+                    return View(profile);
+                }
+            }
+            else
+            {
+                var profile = await _userService.GetUserProfileAsync();
+                ViewBag.DefaultProfileImage = "user-avatar-profile.png";
+
+                validation.AddToModelState(this.ModelState);
+                return View(profile);
+            }
+               
+        }
     }
 }

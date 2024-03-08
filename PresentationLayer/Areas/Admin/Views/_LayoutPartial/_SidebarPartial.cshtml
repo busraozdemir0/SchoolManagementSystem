@@ -5,7 +5,7 @@
                 <div class="dropdown profile-element">
                     @await Component.InvokeAsync("SidebarProfile")
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a class="dropdown-item" href="profile.html">Profil</a></li>
+                        <li><a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Profile">Profil</a></li>
                         <li><a class="dropdown-item" href="contacts.html">İletişim</a></li>
                         <li><a class="dropdown-item" href="mailbox.html">Mail Kutusu</a></li>
                         <li class="dropdown-divider"></li>
@@ -21,7 +21,7 @@
                 <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
             </li>
             <li>
-                <a href="layouts.html"><i class="fa fa-gear"></i> <span class="nav-label">Profil Ayarları</span></a>
+                <a asp-area="Admin" asp-controller="User" asp-action="Profile"><i class="fa fa-gear"></i> <span class="nav-label">Profil Ayarları</span></a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Mesajlar </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>

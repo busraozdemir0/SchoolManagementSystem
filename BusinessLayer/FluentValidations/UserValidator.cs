@@ -40,6 +40,7 @@ namespace BusinessLayer.FluentValidations
                 .NotEmpty()
                 .EmailAddress()
                 .WithName("E-Mail");
+
         }
 
     }

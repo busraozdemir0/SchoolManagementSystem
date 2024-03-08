@@ -43,7 +43,8 @@ namespace BusinessLayer.Helpers.Images
 
             var path = Path.Combine($"{_wwwroot}/{imgFolder}/{folderName}", newFileName);
 
-            await using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, 1024 * 1024, useAsync: false);
+            await using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, 
+                                                                            FileShare.None, 1024 * 1024, useAsync: false);
             await imageFile.CopyToAsync(stream);
             await stream.FlushAsync();
 

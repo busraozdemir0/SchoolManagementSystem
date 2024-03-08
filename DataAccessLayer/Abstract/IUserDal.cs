@@ -21,6 +21,7 @@ namespace DataAccessLayer.Abstract
                                                                                               // Controller'da Item1, Item2 cikmasi yerine identityResult, email seklinde cikacak.
         Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto);
         Task LogOutUserAsync();
+        Task<UserProfileDto> GetUserProfileAsync(); // Login olan kullanicinin bilgilerini getirme islemi
 
     }
 }

@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.Extensions;
+using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,13 +22,19 @@ namespace DataAccessLayer.EntityFramework
         private readonly RoleManager<AppRole> _roleManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ClaimsPrincipal _user;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager)
+        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
             _signInManager = signInManager;
+            _httpContextAccessor = httpContextAccessor;
+            _user = httpContextAccessor.HttpContext.User;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -72,6 +82,16 @@ namespace DataAccessLayer.EntityFramework
         public async Task<AppUser> GetAppUserByIdAsync(Guid userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());
+        }
+
+        public async Task<UserProfileDto> GetUserProfileAsync()
+        {
+            var userId = _user.GetLoggedInUserId();
+
+            var getUserWithImage = await _unitOfWork.GetRepository<AppUser>().GetAsync(x=>x.Id == userId, i=>i.Image);
+
+            var map=_mapper.Map<UserProfileDto>(getUserWithImage);
+            return map;
         }
 
         public async Task<string> GetUserRoleAsync(AppUser user)
