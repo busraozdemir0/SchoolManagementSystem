@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+@model UserLoginDto
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Atlas Koleji - Giriş Yap</title>
+    <!-- meta tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Art Sign Up Form Responsive Widget, Audio and Video players, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates,
+		Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
+    <!-- /meta tags -->
+    <link rel="icon" type="image/png" href="~/icons/lock.png" />
+    <!-- custom style sheet -->
+    <link href="~/Login/css/style.css" rel="stylesheet" type="text/css" />
+    <!-- /custom style sheet -->
+    <!-- fontawesome css -->
+    <link href="~/Login/css/fontawesome-all.css" rel="stylesheet" />
+    <!-- /fontawesome css -->
+    <!-- google fonts-->
+    <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <!-- /google fonts-->
+
+</head>
+
+<body>
+    <h1>Atlas Koleji</h1>
+    <div class=" w3l-login-form">
+        <h2>Giriş Yapın</h2>
+        <form asp-controller="Login" asp-action="Index" method="POST">
+            <div asp-validation-summary="All" style="color:red;"></div>
+            <div class=" w3l-form-group">
+                <label asp-for="UserName">Kullanıcı Adı:</label>
+                <div class="group">
+                    <i class="fas fa-user"></i>
+                    <input asp-for="UserName" type="text" class="form-control" placeholder="Kullanıcı Adı" required="required" />
+                    <span asp-validation-for="UserName"></span>
+                </div>
+            </div>
+            <div class=" w3l-form-group">
+                <label asp-for="Password">Şifre:</label>
+                <div class="group">
+                    <i class="fas fa-unlock"></i>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required="required" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+            </div>
+            <div class="forgot">
+                <a href="#">Şifremi Unuttum</a>
+                <p><input asp-for="RememberMe" type="checkbox">Beni Hatırla</p>
+            </div>
+            <button type="submit">Giriş</button>
+        </form>
+        <p class=" w3l-register-p">Bir hesabın yok mu?<a href="#" class="register"> Kayıt Ol</a></p>
+    </div>
+    <footer>
+        <p class="copyright-agileinfo"> &copy; @DateTime.Now.Year Giriş Paneli. Tüm Hakları Saklıdır | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+    </footer>
+
+</body>
+</html>

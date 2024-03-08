@@ -64,8 +64,9 @@ namespace BusinessLayer.Services.Concrete
 
             if (aboutUpdateDto.Photo != null)
             {
-                _imageHelper.Delete(about.Image.FileName);  // Once about tablosunda var olan resmi silecek
-                                                            // Ardindan yeni resim yukleme islemleri
+                if(aboutUpdateDto.ImageId != null) // Hakkımızda guncelleme sırasında eger ImageId bos degilse var olan resmi sil.
+                    _imageHelper.Delete(about.Image.FileName);  // Once about tablosunda var olan resmi silecek
+                                                                // Ardindan yeni resim yukleme islemleri
 
                 var imageUpload = await _imageHelper.Upload(aboutUpdateDto.Title, aboutUpdateDto.Photo, ImageType.Post);
                 Image image = new(imageUpload.FullName, aboutUpdateDto.Photo.ContentType);

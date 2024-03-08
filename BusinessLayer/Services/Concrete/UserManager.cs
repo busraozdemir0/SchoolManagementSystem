@@ -20,6 +20,16 @@ namespace BusinessLayer.Services.Concrete
             _userDal = userDal;
         }
 
+        public async Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto)
+        {
+            return await _userDal.LoginUserAsync(userLoginDto);
+        }
+
+        public async Task LogOutUserAsync()
+        {
+            await _userDal.LogOutUserAsync();
+        }
+
         public async Task<IdentityResult> TCreateUserAsync(UserAddDto userAddDto)
         {
             return await _userDal.CreateUserAsync(userAddDto);

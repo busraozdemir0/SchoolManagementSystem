@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
+using static PresentationLayer.ResultMessages.Messages;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
@@ -89,7 +90,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 result.AddToModelState(this.ModelState);
                 _toast.AddErrorToastMessage("Haber güncellenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
             }
-            return View();
+            var report = await _reportService.TGetByGuidAsync(reportUpdateDto.Id);
+            var mapReport = _mapper.Map<ReportUpdateDto>(report);
+            return View(new ReportUpdateDto { ImageId=mapReport.ImageId, Image=mapReport.Image});
         }
 
         public async Task<IActionResult> Delete(Guid reportId)

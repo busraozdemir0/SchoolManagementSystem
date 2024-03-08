@@ -51,8 +51,12 @@
                                 <i class="fa-solid fa-user" aria-hidden="true" style="font-size:1.1em; margin-bottom:8px;"></i><span class="caret">▾</span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item nav-link" href="#">&nbsp; &nbsp; &nbsp; ● Giriş Yap</a></li>
+                                <li><a class="dropdown-item nav-link" asp-controller="Login" asp-action="Index">&nbsp; &nbsp; &nbsp; ● Giriş Yap</a></li>
                                 <li><a class="dropdown-item nav-link" href="#">&nbsp; &nbsp; &nbsp; ● Kayıt Ol</a></li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a class="dropdown-item nav-link" asp-controller="Login" asp-action="LogOut">&nbsp; &nbsp; &nbsp; ● Çıkış Yap</a></li>
+                                }
                             </ul>
                         </div>
                     </li>

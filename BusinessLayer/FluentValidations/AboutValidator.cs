@@ -15,7 +15,7 @@ namespace BusinessLayer.FluentValidations
             RuleFor(x => x.Title)
                 .NotEmpty()
                 .MinimumLength(3)
-                 .WithName("Başlık");
+                .WithName("Başlık");
 
             RuleFor(x => x.Content)
                 .NotEmpty()

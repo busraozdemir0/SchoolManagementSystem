@@ -32,7 +32,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<Report>> GetListAsync()
         {
-            return await _reportDal.GetAllAsync(x=>!x.IsDeleted); // Silinmemis olan haberler
+            return await _reportDal.GetAllAsync(x => !x.IsDeleted); // Silinmemis olan haberler
         }
         public async Task<string> TAddReportAndImageAsync(ReportAddDto reportAddDto)
         {
@@ -64,7 +64,7 @@ namespace BusinessLayer.Services.Concrete
                 return report.Title;
             }
 
-            
+
         }
         public async Task TAddAsync(Report t)
         {
@@ -85,7 +85,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<Report> TGetByGuidAsync(Guid id)
         {
-            return await _unitOfWork.GetRepository<Report>().GetAsync(x=>x.Id==id, i => i.Image);
+            return await _unitOfWork.GetRepository<Report>().GetAsync(x => x.Id == id, i => i.Image);
         }
 
         public async Task<ReportListDto> TSearchAsync(string keyword, int currentPage = 1, int pageSize = 6, bool isAscending = false)
@@ -105,8 +105,9 @@ namespace BusinessLayer.Services.Concrete
 
             if (reportUpdateDto.Photo != null) // Eger bir resim secilmisse
             {
-                _imageHelper.Delete(report.Image.FileName); // Once haber'de var olan resmi silecek
-
+                if (reportUpdateDto.ImageId != null) // Eger haber guncelleme sirasında ImageId bos degilse yani bir resim varsa o resmi silecegiz.
+                    _imageHelper.Delete(report.Image.FileName); // Once haber'de var olan resmi silecek
+                
                 // Ardindan yeni bir image yukleme islemi
                 var imageUpload = await _imageHelper.Upload(reportUpdateDto.Title, reportUpdateDto.Photo, ImageType.Post);
                 Image image = new(imageUpload.FullName, reportUpdateDto.Photo.ContentType);
@@ -127,7 +128,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<string> TSafeDeleteReportAsync(Guid reportId)
         {
-           return await _reportDal.SafeDeleteReportAsync(reportId);
+            return await _reportDal.SafeDeleteReportAsync(reportId);
         }
 
         public async Task<string> TUndoDeleteReportAsync(Guid reportId)

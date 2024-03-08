@@ -16,13 +16,15 @@ namespace DataAccessLayer.EntityFramework
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _mapper;
 
-        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper)
+        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
+            _signInManager = signInManager;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -75,6 +77,20 @@ namespace DataAccessLayer.EntityFramework
         public async Task<string> GetUserRoleAsync(AppUser user)
         {
             return string.Join("", await _userManager.GetRolesAsync(user));
+        }
+
+        public async Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto)
+        {
+            var user = await _userManager.FindByNameAsync(userLoginDto.UserName);
+            if (user != null)
+                return await _signInManager.PasswordSignInAsync(user,userLoginDto.Password, userLoginDto.RememberMe,false);
+
+            return null;   
+        }
+
+        public async Task LogOutUserAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
 
         public async Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto)

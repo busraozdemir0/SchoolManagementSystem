@@ -50,7 +50,10 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 result.AddToModelState(this.ModelState);
                 _toast.AddErrorToastMessage("Hakkımızda bilgisi güncellenirken bir hata oluştu.", new ToastrOptions { Title = "Başarısız!" });
             }
-            return View();
+
+            var about = await _aboutService.GetListAsync();
+            var mapAboutUpdateDto = _mapper.Map<AboutUpdateDto>(about.First());
+            return View(new AboutUpdateDto { ImageId=mapAboutUpdateDto.ImageId, Image=mapAboutUpdateDto.Image});
         }
     }
 }
