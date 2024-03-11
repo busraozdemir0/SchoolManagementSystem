@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BusinessLayer.Helpers.Images;
 using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
@@ -19,14 +18,12 @@ namespace BusinessLayer.Services.Concrete
     {
         private readonly IReportDal _reportDal;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IImageHelper _imageHelper;
         private readonly IMapper _mapper;
 
-        public ReportManager(IReportDal reportDal, IUnitOfWork unitOfWork, IImageHelper imageHelper, IMapper mapper)
+        public ReportManager(IReportDal reportDal, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _reportDal = reportDal;
             _unitOfWork = unitOfWork;
-            _imageHelper = imageHelper;
             _mapper = mapper;
         }
 
@@ -36,35 +33,7 @@ namespace BusinessLayer.Services.Concrete
         }
         public async Task<string> TAddReportAndImageAsync(ReportAddDto reportAddDto)
         {
-            if (reportAddDto.Image != null) // Eger resim secmisse
-            {
-                // Resim yukleme islemleri
-                var imageUpload = await _imageHelper.Upload(reportAddDto.Title, reportAddDto.Image, ImageType.Post);
-                Image image = new(imageUpload.FullName, reportAddDto.Image.ContentType);
-                await _unitOfWork.GetRepository<Image>().AddAsync(image);
-
-                // Entity Constructure sayesinde resmiyle beraber Haber olusturduk.
-                var report = new Report(reportAddDto.Title, reportAddDto.Content, image.Id);
-
-                await _unitOfWork.GetRepository<Report>().AddAsync(report);
-                await _unitOfWork.SaveAsync();
-
-                return report.Title;
-            }
-            else // Resim secmemisse
-            {
-                var report = new Report() // Resim haricindeki alanlari report nesnesine aktar
-                {
-                    Title = reportAddDto.Title,
-                    Content = reportAddDto.Content,
-                };
-                await _reportDal.AddAsync(report); // ve bu report nesnesini kaydet
-                await _unitOfWork.SaveAsync();
-
-                return report.Title;
-            }
-
-
+           return await _reportDal.AddReportAndImageAsync(reportAddDto);
         }
         public async Task TAddAsync(Report t)
         {
@@ -101,29 +70,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<string> TUpdateReportAndImageAsync(ReportUpdateDto reportUpdateDto)
         {
-            var report = await _unitOfWork.GetRepository<Report>().GetAsync(x => x.Id == reportUpdateDto.Id, i => i.Image);
-
-            if (reportUpdateDto.Photo != null) // Eger bir resim secilmisse
-            {
-                if (reportUpdateDto.ImageId != null) // Eger haber guncelleme sirasında ImageId bos degilse yani bir resim varsa o resmi silecegiz.
-                    _imageHelper.Delete(report.Image.FileName); // Once haber'de var olan resmi silecek
-                
-                // Ardindan yeni bir image yukleme islemi
-                var imageUpload = await _imageHelper.Upload(reportUpdateDto.Title, reportUpdateDto.Photo, ImageType.Post);
-                Image image = new(imageUpload.FullName, reportUpdateDto.Photo.ContentType);
-                await _unitOfWork.GetRepository<Image>().AddAsync(image);
-
-                report.ImageId = image.Id;
-            }
-
-            report.Title = reportUpdateDto.Title;
-            report.Content = reportUpdateDto.Content;
-            report.ModifiedDate = DateTime.Now;
-
-            await _unitOfWork.GetRepository<Report>().UpdateAsync(report);
-            await _unitOfWork.SaveAsync();
-
-            return report.Title;
+            return await _reportDal.UpdateReportAndImageAsync(reportUpdateDto);
         }
 
         public async Task<string> TSafeDeleteReportAsync(Guid reportId)

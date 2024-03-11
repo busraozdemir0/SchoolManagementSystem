@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Context;
+using DataAccessLayer.Helpers.Images;
 using DataAccessLayer.Repository.Abstract;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
@@ -22,6 +23,8 @@ namespace DataAccessLayer.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>(); // IUnitOfWork istendiginde UnitOfWork'u kullanacak.
+
+            services.AddScoped<IImageHelper, ImageHelper>(); // Gorselleri Image tablosunda tutacagimiz icin Helper yazdik.
 
             return services;
         }

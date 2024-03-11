@@ -160,7 +160,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var profile = await _userService.GetUserProfileAsync();
+            var profile = await _userService.TGetUserProfileAsync();
             ViewBag.DefaultProfileImage = "user-avatar-profile.png"; // Eger hic profil resmi yuklenmemisse varsayilan resim gosterilecek.
 
             return View(profile);
@@ -173,7 +173,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             if (validation.IsValid)
             {
-                var result = await _userService.UserProfileUpdateAsync(userProfileDto);
+                var result = await _userService.TUserProfileUpdateAsync(userProfileDto);
                 if (result)
                 {
                     _toast.AddSuccessToastMessage("Profil güncelleme işlemi başarıyla tamamlandı.", new ToastrOptions { Title = "İşlem Başarılı!" });
@@ -181,7 +181,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 }
                 else
                 {
-                    var profile = await _userService.GetUserProfileAsync();
+                    var profile = await _userService.TGetUserProfileAsync();
 
                     _toast.AddErrorToastMessage("Profil güncelleme işlemi tamamlanamadı.", new ToastrOptions { Title = "İşlem Başarısız!" });
                     return View(profile);
@@ -189,7 +189,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             else
             {
-                var profile = await _userService.GetUserProfileAsync();
+                var profile = await _userService.TGetUserProfileAsync();
                 ViewBag.DefaultProfileImage = "user-avatar-profile.png";
 
                 validation.AddToModelState(this.ModelState);

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLayer.Helpers.Images
+namespace DataAccessLayer.Helpers.Images
 {
     public interface IImageHelper
     {

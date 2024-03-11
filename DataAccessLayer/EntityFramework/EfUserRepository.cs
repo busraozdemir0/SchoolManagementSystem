@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Extensions;
+using DataAccessLayer.Helpers.Images;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
+using EntityLayer.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +27,9 @@ namespace DataAccessLayer.EntityFramework
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IImageHelper _imageHelper;
 
-        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
+        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -35,6 +38,7 @@ namespace DataAccessLayer.EntityFramework
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
             _unitOfWork = unitOfWork;
+            _imageHelper = imageHelper;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -131,6 +135,68 @@ namespace DataAccessLayer.EntityFramework
             }
             else
                 return result;
+        }
+        private async Task<Guid> UploadImageForUser(UserProfileDto userProfileDto)
+        {
+            // Resim yukleme islemleri
+            var imageUpload = await _imageHelper.Upload($"{userProfileDto.Name} {userProfileDto.Surname}", userProfileDto.Photo, ImageType.User);
+            Image image = new(imageUpload.FullName, userProfileDto.Photo.ContentType);
+            await _unitOfWork.GetRepository<Image>().AddAsync(image);
+
+            return image.Id;
+        }
+        public async Task<bool> UserProfileUpdateAsync(UserProfileDto userProfileDto)
+        {
+            var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
+            var user = await GetAppUserByIdAsync(userId);
+
+            Guid? imageId = user.ImageId; // Giris yapan kullanicinin image id'si
+
+            var isVerified = await _userManager.CheckPasswordAsync(user, userProfileDto.CurrentPassword); // Mevcuttaki sifre dogruysa true donecek.
+            if (isVerified && userProfileDto.NewPassword != null) // Eger yeni sifre alanina deger girilmisse sifre degistirme islemi yapilacak.
+            {
+                var result = await _userManager.ChangePasswordAsync(user, userProfileDto.CurrentPassword, userProfileDto.NewPassword); // Sifre degisme islemi
+                if (result.Succeeded)
+                {
+                    await _userManager.UpdateSecurityStampAsync(user);
+                    LogOutUserAsync(); // Sifre degistirildigi icin cikis yaptirdik.
+                    await _signInManager.PasswordSignInAsync(user, userProfileDto.NewPassword, true, false); // Ardindan yeni sifreyle otomatikman tekrar giris yaptiriyoruz.
+
+                    _mapper.Map(userProfileDto, user);
+
+                    user.ImageId = imageId;
+
+                    if (userProfileDto.Photo != null) // Eger kullanici resim sectiyse resim yukleme isleminin ardindan ImageId bilgisi guncelleniyor.
+                        user.ImageId = await UploadImageForUser(userProfileDto);
+
+                    await _userManager.UpdateAsync(user);
+                    await _unitOfWork.SaveAsync();
+
+                    return true;
+                }
+
+                else
+                    return false;
+            }
+            else if (isVerified)
+            {
+                await _userManager.UpdateSecurityStampAsync(user);
+
+                _mapper.Map(userProfileDto, user);
+
+                user.ImageId = imageId;
+
+                if (userProfileDto.Photo != null) // Eger kullanici resim sectiyse resim yukleme isleminin ardindan ImageId bilgisi guncelleniyor.
+                    user.ImageId = await UploadImageForUser(userProfileDto);
+
+                await _userManager.UpdateAsync(user);
+                await _unitOfWork.SaveAsync();
+
+                return true;
+            }
+
+            else
+                return false;
         }
     }
 }

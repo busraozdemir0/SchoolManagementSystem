@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Repository.Abstract;
+using EntityLayer.DTOs.Abouts;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace DataAccessLayer.Abstract
     public interface IAboutDal : IRepository<About>
     {
         Task<About> GetByIdAsync(int id);
+        Task UpdateAboutAndImage(AboutUpdateDto aboutUpdateDto);
     }
 }

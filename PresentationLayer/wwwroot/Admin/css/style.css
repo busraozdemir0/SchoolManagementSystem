@@ -2515,6 +2515,23 @@ table.dataTable thead .sorting_desc_disabled {
 .dataTables_wrapper {
   padding-bottom: 30px;
 }
+
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: #697a8d;
+    --bs-table-striped-bg: #f9fafb;
+    --bs-table-active-color: #697a8d;
+    --bs-table-active-bg: rgba(67, 89, 113, 0.1);
+    --bs-table-hover-color: #697a8d;
+    --bs-table-hover-bg: rgba(67, 89, 113, 0.06);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #697a8d;
+    vertical-align: middle;
+    border-color: #d9dee3;
+}
+
 .dataTables_length {
   float: left;
 }

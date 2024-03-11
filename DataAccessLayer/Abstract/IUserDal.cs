@@ -22,6 +22,7 @@ namespace DataAccessLayer.Abstract
         Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto);
         Task LogOutUserAsync();
         Task<UserProfileDto> GetUserProfileAsync(); // Login olan kullanicinin bilgilerini getirme islemi
+        Task<bool> UserProfileUpdateAsync(UserProfileDto userProfileDto);
 
     }
 }
