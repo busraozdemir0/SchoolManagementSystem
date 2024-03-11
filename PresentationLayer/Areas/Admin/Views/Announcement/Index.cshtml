@@ -59,7 +59,7 @@
                                 {
                                     <tr name="@announcement.Id">
                                         <td>@announcement.Title</td>
-                                        <td>@announcement.Content</td>
+                                        <td>@Html.Raw(announcement.Content)</td>
                                         <td>@announcement.CreatedBy</td>
                                         <td>@announcement.Role.Name</td>
                                         <td>@announcement.CreatedDate.ToShortDateString()</td>

@@ -21,7 +21,7 @@
         <div class="widget-text-box">
             @if (ViewBag.GetLoggedInAbout is not null) @*Eger hakkımda yazisi yazilmamizsa varsayilan yazi gelsin.*@
             {
-                <p>@ViewBag.GetLoggedInAbout</p>
+                <p>@Html.Raw(ViewBag.GetLoggedInAbout)</p>
             }
             else
             {

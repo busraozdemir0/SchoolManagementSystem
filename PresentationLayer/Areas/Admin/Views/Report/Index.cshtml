@@ -55,7 +55,7 @@
                                 {
                                     <tr name="@report.Id">
                                         <td>@report.Title</td>
-                                        <td>@report.Content</td>
+                                        <td>@Html.Raw(report.Content)</td>
                                         <td>@report.CreatedDate.ToShortDateString()</td>
                                         <td>@(report.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">

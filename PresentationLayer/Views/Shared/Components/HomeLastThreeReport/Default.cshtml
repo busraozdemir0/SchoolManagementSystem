@@ -25,7 +25,8 @@
                             <div class="blog-info">
                                 <h4><a data-id="@report.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@report.Title</a></h4>
                                 <p>
-                                    @report.Content ...
+                                   @*  @Html.Raw(report.Content) ... *@
+                                    @Regex.Replace(report.Content, @"<[^>]*>|&nbsp;", "").Substring(0, 30)...
                                 </p>
                                 <div class="d-flex align-items-center justify-content-between mt-4">
                                     <a class="d-flex align-items-center" href="#blog" title="23k followers">

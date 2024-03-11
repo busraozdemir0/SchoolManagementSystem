@@ -10,9 +10,9 @@
             </div>
             <div class="col-xl-5 col-lg-6 offset-xl-1 mt-lg-0 mt-5 pt-lg-0 pt-5">
                 <p class="text-uppercase" style="text-align:center;">MİSYONUMUZ & VİZYONUMUZ</p>
-                <h3 class="title-style" style="text-align:center;">@Model.Title</h3>
+                <h3 class="title-style" style="text-align:center;">@Html.Raw(Model.Title)</h3>
                 <p class="mt-4">
-                    @Model.Content
+                    @Html.Raw(Model.Content)
                 </p>
                 <a asp-controller="Contact" asp-action="Index" class="btn btn-style mt-5">İletişim</a>
             </div>

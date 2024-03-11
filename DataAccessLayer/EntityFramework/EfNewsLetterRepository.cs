@@ -11,6 +11,13 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Routing.Template;
+using System.IO;
+using System.Web;
+using System.Text.RegularExpressions;
+
 
 namespace DataAccessLayer.EntityFramework
 {
@@ -78,6 +85,7 @@ namespace DataAccessLayer.EntityFramework
                 {
                     using (MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail.EMail, subject, body))
                     {
+                        mailMessage.IsBodyHtml = true; // Mesaj Html elemanlar icerdigi icin
                         smtpClient.Send(mailMessage);
                     }
                 }

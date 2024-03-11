@@ -1,7 +1,7 @@
 ﻿@model ReportDto
 
 @{
-    ViewData["Title"] = "Haber "+Model.Title;
+    ViewData["Title"] = "Haber " + @Model.Title;
 }
 
 <!-- inner banner -->
@@ -49,7 +49,7 @@
                                 </ul>
                             </div>
                         <h4 style="text-align:center;"><a href="#">@Model.Title</a></h4>
-                        <p>@Model.Content</p>
+                        <p>@Html.Raw(Model.Content)</p>
                             <div class="top-content-border align-items-center justify-content-between mt-4 pt-4">
                                 <h6></h6>
                                 <a class="btn btn-style-primary" asp-controller="Report" asp-action="Index">
