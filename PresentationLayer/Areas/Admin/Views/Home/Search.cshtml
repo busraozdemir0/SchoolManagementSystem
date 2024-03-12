@@ -1,0 +1,252 @@
+﻿@model SearchModel
+
+@{
+    ViewData["Title"] = "Arama Sonuçları";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Arama Sonuçları</h2>
+        @*    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+        <a href="index.html">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+        Extra Pages
+        </li>
+        <li class="breadcrumb-item active">
+        <strong>	Search Page</strong>
+        </li>
+        </ol> *@
+    </div>
+</div>
+
+@if (ViewBag.Keyword is null)
+{
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-content p-5">
+                    <h2>
+                        Aradığınız “@ViewBag.Keyword” kelimesine ait sonuç bulunamadı... :(
+                    </h2>
+                    <p style="color:gray;">Lütfen tekrar deneyin.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+else if (Model.Announcements.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var announcement in Model.Announcements)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="Announcement" asp-action="Update" asp-route-announcementId="@announcement.Id">@announcement.Title</a></h3>
+                                <a href="#" class="search-link">@(((DateTime)announcement.CreatedDate).ToString("dd-MM-yyyy"))</a>
+                                <p>
+                                    @Html.Raw(announcement.Content)
+                                </p>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.Contacts.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var contact in Model.Contacts)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="Contact" asp-action="Detail" asp-route-contactId="@contact.Id">@contact.Subject</a></h3>
+                                <a href="#">@contact.NameSurname ~ @contact.EMail ~ Oluşturulma Tarihi: @(((DateTime)contact.CreatedDate).ToString("dd-MM-yyyy"))</a>
+                                <p>
+                                    @contact.Message
+                                </p>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.Grades.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var grade in Model.Grades)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="Grade" asp-action="Update" asp-route-gradeId="@grade.Id">@grade.Name</a></h3>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.Lessons.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var lesson in Model.Lessons)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id">@lesson.LessonName</a></h3>
+                                <a href="#" class="search-link">Ders Kodu: @lesson.LessonCode - Ders Saati: @lesson.LessonCredit</a>
+
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.Reports.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var report in Model.Reports)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="Report" asp-action="Update" asp-route-reportId="@report.Id">@report.Title</a></h3>
+                                <a href="#" class="search-link">@(((DateTime)report.CreatedDate).ToString("dd-MM-yyyy"))</a>
+                                <p>
+                                    @Html.Raw(report.Content)
+                                </p>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.Roles.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var role in Model.Roles)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="Role" asp-action="Update" asp-route-roleId="@role.Id">@role.Name</a></h3>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.Users.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @ViewBag.Result sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var user in Model.Users)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-userId="@user.Id">@user.Name @user.Surname</a></h3>
+                                <a href="#" class="search-link">@user.UserName - @user.Email</a>
+                                <p>
+                                    @user.Role
+                                </p>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content p-5">
+                        <h2>
+                            Aradığınız “@ViewBag.Keyword” kelimesine ait sonuç bulunamadı... :(
+                        </h2>
+                        <p style="color:gray;">Lütfen tekrar deneyin.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

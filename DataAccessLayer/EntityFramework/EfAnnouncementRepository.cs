@@ -2,6 +2,8 @@
 using DataAccessLayer.Context;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.Announcements;
+using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;

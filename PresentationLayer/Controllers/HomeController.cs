@@ -14,13 +14,11 @@ namespace PresentationLayer.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IReportService _reportService;
         private readonly IToastNotification _toast;
 
-        public HomeController(ILogger<HomeController> logger, IReportService reportService, IToastNotification toast)
+        public HomeController(IReportService reportService, IToastNotification toast)
         {
-            _logger = logger;
             _reportService = reportService;
             _toast = toast;
         }
