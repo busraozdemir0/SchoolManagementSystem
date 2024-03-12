@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
     $('#usersTable').DataTable({
         dom:
-            "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-3'f>>" +
-            "<'row'<'col-sm-11'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-6'p>>",
+            "<'row'<'col-sm-3 col-md-3 col-lg-3'l><'col-sm-2 col-md-2 col-lg-4 text-center'B><'col-sm-7 col-md-7 col-lg-5'f>>" +
+            "<'row'<'col-sm-12 table-responsive'tr>>" +
+            "<'row'<'col-sm-6'i><'col-sm-6'p>>",
         buttons: [
         ],
         language: {
