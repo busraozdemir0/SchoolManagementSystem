@@ -2,6 +2,7 @@
 using DataAccessLayer.Helpers.Search;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using X.PagedList;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
@@ -24,13 +25,13 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> Search(string keyword)
+        public async Task<IActionResult> Search([FromQuery] string keyword, int page=1)
         {
-            ViewBag.Keyword = keyword;          
+            ViewBag.Keyword = keyword;
 
             if (keyword == null)
             {
-                _toast.AddErrorToastMessage("Aradığınız ifadeye uygun sonuç bulunamadı.",new ToastrOptions { Title="Başarısız!"});
+                _toast.AddErrorToastMessage("Aradığınız ifadeye uygun sonuç bulunamadı.", new ToastrOptions { Title = "Başarısız!" });
                 return View();
             }
 
@@ -45,7 +46,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             else
             {
-                var result = await _searchProcess.SearchAsync(keyword);
+                var result = await _searchProcess.SearchAsync(keyword,page);
                 return View(result);
             }
         }

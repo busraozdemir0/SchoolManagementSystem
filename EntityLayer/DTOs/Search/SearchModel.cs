@@ -5,18 +5,20 @@ using EntityLayer.DTOs.Lessons;
 using EntityLayer.DTOs.Reports;
 using EntityLayer.DTOs.Roles;
 using EntityLayer.DTOs.Users;
+using EntityLayer.Entities;
+using X.PagedList;
 
 namespace EntityLayer.DTOs.Search
 {
     public class SearchModel
     {    
-        public List<AnnouncementListDto> Announcements { get; set; }
-        public List<ContactDto> Contacts { get; set; }
-        public List<GradeListDto> Grades { get; set; }
-        public List<LessonListDto> Lessons { get; set; }
-        public List<ReportDto> Reports { get; set; }
-        public List<RoleListDto> Roles { get; set; }
-        public List<UserListDto> Users { get; set; }
+        public IPagedList<Announcement> Announcements { get; set; }
+        public IPagedList<Contact> Contacts { get; set; }
+        public IPagedList<Grade> Grades { get; set; }
+        public IPagedList<Lesson> Lessons { get; set; }
+        public IPagedList<Report> Reports { get; set; }
+        public IPagedList<AppRole> Roles { get; set; }
+        public IPagedList<AppUser> Users { get; set; }
 
     }
 }
