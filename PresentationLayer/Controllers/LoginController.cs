@@ -30,12 +30,12 @@ namespace PresentationLayer.Controllers
                 }
                 else // Giris basarili degilse mesaj dondurecek bir error ekliyoruz.
                 {
-                    ModelState.AddModelError("", "E-Posta veya şifreniz yanlıştır.");
+                    ModelState.AddModelError("", "Kullanıcı adınız veya şifreniz yanlıştır.");
                     return View(); // tekrar Login'i getir
                 }
             }else
             {
-                ModelState.AddModelError("", "E-Posta veya şifreniz yanlıştır.");
+                ModelState.AddModelError("", "Kullanıcı adınız veya şifreniz yanlıştır.");
                 return View();
             }
         }

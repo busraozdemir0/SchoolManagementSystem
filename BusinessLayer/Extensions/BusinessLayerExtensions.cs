@@ -7,6 +7,7 @@ using EntityLayer.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace BusinessLayer.Extensions
             {
                 opt.RegisterValidatorsFromAssemblyContaining<ContactValidator>();
                 opt.DisableDataAnnotationsValidation = true;
-                opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr"); // fluent validation'un turkcelestirilmesi
+                opt.ValidatorOptions.LanguageManager.Culture = new CultureInfo("tr");
             });
 
             return services;

@@ -3,6 +3,7 @@ using BusinessLayer.Extensions;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using EntityLayer.Entities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
 using System.Globalization;
@@ -15,11 +16,6 @@ builder.Services.LoadBusinessLayerExtension();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-     //.AddNToastNotifyNoty(new NotyOptions()  // Toastr bildirimleri icin configurasyon
-     //{
-     //    Layout = "bottomRight",  // Bildirimin sag alt kosede cikmasi icin
-     //    Timeout = 3000   // Bildirim kac ms gosterilsin (3 sn olarak belirttik)
-     //})
      .AddNToastNotifyToastr(new ToastrOptions() // Toastr bildirimleri icin configurasyon
      {
          PositionClass = ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik

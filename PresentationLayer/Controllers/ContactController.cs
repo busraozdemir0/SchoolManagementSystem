@@ -5,6 +5,7 @@ using EntityLayer.DTOs.Contacts;
 using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NToastNotify;
 
 namespace PresentationLayer.Controllers
@@ -33,18 +34,18 @@ namespace PresentationLayer.Controllers
             var map=_mapper.Map<Contact>(contactAddDto);
             var result = await _validator.ValidateAsync(map);
 
-            if(result.IsValid)
+            if (result.IsValid)
             {
                 await _contactService.TAddAsync(map);
-                _toast.AddSuccessToastMessage("Mesaj başarıyla gönderildi.", new ToastrOptions { Title = "Başarılı!" });
+                _toast.AddSuccessToastMessage("Mesajınız başarıyla gönderildi.", new ToastrOptions { Title = "İşlem Başarılı!" });
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                result.AddToModelState(this.ModelState);
-                _toast.AddErrorToastMessage("Mesaj gönderilirken bir hata oluştu.", new ToastrOptions { Title = "Başarısız!" });   
+                 result.AddToModelState(this.ModelState);
+
+                _toast.AddErrorToastMessage("Mesajınız gönderilirken bir hata oluştu.", new ToastrOptions { Title = "İşlem Başarısız!" });
             }
-            
             return RedirectToAction("Index", "Contact");
         }
         

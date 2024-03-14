@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Helpers.Search;
+using EntityLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using X.PagedList;
@@ -25,7 +26,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] string keyword, int page=1)
+        public async Task<IActionResult> Search([FromQuery] string keyword, int page = 1)
         {
             ViewBag.Keyword = keyword;
 
@@ -46,7 +47,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             else
             {
-                var result = await _searchProcess.SearchAsync(keyword,page);
+                var result = await _searchProcess.SearchAsync(keyword, page);
                 return View(result);
             }
         }

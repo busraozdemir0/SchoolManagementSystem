@@ -15,7 +15,7 @@ namespace BusinessLayer.FluentValidations
         {
             RuleFor(x => x.NameSurname)
                 .NotNull()
-                .MinimumLength(3)
+                .MinimumLength(2)
                 .MaximumLength(150)
                 .WithName("İsim Soyisim");
 
@@ -26,13 +26,13 @@ namespace BusinessLayer.FluentValidations
             
             RuleFor(x => x.Subject)
                 .NotNull()
-                .MinimumLength(3)
+                .MinimumLength(2)
                 .MaximumLength(150)
                 .WithName("Konu");
 
             RuleFor(x => x.Message)
                 .NotNull()
-                .MinimumLength(3)
+                .MinimumLength(2)
                 .WithName("Mesaj");
 
             
