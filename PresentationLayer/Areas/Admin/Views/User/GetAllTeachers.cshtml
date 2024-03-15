@@ -26,7 +26,7 @@
             <div class="ibox ">
                 <div class="card">
                     <div class="text-nowrap m-5">
-                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="User" asp-action="Add">
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="User" asp-action="AddTeacher">
                             Öğretmen Ekle <i class="fa fa-plus"></i>
                         </a>
                         <table class="table table-striped" id="usersTable" width="100%" cellspacing="0">
@@ -65,7 +65,7 @@
                                             <td>@user.UserName</td>
                                             <td>@user.Role</td>
                                             <td class="text-center">
-                                                <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-userId="@user.Id"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="UpdateTeacher" asp-route-userId="@user.Id"><i class="fa fa-edit"></i></a>
                                                 <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id"><i class="fa fa-minus-circle"></i></a>
 
                                             </td>

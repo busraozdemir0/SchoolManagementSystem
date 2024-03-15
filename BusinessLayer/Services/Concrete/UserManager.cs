@@ -90,5 +90,25 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _userDal.GetUserGradeIdAsync(user);
         }
+
+        public async Task<IdentityResult> TCreateStudentAsync(UserAddDto userAddDto)
+        {
+            return await _userDal.CreateStudentAsync(userAddDto);
+        }
+
+        public async Task<IdentityResult> TCreateTeacherAsync(UserAddDto userAddDto)
+        {
+            return await _userDal.CreateTeacherAsync(userAddDto);
+        }
+
+        public async Task<IdentityResult> TUpdateStudentAsync(UserUpdateDto userUpdateDto)
+        {
+            return await _userDal.UpdateStudentAsync(userUpdateDto);
+        }
+
+        public async Task<IdentityResult> TUpdateTeacherAsync(UserUpdateDto userUpdateDto)
+        {
+            return await _userDal.UpdateTeacherAsync(userUpdateDto);
+        }
     }
 }

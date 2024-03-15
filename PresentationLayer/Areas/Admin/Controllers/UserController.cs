@@ -54,7 +54,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var roles = await _roleService.TGetAllRolesAsync();
 
             var grades = await _gradeService.GetListAsync();
-            return View(new UserAddDto { Roles = roles, Grades=grades });
+            return View(new UserAddDto { Roles = roles, Grades = grades });
         }
 
         [HttpPost]
@@ -80,10 +80,77 @@ namespace PresentationLayer.Areas.Admin.Controllers
                     _toast.AddErrorToastMessage("Kullanıcı eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
 
                     validation.AddToModelState(this.ModelState);
-                    return View(new UserAddDto { Roles = roles });
+                    return View(new UserAddDto { Roles = roles, Grades = grades });
                 }
             }
             return View(new UserAddDto { Roles = roles, Grades = grades });
+        }
+        [HttpGet]
+        public async Task<IActionResult> AddTeacher()
+        {
+            var grades = await _gradeService.GetListAsync();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTeacher(UserAddDto userAddDto)
+        {
+            var mapUser = _mapper.Map<AppUser>(userAddDto);
+            var validation = await _validator.ValidateAsync(mapUser);
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.TCreateTeacherAsync(userAddDto);
+                if (result.Succeeded)
+                {
+                    _toast.AddSuccessToastMessage(Messages.User.Add(userAddDto.UserName), new ToastrOptions { Title = "Başarılı!" });
+                    return RedirectToAction("GetAllTeachers", "User", new { Area = "Admin" });
+                }
+                else
+                {
+                    result.AddToIdentityModelState(this.ModelState);
+                    _toast.AddErrorToastMessage("Öğretmen eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+
+                    validation.AddToModelState(this.ModelState);
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddStudent()
+        {
+            var grades = await _gradeService.GetListAsync();
+            return View(new UserAddDto { Grades = grades });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddStudent(UserAddDto userAddDto)
+        {
+            var mapUser = _mapper.Map<AppUser>(userAddDto);
+            var validation = await _validator.ValidateAsync(mapUser);
+
+            var grades = await _gradeService.GetListAsync();
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.TCreateStudentAsync(userAddDto);
+                if (result.Succeeded)
+                {
+                    _toast.AddSuccessToastMessage(Messages.User.Add(userAddDto.UserName), new ToastrOptions { Title = "Başarılı!" });
+                    return RedirectToAction("GetAllStudents", "User", new { Area = "Admin" });
+                }
+                else
+                {
+                    result.AddToIdentityModelState(this.ModelState);
+                    _toast.AddErrorToastMessage("Öğrenci eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+
+                    validation.AddToModelState(this.ModelState);
+                    return View(new UserAddDto { Grades = grades });
+                }
+            }
+            return View(new UserAddDto { Grades = grades });
         }
 
         [HttpGet]
@@ -98,7 +165,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var userRoleId = await _roleService.TGetByIdRoleAsync(userRole);
 
             var roles = await _roleService.TGetAllRolesAsync(); // Roller        
-            
+
             var mapUserUpdateDto = _mapper.Map<UserUpdateDto>(user);
             mapUserUpdateDto.Roles = roles;
             mapUserUpdateDto.RoleId = userRoleId;
@@ -110,7 +177,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 ViewBag.IsStudent = true; // Ogrenci mi bilgisi view'a yansitilmasi icin
 
                 var gradeId = await _userService.TGetUserGradeIdAsync(user);
-      
+
                 mapUserUpdateDto.GradeId = gradeId;
             }
             return View(mapUserUpdateDto);
@@ -136,7 +203,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                     var validation = await _validator.ValidateAsync(map);
 
                     if (validation.IsValid)
-                    {                       
+                    {
                         user.SecurityStamp = Guid.NewGuid().ToString();
 
                         var result = await _userService.TUpdateUserAsync(userUpdateDto);
@@ -157,7 +224,118 @@ namespace PresentationLayer.Areas.Admin.Controllers
                         validation.AddToModelState(this.ModelState);
                         return View(new UserUpdateDto { Roles = roles, Grades = grades });
                     }
-                }               
+                }
+            }
+            return NotFound(); // User'ı bulamazsa NotFound donecek.
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateTeacher(Guid userId)
+        {
+            var user = await _userService.TGetAppUserByIdAsync(userId);
+
+            var userRoleId = await _roleService.TGetByIdRoleAsync(RoleConsts.Teacher); // Teacher rolu      
+
+            var mapUserUpdateDto = _mapper.Map<UserUpdateDto>(user);
+            mapUserUpdateDto.RoleId = userRoleId;
+            return View(mapUserUpdateDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateTeacher(UserUpdateDto userUpdateDto)
+        {
+            var user = await _userService.TGetAppUserByIdAsync(userUpdateDto.Id);
+
+            if (user != null) // Eger boyle bir kullanici varsa
+            {
+                if (ModelState.IsValid)
+                {
+                    var map = _mapper.Map(userUpdateDto, user);
+                    var validation = await _validator.ValidateAsync(map);
+
+                    if (validation.IsValid)
+                    {
+                        user.SecurityStamp = Guid.NewGuid().ToString();
+
+                        var result = await _userService.TUpdateTeacherAsync(userUpdateDto);
+                        if (result.Succeeded)
+                        {
+                            _toast.AddSuccessToastMessage(Messages.User.Update(userUpdateDto.UserName), new ToastrOptions { Title = "Başarılı!" });
+                            return RedirectToAction("GetAllTeachers", "User", new { Area = "Admin" });
+                        }
+                        else
+                        {
+                            result.AddToIdentityModelState(this.ModelState);
+                            _toast.AddErrorToastMessage("Öğretmen güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        validation.AddToModelState(this.ModelState);
+                        return View();
+                    }
+                }
+            }
+            return NotFound(); // User'ı bulamazsa NotFound donecek.
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateStudent(Guid userId)
+        {
+            var user = await _userService.TGetAppUserByIdAsync(userId);
+            var grades = await _gradeService.GetListAsync(); // Siniflar
+
+            var userRoleId = await _roleService.TGetByIdRoleAsync(RoleConsts.Student); // Student rolu       
+
+            var mapUserUpdateDto = _mapper.Map<UserUpdateDto>(user);
+            mapUserUpdateDto.RoleId = userRoleId;
+
+            mapUserUpdateDto.Grades = grades;
+
+            var gradeId = await _userService.TGetUserGradeIdAsync(user);
+            mapUserUpdateDto.GradeId = gradeId;
+
+            return View(mapUserUpdateDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStudent(UserUpdateDto userUpdateDto)
+        {
+            var user = await _userService.TGetAppUserByIdAsync(userUpdateDto.Id);
+
+            if (user != null) // Eger boyle bir kullanici varsa
+            {
+                var grades = await _gradeService.GetListAsync(); // Siniflar
+
+                if (ModelState.IsValid)
+                {
+                    var map = _mapper.Map(userUpdateDto, user); 
+                    var validation = await _validator.ValidateAsync(map);
+
+                    if (validation.IsValid)
+                    {
+                        user.SecurityStamp = Guid.NewGuid().ToString();
+
+                        var result = await _userService.TUpdateStudentAsync(userUpdateDto);
+                        if (result.Succeeded)
+                        {
+                            _toast.AddSuccessToastMessage(Messages.User.Update(userUpdateDto.UserName), new ToastrOptions { Title = "Başarılı!" });
+                            return RedirectToAction("GetAllStudents", "User", new { Area = "Admin" });
+                        }
+                        else
+                        {
+                            result.AddToIdentityModelState(this.ModelState);
+                            _toast.AddErrorToastMessage("Öğrenci güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                            return View(new UserUpdateDto { Grades = grades });
+                        }
+                    }
+                    else
+                    {
+                        validation.AddToModelState(this.ModelState);
+                        return View(new UserUpdateDto { Grades = grades });
+                    }
+                }
             }
             return NotFound(); // User'ı bulamazsa NotFound donecek.
         }
@@ -190,7 +368,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         public async Task<IActionResult> Profile(UserProfileDto userProfileDto)
         {
             var mapUser = _mapper.Map<AppUser>(userProfileDto);
-            var validation =await _validator.ValidateAsync(mapUser);
+            var validation = await _validator.ValidateAsync(mapUser);
 
             if (validation.IsValid)
             {
@@ -216,7 +394,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 validation.AddToModelState(this.ModelState);
                 return View(profile);
             }
-               
+
         }
     }
 }

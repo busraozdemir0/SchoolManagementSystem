@@ -31,6 +31,7 @@ namespace DataAccessLayer.EntityFramework
         private readonly IRoleDal _roleDal;
 
         public const string Student = "Öğrenci";
+        public const string Teacher = "Öğretmen";
 
         public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal)
         {
@@ -59,19 +60,66 @@ namespace DataAccessLayer.EntityFramework
                     Random randomStudentNo = new Random();
                     mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
 
-                    foreach(var user in _userManager.Users)
+                    foreach (var user in _userManager.Users)
                     {
-                        if(mapUser.StudentNo==user.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
+                        if (mapUser.StudentNo == user.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
                             mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
                     }
                 }
                 await _userManager.AddToRoleAsync(mapUser, findRole.ToString());
+                await _unitOfWork.SaveAsync();
+
                 return result;
             }
             else
                 return result;
         }
 
+        public async Task<IdentityResult> CreateStudentAsync(UserAddDto userAddDto)
+        {
+            var mapUser = _mapper.Map<AppUser>(userAddDto);
+
+            var result = await _userManager.CreateAsync(mapUser, string.IsNullOrEmpty(userAddDto.Password) ? "" : userAddDto.Password);
+
+            if (result.Succeeded)
+            {
+                var findStudentRoleId = await _roleDal.GetByIdRoleAsync(Student); // Ogrenci rolu
+                var findRole = await _roleManager.FindByIdAsync(findStudentRoleId.ToString());
+
+                Random randomStudentNo = new Random();
+                mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
+
+                foreach (var user in _userManager.Users)
+                {
+                    if (mapUser.StudentNo == user.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
+                        mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
+                }
+
+                await _userManager.AddToRoleAsync(mapUser, findRole.ToString());
+
+                await _unitOfWork.SaveAsync();
+                return result;
+            }
+            else
+                return result;
+        }
+        public async Task<IdentityResult> CreateTeacherAsync(UserAddDto userAddDto)
+        {
+            var mapUser = _mapper.Map<AppUser>(userAddDto);
+
+            var result = await _userManager.CreateAsync(mapUser, string.IsNullOrEmpty(userAddDto.Password) ? "" : userAddDto.Password);
+
+            if (result.Succeeded)
+            {
+                var findTeacherRoleId = await _roleDal.GetByIdRoleAsync(Teacher); // Ogretmen rolu
+                var findRole = await _roleManager.FindByIdAsync(findTeacherRoleId.ToString());
+
+                await _userManager.AddToRoleAsync(mapUser, findRole.ToString());
+                return result;
+            }
+            else
+                return result;
+        }
         public async Task<(IdentityResult identityResult, string? userName)> DeleteUserAsync(Guid userId)
         {
             var user = await GetAppUserByIdAsync(userId);
@@ -153,30 +201,56 @@ namespace DataAccessLayer.EntityFramework
                 var findRole = await _roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString()); // View tarafinda SelectList uzerinden secilmis olan rolun id'sine gore rolu bul
                 await _userManager.AddToRoleAsync(user, findRole.Name); // Bulunan rolu guncellenecek olan kullaniciya ata
 
-                if (!(selectRole.Name==Student)) // Eger kullanici guncelleme esnasinda secilen rol Ogrenci'den farkliysa GradeId ve StudentNo bilgisini null yap
+                if (!(selectRole.Name == Student)) // Eger kullanici guncelleme esnasinda secilen rol Ogrenci'den farkliysa GradeId ve StudentNo bilgisini null yap
                 {
                     user.GradeId = null;
                     user.StudentNo = null;
                 }
-                else
-                {
-                    Random randomStudentNo = new Random();
-                    user.StudentNo = randomStudentNo.Next(1000, 9999);
 
-                    foreach (var item in _userManager.Users)
-                    {
-                        if (user.StudentNo == item.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
-                            user.StudentNo = randomStudentNo.Next(1000, 9999);
-                    }
-                }
-
-               await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync();
 
                 return result;
             }
             else
                 return result;
         }
+
+        public async Task<IdentityResult> UpdateStudentAsync(UserUpdateDto userUpdateDto)
+        {
+            var user = await GetAppUserByIdAsync(userUpdateDto.Id);
+            var studentRole = await _roleDal.GetByIdRoleAsync(Student); // Student rolu
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+
+                var findRole = await _roleManager.FindByIdAsync(studentRole.ToString()); // Student rolunun id'sini bul
+                await _userManager.AddToRoleAsync(user, findRole.Name); 
+
+                return result;
+            }
+            else
+                return result;
+        }
+
+        public async Task<IdentityResult> UpdateTeacherAsync(UserUpdateDto userUpdateDto)
+        {
+            var user = await GetAppUserByIdAsync(userUpdateDto.Id);
+            var teacherRole = await _roleDal.GetByIdRoleAsync(Teacher); // Teacher rolu
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+
+                var findRole = await _roleManager.FindByIdAsync(teacherRole.ToString()); // Teacher rolunun id'sini bul
+                await _userManager.AddToRoleAsync(user, findRole.Name); 
+
+                return result;
+            }
+            else
+                return result;
+        }
+
         private async Task<Guid> UploadImageForUser(UserProfileDto userProfileDto)
         {
             // Resim yukleme islemleri

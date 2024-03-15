@@ -1,0 +1,115 @@
+﻿@model UserAddDto
+
+@{
+    ViewData["Title"] = "Öğrenci Ekleme";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Kullanıcılar</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="User" asp-action="GetAllStudents">Öğrenciler</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Öğrenci Ekleme</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <form asp-controller="User" asp-action="AddStudent" method="post" enctype="multipart/form-data">
+                            <div class="mt-4" asp-validation-summary="ModelOnly"></div>
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label asp-for="Name" class="form-label">İsim</label> <span style="color:red;">*</span>
+                                    <input asp-for="Name" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı ismini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Surname" class="form-label">Soyisim</label> <span style="color:red;">*</span>
+                                    <input asp-for="Surname" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı soyismini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Email" class="form-label">E-Mail</label> <span style="color:red;">*</span>
+                                    <input asp-for="Email" type="email"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı e-mailini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PhoneNumber" class="form-label">Telefon Numarası</label> <span style="color:red;">*</span>
+                                    <input asp-for="PhoneNumber" type="tel" pattern="[(][0-9]{3}[)] [0-9]{3} [0-9]{4}"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="(123) 456 7890"
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <small class="text-muted">Format: (123) 456 7890</small>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="UserName" class="form-label">Kullanıcı Adı</label> <span style="color:red;">*</span>
+                                    <input asp-for="UserName" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen kullanıcı adını giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-xl-11 col-lg-10 col-md-9 col-sm-9 ">
+                                            <label asp-for="GradeId" class="form-label">Öğrencinin Sınıfı</label>
+                                        </div>
+                                    </div>
+                                    <select asp-for="GradeId" class="form-control mb-3" asp-items="@(new SelectList(Model.Grades,"Id","Name"))"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Password" class="form-label">Parola</label>
+                                    <input asp-for="Password" type="password"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                           aria-describedby="defaultFormControlHelp" />  @* &#xb7; => parola inputunda silik bir sekilde noktalar gozukturmek icin *@
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Kullanıcıyı Oluştur</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

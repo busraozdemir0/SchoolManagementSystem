@@ -26,7 +26,7 @@
             <div class="ibox ">
                 <div class="card">
                     <div class="text-nowrap m-5">
-                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="User" asp-action="Add">
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="User" asp-action="AddStudent">
                             Öğrenci Ekle <i class="fa fa-plus"></i>
                         </a>
                         <table class="table table-striped" id="usersTable" width="100%" cellspacing="0">
@@ -38,6 +38,7 @@
                                     <th>Telefon Numarası</th>
                                     <th>Kullanıcı Adı</th>
                                     <th>Rolü</th>
+                                    <th>Sınıfı</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
@@ -49,6 +50,7 @@
                                     <th>Telefon Numarası</th>
                                     <th>Kullanıcı Adı</th>
                                     <th>Rolü</th>
+                                    <th>Sınıfı</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </tfoot>
@@ -64,12 +66,11 @@
                                             <td>@user.PhoneNumber</td>
                                             <td>@user.UserName</td>
                                             <td>@user.Role</td>
+                                            <td>@user.Grade.Name</td>
                                             <td class="text-center">
-                                                <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-userId="@user.Id"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="UpdateStudent" asp-route-userId="@user.Id"><i class="fa fa-edit"></i></a>
                                                 <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id"><i class="fa fa-minus-circle"></i></a>
-
                                             </td>
-
                                         </tr>
                                     }
                                 }
