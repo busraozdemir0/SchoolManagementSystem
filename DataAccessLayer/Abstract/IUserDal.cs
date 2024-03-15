@@ -15,6 +15,7 @@ namespace DataAccessLayer.Abstract
         Task<List<UserListDto>> GetAllUsersWithRoleAsync(); // Kullanicilari rolleriyle birlikte listeleme islemi
         Task<AppUser> GetAppUserByIdAsync(Guid userId); // Id'ye gore kullaniciyi dondurecek olan metod
         Task<string> GetUserRoleAsync(AppUser user); // Kullanicinin rolünü getirecek olan metod
+        Task<int> GetUserGradeIdAsync(AppUser user); // Kulanici Ogrenciyse Sinif Id bilgisini getirecek
         Task<IdentityResult> UpdateUserAsync(UserUpdateDto userUpdateDto);
         Task<(IdentityResult identityResult, string? userName)> DeleteUserAsync(Guid userId); // Birden fazla geriye deger dondurme islemi
                                                                                               // (IdentityResult identityResult,string? userName) => hem IdentityResulttan bir deger hem de kullanicinin adini dondurmek istedigimiz icin yan yana yazildi (string? => string null deger olabilir)

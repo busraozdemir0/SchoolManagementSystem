@@ -86,6 +86,9 @@ namespace BusinessLayer.Services.Concrete
             return await _userDal.UserProfileUpdateAsync(userProfileDto);
         }
 
-        
+        public async Task<int> TGetUserGradeIdAsync(AppUser user)
+        {
+            return await _userDal.GetUserGradeIdAsync(user);
+        }
     }
 }

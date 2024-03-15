@@ -16,7 +16,9 @@ namespace EntityLayer.DTOs.Users
         public string UserName { get; set; }
         public string Password { get; set; }
         public Guid RoleId { get; set; }
-        public List<AppRole> Roles { get; set; } // kullanici eklerken rolunu secebilmek icin
+        public List<AppRole> Roles { get; set; } // Kullanici eklerken rolunu secebilmek icin
+        public int? GradeId { get; set; }
+        public List<Grade> Grades { get; set; } // Ogrenci eklerken sinifini secebilmek icin
 
     }
 }

@@ -32,7 +32,7 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label asp-for="Name" class="form-label">İsim</label>
+                                    <label asp-for="Name" class="form-label">İsim</label> <span style="color:red;">*</span>
                                     <input asp-for="Name" type="text"
                                            class="form-control mb-1"
                                            id="defaultFormControlInput"
@@ -42,7 +42,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="Surname" class="form-label">Soyisim</label>
+                                    <label asp-for="Surname" class="form-label">Soyisim</label> <span style="color:red;">*</span>
                                     <input asp-for="Surname" type="text"
                                            class="form-control mb-1"
                                            id="defaultFormControlInput"
@@ -52,7 +52,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="Email" class="form-label">E-Mail</label>
+                                    <label asp-for="Email" class="form-label">E-Mail</label> <span style="color:red;">*</span>
                                     <input asp-for="Email" type="email"
                                            class="form-control mb-1"
                                            id="defaultFormControlInput"
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="PhoneNumber" class="form-label">Telefon Numarası</label>
+                                    <label asp-for="PhoneNumber" class="form-label">Telefon Numarası</label> <span style="color:red;">*</span>
                                     <input asp-for="PhoneNumber" type="tel" pattern="[(][0-9]{3}[)] [0-9]{3} [0-9]{4}"
                                            class="form-control mb-1"
                                            id="defaultFormControlInput"
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+                                    <label asp-for="UserName" class="form-label">Kullanıcı Adı</label> <span style="color:red;">*</span>
                                     <input asp-for="UserName" type="text"
                                            class="form-control mb-1"
                                            id="defaultFormControlInput"
@@ -95,7 +95,19 @@
                                         </div>
                                     </div>
                                     <select asp-for="RoleId" class="form-control mb-3" asp-items="@(new SelectList(Model.Roles,"Id","Name"))"></select>
+                                </div>
 
+                                <div class="form-group">
+                                    <a id="studentGrade" type="button" style="color:dodgerblue;" class="btn link-primary">Eklenen Kullanıcı Öğrenci Rolüne Sahip İse Sınıfını Seçin</a>
+                                </div>
+
+                                <div class="form-group" id="studentGradeSelect" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-xl-11 col-lg-10 col-md-9 col-sm-9 ">
+                                            <label asp-for="GradeId" class="form-label">Öğrencinin Sınıfı</label>
+                                        </div>
+                                    </div>
+                                    <select asp-for="GradeId" class="form-control mb-3" asp-items="@(new SelectList(Model.Grades,"Id","Name"))"></select>
                                 </div>
 
                                 <div class="form-group">
@@ -148,6 +160,16 @@
 </div>
 
 @section Scripts {
+
+    <script>
+        $(function () {
+            $("#studentGrade").click(function () {
+                var gradeSelect = document.getElementById("studentGradeSelect");
+                gradeSelect.style.display = "block";
+            });
+        });
+    </script>
+
     @* AJAX - Bootstrap modal ile rol ekleme islemi *@
 
     <script src="~/js/roleAdd.js"></script>

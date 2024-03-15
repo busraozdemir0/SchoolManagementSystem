@@ -56,19 +56,15 @@
                                     @await Component.InvokeAsync("ShowHomeName")
 
                                     <li>
-                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="LogOut">&nbsp; &nbsp; ● Çıkış Yap</a>
+                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="LogOut" style="font-size:17px;">&nbsp; &nbsp; <i class="fa-solid fa-angle-right"></i> Çıkış Yap</a>
                                         <br />
                                     </li>
                                 }
                                 else
                                 {
-                                    <li>
+                                    <li class="mb-4">
                                         <br />
-                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="Index">&nbsp; &nbsp; ● Giriş Yap</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item nav-link" href="#">&nbsp; &nbsp; ● Kayıt Ol</a>
-                                        <br />
+                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="Index" style="font-size:17px;">&nbsp; &nbsp; <i class="fa-solid fa-angle-right"></i> Giriş Yap</a>
                                     </li>
                                 }
                             </ul>

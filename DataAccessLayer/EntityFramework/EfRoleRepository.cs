@@ -29,7 +29,6 @@ namespace DataAccessLayer.EntityFramework
         public async Task<List<AppRole>> GetAllRolesAsync()
         {
             var roles = await _roleManager.Roles.ToListAsync();
-            
             return roles;
         }
 
@@ -80,5 +79,7 @@ namespace DataAccessLayer.EntityFramework
             else
                 return (result, null);
         }
+
+       
     }
 }

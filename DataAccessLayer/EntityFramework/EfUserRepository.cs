@@ -28,8 +28,11 @@ namespace DataAccessLayer.EntityFramework
         private readonly ClaimsPrincipal _user;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageHelper _imageHelper;
+        private readonly IRoleDal _roleDal;
 
-        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper)
+        public const string Student = "Öğrenci";
+
+        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,6 +42,7 @@ namespace DataAccessLayer.EntityFramework
             _user = httpContextAccessor.HttpContext.User;
             _unitOfWork = unitOfWork;
             _imageHelper = imageHelper;
+            _roleDal = roleDal;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -50,6 +54,17 @@ namespace DataAccessLayer.EntityFramework
             if (result.Succeeded)
             {
                 var findRole = await _roleManager.FindByIdAsync(userAddDto.RoleId.ToString());
+                if (findRole.Name.Equals(Student)) // Eger eklenen kullanicinin rolu Ogrenci rolundeyse rastgele ogrenci numarası atanacak.
+                {
+                    Random randomStudentNo = new Random();
+                    mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
+
+                    foreach(var user in _userManager.Users)
+                    {
+                        if(mapUser.StudentNo==user.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
+                            mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
+                    }
+                }
                 await _userManager.AddToRoleAsync(mapUser, findRole.ToString());
                 return result;
             }
@@ -92,9 +107,9 @@ namespace DataAccessLayer.EntityFramework
         {
             var userId = _user.GetLoggedInUserId();
 
-            var getUserWithImage = await _unitOfWork.GetRepository<AppUser>().GetAsync(x=>x.Id == userId, i=>i.Image);
+            var getUserWithImage = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, i => i.Image);
 
-            var map=_mapper.Map<UserProfileDto>(getUserWithImage);
+            var map = _mapper.Map<UserProfileDto>(getUserWithImage);
             return map;
         }
 
@@ -102,14 +117,19 @@ namespace DataAccessLayer.EntityFramework
         {
             return string.Join("", await _userManager.GetRolesAsync(user));
         }
+        public async Task<int> GetUserGradeIdAsync(AppUser user)
+        {
+            var grade = await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == user.GradeId);
+            return grade.Id;
+        }
 
         public async Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto)
         {
             var user = await _userManager.FindByNameAsync(userLoginDto.UserName);
             if (user != null)
-                return await _signInManager.PasswordSignInAsync(user,userLoginDto.Password, userLoginDto.RememberMe,false);
+                return await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
 
-            return null;   
+            return null;
         }
 
         public async Task LogOutUserAsync()
@@ -122,6 +142,8 @@ namespace DataAccessLayer.EntityFramework
             var user = await GetAppUserByIdAsync(userUpdateDto.Id);
             var userRole = await GetUserRoleAsync(user); // Kullanicinin rolu
 
+            var selectRole = await _roleDal.FindByIdRoleAsync(userUpdateDto.RoleId);
+
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
@@ -130,6 +152,25 @@ namespace DataAccessLayer.EntityFramework
 
                 var findRole = await _roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString()); // View tarafinda SelectList uzerinden secilmis olan rolun id'sine gore rolu bul
                 await _userManager.AddToRoleAsync(user, findRole.Name); // Bulunan rolu guncellenecek olan kullaniciya ata
+
+                if (!(selectRole.Name==Student)) // Eger kullanici guncelleme esnasinda secilen rol Ogrenci'den farkliysa GradeId ve StudentNo bilgisini null yap
+                {
+                    user.GradeId = null;
+                    user.StudentNo = null;
+                }
+                else
+                {
+                    Random randomStudentNo = new Random();
+                    user.StudentNo = randomStudentNo.Next(1000, 9999);
+
+                    foreach (var item in _userManager.Users)
+                    {
+                        if (user.StudentNo == item.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
+                            user.StudentNo = randomStudentNo.Next(1000, 9999);
+                    }
+                }
+
+               await _unitOfWork.SaveAsync();
 
                 return result;
             }

@@ -7,6 +7,7 @@ using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using PresentationLayer.Consts;
 using PresentationLayer.ResultMessages;
 
 namespace PresentationLayer.Areas.Admin.Controllers
@@ -16,17 +17,19 @@ namespace PresentationLayer.Areas.Admin.Controllers
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly IGradeService _gradeService;
         private readonly IMapper _mapper;
         private readonly IValidator<AppUser> _validator;
         private readonly IToastNotification _toast;
 
-        public UserController(IUserService userService, IMapper mapper, IRoleService roleService, IValidator<AppUser> validator, IToastNotification toast)
+        public UserController(IUserService userService, IMapper mapper, IRoleService roleService, IValidator<AppUser> validator, IToastNotification toast, IGradeService gradeService)
         {
             _userService = userService;
             _mapper = mapper;
             _roleService = roleService;
             _validator = validator;
             _toast = toast;
+            _gradeService = gradeService;
         }
 
         public async Task<IActionResult> Index()
@@ -49,7 +52,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
         public async Task<IActionResult> Add()
         {
             var roles = await _roleService.TGetAllRolesAsync();
-            return View(new UserAddDto { Roles = roles });
+
+            var grades = await _gradeService.GetListAsync();
+            return View(new UserAddDto { Roles = roles, Grades=grades });
         }
 
         [HttpPost]
@@ -59,6 +64,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var validation = await _validator.ValidateAsync(mapUser);
 
             var roles = await _roleService.TGetAllRolesAsync(); // Tum roller
+            var grades = await _gradeService.GetListAsync();
 
             if (ModelState.IsValid)
             {
@@ -77,22 +83,36 @@ namespace PresentationLayer.Areas.Admin.Controllers
                     return View(new UserAddDto { Roles = roles });
                 }
             }
-            return View(new UserAddDto { Roles = roles });
+            return View(new UserAddDto { Roles = roles, Grades = grades });
         }
 
         [HttpGet]
         public async Task<IActionResult> Update(Guid userId)
         {
+            ViewBag.IsStudent = false; // Ogrenci mi oldugu bilgisi en basta false olsun
+
             var user = await _userService.TGetAppUserByIdAsync(userId);
+            var grades = await _gradeService.GetListAsync(); // Siniflar
 
             var userRole = await _userService.TGetUserRoleAsync(user); // Kullanicinin rolu
             var userRoleId = await _roleService.TGetByIdRoleAsync(userRole);
 
-            var roles = await _roleService.TGetAllRolesAsync(); // Roller
+            var roles = await _roleService.TGetAllRolesAsync(); // Roller        
             
             var mapUserUpdateDto = _mapper.Map<UserUpdateDto>(user);
             mapUserUpdateDto.Roles = roles;
             mapUserUpdateDto.RoleId = userRoleId;
+
+            mapUserUpdateDto.Grades = grades;
+
+            if (userRole == RoleConsts.Student)
+            {
+                ViewBag.IsStudent = true; // Ogrenci mi bilgisi view'a yansitilmasi icin
+
+                var gradeId = await _userService.TGetUserGradeIdAsync(user);
+      
+                mapUserUpdateDto.GradeId = gradeId;
+            }
             return View(mapUserUpdateDto);
         }
 
@@ -104,6 +124,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
             if (user != null) // Eger boyle bir kullanici varsa
             {
                 var roles = await _roleService.TGetAllRolesAsync();
+                var grades = await _gradeService.GetListAsync(); // Siniflar
+
                 if (ModelState.IsValid)
                 {
                     var map = _mapper.Map(userUpdateDto, user); // Dto ile guncellenecek olan kullanici(user) birbirine esleniyor.
@@ -114,8 +136,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                     var validation = await _validator.ValidateAsync(map);
 
                     if (validation.IsValid)
-                    {
-                        
+                    {                       
                         user.SecurityStamp = Guid.NewGuid().ToString();
 
                         var result = await _userService.TUpdateUserAsync(userUpdateDto);
@@ -128,13 +149,13 @@ namespace PresentationLayer.Areas.Admin.Controllers
                         {
                             result.AddToIdentityModelState(this.ModelState);
                             _toast.AddErrorToastMessage("Kullanıcı güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
-                            return View(new UserUpdateDto { Roles = roles });
+                            return View(new UserUpdateDto { Roles = roles, Grades = grades });
                         }
                     }
                     else
                     {
                         validation.AddToModelState(this.ModelState);
-                        return View(new UserUpdateDto { Roles = roles });
+                        return View(new UserUpdateDto { Roles = roles, Grades = grades });
                     }
                 }               
             }
