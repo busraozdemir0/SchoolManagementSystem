@@ -12,6 +12,7 @@ namespace EntityLayer.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string? UserAbout { get; set; }
+        public string? Address { get; set; }
         public string? Gender { get; set; }
         public int? StudentNo { get; set; } // Kayitli olacak kullanici ogrenci ise StudentNo girebilecek
         public int? GradeId { get; set; } // Kayitli olacak kullanici ogrenci ise Sinif bilgisini girebilecek

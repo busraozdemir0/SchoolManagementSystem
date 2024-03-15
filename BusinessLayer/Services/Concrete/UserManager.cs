@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -109,6 +110,11 @@ namespace BusinessLayer.Services.Concrete
         public async Task<IdentityResult> TUpdateTeacherAsync(UserUpdateDto userUpdateDto)
         {
             return await _userDal.UpdateTeacherAsync(userUpdateDto);
+        }
+
+        public async Task<List<AppUser>> GetAllFilterAndIncludeUsersAsync(Expression<Func<AppUser, bool>> filter = null, params Expression<Func<AppUser, object>>[] includeProperties)
+        {
+            return await _userDal.GetAllFilterAndIncludeUsersAsync();
         }
     }
 }

@@ -15,8 +15,11 @@ namespace EntityLayer.DTOs.Users
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string UserName { get; set; }
+        public string Gender { get; set; }
         public string Role { get; set; }
+        public int? GradeId { get; set; }
         public Grade Grade { get; set; }
+        public int? StudentNo { get; set; }
        
     }
 }

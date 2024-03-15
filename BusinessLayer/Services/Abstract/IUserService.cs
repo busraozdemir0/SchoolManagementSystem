@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,5 +29,11 @@ namespace BusinessLayer.Services.Abstract
         Task LogOutUserAsync();
         Task<UserProfileDto> TGetUserProfileAsync();
         Task<bool> TUserProfileUpdateAsync(UserProfileDto userProfileDto); // Login olan kullanicinin profil guncelleme islemleri
+
+        // Kullanicilari iliskili oldugu tablolarla yani ornegin grade ve image tablolarina dahil
+        // ederek listelemek icin
+        Task<List<AppUser>> GetAllFilterAndIncludeUsersAsync(Expression<Func<AppUser, bool>> filter = null, 
+            params Expression<Func<AppUser, object>>[] includeProperties);
+
     }
 }

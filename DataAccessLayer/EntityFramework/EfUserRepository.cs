@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.Helpers.Images;
 using DataAccessLayer.UnitOfWorks;
@@ -9,9 +10,11 @@ using EntityLayer.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,11 +32,12 @@ namespace DataAccessLayer.EntityFramework
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageHelper _imageHelper;
         private readonly IRoleDal _roleDal;
+        private readonly AppDbContext _context;
 
         public const string Student = "Öğrenci";
         public const string Teacher = "Öğretmen";
 
-        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal)
+        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal, AppDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -44,6 +48,7 @@ namespace DataAccessLayer.EntityFramework
             _unitOfWork = unitOfWork;
             _imageHelper = imageHelper;
             _roleDal = roleDal;
+            _context = context;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -131,6 +136,22 @@ namespace DataAccessLayer.EntityFramework
                 return (result, null);
         }
 
+        public async Task<List<AppUser>> GetAllFilterAndIncludeUsersAsync(Expression<Func<AppUser, bool>> filter = null, params Expression<Func<AppUser, object>>[] includeProperties)
+        {
+            IQueryable<AppUser> query = _context.Users;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (includeProperties.Any())
+            {
+                foreach (var item in includeProperties)
+                    query = query.Include(item);
+            }
+
+            return (await query.ToListAsync());
+        }
+
         public async Task<List<UserListDto>> GetAllUsersWithRoleAsync()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -140,12 +161,17 @@ namespace DataAccessLayer.EntityFramework
             {
                 var findUser = await _userManager.FindByIdAsync(user.Id.ToString()); // User'in id'sine gore kullaniciyi bul
                 var role = string.Join("", await _userManager.GetRolesAsync(findUser)); // Bulunan kullanicinin rolunu bul
-
                 user.Role = role;
-            }
 
+                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id, g => g.Grade, i => i.Image);
+                foreach (var item in userInclude.ToList())
+                {
+                    user.Grade = item.Grade;
+                }
+            }
             return mapUser;
         }
+
         public async Task<AppUser> GetAppUserByIdAsync(Guid userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());
@@ -207,6 +233,21 @@ namespace DataAccessLayer.EntityFramework
                     user.StudentNo = null;
                 }
 
+                else // Eger rol Ogrenci secilmisse ve StudentNo alanı null ise o kullaniciya numara atama
+                     // islemi gerceklesecek.
+                {
+                    if (user.StudentNo is null)
+                    {
+                        Random randomStudentNo = new Random();
+                        user.StudentNo = randomStudentNo.Next(1000, 9999);
+
+                        foreach (var item in _userManager.Users)
+                        {
+                            if (user.StudentNo == item.StudentNo) // Eger var olan bir ogrenci numarasi uretilmisse tekrardan uret
+                                user.StudentNo = randomStudentNo.Next(1000, 9999);
+                        }
+                    }
+                }
                 await _unitOfWork.SaveAsync();
 
                 return result;
@@ -225,7 +266,7 @@ namespace DataAccessLayer.EntityFramework
             {
 
                 var findRole = await _roleManager.FindByIdAsync(studentRole.ToString()); // Student rolunun id'sini bul
-                await _userManager.AddToRoleAsync(user, findRole.Name); 
+                await _userManager.AddToRoleAsync(user, findRole.Name);
 
                 return result;
             }
@@ -243,7 +284,7 @@ namespace DataAccessLayer.EntityFramework
             {
 
                 var findRole = await _roleManager.FindByIdAsync(teacherRole.ToString()); // Teacher rolunun id'sini bul
-                await _userManager.AddToRoleAsync(user, findRole.Name); 
+                await _userManager.AddToRoleAsync(user, findRole.Name);
 
                 return result;
             }

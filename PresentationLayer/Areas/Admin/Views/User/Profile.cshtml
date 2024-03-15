@@ -91,12 +91,13 @@
                                         <span style="color:red;" asp-validation-for="PhoneNumber"></span>
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label asp-for="Gender" class="form-label">Cinsiyet</label>
-                                        <input asp-for="Gender" class="form-control"
+                                        <label asp-for="Address" class="form-label">Adres</label>
+                                        <input asp-for="Address" class="form-control"
                                                type="text"
                                                autofocus />
-                                        <span style="color:red;" asp-validation-for="Gender"></span>
+                                        <span style="color:red;" asp-validation-for="Address"></span>
                                     </div>
+
                                     <div class="mb-3 col-md-6">
                                         <label asp-for="CurrentPassword" class="form-label">Mevcut Parola <small style="color:red;">*</small> </label>
                                         <input asp-for="CurrentPassword" class="form-control"
@@ -110,6 +111,19 @@
                                                type="text"
                                                autofocus />
                                         <span style="color:red;" asp-validation-for="NewPassword"></span>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label asp-for="Gender" class="form-label">Cinsiyeti</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                @Html.RadioButtonFor(model => model.Gender, "Kadın", new { disabled = "disabled" })
+                                                <label for="Kadın" style="font-size:17px; color:black;">Kadın</label><br>
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.RadioButtonFor(model => model.Gender, "Erkek", new { disabled = "disabled" })
+                                                <label for="Erkek" style="font-size:17px; color:black;">Erkek</label><br>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label asp-for="UserAbout" class="form-label">Hakkımda Yazısı</label>

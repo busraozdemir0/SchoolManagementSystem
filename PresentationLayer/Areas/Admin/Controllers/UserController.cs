@@ -54,6 +54,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var roles = await _roleService.TGetAllRolesAsync();
 
             var grades = await _gradeService.GetListAsync();
+
             return View(new UserAddDto { Roles = roles, Grades = grades });
         }
 

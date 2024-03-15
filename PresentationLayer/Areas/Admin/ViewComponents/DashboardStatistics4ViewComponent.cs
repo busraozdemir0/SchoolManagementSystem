@@ -39,6 +39,8 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
 
             ViewBag.GetLoggedInAbout = user.UserAbout;
 
+            ViewBag.GetLoggedInAddress = user.Address;
+
             ViewBag.GetLoggedInImageId = user.ImageId;
 
             if (user.ImageId is null)
