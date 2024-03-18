@@ -1,41 +1,78 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
 <head>
 
-    @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_HeaderPartial.cshtml")
+	@await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_HeaderPartial.cshtml")
 
 </head>
 <body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				@await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_NavbarPartial.cshtml")
 
-    <header class="header">
+				<!--heder end here-->
+				<!-- script-for sticky-nav -->
+				<script>
+					$(document).ready(function () {
+						var navoffeset = $(".header-main").offset().top;
+						$(window).scroll(function () {
+							var scrollpos = $(window).scrollTop();
+							if (scrollpos >= navoffeset) {
+								$(".header-main").addClass("fixed");
+							} else {
+								$(".header-main").removeClass("fixed");
+							}
+						});
 
-        @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_NavbarPartial.cshtml")
+					});
+				</script>
+				<!-- /script-for sticky-nav -->
+				<!--inner block start here-->
 
-    </header>
+				@RenderBody()
 
-    <div class="side-bar">
+				<!--inner block end here-->
+				<!--copy rights start here-->
+				@await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_FooterPartial.cshtml")
 
-        @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_SidebarPartial.cshtml")
+				<!--COPY rights end here-->
+			</div>
+		</div>
+		<!--slider menu-->
+		@await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_SidebarPartial.cshtml")
 
-    </div>
+	</div>
+	<!--slide bar menu end here-->
 
+	<script>
+		var toggle = true;
 
-    @RenderBody()
-
-
-    @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_FooterPartial.cshtml")
-
-
-    <!-- custom js file link  -->
-
-    <script src="~/Student-Teacher/js/script.js"></script>
-
-    <script src="~/Admin/js/jquery-3.1.1.min.js"></script>
-    <script src="~/Admin/js/bootstrap.js"></script>
-
-    @await RenderSectionAsync("Scripts", false)
-
-    @await Component.InvokeAsync("NToastNotify")
-
+		$(".sidebar-icon").click(function () {
+			if (toggle) {
+				$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+				$("#menu span").css({ "position": "absolute" });
+			}
+			else {
+				$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+				setTimeout(function () {
+					$("#menu span").css({ "position": "relative" });
+				}, 400);
+			}
+			toggle = !toggle;
+		});
+	</script>
+	<!--scrolling js-->
+	<script src="~/Teacher-Student/js/jquery.nicescroll.js"></script>
+	<script src="~/Teacher-Student/js/scripts.js"></script>
+	<!--//scrolling js-->
+	<script src="~/Teacher-Student/js/bootstrap.js"> </script>
+	<!-- mother grid end here-->
 </body>
-</html>
+</html>                     

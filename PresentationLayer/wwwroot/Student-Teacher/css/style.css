@@ -251,6 +251,7 @@ section{
    height: 100vh;
    border-right: var(--border);
    z-index: 1200;
+   overflow-y:scroll;
 }
 
 .side-bar #close-btn{
