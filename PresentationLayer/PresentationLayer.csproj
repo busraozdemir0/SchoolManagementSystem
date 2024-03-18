@@ -22,9 +22,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Member\Controllers\" />
-    <Folder Include="Areas\Member\Models\" />
-    <Folder Include="Areas\Member\Views\" />
+    <Folder Include="Areas\Student\Controllers\" />
+    <Folder Include="Areas\Student\Models\" />
+    <Folder Include="Areas\Student\Views\" />
+    <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="wwwroot\images\post-images\" />
     <Folder Include="wwwroot\images\user-images\" />
   </ItemGroup>

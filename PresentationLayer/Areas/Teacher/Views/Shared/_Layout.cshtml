@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_HeaderPartial.cshtml")
+
+</head>
+<body>
+
+    <header class="header">
+
+        @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_NavbarPartial.cshtml")
+
+    </header>
+
+    <div class="side-bar">
+
+        @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_SidebarPartial.cshtml")
+
+    </div>
+
+
+    @RenderBody()
+
+
+    @await Html.PartialAsync("/Areas/Teacher/Views/_LayoutPartial/_FooterPartial.cshtml")
+
+
+    <!-- custom js file link  -->
+
+    <script src="~/Student-Teacher/js/script.js"></script>
+
+    <script src="~/Admin/js/jquery-3.1.1.min.js"></script>
+    <script src="~/Admin/js/bootstrap.js"></script>
+
+    @await RenderSectionAsync("Scripts", false)
+
+    @await Component.InvokeAsync("NToastNotify")
+
+</body>
+</html>

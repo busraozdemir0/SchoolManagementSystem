@@ -69,6 +69,12 @@ app.UseEndpoints(endpoints =>
         pattern: "Admin/{controller=Home}/{action=Dashboard}/{id?}"  // id? => null olabilir anlamina gelir
         );
 
+    endpoints.MapAreaControllerRoute(
+        name: "Teacher",
+        areaName: "Teacher",
+        pattern: "Teacher/{controller=Home}/{action=Dashboard}/{id?}" 
+        );
+
     endpoints.MapDefaultControllerRoute();
 });
 
