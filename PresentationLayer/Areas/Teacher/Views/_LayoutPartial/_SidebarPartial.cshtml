@@ -7,7 +7,7 @@
 	</div>
 	<div class="menu">
 		<ul id="menu">
-			<li id="menu-home"><a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+			<li id="menu-home"><a asp-area="Teacher" asp-controller="Home" asp-action="Index"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
 			<li>
 				<a href="#"><i class="fa fa-cogs"></i><span>Profil Ayarları</span></a>
 			</li>
@@ -18,15 +18,15 @@
 					<li id="menu-academico-boletim"><a href="inbox-details.html">Mesaj Oluştur</a></li>
 				</ul>
 			</li>
-			<li><a href="maps.html"><i class="fa fa-bell-o" aria-hidden="true"></i><span>Duyurular</span></a></li>
+			<li><a asp-area="Teacher" asp-controller="Announcement" asp-action="Index"><i class="fa fa-bell-o" aria-hidden="true"></i><span>Duyurular</span></a></li>
 
 			<li><a href="#"><i class="fa fa-graduation-cap "></i><span>Öğrenciler</span></a></li>
 			
 			<li><a href="#"><i class="fa fa-flask"></i><span>Sınıflar</span></a></li>
 			
-			<li><a href="#"><i class="fa fa-book nav_icon"></i><span>Dersler</span></a></li>
+			<li><a asp-area="Teacher" asp-controller="Lesson" asp-action="Index"><i class="fa fa-book nav_icon"></i><span>Dersler</span></a></li>
 						
-			<li><a href="#"><i class="fa fa-home"></i><span>Ana Sayfaya Git</span></a></li>
+			<li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i><span>Ana Sayfaya Git</span></a></li>
 
 			<li><a href="#"><i class="fa fa-sign-out"></i><span>Çıkış Yap</span></a></li>
 		</ul>

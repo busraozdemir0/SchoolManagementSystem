@@ -1,0 +1,61 @@
+﻿@model List<LessonListDto>
+
+@{
+    ViewData["Title"] = "Dersler";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+                <div class="card">
+                    <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Dersler</li>
+                        </ol>
+                    </nav>
+                        <table class="table table-hover" id="lessonsTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Ders Kodu</th>
+                                    <th>Ders Adı</th>
+                                    <th>Haftalık Ders Saati</th>
+                                    <th>Sınıf</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Ders Kodu</th>
+                                    <th>Ders Adı</th>
+                                    <th>Haftalık Ders Saati</th>
+                                    <th>Sınıf</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var lesson in Model)
+                                {
+                                    <tr name="@lesson.Id">
+                                        <td>@lesson.LessonCode</td>
+                                        <td>@lesson.LessonName</td>
+                                        <td>@lesson.LessonCredit</td>
+                                        <td>@lesson.Grade.Name</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm" data-id="@lesson.Id" asp-area="Teacher" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id"><i class="fa fa-upload"></i> Doküman Yükle</a>
+                                            <a class="btn btn-warning btn-sm" data-id="@lesson.Id" asp-area="Teacher" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id"><i class="fa fa-upload"></i> Video Yükle</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lessonIndex.js" type="application/ecmascript"></script>
+}

@@ -55,7 +55,7 @@
                                 {
                                     <tr name="@report.Id">
                                         <td>@report.Title</td>
-                                        <td>@Html.Raw(report.Content)</td>
+                                        <td>@Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</td>
                                         <td>@report.CreatedDate.ToShortDateString()</td>
                                         <td>@(report.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">

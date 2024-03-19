@@ -12,5 +12,7 @@ namespace DataAccessLayer.Abstract
     {
         Task<string> SafeDeleteAnnouncementAsync(Guid announcementId);
         Task<string> UndoDeleteAnnouncementAsync(Guid announcementId);
+
+        Task<List<Announcement>> TeacherAnnouncementListAsync(); // Teacher kullanicilarina yapilan duyurulari listelemek icin
     }
 }

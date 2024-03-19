@@ -19,13 +19,15 @@ namespace BusinessLayer.Services.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
+        private readonly IUserService _userService;
 
-        public AnnouncementManager(IAnnouncementDal announcementDal, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public AnnouncementManager(IAnnouncementDal announcementDal, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, IUserService userService)
         {
             _announcementDal = announcementDal;
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
+            _userService = userService;
         }
 
         public async Task<List<Announcement>> GetDeletedListAsync()
@@ -43,6 +45,7 @@ namespace BusinessLayer.Services.Concrete
         {
             var userId = _user.GetLoggedInUserId(); // Login olan kullanicinin id'sini getirir.
             var userName = _user.GetLoggedInUserName(); // Login olan kullanicinin username'ini getirir.
+            var userNameSurname=await _userService.TGetAppUserByIdAsync(userId); // Login olan kullaniciyi getirir
 
             var announcement = new Announcement
             {
@@ -51,7 +54,7 @@ namespace BusinessLayer.Services.Concrete
                 CreatedDate=t.CreatedDate,
                 RoleId=t.RoleId,
                 UserId= userId, // Giren kisinin id'si
-                CreatedBy=userName
+                CreatedBy= userNameSurname.Name+" "+userNameSurname.Surname
             };
             await _announcementDal.AddAsync(announcement);
             await _unitOfWork.SaveAsync();
@@ -71,6 +74,11 @@ namespace BusinessLayer.Services.Concrete
         public async Task<string> TSafeDeleteAnnouncementAsync(Guid announcementId)
         {
             return await _announcementDal.SafeDeleteAnnouncementAsync(announcementId);
+        }
+
+        public async Task<List<Announcement>> TTeacherAnnouncementListAsync()
+        {
+            return await _announcementDal.TeacherAnnouncementListAsync();
         }
 
         public async Task<string> TUndoDeleteAnnouncementAsync(Guid announcementId)

@@ -1,0 +1,62 @@
+﻿@model List<AnnouncementListDto>
+
+@{
+    ViewData["Title"] = "Duyurular";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Duyurular</li>
+                        </ol>
+                    </nav>
+
+                    <table class="table table-hover" id="announcementsTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Başlık</th>
+                                <th>İçerik</th>
+                                <th>Kimden</th>
+                                <th>Oluşturulma Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Başlık</th>
+                                <th>İçerik</th>
+                                <th>Kimden</th>
+                                <th>Oluşturulma Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var announcement in Model)
+                            {
+                                <tr name="@announcement.Id">
+                                    <td>@announcement.Title</td>
+                                    <td>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 5)...</td>
+                                    <td>@announcement.CreatedBy</td>
+                                    <td>@announcement.CreatedDate.ToShortDateString()</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-primary btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id"><i class="fa fa-search"></i></a>
+                                        <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="Delete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/announcementIndex.js" type="application/ecmascript"></script>
+}

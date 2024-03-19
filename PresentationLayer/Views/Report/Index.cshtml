@@ -1,5 +1,4 @@
-﻿
-@model ReportListDto
+﻿@model ReportListDto
 
 @{
     ViewData["Title"] = "Haberler";
@@ -43,16 +42,27 @@
                         <a href="courses.html">Art & Design</a>
                         </div> *@
                         </div>
-                        <div class="content-main-top m-5">
+                        <div class="content-main-top">
                             <div class="content-top mb-4 mt-3">
                                 <ul class="list-unstyled d-flex align-items-center justify-content-between">
                                     <li> <i class="fas fa-calendar" style="color:gray;"></i> @(((DateTime)item.CreatedDate).ToString("dd-MM-yyyy"))</li>
                                     @* <li> <i class="fas fa-star"></i> 4.5</li> *@
                                 </ul>
                             </div>
-                            <h4><a href="#">@item.Title</a></h4>       
+                            <h4>
+                                @if (item.Title.Length <= 30)
+                                {
+                                    <a href="#">@item.Title</a>
+                                }
+                                else
+                                {
+                                    <a href="#">@item.Title.Substring(0, 28) ...</a>
+
+                                }
+                            </h4>
                             <p>
-                                @Regex.Replace(item.Content, @"<[^>]*>|&nbsp;", "").Substring(0, 10)...
+                                @Regex.Replace(HttpUtility.HtmlDecode(item.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 30)...
+
                             </p>
                             <div class="top-content-border d-flex align-items-center justify-content-between mt-4 pt-4">
                                 <h6></h6>

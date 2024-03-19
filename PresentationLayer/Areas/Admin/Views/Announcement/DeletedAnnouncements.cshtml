@@ -55,7 +55,7 @@
                                 {
                                     <tr name="@announcement.Id">
                                         <td>@announcement.Title</td>
-                                        <td>@Html.Raw(announcement.Content)</td>
+                                        <td>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 5)...</td>
                                         <td>@announcement.CreatedBy</td>
                                         <td>@announcement.Role.Name</td>
                                         <td>@announcement.CreatedDate.ToShortDateString()</td>

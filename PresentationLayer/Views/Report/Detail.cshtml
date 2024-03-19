@@ -21,13 +21,13 @@
 <div class="w3l-grids-block-5 py-5">
     <div class="container py-md-5 py-4">
         <div class="title-main text-center mx-auto mb-md-5 mb-4" style="max-width:500px;">
-           @*  <p class="text-uppercase">Okulumuz Hakkında</p> *@
+            @*  <p class="text-uppercase">Okulumuz Hakkında</p> *@
             <h3 class="title-style">@Model.Title</h3>
         </div>
         <div class="row justify-content-center">
-           
-                <div class="col-lg-12 col-md-8 mt-8">
-                    <div class="coursecard-single">
+
+            <div class="col-lg-12 col-md-8 mt-8">
+                <div class="coursecard-single">
                     <div class="grids5-info position-relative d-flex justify-content-center">
                         @if (Model.ImageId is not null)
                         {
@@ -37,29 +37,31 @@
                         {
                             <img src="~/icons/empty_image.jpg" style="width:750px; height:450px;" alt="" class="img-fluid" />
                         }
-                            @* <div class="meta-list">
+                        @* <div class="meta-list">
                         <a href="courses.html">Art & Design</a>
                         </div> *@
+                    </div>
+                    <div class="content-main-top m-5">
+                        <div class="content-top mb-4 mt-3">
+                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                <li> <i class="fas fa-calendar" style="color:gray;"></i> @(((DateTime)Model.CreatedDate).ToString("dd-MM-yyyy"))</li>
+                                @* <li> <i class="fas fa-star"></i> 4.5</li> *@
+                            </ul>
                         </div>
-                        <div class="content-main-top">
-                            <div class="content-top mb-4 mt-3">
-                                <ul class="list-unstyled d-flex align-items-center justify-content-between">
-                                    <li> <i class="fas fa-calendar" style="color:gray;"></i> @(((DateTime)Model.CreatedDate).ToString("dd-MM-yyyy"))</li>
-                                    @* <li> <i class="fas fa-star"></i> 4.5</li> *@
-                                </ul>
-                            </div>
                         <h4 style="text-align:center;"><a href="#">@Model.Title</a></h4>
-                        <p>@Html.Raw(Model.Content)</p>
-                            <div class="top-content-border align-items-center justify-content-between mt-4 pt-4">
-                                <h6></h6>
-                                <a class="btn btn-style-primary" asp-controller="Report" asp-action="Index">
-                                    Geri dön<i class="fas fa-arrow-left"></i>
-                                </a>
-                            </div>
+                        <p>
+                            @Html.Raw(Model.Content)
+                        </p>
+                        <div class="top-content-border align-items-center justify-content-between mt-4 pt-4">
+                            <h6></h6>
+                            <a class="btn btn-style-primary" asp-controller="Report" asp-action="Index">
+                                Geri dön<i class="fas fa-arrow-left"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-           
+            </div>
+
 
         </div>
 

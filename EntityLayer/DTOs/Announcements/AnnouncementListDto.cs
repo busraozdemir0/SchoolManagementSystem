@@ -13,7 +13,7 @@ namespace EntityLayer.DTOs.Announcements
         public string Title { get; set; }
         public string Content { get; set; }
         public string CreatedBy { get; set; }
-        public Guid ReceiverId { get; set; }
+        public Guid RoleId { get; set; }
         public AppRole Role { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; } 
