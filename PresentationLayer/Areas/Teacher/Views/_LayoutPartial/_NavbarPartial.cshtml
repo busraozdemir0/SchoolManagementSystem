@@ -65,34 +65,14 @@
 					</ul>
 				</li>
 			
-				@await Component.InvokeAsync("DashboardLastThreeAnnouncement")
+				@await Component.InvokeAsync("LastThreeAnnouncement")
 			
 			</ul>
 			<div class="clearfix"> </div>
 		</div>
 		<!--notification menu end -->
-		<div class="profile_details">
-			<ul>
-				<li class="dropdown profile_details_drop">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						<div class="profile_img">
-							<span class="prfil-img"><img src="~/Teacher-Student/images/p1.png" alt=""> </span>
-							<div class="user-name">
-								<p>Ad Soyad</p>
-								<span>Öğretmen</span>
-							</div>
-							<i class="fa fa-angle-down lnr"></i>
-							<i class="fa fa-angle-up lnr"></i>
-							<div class="clearfix"></div>
-						</div>
-					</a>
-					<ul class="dropdown-menu drp-mnu">
-						<li> <a href="#"><i class="fa fa-cog"></i> Profil</a> </li>
-						<li> <a href="#"><i class="fa fa-sign-out"></i> Çıkış</a> </li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+		@await Component.InvokeAsync("LoginProfile")
+
 		<div class="clearfix"> </div>
 	</div>
 	<div class="clearfix"> </div>

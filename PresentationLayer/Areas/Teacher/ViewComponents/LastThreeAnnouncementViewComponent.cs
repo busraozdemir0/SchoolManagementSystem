@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Areas.Teacher.ViewComponents
 {
-	public class DashboardLastThreeAnnouncementViewComponent:ViewComponent
+	public class LastThreeAnnouncementViewComponent:ViewComponent
 	{
 		private readonly IAnnouncementService _announcementService;
 		private readonly IMapper _mapper;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserService _userService;
 
-        public DashboardLastThreeAnnouncementViewComponent(IAnnouncementService announcementService, IMapper mapper, IUnitOfWork unitOfWork, IUserService userService)
+        public LastThreeAnnouncementViewComponent(IAnnouncementService announcementService, IMapper mapper, IUnitOfWork unitOfWork, IUserService userService)
         {
             _announcementService = announcementService;
             _mapper = mapper;

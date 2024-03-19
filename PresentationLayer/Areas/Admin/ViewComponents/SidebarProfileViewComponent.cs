@@ -19,7 +19,7 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
-            _userService = userService;     
+            _userService = userService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -29,7 +29,7 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
 
             var getLoggedInUserName = _user.GetLoggedInUserName();
             ViewBag.GetLoggedInUserName = getLoggedInUserName;
-
+            
             ViewBag.GetLoggedInImageId = user.ImageId;
 
             if (user.ImageId is null)

@@ -517,7 +517,7 @@ i.fa.fa-tasks{
 }
 .user_img{
 	float:left;
-	width:19%;
+	width:16%;
 }
 .user_img img{
 	max-width:100%;
@@ -763,6 +763,11 @@ ul.dropdown-menu {
 }
 .profile_img span.prfil-img{
 	float:left;
+}
+.profile-rounded-circle {
+    height:3.2em;
+    width:3.2em;
+    border-radius:50%;
 }
 .user-name{
 	 float:left;

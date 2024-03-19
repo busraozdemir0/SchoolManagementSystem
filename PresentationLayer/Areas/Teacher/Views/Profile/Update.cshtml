@@ -1,0 +1,148 @@
+﻿@model UserProfileDto
+
+@{
+    ViewData["Title"] = "Profil Güncelleme";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Profilim</li>
+                        </ol>
+                    </nav>
+                    <div class="card mb-4">
+                        <form asp-area="Teacher" asp-controller="Profile" asp-action="Update" method="POST" enctype="multipart/form-data">
+                            <!-- Account -->
+                            <div class="card-body">
+                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            @if (Model.ImageId is null)
+                                            {
+                                                <img src="~/icons/@ViewBag.DefaultProfileImage" alt="user-avatar" class="d-block rounded" height="150" width="150" id="uploadedAvatar">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/@Model.Image.FileName" alt="user-avatar" class="d-block rounded" height="125" width="125" id="uploadedAvatar">
+                                            }
+                                        </div>
+                                        <div class="col-md-10">
+                                            <div class="button-wrapper">
+                                                <label for="upload" class="btn btn-primary me-2 mb-4 mt-4 ml-4" tabindex="0" style="margin-top:50px;">
+                                                    <i class="bx bx-upload d-block d-sm-none"></i>
+                                                    <input asp-for="Photo" type="file" accept="image/*" class="formaccount-file-input" id="defaultFormControlInput" aria-describedby="defaultFormControlHelp">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-0" />
+                            <div class="card-body">
+                                <div asp-validation-summary="ModelOnly" style="color:red;"></div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="Name" class="form-label">İsim <small style="color:red;">*</small> </label>
+                                            <input asp-for="Name" class="form-control"
+                                                   type="text"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="Name"></span>
+                                        </div>
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="Surname" class="form-label">Soyisim <small style="color:red;">*</small></label>
+                                            <input asp-for="Surname" class="form-control"
+                                                   type="text"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="Surname"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="UserName" class="form-label">Kullanıcı Adı <small style="color:red;">*</small> </label>
+                                            <input asp-for="UserName" class="form-control"
+                                                   type="text"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="UserName"></span>
+                                        </div>
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="Email" class="form-label">Mail Adresi <small style="color:red;">*</small> </label>
+                                            <input asp-for="Email" class="form-control"
+                                                   type="email"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="Email"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="PhoneNumber" class="form-label">Telefon Numarası <small style="color:red;">*</small> </label>
+                                            <input asp-for="PhoneNumber" class="form-control"
+                                                   type="tel"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="PhoneNumber"></span>
+                                        </div>
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="Address" class="form-label">Adres</label>
+                                            <input asp-for="Address" class="form-control"
+                                                   type="text"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="Address"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="CurrentPassword" class="form-label">Mevcut Parola <small style="color:red;">*</small> </label>
+                                            <input asp-for="CurrentPassword" class="form-control"
+                                                   type="text"
+                                                   autofocus required />
+                                            <span style="color:red;" asp-validation-for="CurrentPassword"></span>
+                                        </div>
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="NewPassword" class="form-label">Yeni Parola (Opsiyonel)</label>
+                                            <input asp-for="NewPassword" class="form-control"
+                                                   type="text"
+                                                   autofocus />
+                                            <span style="color:red;" asp-validation-for="NewPassword"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="Gender" class="form-label">Cinsiyeti</label>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    @Html.RadioButtonFor(model => model.Gender, "Kadın", new { disabled = "disabled" })
+                                                    <label for="Kadın" style="font-size:17px; color:black;">Kadın</label><br>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @Html.RadioButtonFor(model => model.Gender, "Erkek", new { disabled = "disabled" })
+                                                    <label for="Erkek" style="font-size:17px; color:black;">Erkek</label><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="UserAbout" class="form-label">Hakkımda Yazısı</label>
+                                            <textarea asp-for="UserAbout" id="textEdit" class="form-control"
+                                                      type="text"
+                                                      autofocus style="min-height:200px"></textarea>
+                                            <span style="color:red;" asp-validation-for="UserAbout"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <button type="submit" class="btn btn-primary me-2">Profili Güncelle</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /Account -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
