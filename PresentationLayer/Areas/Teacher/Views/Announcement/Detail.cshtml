@@ -1,0 +1,25 @@
+﻿@model AnnouncementListDto
+
+@{
+	ViewData["Title"] = "Duyuru "+ Model.Title;
+}
+
+<div class="col-md-12 chart-layer1 m-5" style="margin-bottom:400px; margin-top:150px;">
+	<div class="user-marorm">
+		<div class="malorm-bottom">
+			<h4>@Model.CreatedDate.ToShortDateString()</h4>
+			<h2>@Model.CreatedBy</h2>
+			<h1>@Model.Title</h1>
+			<p>@Html.Raw(Model.Content)</p>
+			<ul class="malorum-icons">
+				<li>
+					<a class="btn btn-primary" asp-area="Teacher" asp-controller="Announcement" asp-action="Index"><i class="fa fa-arrow-left"></i>&nbsp; Geri Dön</a>
+				</li>
+				<li>
+					<a class="btn btn-danger" asp-area="Teacher" asp-controller="Announcement" asp-action="Delete"><i class="fa fa-trash"></i></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="clearfix"> </div>

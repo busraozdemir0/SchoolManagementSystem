@@ -23,5 +23,11 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcements);
             return View(mapAnnouncements);
         }
-    }
+        public async Task<IActionResult> Detail(Guid announcementId)
+        {
+            var announcement = await _announcementService.TGetByGuidAsync(announcementId);
+            var mapAnnouncement = _mapper.Map<AnnouncementListDto>(announcement);
+            return View(mapAnnouncement);
+        }
+	}
 }

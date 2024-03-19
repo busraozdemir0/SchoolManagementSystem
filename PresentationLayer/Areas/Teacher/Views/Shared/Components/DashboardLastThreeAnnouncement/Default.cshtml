@@ -1,0 +1,84 @@
+﻿@model List<AnnouncementListDto>
+
+<li class="dropdown head-dpdn">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">@ViewBag.AnnouncementsCount</span></a>
+    <ul class="dropdown-menu">
+        <li>
+            <div class="notification_header">
+                <h3>3 yeni bildiriminiz var</h3>
+            </div>
+        </li>
+        @foreach (var announcement in Model)
+        {
+            <li>
+                <a data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
+                    <div class="user_img"><img src="~/icons/check_mark.png" alt=""></div>
+                    <div class="notification_desc">
+                        <h5>@announcement.Title</h5>
+                        <p>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</p>
+
+                        @{
+                            var difference = DateTime.Now - announcement.CreatedDate; // iki tarih arasi fark
+                            var minuteDifference = 0;
+                            var hourDifference = 0;
+                            var dayDifference = 0;
+
+                            // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse aradaki toplam dk farkini bul.
+                            if (announcement.CreatedDate.Day == DateTime.Now.Day && announcement.CreatedDate.Hour == DateTime.Now.Hour)
+                            {
+                                minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
+                            }
+
+                            // Eger yayinlanan duyuru gun yonunden su an ki gune esitse aradaki toplam saat farkini bul.
+                            else if (announcement.CreatedDate.Day == DateTime.Now.Day)
+                            {
+                                hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
+                            }
+
+                            // Aksi takdirde aradaki toplam gun farkini bul
+                            else
+                            {
+                                dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
+                            }
+                        }
+
+                        <p>
+
+                            @if (announcement.CreatedDate.Day == DateTime.Now.Day && announcement.CreatedDate.Hour == DateTime.Now.Hour)
+                            {
+                                <span>@minuteDifference</span>
+                            }
+                            else if (announcement.CreatedDate.Day == DateTime.Now.Day)
+                            {
+                                <span>@hourDifference</span>
+                            }
+                            else
+                            {
+                                <span>@dayDifference</span>
+                            }
+
+                            @if (announcement.CreatedDate.Day == DateTime.Now.Day && announcement.CreatedDate.Hour == DateTime.Now.Hour)
+                            {
+                                <span>dakika önce</span>
+                            }
+                            else if (announcement.CreatedDate.Day == DateTime.Now.Day)
+                            {
+                                <span>saat önce</span>
+                            }
+                            else
+                            {
+                                <span>gün önce</span>
+                            }
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+        }
+        <li>
+            <div class="notification_bottom">
+                <a asp-area="Teacher" asp-controller="Announcement" asp-action="Index">Tüm duyuruları gör</a>
+            </div>
+        </li>
+    </ul>
+</li>

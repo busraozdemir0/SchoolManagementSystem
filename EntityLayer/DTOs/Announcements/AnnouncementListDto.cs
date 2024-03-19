@@ -15,6 +15,8 @@ namespace EntityLayer.DTOs.Announcements
         public string CreatedBy { get; set; }
         public Guid RoleId { get; set; }
         public AppRole Role { get; set; }
+        public Guid UserId { get; set; }
+        public AppRole User { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; } 
     }
