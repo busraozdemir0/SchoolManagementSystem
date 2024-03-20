@@ -1,4 +1,4 @@
-﻿namespace PresentationLayer.Consts
+﻿namespace DataAccessLayer.Consts
 {
     public static class RoleConsts
     {

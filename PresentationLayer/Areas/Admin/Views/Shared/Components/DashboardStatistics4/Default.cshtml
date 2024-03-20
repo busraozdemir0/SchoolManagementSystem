@@ -18,14 +18,15 @@
                 <img src="~/icons/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
             }
         </div>
-        <div class="widget-text-box">
+        <div class="widget-text-box" style="padding-bottom:4em;">
             @if (ViewBag.GetLoggedInAbout is not null) @*Eger hakkımda yazisi yazilmamizsa varsayilan yazi gelsin.*@
             {
-                <p>@Html.Raw(ViewBag.GetLoggedInAbout)</p>
+                <p style="text-align:center;">@Html.Raw(ViewBag.GetLoggedInAbout)</p>
             }
             else
             {
-                <p>Atlas Koleji okulunun web sitesinde Admin kullanıcısı olarak görev almaktadır.
+                <p style="text-align:center;">
+                    Atlas Koleji okulunun web sitesinde Admin kullanıcısı olarak görev almaktadır.
                     Admin rolü sistemdeki tüm her şeye müdahale edebilmektedir.
                 </p>
             }

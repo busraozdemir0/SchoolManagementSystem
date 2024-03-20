@@ -2,6 +2,7 @@
 using DataAccessLayer.Context;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.Announcements;
 using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
@@ -17,10 +18,6 @@ namespace DataAccessLayer.EntityFramework
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRoleDal _roleDal;
-
-        public const string Teacher = "Öğretmen";
-        public const string Student = "Öğrenci";
-        public const string User = "Kullanıcı";
         public EfAnnouncementRepository(AppDbContext context, IUnitOfWork unitOfWork, IRoleDal roleDal) : base(context)
         {
             _unitOfWork = unitOfWork;
@@ -55,8 +52,8 @@ namespace DataAccessLayer.EntityFramework
 
         public async Task<List<Announcement>> TeacherAnnouncementListAsync()
         {
-            var teacherRoleId = await _roleDal.GetByIdRoleAsync(Teacher); // Teacher rolunun id'sini bul
-            var userRoleId = await _roleDal.GetByIdRoleAsync(User); // Tum kullanicilara duyuru yapilmissa user kullanicisinin rolunu bul.
+            var teacherRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.Teacher); // Teacher rolunun id'sini bul
+            var userRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.User); // Tum kullanicilara duyuru yapilmissa user kullanicisinin rolunu bul.
 
             var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
                     x=>x.RoleId == teacherRoleId || x.RoleId == userRoleId && !x.IsDeleted, r=>r.Role, u=>u.User);

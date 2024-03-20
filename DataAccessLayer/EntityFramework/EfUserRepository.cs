@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.Helpers.Images;
@@ -10,6 +11,7 @@ using EntityLayer.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using DataAccessLayer.Consts;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -34,9 +36,6 @@ namespace DataAccessLayer.EntityFramework
         private readonly IRoleDal _roleDal;
         private readonly AppDbContext _context;
 
-        public const string Student = "Öğrenci";
-        public const string Teacher = "Öğretmen";
-
         public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal, AppDbContext context)
         {
             _userManager = userManager;
@@ -60,7 +59,7 @@ namespace DataAccessLayer.EntityFramework
             if (result.Succeeded)
             {
                 var findRole = await _roleManager.FindByIdAsync(userAddDto.RoleId.ToString());
-                if (findRole.Name.Equals(Student)) // Eger eklenen kullanicinin rolu Ogrenci rolundeyse rastgele ogrenci numarası atanacak.
+                if (findRole.Name.Equals(RoleConsts.Student)) // Eger eklenen kullanicinin rolu Ogrenci rolundeyse rastgele ogrenci numarası atanacak.
                 {
                     Random randomStudentNo = new Random();
                     mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
@@ -88,7 +87,7 @@ namespace DataAccessLayer.EntityFramework
 
             if (result.Succeeded)
             {
-                var findStudentRoleId = await _roleDal.GetByIdRoleAsync(Student); // Ogrenci rolu
+                var findStudentRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.Student); // Ogrenci rolu
                 var findRole = await _roleManager.FindByIdAsync(findStudentRoleId.ToString());
 
                 Random randomStudentNo = new Random();
@@ -116,7 +115,7 @@ namespace DataAccessLayer.EntityFramework
 
             if (result.Succeeded)
             {
-                var findTeacherRoleId = await _roleDal.GetByIdRoleAsync(Teacher); // Ogretmen rolu
+                var findTeacherRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.Teacher); // Ogretmen rolu
                 var findRole = await _roleManager.FindByIdAsync(findTeacherRoleId.ToString());
 
                 await _userManager.AddToRoleAsync(mapUser, findRole.ToString());
@@ -227,7 +226,7 @@ namespace DataAccessLayer.EntityFramework
                 var findRole = await _roleManager.FindByIdAsync(userUpdateDto.RoleId.ToString()); // View tarafinda SelectList uzerinden secilmis olan rolun id'sine gore rolu bul
                 await _userManager.AddToRoleAsync(user, findRole.Name); // Bulunan rolu guncellenecek olan kullaniciya ata
 
-                if (!(selectRole.Name == Student)) // Eger kullanici guncelleme esnasinda secilen rol Ogrenci'den farkliysa GradeId ve StudentNo bilgisini null yap
+                if (!(selectRole.Name == RoleConsts.Student)) // Eger kullanici guncelleme esnasinda secilen rol Ogrenci'den farkliysa GradeId ve StudentNo bilgisini null yap
                 {
                     user.GradeId = null;
                     user.StudentNo = null;
@@ -259,7 +258,7 @@ namespace DataAccessLayer.EntityFramework
         public async Task<IdentityResult> UpdateStudentAsync(UserUpdateDto userUpdateDto)
         {
             var user = await GetAppUserByIdAsync(userUpdateDto.Id);
-            var studentRole = await _roleDal.GetByIdRoleAsync(Student); // Student rolu
+            var studentRole = await _roleDal.GetByIdRoleAsync(RoleConsts.Student); // Student rolu
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -277,7 +276,7 @@ namespace DataAccessLayer.EntityFramework
         public async Task<IdentityResult> UpdateTeacherAsync(UserUpdateDto userUpdateDto)
         {
             var user = await GetAppUserByIdAsync(userUpdateDto.Id);
-            var teacherRole = await _roleDal.GetByIdRoleAsync(Teacher); // Teacher rolu
+            var teacherRole = await _roleDal.GetByIdRoleAsync(RoleConsts.Teacher); // Teacher rolu
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)

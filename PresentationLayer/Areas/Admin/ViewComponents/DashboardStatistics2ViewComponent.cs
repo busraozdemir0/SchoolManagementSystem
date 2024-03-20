@@ -2,7 +2,7 @@
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
-using PresentationLayer.Consts;
+using DataAccessLayer.Consts;
 
 namespace PresentationLayer.Areas.Admin.ViewComponents
 {

@@ -8,7 +8,6 @@ using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
-using PresentationLayer.Consts;
 using PresentationLayer.ResultMessages;
 
 namespace PresentationLayer.Areas.Admin.Controllers

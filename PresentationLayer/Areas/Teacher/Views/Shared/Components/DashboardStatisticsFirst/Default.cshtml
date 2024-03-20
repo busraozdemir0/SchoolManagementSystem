@@ -1,0 +1,43 @@
+﻿<div class="market-updates">
+	<div class="col-md-4 market-update-gd">
+		<div class="market-update-block clr-block-1">
+			<div class="col-md-8 market-update-left">
+				<h3>@ViewBag.StudentCount</h3>
+				<h4>Kayıtlı Öğrenci</h4>
+				<a asp-area="Teacher" asp-controller="Student" asp-action="Index"><p>Öğrenciler Listesi İçin Tıklayın.</p></a>
+			</div>
+			<div class="col-md-4 market-update-right">
+				<i class="fa fa-user"> </i>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="col-md-4 market-update-gd">
+		<div class="market-update-block clr-block-2">
+			<div class="col-md-8 market-update-left">
+				<h3>@ViewBag.AnnouncementCount</h3>
+				<h4>Yeni Duyuru</h4>
+				<a asp-area="Teacher" asp-controller="Announcement" asp-action="Index"><p>Duyurular Listesi İçin Tıklayın.</p></a>
+			</div>
+			<div class="col-md-4 market-update-right">
+				<i class="fa fa-bullhorn"> </i>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="col-md-4 market-update-gd">
+		<div class="market-update-block clr-block-3">
+			<div class="col-md-8 market-update-left">
+				<h3>@ViewBag.MessageCount</h3>
+				<h4>Yeni Mesaj</h4>
+				<a asp-area="Teacher" asp-controller="Message" asp-action="Index"><p>Mesaj Kutusu İçin Tıklayın.</p></a>
+
+			</div>
+			<div class="col-md-4 market-update-right">
+				<i class="fa fa-envelope-o"> </i>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<div class="clearfix"> </div>
+</div>

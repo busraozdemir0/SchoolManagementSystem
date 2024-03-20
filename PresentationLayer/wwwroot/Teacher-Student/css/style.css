@@ -911,6 +911,32 @@ ul.dropdown-menu.drp-mnu li {
     -o-border-radius:49px;
     line-height: 1.7em;
 }
+.market-update-right i.fa.fa-user {
+    font-size: 3em;
+    color: #68AE00;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    text-align: center;
+    border-radius: 49px;
+    -webkit-border-radius: 49px;
+    -moz-border-radius: 49px;
+    -o-border-radius: 49px;
+    line-height: 1.7em;
+}
+.market-update-right i.fa.fa-bullhorn {
+    font-size: 3em;
+    color: #FC8213;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    text-align: center;
+    border-radius: 49px;
+    -webkit-border-radius: 49px;
+    -moz-border-radius: 49px;
+    -o-border-radius: 49px;
+    line-height: 1.7em;
+}
 .market-update-right i.fa.fa-envelope-o {
      font-size:3em;
     color:#337AB7;
@@ -1083,13 +1109,30 @@ canvas#radar {
     background-size: cover;
     min-height:190px;
 }
+.malorum-top-bg {
+    background: url('../../icons/teacher_background.png')no-repeat;
+    background-size: cover;
+    min-height: 190px;
+}
 .malorm-bottom {
-    padding:1.5em 2em;
+    padding:2.6em 2em;
     position:relative;
     background: #fff;
 }
 span.malorum-pro {
-    background: url(../images/b3.png)no-repeat;
+    width: 95px;
+    height: 95px;
+    display: inline-block;
+    position: absolute;
+    top: -60px;
+    left: 285px;
+    border: 2px solid #ccc;
+    border-radius: 63px;
+    -webkit-border-radius:63px;
+    -moz-border-radius: 63px;
+    -o-border-radius: 63px;
+}
+.malorum-pro {
     width: 95px;
     height: 95px;
     display: inline-block;
@@ -1098,7 +1141,7 @@ span.malorum-pro {
     left: 265px;
     border: 2px solid #ccc;
     border-radius: 63px;
-    -webkit-border-radius:63px;
+    -webkit-border-radius: 63px;
     -moz-border-radius: 63px;
     -o-border-radius: 63px;
 }
@@ -1134,7 +1177,7 @@ span.malorum-pro {
 }
 .user-marorm {
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
-    margin: 1.5em 1em 1.5em 1.5em;
+
 }
 .malorm-bottom ul {
     list-style: none;
@@ -3130,6 +3173,9 @@ canvas#bar {
 span.malorum-pro {
     left: 225px;
 }
+    .malorum-pro {
+        left: 225px;
+    }
 canvas#line {
     width: 490px !important;
 }
@@ -3204,6 +3250,9 @@ canvas#line {
 span.malorum-pro {
     left: 190px;
 }
+    .malorum-pro {
+        left: 190px;
+    }
 canvas#radar {
     width: 445px !important;
 }
@@ -3307,9 +3356,15 @@ canvas#bar {
 .malorum-top {
     min-height: 176px;
 }
+    .malorum-top-bg {
+        min-height: 176px;
+    }
 span.malorum-pro {
     left: 145px;
 }
+    .malorum-pro {
+        left: 145px;
+    }
 .left-content {
     width: 82%;
 }
@@ -3570,8 +3625,8 @@ li.dropdown.head-dpdn a.dropdown-toggle {
 }
 .chart-layer1-right {
     padding: 0px;
-    float: right;
-    width: 49%;
+  /*  float: right;
+    width: 49%;*/
 }
 .chart-layer2-right {
     padding: 0px;
@@ -3609,6 +3664,9 @@ canvas#bar {
 .malorum-top {
     min-height: 156px;
 }
+    .malorum-top-bg {
+        min-height: 156px;
+    }
 canvas#radar {
     width: 270px !important;
     height: 270px !important;
@@ -3744,6 +3802,9 @@ canvas#line {
 span.malorum-pro {
     left: 115px;
 }
+    .malorum-pro {
+        left: 220px;
+    }
 .chit-chat-layer1-rit {
     padding: 0em 0em 0em 0em;
 }
@@ -3925,6 +3986,9 @@ canvas#bar {
 span.malorum-pro {
     left: 220px;
 }
+    .malorum-pro {
+        left: 180px;
+    }
 .chart-layer2-right {
     padding: 0em 0em 2em 0em;
     float: none;
@@ -4107,6 +4171,9 @@ canvas#bar {
 span.malorum-pro {
     left: 150px;
 }
+    .malorum-pro {
+        left: 150px;
+    }
 .chart-layer-2 {
     margin: 1em 0em;
 }
@@ -4263,6 +4330,9 @@ canvas#bar {
 span.malorum-pro {
     left: 120px;
 }
+    .malorum-pro {
+        left: 120px;
+    }
 .popular-bran-left p {
     margin-top: 0.2em;
 }
@@ -4420,6 +4490,9 @@ canvas#bar {
 .malorum-top {
     min-height: 100px;
 }
+    .malorum-top-bg {
+        min-height: 100px;
+    }
 span.malorum-pro {
     width: 60px;
     height: 60px;
@@ -4427,6 +4500,13 @@ span.malorum-pro {
     left:83px;
     background-size: 100%;
 }
+    .malorum-pro {
+        width: 60px;
+        height: 60px;
+        top: -35px;
+        left: 83px;
+        background-size: 100%;
+    }
 .malorm-bottom {
     padding: 1.5em 0.8em;
 }
