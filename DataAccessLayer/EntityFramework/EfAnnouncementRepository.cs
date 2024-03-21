@@ -43,6 +43,17 @@ namespace DataAccessLayer.EntityFramework
 
             return announcement.Title;
         }
+        public async Task<string> SafeDeleteTeacherAnnouncementAsync(Guid announcementId)
+        {
+            var announcement = await _unitOfWork.GetRepository<Announcement>().GetAsync(x => x.Id == announcementId);
+
+            announcement.TeacherStatusView = false;
+
+            await _unitOfWork.GetRepository<Announcement>().UpdateAsync(announcement);
+            await _unitOfWork.SaveAsync();
+
+            return announcement.Title;
+        }
 
         public async Task<string> UndoDeleteAnnouncementAsync(Guid announcementId)
         {
@@ -65,7 +76,17 @@ namespace DataAccessLayer.EntityFramework
             var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
                     x=>x.RoleId == teacherRoleId || x.RoleId == userRoleId && !x.IsDeleted, r=>r.Role, u=>u.User);
 
-            return announcements;
+            List<Announcement> announcementList = new();
+
+            foreach(var announcement in announcements) 
+            { 
+                if(announcement.TeacherStatusView==true) // Eger Ogretmen kullanicisi o duyuruyu panelinden kaldirmamissa listeye ekle
+                {
+                    announcementList.Add(announcement);
+                }
+            }
+
+            return announcementList;
         }
 
         public async Task<List<Announcement>> AnnouncementToStudentsListAsync()
@@ -77,5 +98,7 @@ namespace DataAccessLayer.EntityFramework
 
             return announcements;
         }
+
+        
     }
 }

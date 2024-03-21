@@ -34,7 +34,7 @@
 
                                 <div class="form-group">
                                     <label asp-for="RoleId" class="form-label">Bu Duyuruyu Kime Yapacağınızı Seçin <span style="color:red;">*</span></label>
-                                    <select id="receiverList" class="form-control mb-1" asp-for="RoleId" asp-items="@(new SelectList(Model.Roles,"Id","Name"))"></select>
+                                    <select id="receiverList" class="form-control mb-1" asp-for="RoleId" asp-items="@(new SelectList(Model.Roles,"Id","Name"))" style="height: max-content;"></select>
                                     <small class="text-muted">Tüm Kullanıcılara Duyuru Yapabilmek İçin User Seçeneğini Seçin</small>
                                 </div>
 

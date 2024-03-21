@@ -21,6 +21,8 @@ namespace EntityLayer.Entities
         }
         public string Title { get; set; }
         public string Content { get; set; }
+        public bool? TeacherStatusView { get; set; } = true; // Ogretmen paneli icin admin'in yaptigi duyuruyu safe delete ile listeden kaldirma (true ise listelenecek)
+        public bool? StudentStatusView { get; set; } = true; // Ogretmen paneli icin admin'in yaptigi duyuruyu safe delete ile listeden kaldirma
         public Guid? RoleId { get; set; } // Duyuru kimlere yapilacagi bilgisi (Ogretmenler, Ogrenciler, Tümü)
         public virtual AppRole Role { get; set; }
         public Guid UserId { get; set; } // Duyuruyu kim yaptigi bilgisi

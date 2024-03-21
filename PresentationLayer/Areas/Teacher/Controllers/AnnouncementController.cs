@@ -36,7 +36,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _user = httpContextAccessor.HttpContext.User;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() // Admin kullanicisinin yaptigi duyurulari gosterecek view
         {
             var announcements = await _announcementService.TTeacherAnnouncementListAsync();
             var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcements);
@@ -47,6 +47,13 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var announcement = await _announcementService.TGetByGuidAsync(announcementId);
             var mapAnnouncement = _mapper.Map<AnnouncementListDto>(announcement);
             return View(mapAnnouncement);
+        }
+        // Admin kullanicisi tarafindan yapilan duyurulari safe delete yontemiyle listeden kaldirma
+        public async Task<IActionResult> SafeDeleteTeacherAnnouncement(Guid announcementId) 
+        {
+            var announcementTitle = await _announcementService.TSafeDeleteTeacherAnnouncementAsync(announcementId); 
+            _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("Index", "Announcement", new { Area = "Teacher" });
         }
 
         public async Task<IActionResult> StudentAnnouncements() // Ogrencilere yapilan duyurular listesi

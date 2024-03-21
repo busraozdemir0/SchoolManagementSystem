@@ -44,7 +44,7 @@
                                     <td>@announcement.CreatedDate.ToShortDateString()</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id"><i class="fa fa-search"></i></a>
-                                        <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="Delete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
+                                        <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="SafeDeleteTeacherAnnouncement" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
                                     </td>
                                 </tr>
                             }
