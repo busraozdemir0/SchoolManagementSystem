@@ -60,6 +60,11 @@ namespace BusinessLayer.Services.Concrete
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task<List<Announcement>> TAnnouncementToStudentsListAsync()
+        {
+            return await _announcementDal.AnnouncementToStudentsListAsync();
+        }
+
         public async Task TDeleteAsync(Announcement t)
         {
             await _announcementDal.DeleteAsync(t);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Context;
 using EntityLayer.DTOs.Roles;
 using EntityLayer.Entities;
@@ -30,6 +31,19 @@ namespace DataAccessLayer.EntityFramework
         {
             var roles = await _roleManager.Roles.ToListAsync();
             return roles;
+        }
+
+        public async Task<AppRole> GetStudentRoleAsync()
+        {
+            var roles = await _roleManager.Roles.ToListAsync();
+            foreach(var role in roles)
+            {
+                if (role.Name == RoleConsts.Student)
+                {
+                    return role;
+                }
+            }
+            return null;
         }
 
         public async Task<Guid> GetByIdRoleAsync(string roleName)

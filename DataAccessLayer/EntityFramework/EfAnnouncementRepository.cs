@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using DataAccessLayer.Extensions;
 
 namespace DataAccessLayer.EntityFramework
 {
@@ -18,10 +21,14 @@ namespace DataAccessLayer.EntityFramework
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRoleDal _roleDal;
-        public EfAnnouncementRepository(AppDbContext context, IUnitOfWork unitOfWork, IRoleDal roleDal) : base(context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ClaimsPrincipal _user;
+        public EfAnnouncementRepository(AppDbContext context, IUnitOfWork unitOfWork, IRoleDal roleDal, IHttpContextAccessor httpContextAccessor) : base(context)
         {
             _unitOfWork = unitOfWork;
             _roleDal = roleDal;
+            _httpContextAccessor = httpContextAccessor;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task<string> SafeDeleteAnnouncementAsync(Guid announcementId)
@@ -57,6 +64,16 @@ namespace DataAccessLayer.EntityFramework
 
             var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
                     x=>x.RoleId == teacherRoleId || x.RoleId == userRoleId && !x.IsDeleted, r=>r.Role, u=>u.User);
+
+            return announcements;
+        }
+
+        public async Task<List<Announcement>> AnnouncementToStudentsListAsync()
+        {
+            var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
+
+            var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
+                x=>x.UserId==userId && !x.IsDeleted,r=>r.Role, u => u.User);
 
             return announcements;
         }

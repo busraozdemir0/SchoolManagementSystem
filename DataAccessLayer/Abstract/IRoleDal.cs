@@ -12,6 +12,7 @@ namespace DataAccessLayer.Abstract
     public interface IRoleDal
     {
         Task<List<AppRole>> GetAllRolesAsync();
+        Task<AppRole> GetStudentRoleAsync();
         Task<Guid> GetByIdRoleAsync(string roleName); // Gelen rol adinin id'sini cekme
         Task<AppRole> FindByIdRoleAsync(Guid roleId); // Gelen id'ye gore rolu dondurme.
         Task<IdentityResult> CreateRoleAsync(RoleAddDto roleAddDto);

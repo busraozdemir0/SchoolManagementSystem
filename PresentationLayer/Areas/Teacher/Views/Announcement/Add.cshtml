@@ -1,0 +1,62 @@
+﻿@model AnnouncementAddDto
+
+@{
+    ViewData["Title"] = "Duyuru Yap";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Öğrencilere Duyuru Yap</li>
+                        </ol>
+                    </nav>
+                    <form asp-area="Teacher" asp-controller="Announcement" asp-action="Add" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <input asp-for="RoleId" type="hidden"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       value="@ViewBag.Rol"
+                                       disabled=""
+                                       placeholder="Lütfen duyuru başlığını giriniz."
+                                       aria-describedby="defaultFormControlHelp" />
+                                <span asp-validation-for="RoleId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Title" class="form-label">Başlık</label>
+                                <input asp-for="Title" type="text"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       placeholder="Lütfen duyuru başlığını giriniz."
+                                       aria-describedby="defaultFormControlHelp" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Content" class="form-label">İçerik</label>
+                                <textarea asp-for="Content" id="textEdit" type="text"
+                                          class="form-control mb-1"
+                                          id="defaultFormControlInput"
+                                          placeholder="Duyuru içeriği..."
+                                          aria-describedby="defaultFormControlHelp" style="min-height:300px"></textarea>
+                                <span asp-validation-for="Content" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Duyuru Yap</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

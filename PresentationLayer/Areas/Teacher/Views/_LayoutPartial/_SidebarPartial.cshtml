@@ -18,9 +18,16 @@
 					<li id="menu-academico-boletim"><a href="inbox-details.html">Mesaj Oluştur</a></li>
 				</ul>
 			</li>
-			<li><a asp-area="Teacher" asp-controller="Announcement" asp-action="Index"><i class="fa fa-bell-o" aria-hidden="true"></i><span>Duyurular</span></a></li>
 
-			<li><a href="#"><i class="fa fa-graduation-cap "></i><span>Öğrenciler</span></a></li>
+			<li>
+				<a href="#"><i class="fa fa-bell-o"></i><span>Duyurular</span><span class="fa fa-angle-right" style="float: right"></span></a>
+				<ul id="menu-academico-sub">
+					<li id="menu-academico-avaliacoes"><a asp-area="Teacher" asp-controller="Announcement" asp-action="Index">Okul Yönetimi Tarafından Yapılan Duyurular</a></li>
+					<li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Announcement" asp-action="StudentAnnouncements">Duyuru Yap</a></li>
+				</ul>
+			</li>
+
+			<li><a asp-area="Teacher" asp-controller="Student" asp-action="Index"><i class="fa fa-graduation-cap "></i><span>Öğrenciler</span></a></li>
 			
 			<li><a href="#"><i class="fa fa-flask"></i><span>Sınıflar</span></a></li>
 			
@@ -28,7 +35,7 @@
 						
 			<li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i><span>Ana Sayfaya Git</span></a></li>
 
-			<li><a href="#"><i class="fa fa-sign-out"></i><span>Çıkış Yap</span></a></li>
+			<li><a asp-area="" asp-controller="Login" asp-action="LogOut"><i class="fa fa-sign-out"></i><span>Çıkış Yap</span></a></li>
 		</ul>
 	</div>
 </div>

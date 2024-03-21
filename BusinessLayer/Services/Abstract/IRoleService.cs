@@ -12,6 +12,7 @@ namespace BusinessLayer.Services.Abstract
     public interface IRoleService
     {
         Task<List<AppRole>> TGetAllRolesAsync();
+        Task<AppRole> TGetStudentRoleAsync();
         Task<Guid> TGetByIdRoleAsync(string roleName);
         Task<AppRole> TFindByIdRoleAsync(Guid roleId);
         Task<IdentityResult> TCreateRoleAsync(RoleAddDto roleAddDto);

@@ -44,6 +44,11 @@ namespace BusinessLayer.Services.Concrete
             return await _roleDal.GetByIdRoleAsync(roleName);
         }
 
+        public async Task<AppRole> TGetStudentRoleAsync()
+        {
+            return await _roleDal.GetStudentRoleAsync();
+        }
+
         public Task<IdentityResult> TUpdateRoleAsync(RoleUpdateDto roleUpdateDto)
         {
             return _roleDal.UpdateRoleAsync(roleUpdateDto);
