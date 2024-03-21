@@ -93,8 +93,12 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task TUpdateAsync(Announcement t)
         {
-            t.UserId = _user.GetLoggedInUserId(); ;  // Giren kisinin id'si
-            t.CreatedBy = _user.GetLoggedInUserName(); // Giren kisinin userName'i
+            var userId= _user.GetLoggedInUserId(); // Giren kisinin id'si
+
+            var userNameSurname = await _userService.TGetAppUserByIdAsync(_user.GetLoggedInUserId()); // Login olan kullaniciyi getirir
+
+            t.UserId = userId;
+            t.CreatedBy = userNameSurname.Name + " " + userNameSurname.Surname; // Olusturan'in adi soyadi
 
             await _announcementDal.UpdateAsync(t);
             await _unitOfWork.SaveAsync();
