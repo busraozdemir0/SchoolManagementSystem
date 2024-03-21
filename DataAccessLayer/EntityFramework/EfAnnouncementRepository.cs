@@ -21,6 +21,7 @@ namespace DataAccessLayer.EntityFramework
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRoleDal _roleDal;
+        private readonly IUserDal _userDal;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
         public EfAnnouncementRepository(AppDbContext context, IUnitOfWork unitOfWork, IRoleDal roleDal, IHttpContextAccessor httpContextAccessor) : base(context)
@@ -79,13 +80,13 @@ namespace DataAccessLayer.EntityFramework
             List<Announcement> announcementList = new();
 
             foreach(var announcement in announcements) 
-            { 
-                if(announcement.TeacherStatusView==true) // Eger Ogretmen kullanicisi o duyuruyu panelinden kaldirmamissa listeye ekle
+            {
+                // Eger Ogretmen kullanicisi o duyuruyu panelinden kaldirmamis ise listeye ekle.
+                if (announcement.TeacherStatusView==true)
                 {
                     announcementList.Add(announcement);
                 }
             }
-
             return announcementList;
         }
 

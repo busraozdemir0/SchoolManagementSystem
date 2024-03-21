@@ -20,12 +20,13 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         private readonly IAnnouncementService _announcementService;
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
+        private readonly IUserService _userService;
         private readonly IValidator<Announcement> _validator;
         private readonly IToastNotification _toast;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
 
-        public AnnouncementController(IAnnouncementService announcementService, IMapper mapper, IRoleService roleService, IValidator<Announcement> validator, IToastNotification toast, IHttpContextAccessor httpContextAccessor)
+        public AnnouncementController(IAnnouncementService announcementService, IMapper mapper, IRoleService roleService, IValidator<Announcement> validator, IToastNotification toast, IHttpContextAccessor httpContextAccessor, IUserService userService)
         {
             _announcementService = announcementService;
             _mapper = mapper;
@@ -34,12 +35,24 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _toast = toast;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index() // Admin kullanicisinin yaptigi duyurulari gosterecek view
         {
             var announcements = await _announcementService.TTeacherAnnouncementListAsync();
-            var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcements);
+
+            List<Announcement> announcementList = new();
+            foreach (var item in announcements)
+            {
+                var user = await _userService.TGetAppUserByIdAsync(item.UserId);
+                var userRole = await _userService.TGetUserRoleAsync(user);
+                if (userRole == RoleConsts.Admin) // Yalnızca Admin rolundeki kullanicinin yaptigi yorumlar listelenecek.
+                {
+                    announcementList.Add(item);
+                }
+            }
+            var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcementList);
             return View(mapAnnouncements);
         }
         public async Task<IActionResult> Detail(Guid announcementId)

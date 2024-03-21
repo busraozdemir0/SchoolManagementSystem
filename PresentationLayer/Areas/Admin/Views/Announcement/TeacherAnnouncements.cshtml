@@ -1,7 +1,7 @@
 ﻿@model List<AnnouncementListDto>
 
 @{
-    ViewData["Title"] = "Duyurular";
+    ViewData["Title"] = "Öğretmenlerin Duyuruları";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -9,10 +9,10 @@
         <h2>Duyurular</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                <a asp-area="Admin" asp-controller="Announcement" asp-action="Index">Duyurular</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Duyurular</strong>
+                <strong>Öğretmenlerin Duyuruları</strong>
             </li>
         </ol>
     </div>
@@ -26,11 +26,9 @@
             <div class="ibox ">
                 <div class="card">
                     <div class="text-nowrap m-5">
-
-                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Announcement" asp-action="Add">
-                            Duyuru Ekle <i class="fa fa-plus"></i>
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Announcement" asp-action="Index">
+                            <i class="fa fa-arrow-left"></i> Geri Dön 
                         </a>
-
                         <table class="table table-striped" id="announcementsTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
@@ -66,16 +64,12 @@
                                         <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="Update" asp-route-announcementId="@announcement.Id"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="Delete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-
-                        <a class="btn btn-outline-secondary mb-3 mt-2" asp-area="Admin" asp-controller="Announcement" asp-action="TeacherAnnouncements">
-                            <i class="fa fa-hand-o-right"></i>  Öğretmenlerin Yaptığı Duyuruları Görmek İçin Tıklayın
-                        </a>
                     </div>
                 </div>
             </div>
