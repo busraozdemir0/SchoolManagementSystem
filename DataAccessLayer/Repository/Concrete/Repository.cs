@@ -79,7 +79,7 @@ namespace DataAccessLayer.Repository.Concrete
             return await Table.FindAsync(id);
         }
 
-        public async Task<T> UpdateAsync(T entity)
+		public async Task<T> UpdateAsync(T entity)
         {
             await Task.Run(()=> Table.Update(entity)); // Update islemini asenkron yapida calistirabilmek icin
             return entity;

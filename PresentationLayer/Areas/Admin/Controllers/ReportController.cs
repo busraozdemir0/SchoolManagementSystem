@@ -95,7 +95,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View(new ReportUpdateDto { ImageId=mapReport.ImageId, Image=mapReport.Image});
         }
 
-        public async Task<IActionResult> Delete(Guid reportId)
+        public async Task<IActionResult> SafeDelete(Guid reportId)
         {
             var reportTitle = await _reportService.TSafeDeleteReportAsync(reportId);
 
@@ -109,5 +109,12 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(Messages.Report.UndoDelete(reportTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
         }
-    }
+		public async Task<IActionResult> HardDelete(Guid reportId)
+		{
+            var report = await _reportService.TGetByGuidAsync(reportId);
+			await _reportService.TDeleteAsync(report);
+			_toast.AddSuccessToastMessage("Haber tamamen kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
+			return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
+		}
+	}
 }

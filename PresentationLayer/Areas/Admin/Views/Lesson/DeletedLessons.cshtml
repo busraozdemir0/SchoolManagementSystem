@@ -59,6 +59,7 @@
                                         <td>@(lesson.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">                                      
                                             <a class="btn btn-warning btn-sm" data-id="@lesson.Id" asp-area="Admin" asp-controller="Lesson" asp-action="UndoDelete" asp-route-lessonId="@lesson.Id"><i class="fa fa-undo"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@lesson.Id" asp-area="Admin" asp-controller="Lesson" asp-action="HardDelete" asp-route-lessonId="@lesson.Id"><i class="fa fa-minus-circle"></i></a>
                                         </td>
 
                                     </tr>

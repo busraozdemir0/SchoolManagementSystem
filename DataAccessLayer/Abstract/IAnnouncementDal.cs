@@ -13,9 +13,13 @@ namespace DataAccessLayer.Abstract
         Task<string> SafeDeleteAnnouncementAsync(Guid announcementId);
         Task<string> SafeDeleteTeacherAnnouncementAsync(Guid announcementId); // Ogretmen panelinde admin kullanicisinin yaptigi duyurulari listeden kaldirmak icin
         Task<string> UndoDeleteAnnouncementAsync(Guid announcementId);
+        Task<string> UndoDeleteTeacherAnnouncementAsync(Guid announcementId);
 
-        Task<List<Announcement>> TeacherAnnouncementListAsync(); // Teacher kullanicilarina yapilan duyurulari listelemek icin
 
-        Task<List<Announcement>> AnnouncementToStudentsListAsync(); // Giren ogretmen kullanicisinin ogrencilere yaptigi duyurular
-    }
+		Task<List<Announcement>> TeacherAnnouncementListAsync(); // Öğretmen panelinde - Teacher kullanicilarina yapilan duyurulari listelemek icin
+
+        Task<List<Announcement>> TeacherAnnouncementToStudentsListAsync(); // Giren ogretmen kullanicisinin ogrencilere yaptigi duyurular
+        Task<List<Announcement>> TeacherAnnouncementToStudentsDeletedListAsync(); // Giren ogretmen kullanicisinin ogrencilere yaptigi kaldirilmis duyurular 
+
+	}
 }

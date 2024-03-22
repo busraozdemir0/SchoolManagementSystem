@@ -16,7 +16,7 @@
 					<a class="btn btn-primary" asp-area="Teacher" asp-controller="Announcement" asp-action="Index"><i class="fa fa-arrow-left"></i>&nbsp; Geri Dön</a>
 				</li>
 				<li>
-					<a class="btn btn-danger" asp-area="Teacher" asp-controller="Announcement" asp-action="Delete"><i class="fa fa-trash"></i></a>
+					<a class="btn btn-danger btn-sm" data-id="@Model.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="SafeDeleteTeacherAnnouncement" asp-route-announcementId="@Model.Id"><i class="fa fa-minus-circle"></i></a>
 				</li>
 			</ul>
 		</div>

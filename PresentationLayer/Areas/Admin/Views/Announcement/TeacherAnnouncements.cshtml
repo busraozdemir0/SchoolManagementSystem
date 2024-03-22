@@ -61,7 +61,7 @@
                                         <td>@announcement.CreatedBy</td>
                                         <td>@announcement.Role.Name</td>
                                         <td>@announcement.CreatedDate.ToShortDateString()</td>
-                                        <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td>@(announcement.TeacherStatusView ? "Aktif" : "Aktif Değil")</td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="Update" asp-route-announcementId="@announcement.Id"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>

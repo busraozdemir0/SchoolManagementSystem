@@ -12,7 +12,10 @@ namespace BusinessLayer.Services.Abstract
         Task<string> TSafeDeleteAnnouncementAsync(Guid announcementId);
         Task<string> TSafeDeleteTeacherAnnouncementAsync(Guid announcementId);
         Task<string> TUndoDeleteAnnouncementAsync(Guid announcementId);
-        Task<List<Announcement>> TTeacherAnnouncementListAsync();
-        Task<List<Announcement>> TAnnouncementToStudentsListAsync();
-    }
+        Task<string> TUndoDeleteTeacherAnnouncementAsync(Guid announcementId);
+
+		Task<List<Announcement>> TTeacherAnnouncementListAsync();
+        Task<List<Announcement>> TTeacherAnnouncementToStudentsListAsync();
+		Task<List<Announcement>> TTeacherAnnouncementToStudentsDeletedListAsync();
+	}
 }

@@ -47,8 +47,8 @@
                                         <td>@grade.Name</td>
                                         <td>@(grade.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
-                                          
                                             <a class="btn btn-warning btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="UndoDelete" asp-route-gradeId="@grade.Id"><i class="fa fa-undo"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="HardDelete" asp-route-gradeId="@grade.Id"><i class="fa fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 }

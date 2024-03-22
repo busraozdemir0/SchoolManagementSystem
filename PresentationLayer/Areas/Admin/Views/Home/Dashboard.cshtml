@@ -253,13 +253,8 @@
         </div>
     </div>
     <div class="row m-t-lg">
-        <div class="col-lg-12">
-            <div class="ibox-content">
-                <h2>Word map</h2>
-                <small>This is simple example of map</small>
-                <div id="world-map" style="height: 300px;"></div>
-            </div>
-        </div>
+
+        @await Component.InvokeAsync("DashboardMapLocation")
 
     </div>
 

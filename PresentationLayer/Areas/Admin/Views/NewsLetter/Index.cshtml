@@ -53,7 +53,7 @@
                                         <td>@(newsLetter.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" href="mailto:@newsLetter.EMail"><i class="fa fa-envelope"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="Delete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-minus-circle"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="SafeDelete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 }

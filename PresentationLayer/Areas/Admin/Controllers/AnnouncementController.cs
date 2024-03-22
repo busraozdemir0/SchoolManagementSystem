@@ -59,7 +59,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             {
                 var user = await _userService.TGetAppUserByIdAsync(item.UserId);
                 var userRole = await _userService.TGetUserRoleAsync(user);
-                if (userRole == RoleConsts.Teacher) // Yalnızca Teacher rolundeki kullanicinni yaptigi yorumlar listelenecek.
+                if (userRole == RoleConsts.Teacher) // Yalnızca Teacher rolundeki kullanicinin yaptigi yorumlar listelenecek.
                 {
                     announcementList.Add(item);
                 }
@@ -147,7 +147,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View(new AnnouncementUpdateDto { Roles = mapRoles });
 
         }
-        public async Task<IActionResult> Delete(Guid announcementId)
+        public async Task<IActionResult> SafeDelete(Guid announcementId)
         {
             var announcementTitle = await _announcementService.TSafeDeleteAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
@@ -160,8 +160,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return RedirectToAction("Index", "Announcement", new { Area = "Admin" });
         }
 
-        public async Task<IActionResult> HardDelete(Guid announcementId) // Ogretmenlerin yaptigi duyuruları tamamen tablodan silebilmek icin
-        {
+        public async Task<IActionResult> HardDelete(Guid announcementId) // Ogretmenlerin yaptigi veya cop kutusundaki duyuruları tamamen tablodan silebilmek icin
+		{
             var announcement= await _announcementService.TGetByGuidAsync(announcementId);
 
             if(announcement is not null)

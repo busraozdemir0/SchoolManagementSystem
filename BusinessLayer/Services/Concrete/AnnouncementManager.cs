@@ -60,9 +60,9 @@ namespace BusinessLayer.Services.Concrete
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<List<Announcement>> TAnnouncementToStudentsListAsync()
+        public async Task<List<Announcement>> TTeacherAnnouncementToStudentsListAsync()
         {
-            return await _announcementDal.AnnouncementToStudentsListAsync();
+            return await _announcementDal.TeacherAnnouncementToStudentsListAsync();
         }
 
         public async Task TDeleteAsync(Announcement t)
@@ -91,12 +91,22 @@ namespace BusinessLayer.Services.Concrete
             return await _announcementDal.TeacherAnnouncementListAsync();
         }
 
-        public async Task<string> TUndoDeleteAnnouncementAsync(Guid announcementId)
+		public async Task<List<Announcement>> TTeacherAnnouncementToStudentsDeletedListAsync()
+		{
+            return await _announcementDal.TeacherAnnouncementToStudentsDeletedListAsync();
+		}
+
+		public async Task<string> TUndoDeleteAnnouncementAsync(Guid announcementId)
         {
             return await _announcementDal.UndoDeleteAnnouncementAsync(announcementId);
         }
 
-        public async Task TUpdateAsync(Announcement t)
+		public async Task<string> TUndoDeleteTeacherAnnouncementAsync(Guid announcementId)
+		{
+			return await _announcementDal.UndoDeleteTeacherAnnouncementAsync(announcementId);
+		}
+
+		public async Task TUpdateAsync(Announcement t)
         {
             var userId= _user.GetLoggedInUserId(); // Giren kisinin id'si
 

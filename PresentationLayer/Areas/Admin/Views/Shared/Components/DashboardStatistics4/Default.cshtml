@@ -1,36 +1,38 @@
 ﻿
 <div class="row">
     <div class="col-lg-4">
-        <div class="widget-head-color-box navy-bg p-xs text-center">
-            <div class="m-b-xs">
-                <h2 class="font-bold no-margins">
-                    @ViewBag.GetLoggedInNameSurname
-                </h2>
+        <div style="height:20.5em; ">
+            <div class="widget-head-color-box navy-bg p-xs text-center">
+                <div class="m-b-xs">
+                    <h2 class="font-bold no-margins">
+                        @ViewBag.GetLoggedInNameSurname
+                    </h2>
+
+                </div>
+                @* style="width:85px; height:100px" *@
+                @if (@ViewBag.GetLoggedInImageId is not null) @* Profil resmi bos degilse o resmi gosterecek. Bossa varsayilan resim gosterilecek.*@
+                {
+                    <img src="~/images/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
+                }
+                else
+                {
+                    <img src="~/icons/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
+                }
+            </div>
+            <div class="widget-text-box" style="height:7.8em; overflow:auto;">
+                @if (ViewBag.GetLoggedInAbout is not null) @*Eger hakkımda yazisi yazilmamissa varsayilan yazi gelsin.*@
+                {
+                    <p style="text-align:center;">@Html.Raw(ViewBag.GetLoggedInAbout)</p>
+                }
+                else
+                {
+                    <p style="text-align:center;">
+                        Atlas Koleji okulunun web sitesinde Admin kullanıcısı olarak görev almaktadır.
+                        Admin rolü sistemdeki tüm her şeye müdahale edebilmektedir.
+                    </p>
+                }
 
             </div>
-            @* style="width:85px; height:100px" *@
-            @if (@ViewBag.GetLoggedInImageId is not null) @* Profil resmi bos degilse o resmi gosterecek. Bossa varsayilan resim gosterilecek.*@
-            {
-                <img src="~/images/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
-            }
-            else
-            {
-                <img src="~/icons/@ViewBag.GetLoggedInImage" style="height:7.5em; width:7.5em;" class="rounded-circle circle-border m-b-xs" alt="profile">
-            }
-        </div>
-        <div class="widget-text-box" style="padding-bottom:4em;">
-            @if (ViewBag.GetLoggedInAbout is not null) @*Eger hakkımda yazisi yazilmamizsa varsayilan yazi gelsin.*@
-            {
-                <p style="text-align:center;">@Html.Raw(ViewBag.GetLoggedInAbout)</p>
-            }
-            else
-            {
-                <p style="text-align:center;">
-                    Atlas Koleji okulunun web sitesinde Admin kullanıcısı olarak görev almaktadır.
-                    Admin rolü sistemdeki tüm her şeye müdahale edebilmektedir.
-                </p>
-            }
-
         </div>
     </div>
     <div class="col-lg-2">
@@ -46,7 +48,7 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="widget lazur-bg p-md">
+        <div class="widget lazur-bg p-md" style="height:19.8em; overflow:auto;">
 
             <h2 class="font-bold">
                 @ViewBag.GetLoggedInNameSurname

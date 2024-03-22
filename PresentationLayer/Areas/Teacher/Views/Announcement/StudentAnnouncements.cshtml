@@ -51,7 +51,7 @@
                                     <td>@announcement.CreatedDate.ToShortDateString()</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Update" asp-route-announcementId="@announcement.Id"><i class="fa fa-edit"></i></a>
-                                        <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Delete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
+                                        <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Delete" asp-route-announcementId="@announcement.Id"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             }

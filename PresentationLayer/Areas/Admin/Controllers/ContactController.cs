@@ -40,7 +40,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapContact = _mapper.Map<ContactDto>(contact);
             return View(mapContact);
         }
-        public async Task<IActionResult> Delete(Guid contactId)
+        public async Task<IActionResult> SafeDelete(Guid contactId)
         {
             var contact = await _contactService.TSafeDeleteContactAsync(contactId);
             _toast.AddSuccessToastMessage(Messages.Contact.Delete(contact), new ToastrOptions { Title = "Başarılı!" });
@@ -52,5 +52,13 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(Messages.Contact.UndoDelete(contact), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedContacts", "Contact", new { Area = "Admin" });
         }
-    }
+
+		public async Task<IActionResult> HardDelete(Guid contactId)
+		{
+            var contact = await _contactService.TGetByGuidAsync(contactId);
+			await _contactService.TDeleteAsync(contact);
+			_toast.AddSuccessToastMessage("Mesaj tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
+			return RedirectToAction("DeletedContacts", "Contact", new { Area = "Admin" });
+		}
+	}
 }

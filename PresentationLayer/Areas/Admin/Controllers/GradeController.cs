@@ -89,7 +89,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             return View();
         }
-        public async Task<IActionResult> Delete(int gradeId)
+        public async Task<IActionResult> SafeDelete(int gradeId)
         {
             var gradeName=await _gradeService.TSafeDeleteGradeAsync(gradeId);
             _toast.AddSuccessToastMessage(gradeName+" adlı sınıf başarıyla silindi.", new ToastrOptions { Title = "Başarılı!" });
@@ -101,5 +101,12 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(gradeName + " adlı sınıf başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
         }
-    }
+		public async Task<IActionResult> HardDelete(int gradeId)
+		{
+            var grade=await _gradeService.TGetGradeByIdAsync(gradeId);
+			await _gradeService.TDeleteAsync(grade);
+			_toast.AddSuccessToastMessage("Sınıf tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
+			return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
+		}
+	}
 }

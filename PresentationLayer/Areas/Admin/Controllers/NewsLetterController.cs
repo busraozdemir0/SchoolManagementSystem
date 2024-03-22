@@ -40,7 +40,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapNewsLetters = _mapper.Map<List<NewsLetterListDto>>(newsLetters);
             return View(mapNewsLetters);
         }
-        public async Task<IActionResult> Delete(int newsLetterId)
+        public async Task<IActionResult> SafeDelete(int newsLetterId)
         {
             var newsLetterEMail = await _newsletterService.TSafeDeleteNewsLetterAsync(newsLetterId);
             _toast.AddSuccessToastMessage(newsLetterEMail + " adlı mail başarıyla silindi", new ToastrOptions { Title = "Başarılı!" });
@@ -52,7 +52,16 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(newsLetterEMail + " adlı mail başarıyla geri alındı", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedNewsLetters", "NewsLetter", new { Area = "Admin" });
         }
-        [HttpGet]
+
+		public async Task<IActionResult> HardDelete(int newsLetterId)
+		{
+            var newsLetter=await _newsletterService.TGetByIdAsync(newsLetterId);
+			await _newsletterService.TDeleteAsync(newsLetter);
+			_toast.AddSuccessToastMessage("Mail tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
+			return RedirectToAction("DeletedNewsLetters", "NewsLetter", new { Area = "Admin" });
+		}
+
+		[HttpGet]
         public async Task<IActionResult> SendingBulkEmails()
         {
             return View();

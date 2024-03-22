@@ -50,6 +50,7 @@
                                         <td>@(newsLetter.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             <a class="btn btn-warning btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="UndoDelete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-undo"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@newsLetter.Id" asp-area="Admin" asp-controller="NewsLetter" asp-action="HardDelete" asp-route-newsLetterId="@newsLetter.Id"><i class="fa fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 }

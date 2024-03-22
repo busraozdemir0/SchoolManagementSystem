@@ -107,7 +107,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapGrades = _mapper.Map<List<GradeDto>>(grades);
             return View(new LessonUpdateDto { Grades = mapGrades });
         }
-        public async Task<IActionResult> Delete(Guid lessonId)
+        public async Task<IActionResult> SafeDelete(Guid lessonId)
         {
             var lessonName = await _lessonService.TSafeDeleteLessonAsync(lessonId);
             _toast.AddSuccessToastMessage(lessonName + " adlı ders başarıyla silindi.", new ToastrOptions { Title = "Başarılı!" });
@@ -119,5 +119,13 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(lessonName + " adlı ders başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
         }
-    }
+
+		public async Task<IActionResult> HardDelete(Guid lessonId) // Tablodan tamamen silme islemi icin
+		{
+            var lesson = await _lessonService.TGetByGuidAsync(lessonId);
+			await _lessonService.TDeleteAsync(lesson);
+			_toast.AddSuccessToastMessage("Ders tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
+			return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
+		}
+	}
 }
