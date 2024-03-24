@@ -21,6 +21,11 @@ namespace BusinessLayer.Services.Concrete
             _lessonDal = lessonDal;
         }
 
+        public async Task<List<Lesson>> TGetAllTeacherLessonsAsync()
+        {
+            return await _lessonDal.GetAllTeacherLessonsAsync();
+        }
+
         public async Task<List<Lesson>> GetDeletedListAsync()
         {
             return await _lessonDal.GetAllAsync(x => x.IsDeleted, g => g.Grade);
@@ -28,7 +33,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<Lesson>> GetListAsync()
         {
-            return await _lessonDal.GetAllAsync(x=>!x.IsDeleted, g=>g.Grade);
+            return await _lessonDal.GetAllAsync(x => !x.IsDeleted, g => g.Grade);
         }
 
         public async Task TAddAsync(Lesson t)
@@ -53,7 +58,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<Lesson> TGetByGuidAsync(Guid id)
         {
-            return await _unitOfWork.GetRepository<Lesson>().GetAsync(x => x.Id == id, g=>g.Grade);
+            return await _unitOfWork.GetRepository<Lesson>().GetAsync(x => x.Id == id, g => g.Grade);
         }
 
         public async Task<string> TSafeDeleteLessonAsync(Guid lessonId)

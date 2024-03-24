@@ -1,0 +1,73 @@
+﻿@model List<UserListDto>
+
+@{
+    ViewData["Title"] = "Öğrenciler";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Öğrenciler</li>
+                        </ol>
+                    </nav>
+                    <table class="table table-hover" id="usersTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th>Cinsiyeti</th>
+                                <th>Sınıfı</th>
+                                <th>Öğrenci Numarası</th>
+                                <th>Telefon Numarası</th>
+                                <th>E-Mail</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th>Cinsiyeti</th>
+                                <th>Sınıfı</th>
+                                <th>Öğrenci Numarası</th>
+                                <th>Telefon Numarası</th>
+                                <th>E-Mail</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var user in Model)
+                            {
+                                if (user.Role == RoleConsts.Student && user.GradeId == ViewBag.GradeId)  // Rolu ogrenci ise ve GradeId'si View'a tasinan GradeId ile esitse ogrencileri listele
+                                {
+                                    <tr name="@user.Id">
+                                        <td>@user.Name</td>
+                                        <td>@user.Surname</td>
+                                        <td>@user.Gender</td>
+                                        <td>@user.Grade.Name</td>
+                                        <td>@user.StudentNo</td>
+                                        <td>@user.PhoneNumber</td>
+                                        <td>@user.Email</td>
+                                        <td class="text-center">
+                                            @* <a class="btn btn-warning btn-sm" data-id="@user.Id" asp-area="Teacher" asp-controller="Student" asp-action="Detail" asp-route-userId="@user.Id"><i class="fa fa-search"></i> Detay</a> *@
+                                            <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Teacher" asp-controller="Student" asp-action="LessonScoreAdd" asp-route-userId="@user.Id"><i class="fa fa-edit"></i> Not Sistemi</a>
+                                        </td>
+                                    </tr>
+                               }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/userIndex.js" type="application/ecmascript"></script>
+}

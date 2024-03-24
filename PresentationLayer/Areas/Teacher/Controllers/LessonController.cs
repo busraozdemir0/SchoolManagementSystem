@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Extensions;
+using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Lessons;
 using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using System.Security.Claims;
+using static PresentationLayer.ResultMessages.Messages;
 
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
@@ -26,7 +30,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var lessons = await _lessonService.GetListAsync();
+            var lessons = await _lessonService.TGetAllTeacherLessonsAsync();
             var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
             return View(mapLessons);
         }

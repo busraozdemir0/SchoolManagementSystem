@@ -1,0 +1,54 @@
+﻿@model List<GradeListDto>
+
+@{
+    ViewData["Title"] = "Sınıflar";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Ders Verdiğiniz Sınıflar</li>
+                        </ol>
+                    </nav>
+                    <table class="table table-hover" id="gradesTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Sınıf Adı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Sınıf Adı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var grade in Model)
+                            {
+                                @if (grade != ViewBag.Grade)  // Eger sinif Action'dan gelen sinif ile esit degilse goster. Yani ayni sinif tekrar listelenmemesi icin
+                                {
+                                    <tr name="@grade.Id">
+                                        <td>@grade.Name</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm" data-id="@grade.Id" asp-area="Teacher" asp-controller="Grade" asp-action="GetAllStudentsWithGrade" asp-route-gradeId="@grade.Id"><i class="fa fa-eye"></i> Öğrencileri Gör</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/gradeIndex.js" type="application/ecmascript"></script>
+}

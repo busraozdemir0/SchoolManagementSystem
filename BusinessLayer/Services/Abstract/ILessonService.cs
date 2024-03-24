@@ -9,6 +9,7 @@ namespace BusinessLayer.Services.Abstract
 {
     public interface ILessonService:IGenericService<Lesson>
     {
+        Task<List<Lesson>> TGetAllTeacherLessonsAsync(); // Giren ogretmen kullanicisinin verdigi dersler listeleniyor.
         Task<string> TSafeDeleteLessonAsync(Guid lessonId);
         Task<string> TUndoDeleteLessonAsync(Guid lessonId);
     }

@@ -116,5 +116,6 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _userDal.GetAllFilterAndIncludeUsersAsync();
         }
+
     }
 }

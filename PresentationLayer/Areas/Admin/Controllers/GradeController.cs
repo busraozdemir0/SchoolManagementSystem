@@ -2,6 +2,8 @@
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using EntityLayer.DTOs.Grades;
+using EntityLayer.DTOs.Lessons;
+using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +17,20 @@ namespace PresentationLayer.Areas.Admin.Controllers
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
+        private readonly IUserService _userService;
+        private readonly ILessonService _lessonService;
         private readonly IMapper _mapper;
         private readonly IValidator<Grade> _validator;
         private readonly IToastNotification _toast;
 
-        public GradeController(IGradeService gradeService, IMapper mapper, IValidator<Grade> validator, IToastNotification toast)
+        public GradeController(IGradeService gradeService, IMapper mapper, IValidator<Grade> validator, IToastNotification toast, IUserService userService, ILessonService lessonService)
         {
             _gradeService = gradeService;
             _mapper = mapper;
             _validator = validator;
             _toast = toast;
+            _userService = userService;
+            _lessonService = lessonService;
         }
 
         public async Task<IActionResult> Index()
@@ -108,5 +114,30 @@ namespace PresentationLayer.Areas.Admin.Controllers
 			_toast.AddSuccessToastMessage("Sınıf tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
 			return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
 		}
-	}
+
+        public async Task<IActionResult> GetAllStudentsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan ogrencileri listeleyecek
+        {
+            var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
+            ViewBag.GradeId = gradeId;
+            ViewBag.GradeName = grade.Name;
+
+            var users = await _userService.TGetAllUsersWithRoleAsync();
+            var mapStudents = _mapper.Map<List<UserListDto>>(users);
+
+            return View(mapStudents);
+        }
+
+        public async Task<IActionResult> GetAllLessonsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan dersleri listeleyecek
+        {
+            var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
+            ViewBag.GradeId = gradeId;
+            ViewBag.GradeName = grade.Name;
+
+            var lessons = await _lessonService.GetListAsync();
+            var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
+
+            return View(mapLessons);
+
+        }
+    }
 }

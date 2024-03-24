@@ -50,6 +50,8 @@
                                         <td>@grade.Name</td>
                                         <td>@(grade.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
+                                            <a class="btn btn-secondary btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="GetAllLessonsWithGrade" asp-route-gradeId="@grade.Id"><i class="fa fa-book"></i> Dersleri Gör</a>
+                                            <a class="btn btn-warning btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="GetAllStudentsWithGrade" asp-route-gradeId="@grade.Id"><i class="fa fa-graduation-cap"></i> Öğrencileri Gör</a>
                                             <a class="btn btn-primary btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="Update" asp-route-gradeId="@grade.Id"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm" data-id="@grade.Id" asp-area="Admin" asp-controller="Grade" asp-action="SafeDelete" asp-route-gradeId="@grade.Id"><i class="fa fa-trash"></i></a>
                                         </td>

@@ -10,6 +10,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface ILessonDal:IRepository<Lesson>
     {
+        Task<List<Lesson>> GetAllTeacherLessonsAsync(); // Giren ogretmen kullanicisinin verdigi dersler listeleniyor.
         Task<string> SafeDeleteLessonAsync(Guid lessonId);
         Task<string> UndoDeleteLessonAsync(Guid lessonId);
     }

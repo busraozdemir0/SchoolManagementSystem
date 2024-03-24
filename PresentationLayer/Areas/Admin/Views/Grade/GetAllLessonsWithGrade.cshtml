@@ -1,0 +1,85 @@
+﻿@model List<LessonListDto>
+
+@{
+    ViewData["Title"] = "Dersler";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>"@ViewBag.GradeName" Sınıfına Ait Dersler</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Grade" asp-action="Index">Sınıflar</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Ders Listesi</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="text-nowrap m-5">
+
+                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Lesson" asp-action="Add">
+                            Ders Ekle <i class="fa fa-plus"></i>
+                        </a>
+
+                        <table class="table table-striped" id="lessonsTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Ders Kodu</th>
+                                    <th>Ders Adı</th>
+                                    <th>Haftalık Ders Saati</th>
+                                    <th>Sınıf</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Ders Kodu</th>
+                                    <th>Ders Adı</th>
+                                    <th>Haftalık Ders Saati</th>
+                                    <th>Sınıf</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var lesson in Model)
+                                {
+                                    if (lesson.GradeId == ViewBag.GradeId)
+                                    {
+                                        <tr name="@lesson.Id">
+                                            <td>@lesson.LessonCode</td>
+                                            <td>@lesson.LessonName</td>
+                                            <td>@lesson.LessonCredit</td>
+                                            <td>@lesson.Grade.Name</td>
+                                            <td>@(lesson.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary btn-sm" data-id="@lesson.Id" asp-area="Admin" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-danger btn-sm" data-id="@lesson.Id" asp-area="Admin" asp-controller="Lesson" asp-action="SafeDelete" asp-route-lessonId="@lesson.Id"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lessonIndex.js" type="application/ecmascript"></script>
+}

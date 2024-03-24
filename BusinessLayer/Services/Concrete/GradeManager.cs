@@ -23,12 +23,14 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<Grade>> GetDeletedListAsync()
         {
-            return await _gradeDal.GetAllAsync(x => x.IsDeleted); // Silinmis olan siniflari listele
+            var grades = await _gradeDal.GetAllAsync(x => x.IsDeleted); // Silinmis olan siniflari listele
+            return grades.OrderBy(x => x.Name).ToList();
         }
 
         public async Task<List<Grade>> GetListAsync()
         {
-            return await _gradeDal.GetAllAsync(x=>!x.IsDeleted); // Silinmemis olan siniflari listele
+            var grades = await _gradeDal.GetAllAsync(x=>!x.IsDeleted); // Silinmemis olan siniflari listele
+            return grades.OrderBy(x => x.Name).ToList();
         }
 
         public async Task TAddAsync(Grade t)
