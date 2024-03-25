@@ -38,14 +38,13 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lessons = await _lessonService.TGetAllTeacherLessonsAsync(); // Login olan ogretmenin verdigi dersler listeleniyor.
             var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
 
-            List<GradeListDto> teacherGrades = new(); // Login olan ogretmenin girdigi siniflarin tutulacagi liste.
+            HashSet<GradeListDto> teacherGrades = new(); // Login olan ogretmenin girdigi siniflarin tutulacagi liste. (HashSet yapisi tekrarsiz veri tutmasini saglayacak)
+                                                         // İlgili dto'da IEquatable<GradeListDto> arayuzu implemente edildi ve ilgili metotlarin ici dolduruldu.
 
             foreach (var lesson in mapLessons)
             {
                 var grade = await _gradeService.TGetGradeByIdAsync(lesson.GradeId); // Dersin ait oldugu sinifin id'sine gore o sinif entity'sini getir.
                 var mapGrade = _mapper.Map<GradeListDto>(grade);
-
-                ViewBag.Grade = mapGrade; // Eger ayni sinif birden fazla ise o sini bir kere gostermek icin.
 
                 teacherGrades.Add(mapGrade); // Map'lenen sinifi listeye ekle
             }

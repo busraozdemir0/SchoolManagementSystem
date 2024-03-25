@@ -1,4 +1,4 @@
-﻿@model List<GradeListDto>
+﻿@model HashSet<GradeListDto>
 
 @{
     ViewData["Title"] = "Sınıflar";
@@ -30,15 +30,12 @@
                         <tbody class="table-border-bottom-0">
                             @foreach (var grade in Model)
                             {
-                                @if (grade != ViewBag.Grade)  // Eger sinif Action'dan gelen sinif ile esit degilse goster. Yani ayni sinif tekrar listelenmemesi icin
-                                {
                                     <tr name="@grade.Id">
                                         <td>@grade.Name</td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" data-id="@grade.Id" asp-area="Teacher" asp-controller="Grade" asp-action="GetAllStudentsWithGrade" asp-route-gradeId="@grade.Id"><i class="fa fa-eye"></i> Öğrencileri Gör</a>
                                         </td>
-                                    </tr>
-                                }
+                                    </tr>                      
                             }
                         </tbody>
                     </table>

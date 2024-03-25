@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.DTOs.Users
 {
-    public class UserListDto
+    public class UserListDto : IEquatable<UserListDto>  // HashSet veri yapisinin tekil degerler tutabilmesi icin bu arayuz implemente ediliyor.
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -20,6 +20,16 @@ namespace EntityLayer.DTOs.Users
         public int? GradeId { get; set; }
         public Grade Grade { get; set; }
         public int? StudentNo { get; set; }
-       
+
+        public bool Equals(UserListDto? other)
+        {
+            if (other == null) 
+                return false;
+            return (this.Id == other.Id);
+        }
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

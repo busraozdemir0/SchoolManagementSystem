@@ -36,11 +36,11 @@
                                 <tr>
                                     <th>Adı</th>
                                     <th>Soyadı</th>
-                                    <th>E-Mail</th>
-                                    <th>Telefon Numarası</th>
-                                    <th>Kullanıcı Adı</th>
                                     <th>Cinsiyeti</th>
-                                    <th>Rolü</th>
+                                    <th>Sınıfı</th>
+                                    <th>Öğrenci Numarası</th>
+                                    <th>Telefon Numarası</th>
+                                    <th>E-Mail</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
@@ -48,11 +48,11 @@
                                 <tr>
                                     <th>Adı</th>
                                     <th>Soyadı</th>
-                                    <th>E-Mail</th>
-                                    <th>Telefon Numarası</th>
-                                    <th>Kullanıcı Adı</th>
                                     <th>Cinsiyeti</th>
-                                    <th>Rolü</th>
+                                    <th>Sınıfı</th>
+                                    <th>Öğrenci Numarası</th>
+                                    <th>Telefon Numarası</th>
+                                    <th>E-Mail</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </tfoot>
@@ -64,11 +64,11 @@
                                         <tr name="@user.Id">
                                             <td>@user.Name</td>
                                             <td>@user.Surname</td>
-                                            <td>@user.Email</td>
-                                            <td>@user.PhoneNumber</td>
-                                            <td>@user.UserName</td>
                                             <td>@user.Gender</td>
-                                            <td>@user.Role</td>
+                                            <td>@user.Grade.Name</td>
+                                            <td>@user.StudentNo</td>
+                                            <td>@user.PhoneNumber</td>
+                                            <td>@user.Email</td>
                                             <td class="text-center">
                                                 <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Update" asp-route-userId="@user.Id"><i class="fa fa-edit"></i></a>
                                                 <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id"><i class="fa fa-minus-circle"></i></a>
@@ -78,7 +78,6 @@
                                 }
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
