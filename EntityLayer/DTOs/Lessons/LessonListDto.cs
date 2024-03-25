@@ -1,4 +1,5 @@
-﻿using EntityLayer.Entities;
+﻿using EntityLayer.DTOs.Users;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace EntityLayer.DTOs.Lessons
         public int LessonCredit { get; set; }
         public int GradeId { get; set; } // Dersin eklenecegi seviye ya da kacinci sinif oldugu bilgisi
         public Grade Grade { get; set; }
+        public Guid UserId { get; set; } // Dersi veren ogretmen bilgisi
+        public AppUser User { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

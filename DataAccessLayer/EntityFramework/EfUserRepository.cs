@@ -171,6 +171,30 @@ namespace DataAccessLayer.EntityFramework
             return mapUser;
         }
 
+        public async Task<List<UserListDto>> GetAllTeachersWithRoleAsync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var mapUser = _mapper.Map<List<UserListDto>>(users);
+            List<UserListDto> teachers = new();
+
+            foreach (var user in mapUser) // Map'lenmis user'lar uzerinde gez
+            {
+                var findUser = await _userManager.FindByIdAsync(user.Id.ToString()); // User'in id'sine gore kullaniciyi bul
+                var role = string.Join("", await _userManager.GetRolesAsync(findUser)); // Bulunan kullanicinin rolunu bul
+                user.Role = role;
+
+                if (role == RoleConsts.Teacher)
+                    teachers.Add(user);
+
+                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id, g => g.Grade, i => i.Image);
+                foreach (var item in userInclude.ToList())
+                {
+                    user.TeacherInfo = "Ad: " + item.Name + " " + item.Surname + " ~ Email: " + item.Email;
+                }
+            }
+            return teachers;
+        }
+
         public async Task<AppUser> GetAppUserByIdAsync(Guid userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());

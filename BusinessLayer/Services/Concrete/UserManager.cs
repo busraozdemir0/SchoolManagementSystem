@@ -117,5 +117,9 @@ namespace BusinessLayer.Services.Concrete
             return await _userDal.GetAllFilterAndIncludeUsersAsync();
         }
 
+        public async Task<List<UserListDto>> TGetAllTeachersWithRoleAsync()
+        {
+            return await _userDal.GetAllTeachersWithRoleAsync();
+        }
     }
 }

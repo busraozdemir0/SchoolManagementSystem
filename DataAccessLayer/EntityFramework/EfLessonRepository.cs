@@ -30,7 +30,7 @@ namespace DataAccessLayer.EntityFramework
             var userId = _user.GetLoggedInUserId();
 
             var lessons = await _unitOfWork.GetRepository<Lesson>()
-                .GetAllAsync(x => x.UserId == userId, u => u.User, g => g.Grade);
+                .GetAllAsync(x => x.UserId == userId && !x.IsDeleted , u => u.User, g => g.Grade);
 
             return lessons.OrderBy(x=>x.Grade.Name).ToList(); // Sinif adina gore artan bicimde sirali olarak donduruluyor.
         }

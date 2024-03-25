@@ -17,6 +17,7 @@ namespace EntityLayer.DTOs.Users
         public string UserName { get; set; }
         public string Gender { get; set; }
         public string Role { get; set; }
+        public string? TeacherInfo { get; set; } // Ders ekleme sayfasinda kullanicinin hem adini hem de email bilgisini yan yana listeleyebilmek icin.
         public int? GradeId { get; set; }
         public Grade Grade { get; set; }
         public int? StudentNo { get; set; }

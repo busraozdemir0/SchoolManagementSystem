@@ -69,6 +69,12 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label asp-for="UserId" class="form-label">Öğretmen Bilgisi Seçin</label>
+                                    <select id="userList" class="form-control mb-3" asp-for="UserId" asp-items="@(new SelectList(Model.Users,"Id","TeacherInfo"))"></select>
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-block">Kaydet</button>
                                 </div>
                             </div>

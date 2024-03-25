@@ -38,6 +38,7 @@
                                     <th>Ders Adı</th>
                                     <th>Haftalık Ders Saati</th>
                                     <th>Sınıf</th>
+                                    <th>Öğretmen Bilgisi</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -48,6 +49,7 @@
                                     <th>Ders Adı</th>
                                     <th>Haftalık Ders Saati</th>
                                     <th>Sınıf</th>
+                                    <th>Öğretmen Bilgisi</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -60,6 +62,7 @@
                                         <td>@lesson.LessonName</td>
                                         <td>@lesson.LessonCredit</td>
                                         <td>@lesson.Grade.Name</td>
+                                        <td>Ad: @lesson.User.Name @lesson.User.Surname ~ Email: @lesson.User.Email</td>
                                         <td>@(lesson.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" data-id="@lesson.Id" asp-area="Admin" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id"><i class="fa fa-edit"></i></a>

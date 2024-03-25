@@ -23,7 +23,7 @@ namespace DataAccessLayer.EntityFramework
 
         public async Task<Grade> GetGradeByIdAsync(int id)
         {
-            return await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == id);
+            return await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == id && !x.IsDeleted);
         }
 
         public async Task<string> SafeDeleteGradeAsync(int gradeId)

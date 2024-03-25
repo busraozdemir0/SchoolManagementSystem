@@ -64,9 +64,18 @@
                                 <div class="form-group">
 
                                     @*  Sinif listesini dropdown icerisinde listeliyoruz *@
-                                    <label asp-for="GradeId" class="form-label">Sınıf Bilgisi <span>*</span></label>
+                                    <label asp-for="GradeId" class="form-label">Sınıf Bilgisi <span style="color:red;">*</span></label>
                                     <select id="gradeList" class="form-control mb-3" asp-for="GradeId" asp-items="@(new SelectList(Model.Grades,"Id","Name"))"></select>
                                     <span asp-validation-for="GradeId" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    @*  Ogretmen listesini dropdown icerisinde listeliyoruz *@
+                                    <label asp-for="UserId" class="form-label">Öğretmen Bilgisi Seçin <span style="color:red;">*</span></label>
+                                    <select id="userList" class="form-control mb-3" asp-for="UserId" asp-items="@(new SelectList(Model.Users,"Id","TeacherInfo"))"></select>
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
 
                                 </div>
 
