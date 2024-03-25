@@ -122,9 +122,9 @@ namespace BusinessLayer.Services.Concrete
             return await _userDal.GetAllTeachersWithRoleAsync();
         }
 
-        public async Task<HashSet<UserListDto>> TStudentInClasListAsync(List<UserListDto> users)
+        public async Task<HashSet<UserListDto>> TStudentInClassListAsync(List<UserListDto> users)
         {
-            return await _userDal.StudentInClasListAsync(users);
+            return await _userDal.StudentInClassListAsync(users);
         }
     }
 }

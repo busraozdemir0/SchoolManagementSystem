@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using DataAccessLayer.Abstract;
+using DataAccessLayer.Consts;
+using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Announcements;
 using EntityLayer.DTOs.Contacts;
@@ -9,11 +12,13 @@ using EntityLayer.DTOs.Roles;
 using EntityLayer.DTOs.Search;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Numerics;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -23,10 +28,26 @@ namespace DataAccessLayer.Helpers.Search
     public class SearchProcess : ISearchProcess
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILessonDal _lessonDal;
+        private readonly IGradeDal _gradeDal;
+        private readonly IUserDal _userDal;
+        private readonly IRoleDal _roleDal;
+        private readonly IAnnouncementDal _announcementDal;
+        private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ClaimsPrincipal _user;
 
-        public SearchProcess(IUnitOfWork unitOfWork)
+        public SearchProcess(IUnitOfWork unitOfWork, ILessonDal lessonDal, IGradeDal gradeDal, IMapper mapper, IAnnouncementDal announcementDal, IUserDal userDal, IRoleDal roleDal, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
+            _lessonDal = lessonDal;
+            _gradeDal = gradeDal;
+            _mapper = mapper;
+            _announcementDal = announcementDal;
+            _userDal = userDal;
+            _roleDal = roleDal;
+            _httpContextAccessor = httpContextAccessor;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task<SearchModel> SearchAsync(string keyword, int page=1)

@@ -379,7 +379,7 @@ namespace DataAccessLayer.EntityFramework
                 return false;
         }
 
-        public async Task<HashSet<UserListDto>> StudentInClasListAsync(List<UserListDto> users)
+        public async Task<HashSet<UserListDto>> StudentInClassListAsync(List<UserListDto> users)
         { 
             var lessons = await _lessonDal.GetAllTeacherLessonsAsync(); // Login olan ogretmenin verdigi dersler listeleniyor.
             var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);

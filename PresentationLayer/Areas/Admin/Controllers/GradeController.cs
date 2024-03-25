@@ -144,7 +144,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         public async Task<IActionResult> StudentExcelReport(int gradeId) // Ogrenciler listesini excel formatinda indirmek icin
         {
             var users = await _userService.TGetAllUsersWithRoleAsync();
-            var studentInClasses = await _userService.TStudentInClasListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+            var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
             HashSet<UserListDto> students = new();
 
             foreach (var item in studentInClasses)

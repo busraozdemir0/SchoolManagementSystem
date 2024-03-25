@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
 using ClosedXML.Excel;
-using EntityLayer.DTOs.Grades;
-using EntityLayer.DTOs.Lessons;
-using EntityLayer.DTOs.Users;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Areas.Teacher.Controllers
@@ -12,29 +10,23 @@ namespace PresentationLayer.Areas.Teacher.Controllers
     public class StudentController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ILessonService _lessonService;
-        private readonly IGradeService _gradeService;
-        private readonly IMapper _mapper;
 
-        public StudentController(IUserService userService, ILessonService lessonService, IMapper mapper, IGradeService gradeService)
+        public StudentController(IUserService userService)
         {
             _userService = userService;
-            _lessonService = lessonService;
-            _mapper = mapper;
-            _gradeService = gradeService;
         }
 
         public async Task<IActionResult> Index()
         {
             var users = await _userService.TGetAllUsersWithRoleAsync();
-            var studentInClasses = await _userService.TStudentInClasListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+            var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
             return View(studentInClasses);
         }
 
         public async Task<IActionResult> StudentExcelReport() // Ogrenciler listesini excel formatinda indirmek icin
         {
             var users = await _userService.TGetAllUsersWithRoleAsync();
-            var studentInClasses = await _userService.TStudentInClasListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+            var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
 
             using (var workBook = new XLWorkbook())
             {

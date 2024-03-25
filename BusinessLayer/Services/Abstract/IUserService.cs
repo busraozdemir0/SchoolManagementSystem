@@ -36,7 +36,7 @@ namespace BusinessLayer.Services.Abstract
         Task<List<AppUser>> GetAllFilterAndIncludeUsersAsync(Expression<Func<AppUser, bool>> filter = null, 
             params Expression<Func<AppUser, object>>[] includeProperties);
 
-        Task<HashSet<UserListDto>> TStudentInClasListAsync(List<UserListDto> users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+        Task<HashSet<UserListDto>> TStudentInClassListAsync(List<UserListDto> users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
 
 
     }
