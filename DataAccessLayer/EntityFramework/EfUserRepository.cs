@@ -11,15 +11,12 @@ using EntityLayer.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.Consts;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using EntityLayer.DTOs.Grades;
+using EntityLayer.DTOs.Lessons;
 
 namespace DataAccessLayer.EntityFramework
 {
@@ -34,9 +31,11 @@ namespace DataAccessLayer.EntityFramework
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageHelper _imageHelper;
         private readonly IRoleDal _roleDal;
+        private readonly IGradeDal _gradeDal;
+        private readonly ILessonDal _lessonDal;
         private readonly AppDbContext _context;
 
-        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal, AppDbContext context)
+        public EfUserRepository(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper, SignInManager<AppUser> signInManager, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IImageHelper imageHelper, IRoleDal roleDal, AppDbContext context, IGradeDal gradeDal, ILessonDal lessonDal)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -48,6 +47,8 @@ namespace DataAccessLayer.EntityFramework
             _imageHelper = imageHelper;
             _roleDal = roleDal;
             _context = context;
+            _gradeDal = gradeDal;
+            _lessonDal = lessonDal;
         }
 
         public async Task<IdentityResult> CreateUserAsync(UserAddDto userAddDto)
@@ -376,6 +377,29 @@ namespace DataAccessLayer.EntityFramework
 
             else
                 return false;
+        }
+
+        public async Task<HashSet<UserListDto>> StudentInClasListAsync(List<UserListDto> users)
+        { 
+            var lessons = await _lessonDal.GetAllTeacherLessonsAsync(); // Login olan ogretmenin verdigi dersler listeleniyor.
+            var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
+
+            HashSet<UserListDto> teacherStudents = new(); // Login olan ogretmenin girdigi siniflarin tutulacagi liste. (HashSet yapisi tekrarsiz veri tutmasini saglayacak)
+                                                          // İlgili dto'da IEquatable<GradeListDto> arayuzu implemente edildi ve ilgili metotlarin ici dolduruldu.
+
+            foreach (var lesson in mapLessons)
+            {
+                var grade = await _gradeDal.GetGradeByIdAsync(lesson.GradeId); // Dersin ait oldugu sinifin id'sine gore o sinif entity'sini getir.
+                var mapGrade = _mapper.Map<GradeListDto>(grade);
+                foreach (var user in users)
+                {
+                    if (mapGrade.Id == user.GradeId)
+                    {
+                        teacherStudents.Add(user);
+                    }
+                }
+            }
+            return teacherStudents;
         }
     }
 }

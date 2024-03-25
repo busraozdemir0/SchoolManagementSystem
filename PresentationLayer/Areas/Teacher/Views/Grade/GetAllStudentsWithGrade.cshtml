@@ -11,9 +11,12 @@
                 <div class="text-nowrap m-5">
                     <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Öğrenciler</li>
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">"@ViewBag.GradeName" Sınıfındaki Öğrenciler</li>
                         </ol>
                     </nav>
+                    <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="Grade" asp-action="Index" style="margin-bottom:1.7em;">
+                        <i class="fa fa-arrow-left"></i> Geri Dön
+                    </a>
                     <table class="table table-hover" id="usersTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -53,7 +56,6 @@
                                         <td>@user.PhoneNumber</td>
                                         <td>@user.Email</td>
                                         <td class="text-center">
-                                            @* <a class="btn btn-warning btn-sm" data-id="@user.Id" asp-area="Teacher" asp-controller="Student" asp-action="Detail" asp-route-userId="@user.Id"><i class="fa fa-search"></i> Detay</a> *@
                                             <a class="btn btn-primary btn-sm" data-id="@user.Id" asp-area="Teacher" asp-controller="Student" asp-action="LessonScoreAdd" asp-route-userId="@user.Id"><i class="fa fa-edit"></i> Not Sistemi</a>
                                         </td>
                                     </tr>
@@ -61,6 +63,8 @@
                             }
                         </tbody>
                     </table>
+                    <a class="btn btn-success" data-id="@ViewBag.GradeId" asp-area="Teacher" asp-controller="Grade" asp-action="StudentExcelReport" asp-route-gradeId="@ViewBag.GradeId"><i class="fa fa-file-excel-o" aria-hidden="true"></i> @ViewBag.GradeName Öğrenci Listesini İndir</a>
+
                 </div>
             </div>
         </div>

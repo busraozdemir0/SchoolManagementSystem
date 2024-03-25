@@ -26,6 +26,9 @@
             <div class="ibox ">
                 <div class="card">
                     <div class="text-nowrap m-5">
+                        <a class="btn btn-outline-secondary mb-3" asp-area="Admin" asp-controller="Grade" asp-action="Index">
+                            <i class="fa fa-arrow-left"></i> Geri Dön
+                        </a>
 
                         <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="User" asp-action="AddStudent">
                             Öğrenci Ekle <i class="fa fa-plus"></i>
@@ -78,6 +81,8 @@
                                 }
                             </tbody>
                         </table>
+                        <a class="btn btn-outline-success" data-id="@ViewBag.GradeId" asp-area="Admin" asp-controller="Grade" asp-action="StudentExcelReport" asp-route-gradeId="@ViewBag.GradeId"><i class="fa fa-file-excel-o" aria-hidden="true"></i> @ViewBag.GradeName Öğrenci Listesini İndir</a>
+
                     </div>
                 </div>
             </div>

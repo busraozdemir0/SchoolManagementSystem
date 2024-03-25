@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
 using BusinessLayer.Services.Concrete;
+using ClosedXML.Excel;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Grades;
@@ -52,6 +54,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         }
         public async Task<IActionResult> GetAllStudentsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan ogrencileri listeleyecek
         {
+            var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
+            ViewBag.GradeName=grade.Name;
             ViewBag.GradeId = gradeId;
 
             var users = await _userService.TGetAllUsersWithRoleAsync();
@@ -60,5 +64,52 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             return View(mapStudents);
 
         }
+
+        public async Task<IActionResult> StudentExcelReport(int gradeId) // Ogrenciler listesini excel formatinda indirmek icin
+        {
+            var users = await _userService.TGetAllUsersWithRoleAsync();
+            var studentInClasses = await _userService.TStudentInClasListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+            HashSet<UserListDto> students = new();
+
+            foreach(var item in studentInClasses)
+            {
+                if (item.GradeId == gradeId && item.Role==RoleConsts.Student) // Eger kullanici ogrenci rolundeyse ve gelen sinif id'si ile eslesiyorsa listeye ekle
+                    students.Add(item);              
+            }
+
+            var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
+
+            using (var workBook = new XLWorkbook())
+            {
+                var workSheet = workBook.Worksheets.Add(grade.Name+" Öğrenci Listesi");
+                workSheet.Cell(1, 1).Value = "Öğrenci Numarası";
+                workSheet.Cell(1, 2).Value = "Adı";
+                workSheet.Cell(1, 3).Value = "Soyadı";
+                workSheet.Cell(1, 4).Value = "Cinsiyeti";
+                workSheet.Cell(1, 5).Value = "Sınıfı";
+                workSheet.Cell(1, 6).Value = "Telefon Numarası";
+                workSheet.Cell(1, 7).Value = "E-Mail";
+
+                int rowCount = 2;
+                foreach (var item in students)
+                {
+                    workSheet.Cell(rowCount, 1).Value = item.StudentNo;
+                    workSheet.Cell(rowCount, 2).Value = item.Name;
+                    workSheet.Cell(rowCount, 3).Value = item.Surname;
+                    workSheet.Cell(rowCount, 4).Value = item.Gender;
+                    workSheet.Cell(rowCount, 5).Value = item.Grade.Name;
+                    workSheet.Cell(rowCount, 6).Value = item.PhoneNumber;
+                    workSheet.Cell(rowCount, 7).Value = item.Email;
+                    rowCount++;
+                }
+                using (var stream = new MemoryStream())
+                {
+                    workBook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", grade.Name + "StudentsList.xlsx");
+                }
+            }
+        }
+
     }
 }

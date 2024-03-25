@@ -36,5 +36,6 @@ namespace DataAccessLayer.Abstract
         Task<List<AppUser>> GetAllFilterAndIncludeUsersAsync(Expression<Func<AppUser, 
             bool>> filter = null, params Expression<Func<AppUser, object>>[] includeProperties);
 
+        Task<HashSet<UserListDto>> StudentInClasListAsync(List<UserListDto> users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
     }
 }
