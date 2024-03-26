@@ -20,5 +20,8 @@ namespace EntityLayer.DTOs.LessonScores
         public Lesson Lesson { get; set; }
         public Guid UserId { get; set; }
         public AppUser User { get; set; }
+        public Guid CreatedBy { get; set; }
+        public string? LessonTeacher { get; set; } // Ogretmenin ad soyad bilgisini cekebilmek icin
+        public bool IsDeleted { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿@model LessonScoreUpdateDto
+﻿@model LessonScoreAddDto
 
 @{
-    ViewData["Title"] = "Not Güncelle";
+    ViewData["Title"] = "Not Sistemi";
 }
 
 <div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
@@ -17,19 +17,18 @@
                     <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="LessonScore" asp-action="Index" style="margin-bottom:1.7em;">
                         <i class="fa fa-arrow-left"></i> Geri Dön
                     </a>
-                    <form asp-area="Teacher" asp-controller="LessonScore" asp-action="LessonScoreUpdate" method="post" enctype="multipart/form-data">
+                    <form asp-area="Teacher" asp-controller="LessonScore" asp-action="Add" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="ModelOnly"></div>
                         <div class="card-body">
 
-                            <input type="hidden" asp-for="Id" />
-                            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
-                            <input type="hidden" asp-for="CreatedBy" value="@ViewBag.CreatedBy" />
+                            <input type="hidden" asp-for="UserId" value="@ViewBag.StudentId" />
 
                             <div class="form-group">
                                 <label asp-for="StudentNo" class="form-label">Öğrenci No</label>
                                 <input asp-for="StudentNo"
                                        class="form-control mb-1"
                                        id="defaultFormControlInput"
+                                       value="@ViewBag.StudentNo"
                                        readonly
                                        aria-describedby="defaultFormControlHelp" />
                             </div>
@@ -39,6 +38,7 @@
                                 <input asp-for="GradeName" type="text"
                                        class="form-control mb-1"
                                        id="defaultFormControlInput"
+                                       value="@ViewBag.GradeName"
                                        readonly
                                        aria-describedby="defaultFormControlHelp" />
                             </div>
@@ -64,7 +64,7 @@
                                 <input asp-for="Score2" type="number"
                                        class="form-control mb-1"
                                        id="defaultFormControlInput"
-                                       placeholder="İkinci sınav notu."
+                                       placeholder="İkinci sınav notu"
                                        aria-describedby="defaultFormControlHelp" />
                                 <span asp-validation-for="Score2" class="text-danger"></span>
                             </div>
@@ -81,7 +81,7 @@
 
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Not Bilgilerini Güncelle</button>
+                                <button type="submit" class="btn btn-primary">Not Bilgilerini Kaydet</button>
                             </div>
                         </div>
                     </form>

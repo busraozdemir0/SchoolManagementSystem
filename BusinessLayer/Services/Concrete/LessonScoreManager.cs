@@ -30,22 +30,24 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<LessonScore>> GetDeletedListAsync()
         {
-            return await _lessonScoreDal.GetAllAsync(x => x.IsDeleted);
+            return await _unitOfWork.GetRepository<LessonScore>()
+                .GetAllAsync(x => x.IsDeleted, u => u.User, l => l.Lesson);
         }
 
         public async Task<List<LessonScore>> GetListAsync()
         {
-            return await _lessonScoreDal.GetAllAsync(x => !x.IsDeleted);
+            return await _unitOfWork.GetRepository<LessonScore>()
+                .GetAllAsync(x => !x.IsDeleted, u => u.User, l => l.Lesson);
         }
 
         public async Task TAddAsync(LessonScore t)
         {
             var loginTeacherId = _user.GetLoggedInUserId();
-            
+
             var lessonScore = new LessonScore
             {
                 StudentNo = t.StudentNo,
-                GradeName=t.GradeName,
+                GradeName = t.GradeName,
                 Score1 = t.Score1,
                 Score2 = t.Score2,
                 PerformanceScore = t.PerformanceScore,

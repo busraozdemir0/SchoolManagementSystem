@@ -14,6 +14,7 @@
                             <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Not Sistemi</li>
                         </ol>
                     </nav>
+
                     <table class="table table-hover" id="lessonScoresTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -69,7 +70,7 @@
                                         {  @lessonScore.PerformanceScore  }
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-success btn-sm" data-id="@lessonScore.Id" asp-area="Teacher" asp-controller="LessonScore" asp-action="LessonScoreUpdate" asp-route-lessonScoreId="@lessonScore.Id"><i class="fa fa-edit"></i> Not Bilgisi Güncelle</a>
+                                        <a class="btn btn-success btn-sm" data-id="@lessonScore.Id" asp-area="Teacher" asp-controller="LessonScore" asp-action="Update" asp-route-lessonScoreId="@lessonScore.Id"><i class="fa fa-edit"></i> Not Bilgisi Güncelle</a>
                                         <a class="btn btn-danger btn-sm" data-id="@lessonScore.Id" asp-area="Teacher" asp-controller="LessonScore" asp-action="SafeDelete" asp-route-lessonScoreId="@lessonScore.Id"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>

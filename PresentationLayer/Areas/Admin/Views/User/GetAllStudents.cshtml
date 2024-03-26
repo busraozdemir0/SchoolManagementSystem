@@ -60,9 +60,7 @@
                             </tfoot>
                             <tbody class="table-border-bottom-0">
                                 @foreach (var user in Model)
-                                {
-                                    if (user.Role == RoleConsts.Student)
-                                    {
+                                {  
                                         <tr name="@user.Id">
                                             <td>@user.Name</td>
                                             <td>@user.Surname</td>
@@ -78,7 +76,6 @@
                                                 <a class="btn btn-danger btn-sm" data-id="@user.Id" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id"><i class="fa fa-minus-circle"></i></a>
                                             </td>
                                         </tr>
-                                    }
                                 }
                             </tbody>
                         </table>

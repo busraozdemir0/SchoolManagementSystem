@@ -58,6 +58,9 @@
                 <a asp-area="Admin" asp-controller="Lesson" asp-action="Index"><i class="fa fa-book"></i> <span class="nav-label">Dersler</span></a>
             </li>
             <li>
+                <a asp-area="Admin" asp-controller="LessonScore" asp-action="Index"><i class="fa fa-edit"></i> <span class="nav-label">Not Sistemi</span></a>
+            </li>
+            <li>
                 <a asp-area="Admin" asp-controller="NewsLetter" asp-action="Index"><i class="fa fa-user-plus"></i> <span class="nav-label">Aboneler</span></a>
             </li>
             <li>
@@ -70,6 +73,7 @@
             <li>
                 <a href="#"><i class="fa fa-trash"></i> <span class="nav-label">Silinmiş Öğeler </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>
                 <ul class="nav nav-second-level collapse">
+                    <li><a asp-area="Admin" asp-controller="LessonScore" asp-action="DeletedLessonScores">Not Bilgileri</a></li>
                     <li><a asp-area="Admin" asp-controller="Report" asp-action="DeletedReports">Haberler</a></li>
                     <li><a asp-area="Admin" asp-controller="Announcement" asp-action="DeletedAnnouncements">Duyurular</a></li>
                     <li><a asp-area="Admin" asp-controller="NewsLetter" asp-action="DeletedNewsLetters">Aboneler</a></li>

@@ -17,8 +17,9 @@ namespace EntityLayer.DTOs.LessonScores
         public double? Score2 { get; set; }
         public double? PerformanceScore { get; set; } 
         public string CreatedBy { get; set; } 
-        public Guid LessonId { get; set; } 
-        public IList<LessonListDto> Lessons { get; set; }
+        public Guid LessonId { get; set; }
+        public Lesson Lesson { get; set; }
+        public IList<LessonListDto> Lessons { get; set; }   
         public Guid UserId { get; set; }
         public AppUser User { get; set; }
     }

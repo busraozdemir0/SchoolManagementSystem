@@ -35,17 +35,17 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await _userService.TGetAllUsersWithRoleAsync();
+            var users = await _userService.TGetAllUsersWithRoleAsync(); // Tum kullanicilar
             return View(users);
         }
         public async Task<IActionResult> GetAllTeachers()
         {
-            var users = await _userService.TGetAllUsersWithRoleAsync();
+            var users = await _userService.TGetAllTeachersWithRoleAsync(); // Ogretmenler listesi
             return View(users);
         }
         public async Task<IActionResult> GetAllStudents()
         {
-            var users = await _userService.TGetAllUsersWithRoleAsync();
+            var users = await _userService.TGetAllStudentsWithRoleAsync(); // Ogrenciler listesi
             return View(users);
         }
 
