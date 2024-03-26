@@ -1,0 +1,87 @@
+﻿@model List<LessonScoreListDto>
+
+@{
+    ViewData["Title"] = "Not Bilgileri";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Not Sistemi</li>
+                        </ol>
+                    </nav>
+                    <table class="table table-hover" id="lessonScoresTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Öğrenci No</th>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th>Sınıfı</th>
+                                <th>Ders Adı</th>
+                                <th>1. Sınav Notu</th>
+                                <th>2. Sınav Notu</th>
+                                <th>Performans Notu</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Öğrenci No</th>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th>Sınıfı</th>
+                                <th>Ders Adı</th>
+                                <th>1. Sınav Notu</th>
+                                <th>2. Sınav Notu</th>
+                                <th>Performans Notu</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var lessonScore in Model)
+                            {
+                                <tr name="@lessonScore.Id">
+                                    <td>@lessonScore.StudentNo</td>
+                                    <td>@lessonScore.User.Name</td>
+                                    <td>@lessonScore.User.Surname</td>
+                                    <td>@lessonScore.GradeName</td>
+                                    <td>@lessonScore.Lesson.LessonName</td>
+                                    <td>
+                                        @if (lessonScore.Score1 == 0)
+                                        {   <p>-</p>   }
+                                        else
+                                        {  @lessonScore.Score1   }
+                                    </td>
+                                    <td>
+                                        @if (lessonScore.Score2 == 0)
+                                        {   <p>-</p>  }
+                                        else
+                                        { @lessonScore.Score2  }
+                                    </td>
+                                    <td>
+                                        @if (lessonScore.PerformanceScore == 0)
+                                        {  <p>-</p>  }
+                                        else
+                                        {  @lessonScore.PerformanceScore  }
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-success btn-sm" data-id="@lessonScore.Id" asp-area="Teacher" asp-controller="LessonScore" asp-action="LessonScoreUpdate" asp-route-lessonScoreId="@lessonScore.Id"><i class="fa fa-edit"></i> Not Bilgisi Güncelle</a>
+                                        <a class="btn btn-danger btn-sm" data-id="@lessonScore.Id" asp-area="Teacher" asp-controller="LessonScore" asp-action="SafeDelete" asp-route-lessonScoreId="@lessonScore.Id"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/lessonScoreIndex.js" type="application/ecmascript"></script>
+}

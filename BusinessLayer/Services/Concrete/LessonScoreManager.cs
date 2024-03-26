@@ -41,17 +41,17 @@ namespace BusinessLayer.Services.Concrete
         public async Task TAddAsync(LessonScore t)
         {
             var loginTeacherId = _user.GetLoggedInUserId();
-            var loginTeacher = await _unitOfWork.GetRepository<AppUser>().GetAsync(x=>x.Id==loginTeacherId);
             
             var lessonScore = new LessonScore
             {
                 StudentNo = t.StudentNo,
+                GradeName=t.GradeName,
                 Score1 = t.Score1,
                 Score2 = t.Score2,
                 PerformanceScore = t.PerformanceScore,
                 LessonId = t.LessonId,
                 UserId = t.UserId,
-                CreatedBy = loginTeacher.Name+" "+loginTeacher.Surname // Giris yapan ve not ekleyen ogretmenin adi ve soyadi tabloya kaydediliyor
+                CreatedBy = loginTeacherId.ToString() // Giris yapan ve not ekleyen ogretmenin id bilgisi tabloya kaydediliyor
             };
 
             await _lessonScoreDal.AddAsync(lessonScore);
@@ -67,6 +67,26 @@ namespace BusinessLayer.Services.Concrete
         public async Task<LessonScore> TGetByGuidAsync(Guid id)
         {
             return await _unitOfWork.GetRepository<LessonScore>().GetByGuidAsync(id);
+        }
+
+        public async Task<List<LessonScore>> TGetDeletedListLoginTeacherLessonScore()
+        {
+            return await _lessonScoreDal.GetDeletedListLoginTeacherLessonScore();
+        }
+
+        public async Task<List<LessonScore>> TGetListLoginTeacherLessonScore()
+        {
+            return await _lessonScoreDal.GetListLoginTeacherLessonScore();
+        }
+
+        public async Task TSafeDeleteLessonScoreAsync(Guid lessonScoreId)
+        {
+            await _lessonScoreDal.SafeDeleteLessonScoreAsync(lessonScoreId);
+        }
+
+        public async Task TUndoDeleteLessonScoreAsync(Guid lessonScoreId)
+        {
+            await _lessonScoreDal.UndoDeleteLessonScoreAsync(lessonScoreId);
         }
 
         public async Task TUpdateAsync(LessonScore t)

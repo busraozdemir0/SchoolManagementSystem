@@ -23,6 +23,7 @@ namespace EntityLayer.Entities
             UserId = userId;
         }
         public int StudentNo { get; set; } // Ogrencinin numarasi
+        public string GradeName { get; set; } // Ogrencinin sinifi
         public double? Score1 { get; set; } // Dersin 1. puani
         public double? Score2 { get; set; } // Dersin 2. puani
         public double? PerformanceScore { get; set; } // Dersin performans/degerlendirme puani

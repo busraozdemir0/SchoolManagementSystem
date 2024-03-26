@@ -13,7 +13,9 @@ namespace BusinessLayer.AutoMapper.LessonScores
     {
         public LessonScoreProfile()
         {
+            CreateMap<LessonScore, LessonScoreListDto>().ReverseMap();
             CreateMap<LessonScore, LessonScoreAddDto>().ReverseMap();
+            CreateMap<LessonScore, LessonScoreUpdateDto>().ReverseMap();
         }
     }
 }

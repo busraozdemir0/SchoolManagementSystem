@@ -10,5 +10,9 @@ namespace DataAccessLayer.Abstract
 {
     public interface ILessonScoreDal : IRepository<LessonScore>
     {
+        Task<List<LessonScore>> GetListLoginTeacherLessonScore();
+        Task<List<LessonScore>> GetDeletedListLoginTeacherLessonScore();
+        Task SafeDeleteLessonScoreAsync(Guid lessonScoreId);
+        Task UndoDeleteLessonScoreAsync(Guid lessonScoreId);
     }
 }

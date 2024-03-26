@@ -20,22 +20,10 @@ namespace PresentationLayer.Areas.Teacher.Controllers
     public class StudentController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ILessonScoreService _lessonScoreService;
-        private readonly ILessonService _lessonService;
-        private readonly IMapper _mapper;
-        private readonly IValidator<LessonScore> _validator;
-        private readonly IToastNotification _toastr;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public StudentController(IUserService userService, ILessonScoreService lessonScoreService, ILessonService lessonService, IMapper mapper, IValidator<LessonScore> validator, IToastNotification toastr, IUnitOfWork unitOfWork)
+        public StudentController(IUserService userService)
         {
             _userService = userService;
-            _lessonScoreService = lessonScoreService;
-            _lessonService = lessonService;
-            _mapper = mapper;
-            _validator = validator;
-            _toastr = toastr;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<IActionResult> Index()
@@ -81,41 +69,6 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 }
             }
         }
-        [HttpGet]
-        public async Task<IActionResult> LessonScoreAdd(Guid userId)
-        {
-            var student = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, g => g.Grade, i => i.Image);
-
-            ViewBag.StudentId = userId;
-            ViewBag.StudentNo = student.StudentNo;
-            ViewBag.GradeName = student.Grade.Name;
-
-            var lessons = await _lessonService.TLessonsInTheStudentsGrade(userId);  // Ogrencinin bulundugu siniftaki dersler listelencek (sadece o ogretmenin verdigi dersler)
-
-            return View(new LessonScoreAddDto { Lessons = lessons });
-        }
-        [HttpPost]
-        public async Task<IActionResult> LessonScoreAdd(LessonScoreAddDto lessonScoreDto)
-        {
-            var student = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == lessonScoreDto.UserId);
-
-            var mapLessonScore = _mapper.Map<LessonScore>(lessonScoreDto);
-            var result = await _validator.ValidateAsync(mapLessonScore);
-            if (result.IsValid)
-            {
-                await _lessonScoreService.TAddAsync(mapLessonScore);
-                _toastr.AddSuccessToastMessage("Not bilgileri başarıyla eklendi.", new ToastrOptions { Title = "Başarılı!" });
-
-                return RedirectToAction("Index", "Student", new { Area = "Teacher" });
-            }
-            else
-            {
-                result.AddToModelState(this.ModelState);
-                _toastr.AddErrorToastMessage("Not bilgileri eklenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
-            }
-            var lessons = await _lessonService.TLessonsInTheStudentsGrade(student.Id);
-
-            return View(new LessonScoreAddDto { Lessons = lessons });
-        }
+        
     }
 }

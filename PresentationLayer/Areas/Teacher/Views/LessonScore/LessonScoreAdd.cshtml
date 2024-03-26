@@ -1,0 +1,93 @@
+﻿@model LessonScoreAddDto
+
+@{
+    ViewData["Title"] = "Not Sistemi";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 177px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Not Sistemi</li>
+                        </ol>
+                    </nav>
+                    <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="LessonScore" asp-action="LessonScoreAdd" style="margin-bottom:1.7em;">
+                        <i class="fa fa-arrow-left"></i> Geri Dön
+                    </a>
+                    <form asp-area="Teacher" asp-controller="LessonScore" asp-action="LessonScoreAdd" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="card-body">
+
+                            <input type="hidden" asp-for="UserId" value="@ViewBag.StudentId" />
+
+                            <div class="form-group">
+                                <label asp-for="StudentNo" class="form-label">Öğrenci No</label>
+                                <input asp-for="StudentNo"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       value="@ViewBag.StudentNo"
+                                       readonly
+                                       aria-describedby="defaultFormControlHelp" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="GradeName" class="form-label">Öğrencinin Sınıfı</label>
+                                <input asp-for="GradeName" type="text"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       value="@ViewBag.GradeName"
+                                       readonly
+                                       aria-describedby="defaultFormControlHelp" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LessonId" class="form-label">Hangi Derse Ait Not Gireceğinizi Seçin <span style="color:red;">*</span></label>
+                                <select id="receiverList" class="form-control mb-1" asp-for="LessonId" asp-items="@(new SelectList(Model.Lessons,"Id","LessonName"))" style="height: max-content;"></select>
+                                <span asp-validation-for="LessonId" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Score1" class="form-label">Sınav 1</label>
+                                <input asp-for="Score1" type="number"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       placeholder="Birinci sınav notu"
+                                       aria-describedby="defaultFormControlHelp" />
+                                <span asp-validation-for="Score1" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Score2" class="form-label">Sınav 2</label>
+                                <input asp-for="Score2" type="number"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       placeholder="İkinci sınav notu."
+                                       aria-describedby="defaultFormControlHelp" />
+                                <span asp-validation-for="Score2" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PerformanceScore" class="form-label">Performans Notu</label>
+                                <input asp-for="PerformanceScore" type="number"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       placeholder="Performans notu"
+                                       aria-describedby="defaultFormControlHelp" />
+                                <span asp-validation-for="PerformanceScore" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Not Bilgilerini Kaydet</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
