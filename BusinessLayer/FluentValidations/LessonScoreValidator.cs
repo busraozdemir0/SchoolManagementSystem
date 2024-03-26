@@ -13,22 +13,23 @@ namespace BusinessLayer.FluentValidations
         public LessonScoreValidator()
         {
             RuleFor(x => x.Score1)
-                .Null()
                 .GreaterThanOrEqualTo(0)  // Notlarin 0-100 arasinda olmasi gerektigi konusunda validasyon
                 .LessThanOrEqualTo(100) 
                 .WithName("1. Sınav");
 
             RuleFor(x => x.Score2)
-                .Null()
                 .GreaterThanOrEqualTo(0)  
                 .LessThanOrEqualTo(100)
                 .WithName("2. Sınav");
 
             RuleFor(x => x.PerformanceScore)
-                .Null()
                 .GreaterThanOrEqualTo(0)
                 .LessThanOrEqualTo(100)
                 .WithName("Performans Notu");
+
+            RuleFor(x => x.LessonId)
+                .NotEmpty()
+                .WithName("Ders");
 
         }
     }

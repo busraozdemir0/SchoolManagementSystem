@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.Lessons;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,11 @@ namespace BusinessLayer.Services.Concrete
         {
             await _lessonDal.UpdateAsync(t);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<List<LessonListDto>> TLessonsInTheStudentsGrade(Guid userId)
+        {
+            return await _lessonDal.LessonsInTheStudentsGrade(userId);
         }
     }
 }

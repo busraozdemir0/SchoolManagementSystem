@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Repository.Abstract;
+using EntityLayer.DTOs.Lessons;
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace DataAccessLayer.Abstract
         Task<List<Lesson>> GetAllTeacherLessonsAsync(); // Giren ogretmen kullanicisinin verdigi dersler listeleniyor.
         Task<string> SafeDeleteLessonAsync(Guid lessonId);
         Task<string> UndoDeleteLessonAsync(Guid lessonId);
+        Task<List<LessonListDto>> LessonsInTheStudentsGrade(Guid userId);  // Ogrencinin bulundugu siniftaki dersler listelencek (sadece o ogretmenin verdigi dersler)
     }
 }

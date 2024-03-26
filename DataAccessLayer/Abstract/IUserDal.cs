@@ -17,6 +17,7 @@ namespace DataAccessLayer.Abstract
         Task<IdentityResult> CreateTeacherAsync(UserAddDto userAddDto);
         Task<List<UserListDto>> GetAllUsersWithRoleAsync(); // Kullanicilari rolleriyle birlikte listeleme islemi
         Task<List<UserListDto>> GetAllTeachersWithRoleAsync(); // Ogretmen kullanicilarini listelemek icin
+        Task<List<UserListDto>> GetAllStudentsWithRoleAsync(); // Ogrenci kullanicilarini listelemek icin
         Task<AppUser> GetAppUserByIdAsync(Guid userId); // Id'ye gore kullaniciyi dondurecek olan metod
         Task<string> GetUserRoleAsync(AppUser user); // Kullanicinin rolünü getirecek olan metod
         Task<int> GetUserGradeIdAsync(AppUser user); // Kulanici Ogrenciyse Sinif Id bilgisini getirecek

@@ -17,6 +17,7 @@ namespace BusinessLayer.Services.Abstract
         Task<IdentityResult> TCreateTeacherAsync(UserAddDto userAddDto);
         Task<List<UserListDto>> TGetAllUsersWithRoleAsync();
         Task<List<UserListDto>> TGetAllTeachersWithRoleAsync();
+        Task<List<UserListDto>> TGetAllStudentsWithRoleAsync();
         Task<AppUser> TGetAppUserByIdAsync(Guid userId); // Id'ye gore kullaniciyi dondurecek olan metod
         Task<string> TGetUserRoleAsync(AppUser user); // Kullanicinin rolünü getirecek olan metod
         Task<int> TGetUserGradeIdAsync(AppUser user);

@@ -1,8 +1,10 @@
-﻿using DataAccessLayer.Abstract;
+﻿using AutoMapper;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.Lessons;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -17,13 +19,15 @@ namespace DataAccessLayer.EntityFramework
     public class EfLessonRepository : Repository<Lesson>, ILessonDal
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
-        public EfLessonRepository(AppDbContext context, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(context)
+        public EfLessonRepository(AppDbContext context, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(context)
         {
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
+            _mapper = mapper;
         }
         public async Task<List<Lesson>> GetAllTeacherLessonsAsync()
         {
@@ -58,6 +62,23 @@ namespace DataAccessLayer.EntityFramework
             await _unitOfWork.SaveAsync();
 
             return lesson.LessonName;
+        }
+
+        public async Task<List<LessonListDto>> LessonsInTheStudentsGrade(Guid userId)
+        {
+            var student = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, g => g.Grade, i => i.Image);
+
+            var lessons = await GetAllTeacherLessonsAsync();
+            var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
+
+            List<LessonListDto> lessonsInTheStudentsGrade = new();
+            foreach (var lesson in mapLessons)
+            {
+                if (lesson.GradeId == student.GradeId)  // Dersin eklendigi sinif bilgisi ile ogrencinin sinif bilgisi esit ise listeye ekle
+                    lessonsInTheStudentsGrade.Add(lesson);
+            }
+
+            return lessonsInTheStudentsGrade;
         }
     }
 }

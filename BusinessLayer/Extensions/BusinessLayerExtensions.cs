@@ -59,6 +59,9 @@ namespace BusinessLayer.Extensions
             services.AddScoped<IAnnouncementService, AnnouncementManager>();
             services.AddScoped<IAnnouncementDal, EfAnnouncementRepository>();
 
+            services.AddScoped<ILessonScoreService, LessonScoreManager>();
+            services.AddScoped<ILessonScoreDal, EfLessonScoreRepository>();
+
             services.AddAutoMapper(assembly);
 
             // Fluent validation hata mesajlarinin turkcelestirilmesi
