@@ -18,6 +18,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
     public class AnnouncementController : Controller
     {
         private readonly IAnnouncementService _announcementService;
+        private readonly IAboutService _aboutService;
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
         private readonly IUserService _userService;
@@ -26,7 +27,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
 
-        public AnnouncementController(IAnnouncementService announcementService, IMapper mapper, IRoleService roleService, IValidator<Announcement> validator, IToastNotification toast, IHttpContextAccessor httpContextAccessor, IUserService userService)
+        public AnnouncementController(IAnnouncementService announcementService, IMapper mapper, IRoleService roleService, IValidator<Announcement> validator, IToastNotification toast, IHttpContextAccessor httpContextAccessor, IUserService userService, IAboutService aboutService)
         {
             _announcementService = announcementService;
             _mapper = mapper;
@@ -36,10 +37,13 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
             _userService = userService;
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index() // Admin kullanicisinin yaptigi duyurulari gosterecek view
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcements = await _announcementService.TTeacherAnnouncementListAsync();
 
             List<Announcement> announcementList = new();
@@ -57,6 +61,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         }
         public async Task<IActionResult> Detail(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcement = await _announcementService.TGetByGuidAsync(announcementId);
             var mapAnnouncement = _mapper.Map<AnnouncementListDto>(announcement);
             return View(mapAnnouncement);
@@ -64,6 +70,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         // Admin kullanicisi tarafindan yapilan duyurulari safe delete yontemiyle listeden kaldirma
         public async Task<IActionResult> SafeDeleteTeacherAnnouncement(Guid announcementId) 
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcementTitle = await _announcementService.TSafeDeleteTeacherAnnouncementAsync(announcementId); 
             _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "Announcement", new { Area = "Teacher" });
@@ -71,6 +79,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
         public async Task<IActionResult> StudentAnnouncements() // Ogrencilere yapilan duyurular listesi
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcements = await _announcementService.TTeacherAnnouncementToStudentsListAsync();
             var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcements);
             return View(mapAnnouncements);
@@ -79,6 +89,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var role = await _roleService.TGetStudentRoleAsync(); // Yalnızca ogrenci rolundekilere duyuru yapmak için
             var mapRole = _mapper.Map<RoleListDto>(role);
             ViewBag.Rol = mapRole.Name;
@@ -88,6 +100,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AnnouncementAddDto announcementAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapAnnouncement = _mapper.Map<Announcement>(announcementAddDto);
             var result = await _validator.ValidateAsync(mapAnnouncement);
 
@@ -116,6 +130,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var role = await _roleService.TGetStudentRoleAsync(); // Yalnızca ogrenci rolundekilere duyuru yapmak için
             var mapRole = _mapper.Map<RoleListDto>(role);
 
@@ -129,6 +145,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(AnnouncementUpdateDto announcementUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+            
             var mapAnnouncement = _mapper.Map<Announcement>(announcementUpdateDto);
             var result = await _validator.ValidateAsync(mapAnnouncement);
 
@@ -160,6 +178,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         }
         public async Task<IActionResult> DeletedAnnouncements()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcements = await _announcementService.TTeacherAnnouncementToStudentsDeletedListAsync();
             var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcements);
             return View(mapAnnouncements);
@@ -167,12 +187,16 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
         public async Task<IActionResult> Delete(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcementTitle = await _announcementService.TSafeDeleteTeacherAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("StudentAnnouncements", "Announcement", new { Area = "Teacher" });
         }
         public async Task<IActionResult> UndoDelete(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcementTitle = await _announcementService.TUndoDeleteTeacherAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.UndoDelete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedAnnouncements", "Announcement", new { Area = "Teacher" });

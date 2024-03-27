@@ -19,15 +19,19 @@ namespace PresentationLayer.Areas.Teacher.Controllers
     [Area("Teacher")]
     public class StudentController : Controller
     {
+        private readonly IAboutService _aboutService;
         private readonly IUserService _userService;
 
-        public StudentController(IUserService userService)
+        public StudentController(IUserService userService, IAboutService aboutService)
         {
             _userService = userService;
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllUsersWithRoleAsync();
             var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
             return View(studentInClasses);
@@ -35,6 +39,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
         public async Task<IActionResult> StudentExcelReport() // Ogrenciler listesini excel formatinda indirmek icin
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllUsersWithRoleAsync();
             var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
 

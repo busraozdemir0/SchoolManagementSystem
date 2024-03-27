@@ -13,25 +13,30 @@ namespace PresentationLayer.Controllers
     public class ContactController : Controller
     {
         private readonly IContactService _contactService;
+        private readonly IAboutService _aboutService;
         private readonly IMapper _mapper;
         private readonly IValidator<Contact> _validator;
         private readonly IToastNotification _toast;  // Mesaj eklendiginde bicimli bir sekilde bildirim mesaji verebilmek icin NToastNotify adli kutuphaneyi kullaniyoruz.
-        public ContactController(IContactService contactService, IMapper mapper, IValidator<Contact> validator, IToastNotification toast)
+        public ContactController(IContactService contactService, IMapper mapper, IValidator<Contact> validator, IToastNotification toast, IAboutService aboutService)
         {
             _contactService = contactService;
             _mapper = mapper;
             _validator = validator;
             _toast = toast;
+            _aboutService = aboutService;
         }
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(ContactAddDto contactAddDto)
         {
-            var map=_mapper.Map<Contact>(contactAddDto);
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var map =_mapper.Map<Contact>(contactAddDto);
             var result = await _validator.ValidateAsync(map);
 
             if (result.IsValid)

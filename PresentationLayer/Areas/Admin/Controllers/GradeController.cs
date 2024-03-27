@@ -18,6 +18,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
     [Area("Admin")]
     public class GradeController : Controller
     {
+        private readonly IAboutService _aboutService;
         private readonly IGradeService _gradeService;
         private readonly IUserService _userService;
         private readonly ILessonService _lessonService;
@@ -25,7 +26,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         private readonly IValidator<Grade> _validator;
         private readonly IToastNotification _toast;
 
-        public GradeController(IGradeService gradeService, IMapper mapper, IValidator<Grade> validator, IToastNotification toast, IUserService userService, ILessonService lessonService)
+        public GradeController(IGradeService gradeService, IMapper mapper, IValidator<Grade> validator, IToastNotification toast, IUserService userService, ILessonService lessonService, IAboutService aboutService)
         {
             _gradeService = gradeService;
             _mapper = mapper;
@@ -33,28 +34,38 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast = toast;
             _userService = userService;
             _lessonService = lessonService;
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var grades=await _gradeService.GetListAsync();
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var grades =await _gradeService.GetListAsync();
             var mapGrades=_mapper.Map<List<GradeListDto>>(grades);
             return View(mapGrades);
         }
         public async Task<IActionResult> DeletedGrades()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var grades = await _gradeService.GetDeletedListAsync();
             var mapGrades = _mapper.Map<List<GradeListDto>>(grades);
             return View(mapGrades);
         }
+
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Add(GradeAddDto gradeAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapGrade = _mapper.Map<Grade>(gradeAddDto);
             var result=await _validator.ValidateAsync(mapGrade);
 
@@ -74,6 +85,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int gradeId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
             var mapGrade=_mapper.Map<GradeUpdateDto>(grade);
             return View(mapGrade);
@@ -81,6 +94,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(GradeUpdateDto gradeUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapGrade = _mapper.Map<Grade>(gradeUpdateDto);
             var result = await _validator.ValidateAsync(mapGrade);
 
@@ -99,19 +114,25 @@ namespace PresentationLayer.Areas.Admin.Controllers
         }
         public async Task<IActionResult> SafeDelete(int gradeId)
         {
-            var gradeName=await _gradeService.TSafeDeleteGradeAsync(gradeId);
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var gradeName =await _gradeService.TSafeDeleteGradeAsync(gradeId);
             _toast.AddSuccessToastMessage(gradeName+" adlı sınıf başarıyla silindi.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "Grade", new { Area = "Admin" });
         }
         public async Task<IActionResult> UndoDelete(int gradeId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var gradeName = await _gradeService.TUndoDeleteGradeAsync(gradeId);
             _toast.AddSuccessToastMessage(gradeName + " adlı sınıf başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
         }
 		public async Task<IActionResult> HardDelete(int gradeId)
 		{
-            var grade=await _gradeService.TGetGradeByIdAsync(gradeId);
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var grade =await _gradeService.TGetGradeByIdAsync(gradeId);
 			await _gradeService.TDeleteAsync(grade);
 			_toast.AddSuccessToastMessage("Sınıf tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
 			return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
@@ -119,6 +140,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> GetAllStudentsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan ogrencileri listeleyecek
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
             ViewBag.GradeId = gradeId;
             ViewBag.GradeName = grade.Name;
@@ -131,6 +154,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> GetAllLessonsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan dersleri listeleyecek
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
             ViewBag.GradeId = gradeId;
             ViewBag.GradeName = grade.Name;
@@ -143,6 +168,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         }
         public async Task<IActionResult> StudentExcelReport(int gradeId) // Ogrenciler listesini excel formatinda indirmek icin
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllUsersWithRoleAsync();
             var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
             HashSet<UserListDto> students = new();

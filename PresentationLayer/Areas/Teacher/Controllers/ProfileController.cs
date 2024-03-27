@@ -12,25 +12,27 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 	[Area("Teacher")]
 	public class ProfileController : Controller
 	{
-		//private readonly IRoleService _roleService;
-		//private readonly IGradeService _gradeService;
-		private readonly IUserService _userService;
+        private readonly IAboutService _aboutService;
+        private readonly IUserService _userService;
 		private readonly IMapper _mapper;
 		private readonly IValidator<AppUser> _validator;
 		private readonly IToastNotification _toast;
 
-		public ProfileController(IUserService userService, IMapper mapper, IValidator<AppUser> validator, IToastNotification toast)
-		{
-			_userService = userService;
-			_mapper = mapper;
-			_validator = validator;
-			_toast = toast;
-		}
+        public ProfileController(IUserService userService, IMapper mapper, IValidator<AppUser> validator, IToastNotification toast, IAboutService aboutService)
+        {
+            _userService = userService;
+            _mapper = mapper;
+            _validator = validator;
+            _toast = toast;
+            _aboutService = aboutService;
+        }
 
-		[HttpGet]
+        [HttpGet]
 		public async Task<IActionResult> Update()
 		{
-			var profile = await _userService.TGetUserProfileAsync();
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var profile = await _userService.TGetUserProfileAsync();
 			ViewBag.DefaultProfileImage = "user-avatar-profile.png"; // Eger hic profil resmi yuklenmemisse varsayilan resim gosterilecek.
 
 			return View(profile);
@@ -38,7 +40,9 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Update(UserProfileDto userProfileDto)
 		{
-			var mapUser = _mapper.Map<AppUser>(userProfileDto);
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var mapUser = _mapper.Map<AppUser>(userProfileDto);
 			var validation = await _validator.ValidateAsync(mapUser);
 
 			if (validation.IsValid)

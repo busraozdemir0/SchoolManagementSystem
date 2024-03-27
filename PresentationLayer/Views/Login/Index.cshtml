@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-    <title>Atlas Koleji - Giriş Yap</title>
+    <title>@ViewBag.SchoolName - Giriş Yap</title>
     <!-- meta tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <h1>Atlas Koleji</h1>
+    <h1>@ViewBag.SchoolName</h1>
     <div class=" w3l-login-form">
         <h2>Giriş Yapın</h2>
         <form asp-controller="Login" asp-action="Index" method="POST">
@@ -59,7 +59,7 @@
 @*         <p class=" w3l-register-p">Bir hesabın yok mu?<a href="#" class="register"> Kayıt Ol</a></p> *@
     </div>
     <footer>
-        <p class="copyright-agileinfo"> &copy; @DateTime.Now.Year Giriş Paneli. Tüm Hakları Saklıdır | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+        <p class="copyright-agileinfo"> &copy; @DateTime.Now.Year @ViewBag.SchoolName. Tüm Hakları Saklıdır | Design by <a href="http://w3layouts.com">W3layouts</a></p>
     </footer>
 
 </body>

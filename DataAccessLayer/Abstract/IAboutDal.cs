@@ -12,6 +12,7 @@ namespace DataAccessLayer.Abstract
     public interface IAboutDal : IRepository<About>
     {
         Task<About> GetByIdAsync(int id);
+        Task<string> GetSchoolNameAsync(); // Okul adini dondurecek olan metod
         Task UpdateAboutAndImage(AboutUpdateDto aboutUpdateDto);
     }
 }

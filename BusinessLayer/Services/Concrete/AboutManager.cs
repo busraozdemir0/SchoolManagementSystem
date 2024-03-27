@@ -53,6 +53,12 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _aboutDal.GetByIdAsync(id);
         }
+
+        public async Task<string> TGetSchoolNameAsync()
+        {
+            return await _aboutDal.GetSchoolNameAsync();
+        }
+
         public async Task TUpdateAboutAndImage(AboutUpdateDto aboutUpdateDto)
         {
             await _aboutDal.UpdateAboutAndImage(aboutUpdateDto);

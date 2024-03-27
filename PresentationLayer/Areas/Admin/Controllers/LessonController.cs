@@ -13,6 +13,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
     [Area("Admin")]
     public class LessonController : Controller
     {
+        private readonly IAboutService _aboutService;
         private readonly ILessonService _lessonService;
         private readonly IGradeService _gradeService;
         private readonly IUserService _userService;
@@ -20,7 +21,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         private readonly IValidator<Lesson> _validator;
         private readonly IToastNotification _toast;
 
-        public LessonController(ILessonService lessonService, IMapper mapper, IValidator<Lesson> validator, IToastNotification toast, IGradeService gradeService, IUserService userService)
+        public LessonController(ILessonService lessonService, IMapper mapper, IValidator<Lesson> validator, IToastNotification toast, IGradeService gradeService, IUserService userService, IAboutService aboutService)
         {
             _lessonService = lessonService;
             _mapper = mapper;
@@ -28,16 +29,21 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast = toast;
             _gradeService = gradeService;
             _userService = userService;
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lessons = await _lessonService.GetListAsync();
             var mapLessons=_mapper.Map<List<LessonListDto>>(lessons);
             return View(mapLessons);
         }
         public async Task<IActionResult> DeletedLessons()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lessons = await _lessonService.GetDeletedListAsync();
             var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
             return View(mapLessons);
@@ -45,7 +51,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var grades=await _gradeService.GetListAsync();
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var grades =await _gradeService.GetListAsync();
             var mapGrades = _mapper.Map<List<GradeDto>>(grades);
 
             var teachers = await _userService.TGetAllTeachersWithRoleAsync(); // Ogretmen kullanicilari listeleniyor.
@@ -55,6 +63,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(LessonAddDto lessonAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapLesson = _mapper.Map<Lesson>(lessonAddDto);
             var result = await _validator.ValidateAsync(mapLesson);
 
@@ -79,6 +89,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid lessonId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lesson = await _lessonService.TGetByGuidAsync(lessonId); // Id'ye gore dersi getir
 
             var grades = await _gradeService.GetListAsync(); // Tum siniflari getir
@@ -95,6 +107,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(LessonUpdateDto lessonUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapLesson = _mapper.Map<Lesson>(lessonUpdateDto);
             var result = await _validator.ValidateAsync(mapLesson);
 
@@ -123,12 +137,16 @@ namespace PresentationLayer.Areas.Admin.Controllers
         }
         public async Task<IActionResult> SafeDelete(Guid lessonId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lessonName = await _lessonService.TSafeDeleteLessonAsync(lessonId);
             _toast.AddSuccessToastMessage(lessonName + " adlı ders başarıyla silindi.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "Lesson", new { Area = "Admin" });
         }
         public async Task<IActionResult> UndoDelete(Guid lessonId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lessonName = await _lessonService.TUndoDeleteLessonAsync(lessonId);
             _toast.AddSuccessToastMessage(lessonName + " adlı ders başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
@@ -136,6 +154,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
 		public async Task<IActionResult> HardDelete(Guid lessonId) // Tablodan tamamen silme islemi icin
 		{
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lesson = await _lessonService.TGetByGuidAsync(lessonId);
 			await _lessonService.TDeleteAsync(lesson);
 			_toast.AddSuccessToastMessage("Ders tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });

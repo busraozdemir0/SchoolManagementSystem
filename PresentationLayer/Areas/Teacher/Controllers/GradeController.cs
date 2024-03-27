@@ -20,23 +20,26 @@ namespace PresentationLayer.Areas.Teacher.Controllers
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;
+        private readonly IAboutService _aboutService;
         private readonly IUserService _userService;
         private readonly ILessonService _lessonService;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GradeController(IGradeService gradeService, IUserService userService, IMapper mapper, IUnitOfWork unitOfWork, ILessonService lessonService)
+        public GradeController(IGradeService gradeService, IUserService userService, IMapper mapper, IUnitOfWork unitOfWork, ILessonService lessonService, IAboutService aboutService)
         {
             _gradeService = gradeService;
             _userService = userService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _lessonService = lessonService;
-
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var lessons = await _lessonService.TGetAllTeacherLessonsAsync(); // Login olan ogretmenin verdigi dersler listeleniyor.
             var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
 
@@ -54,6 +57,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         }
         public async Task<IActionResult> GetAllStudentsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan ogrencileri listeleyecek
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
             ViewBag.GradeName=grade.Name;
             ViewBag.GradeId = gradeId;
@@ -67,6 +72,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
         public async Task<IActionResult> StudentExcelReport(int gradeId) // Ogrenciler listesini excel formatinda indirmek icin
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllUsersWithRoleAsync();
             var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
             HashSet<UserListDto> students = new();

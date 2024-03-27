@@ -12,6 +12,12 @@ namespace BusinessLayer.FluentValidations
     {
         public AboutValidator()
         {
+            RuleFor(x => x.SchoolName)
+                .NotEmpty()
+                .MinimumLength(3)
+                .MaximumLength(20)
+                .WithName("Okul Adı");
+
             RuleFor(x => x.Title)
                 .NotEmpty()
                 .MinimumLength(3)

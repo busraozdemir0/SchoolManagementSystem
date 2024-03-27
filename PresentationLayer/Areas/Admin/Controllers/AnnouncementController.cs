@@ -17,6 +17,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
     [Area("Admin")]
     public class AnnouncementController : Controller
     {
+        private readonly IAboutService _aboutService;
         private readonly IAnnouncementService _announcementService;
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
@@ -25,7 +26,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         private readonly IUserService _userService;
 
 
-        public AnnouncementController(IAnnouncementService announcementService, IMapper mapper, IValidator<EntityLayer.Entities.Announcement> validator, IToastNotification toast, IRoleService roleService, IUserService userService)
+        public AnnouncementController(IAnnouncementService announcementService, IMapper mapper, IValidator<EntityLayer.Entities.Announcement> validator, IToastNotification toast, IRoleService roleService, IUserService userService, IAboutService aboutService)
         {
             _announcementService = announcementService;
             _mapper = mapper;
@@ -33,10 +34,13 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast = toast;
             _roleService = roleService;
             _userService = userService;
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcements = await _announcementService.GetListAsync();
             List<EntityLayer.Entities.Announcement> announcementList = new();
             foreach(var item in announcements)
@@ -53,6 +57,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         }
         public async Task<IActionResult> TeacherAnnouncements()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcements = await _announcementService.GetListAsync();
             List<EntityLayer.Entities.Announcement> announcementList = new();
             foreach (var item in announcements)
@@ -69,6 +75,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         }
         public async Task<IActionResult> DeletedAnnouncements()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcements = await _announcementService.GetDeletedListAsync();
             var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcements);
             return View(mapAnnouncements);
@@ -77,6 +85,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var roles = await _roleService.TGetAllRolesAsync();
             var mapRoles = _mapper.Map<List<RoleListDto>>(roles);
             return View(new AnnouncementAddDto { Roles = mapRoles });
@@ -85,6 +95,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AnnouncementAddDto announcementAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapAnnouncement = _mapper.Map<EntityLayer.Entities.Announcement>(announcementAddDto);
             var result = await _validator.ValidateAsync(mapAnnouncement);
 
@@ -109,6 +121,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var roles = await _roleService.TGetAllRolesAsync();
             var mapRoles = _mapper.Map<List<RoleListDto>>(roles); // Tum roller
 
@@ -122,6 +136,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(AnnouncementUpdateDto announcementUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapAnnouncement = _mapper.Map<EntityLayer.Entities.Announcement>(announcementUpdateDto);
             var result = await _validator.ValidateAsync(mapAnnouncement);
 
@@ -149,26 +165,32 @@ namespace PresentationLayer.Areas.Admin.Controllers
         }
         public async Task<IActionResult> SafeDelete(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcementTitle = await _announcementService.TSafeDeleteAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "Announcement", new { Area = "Admin" });
         }
         public async Task<IActionResult> UndoDelete(Guid announcementId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var announcementTitle = await _announcementService.TUndoDeleteAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.UndoDelete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("Index", "Announcement", new { Area = "Admin" });
+            return RedirectToAction("Index", "DeletedAnnouncements", new { Area = "Admin" });
         }
 
         public async Task<IActionResult> HardDelete(Guid announcementId) // Ogretmenlerin yaptigi veya cop kutusundaki duyuruları tamamen tablodan silebilmek icin
 		{
-            var announcement= await _announcementService.TGetByGuidAsync(announcementId);
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var announcement = await _announcementService.TGetByGuidAsync(announcementId);
 
             if(announcement is not null)
             {
                 await _announcementService.TDeleteAsync(announcement);
                 _toast.AddSuccessToastMessage("Duyuru başarıyla silindi", new ToastrOptions { Title = "Başarılı!" });
-                return RedirectToAction("Index", "Announcement", new { Area = "Admin" });
+                return RedirectToAction("Index", "DeletedAnnouncements", new { Area = "Admin" });
             }
             else
             {

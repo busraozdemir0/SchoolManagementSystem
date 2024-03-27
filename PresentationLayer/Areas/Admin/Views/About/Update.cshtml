@@ -34,6 +34,17 @@
                             <form asp-area="Admin" asp-controller="About" asp-action="Update" method="post" enctype="multipart/form-data">
                                 <div asp-validation-summary="ModelOnly"></div>
                                 <input type="hidden" asp-for="Id" />
+
+                                <div class="form-group">
+                                    <label asp-for="SchoolName" class="form-label">Okul Adı</label>
+                                    <input asp-for="SchoolName" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Okul Adı..."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="SchoolName" class="text-danger"></span>
+                                </div>
+
                                 <div class="form-group">
                                     <label asp-for="Title" class="form-label">Başlık</label>
                                     <input asp-for="Title" type="text"

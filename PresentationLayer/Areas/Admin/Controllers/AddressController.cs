@@ -14,22 +14,26 @@ namespace PresentationLayer.Areas.Admin.Controllers
     [Area("Admin")]
     public class AddressController : Controller
     {
+        private readonly IAboutService _aboutService;
         private readonly IAddressService _addressService;
         private readonly IToastNotification _toast;
         private readonly IMapper _mapper;
         private readonly IValidator<Address> _validator;
 
-        public AddressController(IAddressService addressService, IToastNotification toast, IMapper mapper, IValidator<Address> validator)
+        public AddressController(IAddressService addressService, IToastNotification toast, IMapper mapper, IValidator<Address> validator, IAboutService aboutService)
         {
             _addressService = addressService;
             _toast = toast;
             _mapper = mapper;
             _validator = validator;
+            _aboutService = aboutService;
         }
         [HttpGet]
         public async Task<IActionResult> Update()
         {
-           var addresses = await _addressService.GetListAsync(); // Address tablosunu listele
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var addresses = await _addressService.GetListAsync(); // Address tablosunu listele
            var mapAddress = _mapper.Map<AddressUpdateDto>(addresses.First()); // İlk kaydi AddressUpdateDto'ya map'le
             return View(mapAddress);
         }
@@ -37,6 +41,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(AddressUpdateDto addressUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapAddress = _mapper.Map<Address>(addressUpdateDto);
             var result = await _validator.ValidateAsync(mapAddress);
 

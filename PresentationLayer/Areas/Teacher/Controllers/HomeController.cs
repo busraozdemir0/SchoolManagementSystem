@@ -18,25 +18,30 @@ namespace PresentationLayer.Areas.Teacher.Controllers
     public class HomeController : Controller
     {
         private readonly ISearchProcess _searchProcess;
+        private readonly IAboutService _aboutService;
         private readonly IToastNotification _toast;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
 
-        public HomeController(ISearchProcess searchProcess, IToastNotification toast, IHttpContextAccessor httpContextAccessor)
+        public HomeController(ISearchProcess searchProcess, IAboutService aboutService, IToastNotification toast, IHttpContextAccessor httpContextAccessor)
         {
             _searchProcess = searchProcess;
+            _aboutService = aboutService;
             _toast = toast;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
             return View();
         }
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] string keyword, int page = 1)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             ViewBag.Keyword = keyword;
             ViewBag.UserId = _user.GetLoggedInUserId();
 

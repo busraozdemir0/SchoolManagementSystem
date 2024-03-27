@@ -8,6 +8,7 @@ using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Abouts;
 using EntityLayer.Entities;
 using EntityLayer.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,12 @@ namespace DataAccessLayer.EntityFramework
             return await _appDbContext.Abouts.FindAsync(id);
         }
 
+        public async Task<string> GetSchoolNameAsync()
+        {
+            var about = await _appDbContext.Abouts.Take(1).FirstOrDefaultAsync();
+            return about.SchoolName;
+        }
+
         public async Task UpdateAboutAndImage(AboutUpdateDto aboutUpdateDto)
         {
             var about = await _unitOfWork.GetRepository<About>().GetAsync(x => x.Id == aboutUpdateDto.Id, i => i.Image); // Gelen nesneyi id'sine göre cek ve Image tablosunu entegre et
@@ -50,6 +57,7 @@ namespace DataAccessLayer.EntityFramework
                 about.ImageId = image.Id;
             }
 
+            about.SchoolName = aboutUpdateDto.SchoolName;
             about.Title = aboutUpdateDto.Title;
             about.Content = aboutUpdateDto.Content;
 

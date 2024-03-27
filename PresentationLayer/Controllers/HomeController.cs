@@ -15,22 +15,27 @@ namespace PresentationLayer.Controllers
     public class HomeController : Controller
     {
         private readonly IReportService _reportService;
+        private readonly IAboutService _aboutService;
         private readonly IToastNotification _toast;
 
-        public HomeController(IReportService reportService, IToastNotification toast)
+        public HomeController(IReportService reportService, IAboutService aboutService, IToastNotification toast)
         {
             _reportService = reportService;
+            _aboutService = aboutService;
             _toast = toast;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Search(string keyword, int currentPage = 1, int pageSize = 6, bool isAscending = false)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var reports = await _reportService.TSearchAsync(keyword, currentPage, pageSize, isAscending);
 
             if (keyword.ToLower().Contains("adres") || keyword.ToLower().Contains("iletişim") || keyword.ToLower().Contains("mesaj"))

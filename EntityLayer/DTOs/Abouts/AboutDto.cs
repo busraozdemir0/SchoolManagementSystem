@@ -10,6 +10,7 @@ namespace EntityLayer.DTOs.Abouts
 {
     public class AboutDto
     {
+        public string SchoolName { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public Guid? ImageId { get; set; }

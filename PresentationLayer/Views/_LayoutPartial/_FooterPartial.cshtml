@@ -10,9 +10,9 @@
                         <h6 class="footer-title-29">Hızlı Linkler</h6>
                         <li><a asp-controller="Home" asp-action="Index">Ana Sayfa</a></li>
                         <li><a href="#about">Hakkımızda</a></li>
-                        <li><a asp-controller="News" asp-action="Index">Haberler</a></li>
+                        <li><a asp-controller="Report" asp-action="Index">Haberler</a></li>
                         <li><a asp-controller="Contact" asp-action="Index">İletişim</a></li>
-                        <li><a href="#">Kayıt Ol</a></li>
+                        <li><a asp-controller="Login" asp-action="Index">Giriş Yap</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4">
@@ -42,7 +42,7 @@
             </div>
             <!-- copyright -->
             <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">
-                © @DateTime.Now.Year Atlas Koleji. Tüm Hakları Saklıdır. Design
+                © @DateTime.Now.Year @ViewBag.SchoolName. Tüm Hakları Saklıdır. Design
                 by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a>
             </p>
             <!-- //copyright -->

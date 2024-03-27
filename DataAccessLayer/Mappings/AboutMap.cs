@@ -16,6 +16,7 @@ namespace DataAccessLayer.Mappings
             builder.HasData(new About
             {
                 Id = 1,
+                SchoolName="Atlas Koleji",
                 Title = "Çocuğunuz İçin En İyi Seçim Biziz",
                 Content = "Atlas Koleji olarak 2009 yılında başladığımız yolculuğumuzda, ortaokul ve lise öğrencilerimizin başarıya ulaşmasını hedefliyor aynı " +
                 "zamanda hayalindeki lise ve üniversiteleri kazanmaları için elimizden geleni yapıyoruz. Okulda yapılan eğitimin yanı sıra web sitemiz sayesinde " +

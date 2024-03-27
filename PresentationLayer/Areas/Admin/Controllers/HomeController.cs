@@ -11,23 +11,28 @@ namespace PresentationLayer.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly IReportService _reportService;
+        private readonly IAboutService _aboutService;
         private readonly IToastNotification _toast;
         private readonly ISearchProcess _searchProcess;
 
-        public HomeController(IReportService reportService, IToastNotification toast, ISearchProcess searchProcess)
+        public HomeController(IReportService reportService, IAboutService aboutService, IToastNotification toast, ISearchProcess searchProcess)
         {
             _reportService = reportService;
-            _toast = toast;
+			_aboutService = aboutService;
+			_toast = toast;
             _searchProcess = searchProcess;
         }
 
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
-            return View();
+			ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+			return View();
         }
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] string keyword, int page = 1)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             ViewBag.Keyword = keyword;
 
             if (keyword == null)

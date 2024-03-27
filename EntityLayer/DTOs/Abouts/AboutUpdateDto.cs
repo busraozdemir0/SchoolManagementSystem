@@ -11,6 +11,7 @@ namespace EntityLayer.DTOs.Abouts
     public class AboutUpdateDto
     {
         public int Id { get; set; }
+        public string SchoolName { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public Guid? ImageId { get; set; }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace EntityLayer.Entities
 {
@@ -13,12 +14,14 @@ namespace EntityLayer.Entities
         {
             
         }
-        public About(string title, string content, Guid imageId)
+        public About(string schoolName, string title, string content, Guid imageId)
         {
+            SchoolName = schoolName;
             Title=title;
             Content=content;
             ImageId = imageId;
         }
+        public string SchoolName { get; set; } // Projedeki okul adini degistirebilmek icin
         public string Title { get; set; }
         public string Content { get; set; }
         public Guid? ImageId { get; set; }

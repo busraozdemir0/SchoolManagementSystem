@@ -16,6 +16,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
+        private readonly IAboutService _aboutService;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IGradeService _gradeService;
@@ -23,7 +24,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         private readonly IValidator<AppUser> _validator;
         private readonly IToastNotification _toast;
 
-        public UserController(IUserService userService, IMapper mapper, IRoleService roleService, IValidator<AppUser> validator, IToastNotification toast, IGradeService gradeService)
+        public UserController(IUserService userService, IMapper mapper, IRoleService roleService, IValidator<AppUser> validator, IToastNotification toast, IGradeService gradeService, IAboutService aboutService)
         {
             _userService = userService;
             _mapper = mapper;
@@ -31,20 +32,27 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _validator = validator;
             _toast = toast;
             _gradeService = gradeService;
+            _aboutService = aboutService;
         }
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllUsersWithRoleAsync(); // Tum kullanicilar
             return View(users);
         }
         public async Task<IActionResult> GetAllTeachers()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllTeachersWithRoleAsync(); // Ogretmenler listesi
             return View(users);
         }
         public async Task<IActionResult> GetAllStudents()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllStudentsWithRoleAsync(); // Ogrenciler listesi
             return View(users);
         }
@@ -52,6 +60,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var roles = await _roleService.TGetAllRolesAsync();
 
             var grades = await _gradeService.GetListAsync();
@@ -62,6 +72,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapUser = _mapper.Map<AppUser>(userAddDto);
             var validation = await _validator.ValidateAsync(mapUser);
 
@@ -90,13 +102,16 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> AddTeacher()
         {
-            var grades = await _gradeService.GetListAsync();
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> AddTeacher(UserAddDto userAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapUser = _mapper.Map<AppUser>(userAddDto);
             var validation = await _validator.ValidateAsync(mapUser);
 
@@ -123,6 +138,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> AddStudent()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var grades = await _gradeService.GetListAsync();
             return View(new UserAddDto { Grades = grades });
         }
@@ -130,6 +147,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStudent(UserAddDto userAddDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapUser = _mapper.Map<AppUser>(userAddDto);
             var validation = await _validator.ValidateAsync(mapUser);
 
@@ -158,6 +177,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid userId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             ViewBag.IsStudent = false; // Ogrenci mi oldugu bilgisi en basta false olsun
 
             var user = await _userService.TGetAppUserByIdAsync(userId);
@@ -188,6 +209,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var user = await _userService.TGetAppUserByIdAsync(userUpdateDto.Id);
 
             if (user != null) // Eger boyle bir kullanici varsa
@@ -234,6 +257,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateTeacher(Guid userId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var user = await _userService.TGetAppUserByIdAsync(userId);
 
             var userRoleId = await _roleService.TGetByIdRoleAsync(RoleConsts.Teacher); // Teacher rolu      
@@ -246,6 +271,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTeacher(UserUpdateDto userUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var user = await _userService.TGetAppUserByIdAsync(userUpdateDto.Id);
 
             if (user != null) // Eger boyle bir kullanici varsa
@@ -285,6 +312,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateStudent(Guid userId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var user = await _userService.TGetAppUserByIdAsync(userId);
             var grades = await _gradeService.GetListAsync(); // Siniflar
 
@@ -304,6 +333,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateStudent(UserUpdateDto userUpdateDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var user = await _userService.TGetAppUserByIdAsync(userUpdateDto.Id);
 
             if (user != null) // Eger boyle bir kullanici varsa
@@ -344,6 +375,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(Guid userId)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             // Identity'nin ondelete metodlarında eger bir kullanici silinirse kullaniciya bagli olan roller de silindigi icin ayriyetten rol silme islemine gerek kalmamaktadir.
             var result = await _userService.TDeleteUserAsync(userId); // Buradan hem identityResult hem de kullanici adi donecek.
             if (result.identityResult.Succeeded)
@@ -361,6 +394,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var profile = await _userService.TGetUserProfileAsync();
             ViewBag.DefaultProfileImage = "user-avatar-profile.png"; // Eger hic profil resmi yuklenmemisse varsayilan resim gosterilecek.
 
@@ -369,6 +404,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Profile(UserProfileDto userProfileDto)
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var mapUser = _mapper.Map<AppUser>(userProfileDto);
             var validation = await _validator.ValidateAsync(mapUser);
 
@@ -401,6 +438,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> StudentExcelReport() // Ogrenciler listesini excel formatinda indirmek icin
         {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
             var users = await _userService.TGetAllUsersWithRoleAsync();
             var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
 

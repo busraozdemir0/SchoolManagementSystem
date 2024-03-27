@@ -249,9 +249,15 @@ namespace DataAccessLayer.EntityFramework
         {
             var user = await _userManager.FindByNameAsync(userLoginDto.UserName);
             if (user != null)
-                return await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
+            {
+                var result = await _signInManager.CheckPasswordSignInAsync(user, userLoginDto.Password, false);
+
+                if (result.Succeeded)
+                    return await _signInManager.PasswordSignInAsync(user, userLoginDto.Password, userLoginDto.RememberMe, false);
+            }
 
             return null;
+
         }
 
         public async Task LogOutUserAsync()
@@ -404,7 +410,7 @@ namespace DataAccessLayer.EntityFramework
         }
 
         public async Task<HashSet<UserListDto>> StudentInClassListAsync(List<UserListDto> users)
-        { 
+        {
             var lessons = await _lessonDal.GetAllTeacherLessonsAsync(); // Login olan ogretmenin verdigi dersler listeleniyor.
             var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
 
