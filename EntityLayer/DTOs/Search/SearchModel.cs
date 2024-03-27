@@ -16,6 +16,7 @@ namespace EntityLayer.DTOs.Search
         public IPagedList<Contact> Contacts { get; set; }
         public IPagedList<Grade> Grades { get; set; }
         public IPagedList<Lesson> Lessons { get; set; }
+        public IPagedList<LessonScore> LessonScores { get; set; }
         public IPagedList<Report> Reports { get; set; }
         public IPagedList<AppRole> Roles { get; set; }
         public IPagedList<AppUser> Users { get; set; }

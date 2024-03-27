@@ -25,7 +25,7 @@
             {
                 <hr />
                 <div class="search-result">
-                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="Announcement" asp-action="Index" asp-route-announcementId="@announcement.Id">@announcement.Title</a></h3>
+                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">@announcement.Title</a></h3>
                     <a href="#" class="a-custom-link">@(((DateTime)announcement.CreatedDate).ToString("dd-MM-yyyy"))</a>
                     <p>
                         @Html.Raw(announcement.Content)
@@ -50,7 +50,7 @@
             {
                 <hr />
                 <div class="search-result">
-                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="Grade" asp-action="Index" asp-route-gradeId="@grade.Id">@grade.Name</a></h3>
+                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="Grade" asp-action="GetAllStudentsWithGrade" asp-route-gradeId="@grade.Id">@grade.Name</a></h3>
                 </div>
                 <hr />
             }
@@ -85,6 +85,28 @@
             <div class="clearfix"> </div>
         }
 
+        else if (Model.LessonScores.Count != 0)
+        {
+            <h2 style="margin-bottom:2em;">
+                Şunun için @Model.LessonScores.TotalItemCount sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+            </h2>
+            @foreach (var lessonScore in Model.LessonScores)
+            {
+                <hr />
+                <div class="search-result">
+                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="LessonScore" asp-action="Update" asp-route-lessonScoreId="@lessonScore.Id">Öğrenci No: @lessonScore.StudentNo - @lessonScore.GradeName </a></h3>
+                    <a href="#" class="a-custom-link">@lessonScore.Lesson.LessonCode @lessonScore.Lesson.LessonName  </a>
+                </div>
+                <hr />
+
+            }
+            @if (Model.LessonScores.TotalItemCount > 5)
+            {
+                @Html.PagedListPager((IPagedList)Model.LessonScores, page => Url.Action("Search", new { keyword = ViewBag.Keyword, page }))
+            }
+            <div class="clearfix"> </div>
+        }
+
         else if (Model.Users.Count != 0)
         {
             <h2 style="margin-bottom:2em;">
@@ -94,7 +116,7 @@
             {
                 <hr />
                 <div class="search-result">
-                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="Student" asp-action="LessonScore" asp-route-userId="@user.Id">@user.Name @user.Surname</a></h3>
+                    <h3><a class="a-custom-link" asp-area="Teacher" asp-controller="LessonScore" asp-action="Index" asp-route-userId="@user.Id">@user.Name @user.Surname</a></h3>
                     <a class="a-custom-link" href="#">@user.UserName - @user.Email</a>
                 </div>
                 <hr />

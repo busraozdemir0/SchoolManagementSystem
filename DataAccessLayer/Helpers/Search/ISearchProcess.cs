@@ -10,5 +10,6 @@ namespace DataAccessLayer.Helpers.Search
     public interface ISearchProcess
     {
         Task<SearchModel> SearchAsync(string keyword, int page = 1);
+        Task<SearchModel> SearchTeacherAsync(string keyword, int page = 1);
     }
 }

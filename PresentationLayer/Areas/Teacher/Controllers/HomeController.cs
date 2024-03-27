@@ -1,8 +1,16 @@
-﻿using DataAccessLayer.Extensions;
+﻿using AutoMapper;
+using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Extensions;
 using DataAccessLayer.Helpers.Search;
+using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.Grades;
+using EntityLayer.DTOs.Lessons;
+using EntityLayer.DTOs.Search;
+using EntityLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System.Security.Claims;
+using X.PagedList;
 
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
@@ -38,19 +46,16 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 return View();
             }
 
-			else if (keyword.ToLower().Contains("öğrenci"))
-				return RedirectToAction("Index", "Student", new { Area = "Teacher" });
-
             else if (keyword.ToLower().Contains("ayar") || keyword.ToLower().Contains("profil"))
                 return RedirectToAction("Update", "Profile", new { Area = "Teacher" });
 
-            else if (keyword.ToLower().Contains("duyuru") || keyword.ToLower().Contains("duyuru yap"))
-                return RedirectToAction("Index", "Announcement", new { Area = "Teacher" });
+            else if ( keyword.ToLower().Contains("duyuru yap") || keyword.ToLower().Contains("öğrenci duyuruları"))
+                return RedirectToAction("StudentAnnouncements", "Announcement", new { Area = "Teacher" });
 
 
             else
             {
-                var result = await _searchProcess.SearchAsync(keyword, page);
+                var result = await _searchProcess.SearchTeacherAsync(keyword, page);
                 return View(result);
             }
         }

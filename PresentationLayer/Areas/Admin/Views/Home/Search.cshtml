@@ -7,17 +7,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9">
         <h2>Arama Sonuçları</h2>
-        @*    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-        <a href="index.html">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-        Extra Pages
-        </li>
-        <li class="breadcrumb-item active">
-        <strong>	Search Page</strong>
-        </li>
-        </ol> *@
     </div>
 </div>
 
@@ -157,6 +146,36 @@ else if (Model.Lessons.Count != 0)
                         @if (Model.Lessons.TotalItemCount > 5)
                         {
                             @Html.PagedListPager((IPagedList)Model.Lessons, page => Url.Action("Search", new { keyword = ViewBag.Keyword, page }))
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+else if (Model.LessonScores.Count != 0)
+{
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <h2>
+                            Şunun için @Model.LessonScores.TotalItemCount sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+                        </h2>
+                        @foreach (var lessonScore in Model.LessonScores)
+                        {
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h3><a class="a-custom-link" asp-area="Admin" asp-controller="LessonScore" asp-action="Update" asp-route-lessonScoreId="@lessonScore.Id">Öğrenci No: @lessonScore.StudentNo - @lessonScore.GradeName </a></h3>
+                                <a href="#" class="a-custom-link">@lessonScore.Lesson.LessonCode @lessonScore.Lesson.LessonName  </a>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        }
+                        @if (Model.LessonScores.TotalItemCount > 5)
+                        {
+                            @Html.PagedListPager((IPagedList)Model.LessonScores, page => Url.Action("Search", new { keyword = ViewBag.Keyword, page }))
                         }
                     </div>
                 </div>

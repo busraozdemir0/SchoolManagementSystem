@@ -30,10 +30,11 @@
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownMenuButton" aria-expanded="false">
                                 <i class="fas fa-search" aria-hidden="true" style="font-size:1.0em"></i><span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="transform: translateX(-160px);">
+                                @* transform: translateX(-160px); => acilan menunun x duzleminde -160px sola kaymasi icin *@
                                 <li>
                                     <form asp-controller="Home" asp-action="Search" method="GET" class="dropdown-item search-box">
-                                        <input class="dropdown-item" style="width:260px;" type="search" placeholder="Aranacak ifade..." name="keyword"
+                                        <input class="dropdown-item" style="width:17em;" type="search" placeholder="Aranacak ifade..." name="keyword"
                                                required="required" autofocus="">
                                         <button type="submit" class="btn">
                                             <span class="fas fa-search"
@@ -44,19 +45,18 @@
                             </ul>
                         </div>
                     </li>
-
                     <li class="nav-item">
                         <div class="btn-group">
                             <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton" aria-expanded="false">
                                 <i class="fa-solid fa-user" aria-hidden="true" style="font-size:1.1em; margin-bottom:8px;"></i><span class="caret">▾</span>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding:0.8em; transform: translateX(-68px);">
                                 @if (User.Identity.IsAuthenticated) @* Eger kullanici giris yapmissa kullanici adini gosterecek. *@
                                 {
                                     @await Component.InvokeAsync("ShowHomeName")
 
                                     <li>
-                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="LogOut" style="font-size:17px;">&nbsp; &nbsp; <i class="fa-solid fa-angle-right"></i> Çıkış Yap</a>
+                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="LogOut" style="font-size:16px;">&nbsp; &nbsp; <i class="fa-solid fa-angle-right"></i> Çıkış Yap</a>
                                         <br />
                                     </li>
                                 }
@@ -64,7 +64,7 @@
                                 {
                                     <li class="mb-4">
                                         <br />
-                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="Index" style="font-size:17px;">&nbsp; &nbsp; <i class="fa-solid fa-angle-right"></i> Giriş Yap</a>
+                                        <a class="dropdown-item nav-link" asp-controller="Login" asp-action="Index" style="font-size:16px;">&nbsp; &nbsp; <i class="fa-solid fa-angle-right"></i> Giriş Yap</a>
                                     </li>
                                 }
                             </ul>
@@ -87,11 +87,6 @@
                 </nav>
             </div>
             <!-- //toggle switch for light and dark theme -->
-
-
-
-
-
         </nav>
     </div>
 </header>
