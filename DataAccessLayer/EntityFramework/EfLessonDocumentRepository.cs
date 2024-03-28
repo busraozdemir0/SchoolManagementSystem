@@ -31,6 +31,23 @@ namespace DataAccessLayer.EntityFramework
             _user = httpContextAccessor.HttpContext.User;
         }
 
+        public async Task<List<LessonDocument>> GetAllDocumentsByLesson(Lesson lesson)
+        {
+            var loginTeacherId = _user.GetLoggedInUserId();
+
+            // Giris yapan kisinin o derse yukledigi ders dokumanlari
+            var documents = await _unitOfWork.GetRepository<LessonDocument>()
+                .GetAllAsync(x=>x.CreatedBy==loginTeacherId.ToString() && !x.IsDeleted, l=>l.Lesson, d=>d.Document);
+
+            List<LessonDocument> lessonDocumentsByLesson = new();
+            foreach(var document in documents)
+            {
+                if (document.LessonId == lesson.Id)
+                    lessonDocumentsByLesson.Add(document);
+            }
+
+            return lessonDocumentsByLesson;
+        }
         public async Task<string> AddLessonDocumentAsync(LessonDocumentAddDto lessonDocumentAddDto)
         {
             var loginTeacherId = _user.GetLoggedInUserId();

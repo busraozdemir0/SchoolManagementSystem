@@ -95,19 +95,19 @@
         {
             public static string Add(string lessonDocumentTitle)
             {
-                return $"{lessonDocumentTitle} başlıklı doküman başarıyla eklendi.";
+                return $"{lessonDocumentTitle} başlıklı materyal başarıyla eklendi.";
             }
             public static string Update(string lessonDocumentTitle)
             {
-                return $"{lessonDocumentTitle} başlıklı doküman başarıyla güncellendi.";
+                return $"{lessonDocumentTitle} başlıklı materyal başarıyla güncellendi.";
             }
             public static string Delete(string lessonDocumentTitle)
             {
-                return $"{lessonDocumentTitle} başlıklı doküman başarıyla silindi.";
+                return $"{lessonDocumentTitle} başlıklı materyal başarıyla silindi.";
             }
             public static string UndoDelete(string lessonDocumentTitle)
             {
-                return $"{lessonDocumentTitle} başlıklı doküman başarıyla geri alındı.";
+                return $"{lessonDocumentTitle} başlıklı materyal başarıyla geri alındı.";
             }
         }
     }

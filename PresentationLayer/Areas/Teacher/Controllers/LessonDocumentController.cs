@@ -23,10 +23,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         private readonly IToastNotification _toast;
         private readonly IMapper _mapper;
         private readonly IValidator<LessonDocumentAddDto> _validator;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ClaimsPrincipal _user;
 
-        public LessonDocumentController(ILessonDocumentService lessonDocumentService, IToastNotification toast, ILessonService lessonService, IMapper mapper, IValidator<LessonDocumentAddDto> validator, IAboutService aboutService, IHttpContextAccessor httpContextAccessor)
+        public LessonDocumentController(ILessonDocumentService lessonDocumentService, IToastNotification toast, ILessonService lessonService, IMapper mapper, IValidator<LessonDocumentAddDto> validator, IAboutService aboutService)
         {
             _lessonDocumentService = lessonDocumentService;
             _toast = toast;
@@ -34,15 +32,18 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _mapper = mapper;
             _validator = validator;
             _aboutService = aboutService;
-            _httpContextAccessor = httpContextAccessor;
-            _user = httpContextAccessor.HttpContext.User;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ListDocumentByLesson(Guid lessonId)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            return View();
+            var lesson = await _lessonService.TGetByGuidAsync(lessonId);
+            var lessonDocuments = await _lessonDocumentService.TGetAllDocumentsByLesson(lesson);
+            var mapLessonDocuments = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
+            ViewBag.LessonName = lesson.LessonName;
+
+            return View(mapLessonDocuments);
         }
 
         [HttpGet]
@@ -78,7 +79,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             else
             {
                 result.AddToModelState(this.ModelState);
-                _toast.AddErrorToastMessage("Ders dokümanı eklenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
+                _toast.AddErrorToastMessage("Ders materyali yüklenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
             }
             return View();
         }

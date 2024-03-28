@@ -10,6 +10,7 @@ namespace BusinessLayer.Services.Abstract
 {
     public interface ILessonDocumentService : IGenericService<LessonDocument>
     {
+        Task<List<LessonDocument>> TGetAllDocumentsByLesson(Lesson lesson); // Gelen ders nesnesine gore o derse yuklenmis ders materyalleri
         Task<string> TAddLessonDocumentAsync(LessonDocumentAddDto lessonDocumentAddDto);
     }
 }

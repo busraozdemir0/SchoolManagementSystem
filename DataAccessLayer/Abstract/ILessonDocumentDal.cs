@@ -11,6 +11,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface ILessonDocumentDal : IRepository<LessonDocument>
     {
+        Task<List<LessonDocument>> GetAllDocumentsByLesson(Lesson lesson); // Gelen ders nesnesine gore o derse yuklenmis ders materyalleri
         Task<string> AddLessonDocumentAsync(LessonDocumentAddDto lessonDocumentAddDto);
     }
 }

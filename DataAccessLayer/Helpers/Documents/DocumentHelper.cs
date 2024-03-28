@@ -44,12 +44,12 @@ namespace DataAccessLayer.Helpers.Documents
             await documentFile.CopyToAsync(stream);
             await stream.FlushAsync();
 
-            string message = $"{newFileName} isimli doküman başarıyla eklendi.";
+            string message = $"{newFileName} isimli doküman başarıyla yüklendi.";
                                                        
 
             return new DocumentUploadedDto()
             {
-                FullName = $"{folderName}/{newFileName}"
+                FullName = $"{newFileName}"
             };
         }
 

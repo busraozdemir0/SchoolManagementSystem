@@ -51,6 +51,11 @@ namespace BusinessLayer.Services.Concrete
             throw new NotImplementedException();
         }
 
+        public async Task<List<LessonDocument>> TGetAllDocumentsByLesson(Lesson lesson)
+        {
+            return await _lessonDocumentDal.GetAllDocumentsByLesson(lesson);
+        }
+
         public async Task<LessonDocument> TGetByGuidAsync(Guid id)
         {
             return await _lessonDocumentDal.GetByGuidAsync(id);

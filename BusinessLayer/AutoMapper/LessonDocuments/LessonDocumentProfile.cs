@@ -14,6 +14,7 @@ namespace BusinessLayer.AutoMapper.LessonDocuments
         public LessonDocumentProfile()
         {
             CreateMap<LessonDocument, LessonDocumentAddDto>().ReverseMap();
+            CreateMap<LessonDocument, LessonDocumentListDto>().ReverseMap();
         }
     }
 }
