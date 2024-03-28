@@ -37,7 +37,7 @@ namespace PresentationLayer.Areas.Teacher.ViewComponents
 				ViewBag.UserAbout = user.UserAbout;
 
 			else
-				ViewBag.UserAbout = "deneme deneme deneme deneme deneme";
+				ViewBag.UserAbout = "Okulumuzda en yetkin öğretmenlerimizden biridir.";
 
 
 			ViewBag.GetLoggedInImageId = user.ImageId;

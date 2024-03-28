@@ -90,5 +90,25 @@
                 return $"{announcementTitle} başlıklı duyuru başarıyla geri alındı.";
             }
         }
+
+        public static class LessonDocument
+        {
+            public static string Add(string lessonDocumentTitle)
+            {
+                return $"{lessonDocumentTitle} başlıklı doküman başarıyla eklendi.";
+            }
+            public static string Update(string lessonDocumentTitle)
+            {
+                return $"{lessonDocumentTitle} başlıklı doküman başarıyla güncellendi.";
+            }
+            public static string Delete(string lessonDocumentTitle)
+            {
+                return $"{lessonDocumentTitle} başlıklı doküman başarıyla silindi.";
+            }
+            public static string UndoDelete(string lessonDocumentTitle)
+            {
+                return $"{lessonDocumentTitle} başlıklı doküman başarıyla geri alındı.";
+            }
+        }
     }
 }

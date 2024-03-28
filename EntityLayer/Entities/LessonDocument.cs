@@ -13,17 +13,18 @@ namespace EntityLayer.Entities
         {
             
         }
-        public LessonDocument(string title, string documentName, string documentPath)
+        public LessonDocument(string title, Guid lessonId, Guid documentId, string createdBy)
         {
             Title = title;
-            DocumentName = documentName;
-            DocumentPath = documentPath;
+            LessonId= lessonId;
+            DocumentId = documentId;
+            CreatedBy = createdBy;
         }
         public string Title { get; set; } // O dokumanin yuklendigi konuya ait baslik
-        public string DocumentName { get; set; }
-        public string DocumentPath { get; set; }
         public Guid LessonId { get; set; } // O dokuman hangi derse yuklendigi bilgisi
         public Lesson Lesson { get; set; }
+        public Guid? DocumentId { get; set; }
+        public Document Document { get; set; }
 
     }
 }

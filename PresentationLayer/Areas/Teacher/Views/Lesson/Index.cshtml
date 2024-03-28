@@ -42,7 +42,7 @@
                                         <td>@lesson.LessonCredit</td>
                                         <td>@lesson.Grade.Name</td>
                                         <td class="text-center">
-                                            <a class="btn btn-primary btn-sm" data-id="@lesson.Id" asp-area="Teacher" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id"><i class="fa fa-upload"></i> Doküman Yükle</a>
+                                            <a class="btn btn-primary btn-sm" data-id="@lesson.Id" asp-area="Teacher" asp-controller="LessonDocument" asp-action="Add" asp-route-lessonId="@lesson.Id"><i class="fa fa-upload"></i> Doküman Yükle</a>
                                             <a class="btn btn-warning btn-sm" data-id="@lesson.Id" asp-area="Teacher" asp-controller="Lesson" asp-action="Update" asp-route-lessonId="@lesson.Id"><i class="fa fa-upload"></i> Video Yükle</a>
                                         </td>
                                     </tr>

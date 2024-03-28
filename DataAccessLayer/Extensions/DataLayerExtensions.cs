@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Context;
+using DataAccessLayer.Helpers.Documents;
 using DataAccessLayer.Helpers.Images;
 using DataAccessLayer.Helpers.Search;
 using DataAccessLayer.Repository.Abstract;
@@ -26,6 +27,7 @@ namespace DataAccessLayer.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>(); // IUnitOfWork istendiginde UnitOfWork'u kullanacak.
 
             services.AddScoped<IImageHelper, ImageHelper>(); // Gorselleri Image tablosunda tutacagimiz icin Helper yazdik.
+            services.AddScoped<IDocumentHelper, DocumentHelper>(); // Ders dokumanlarini LessonDocument tablosunda tutacak helper
             
             services.AddScoped<ISearchProcess, SearchProcess>(); 
 

@@ -28,6 +28,7 @@ namespace DataAccessLayer.Context
         public DbSet<Report> Reports { get; set; } // Haberler tablosu (News)
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

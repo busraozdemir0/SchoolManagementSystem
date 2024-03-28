@@ -62,6 +62,9 @@ namespace BusinessLayer.Extensions
             services.AddScoped<ILessonScoreService, LessonScoreManager>();
             services.AddScoped<ILessonScoreDal, EfLessonScoreRepository>();
 
+            services.AddScoped<ILessonDocumentService, LessonDocumentManager>();
+            services.AddScoped<ILessonDocumentDal, EfLessonDocumentRepository>();
+
             services.AddAutoMapper(assembly);
 
             // Fluent validation hata mesajlarinin turkcelestirilmesi

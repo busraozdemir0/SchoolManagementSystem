@@ -25,10 +25,6 @@ namespace EntityLayer.Entities
         public int LessonCredit { get; set; }
         public int GradeId { get; set; } // Dersin eklenecegi seviye ya da kacinci sinif oldugu bilgisi
         public Grade Grade { get; set; }
-        //public Guid? LessonDocumentId { get; set; }
-        //public LessonDocument LessonDocument { get; set; }
-        //public Guid? LessonVideoId { get; set; }
-        //public LessonVideo LessonVideo { get; set; }
         public Guid? UserId { get; set; } // Bu dersi hangi ogretmenin verdigi bilgisi
         public AppUser User { get; set; }
         public ICollection<LessonScore> LessonScores { get; set; }

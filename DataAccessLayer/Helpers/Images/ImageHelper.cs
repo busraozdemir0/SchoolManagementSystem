@@ -35,7 +35,7 @@ namespace DataAccessLayer.Helpers.Images
             string oldFileName = Path.GetFileNameWithoutExtension(imageFile.FileName); // Uzantisi olmadan resim adi
             string fileExtension = Path.GetExtension(imageFile.FileName); // Resmin uzantisi
 
-            name = ReplaceInvalidChars(name); // Resim ismindeki ozel ve turkce karakterleri degistirecek olan fonksiyon
+            name = InvalidChars.ReplaceInvalidChars(name); // Resim ismindeki ozel ve turkce karakterleri degistirecek olan fonksiyon
 
             DateTime dateTime=DateTime.Now;
 
@@ -61,58 +61,6 @@ namespace DataAccessLayer.Helpers.Images
             var fileToDelete = Path.Combine($"{_wwwroot}/{imgFolder}/{imageName}");
             if(File.Exists(fileToDelete)) // Silinecek resim gercekten var mi
                 File.Delete(fileToDelete);
-        }
-
-        private string ReplaceInvalidChars(string fileName) // Turkce veya ozel karakterleri degistirecek olan fonksiyon
-        {
-            return fileName.Replace("İ", "I")
-                 .Replace("ı", "i")
-                 .Replace("Ğ", "G")
-                 .Replace("ğ", "g")
-                 .Replace("Ü", "U")
-                 .Replace("ü", "u")
-                 .Replace("ş", "s")
-                 .Replace("Ş", "S")
-                 .Replace("Ö", "O")
-                 .Replace("ö", "o")
-                 .Replace("Ç", "C")
-                 .Replace("ç", "c")
-                 .Replace("é", "")
-                 .Replace("!", "")
-                 .Replace("'", "")
-                 .Replace("^", "")
-                 .Replace("+", "")
-                 .Replace("%", "")
-                 .Replace("/", "")
-                 .Replace("(", "")
-                 .Replace(")", "")
-                 .Replace("=", "")
-                 .Replace("?", "")
-                 .Replace("_", "")
-                 .Replace("*", "")
-                 .Replace("æ", "")
-                 .Replace("ß", "")
-                 .Replace("@", "")
-                 .Replace("€", "")
-                 .Replace("<", "")
-                 .Replace(">", "")
-                 .Replace("#", "")
-                 .Replace("$", "")
-                 .Replace("½", "")
-                 .Replace("{", "")
-                 .Replace("[", "")
-                 .Replace("]", "")
-                 .Replace("}", "")
-                 .Replace(@"\", "")
-                 .Replace("|", "")
-                 .Replace("~", "")
-                 .Replace("¨", "")
-                 .Replace(",", "")
-                 .Replace(";", "")
-                 .Replace("`", "")
-                 .Replace(".", "")
-                 .Replace(":", "")
-                 .Replace(" ", "");
         }
     }
 }
