@@ -20,7 +20,8 @@ namespace DataAccessLayer.Mappings
                 LessonName="Bilgisayar Sistemleri",
                 LessonCredit = 2,
                 IsDeleted = false,
-                GradeId = 1
+                GradeId = 1,
+                UserId= Guid.Parse("97B90210-A67F-426D-BE2C-8ADCAB3100FB")
             },
             new Lesson
             {
@@ -29,7 +30,8 @@ namespace DataAccessLayer.Mappings
                 LessonName = "Matematik",
                 LessonCredit = 5,
                 IsDeleted = false,
-                GradeId = 2
+                GradeId = 2,
+                UserId = Guid.Parse("97B90210-A67F-426D-BE2C-8ADCAB3100FB")
             },
             new Lesson
             {
@@ -38,7 +40,8 @@ namespace DataAccessLayer.Mappings
                 LessonName = "Fizik",
                 LessonCredit = 3,
                 IsDeleted = false,
-                GradeId = 3
+                GradeId = 3,
+                UserId = Guid.Parse("97B90210-A67F-426D-BE2C-8ADCAB3100FB")
             },
             new Lesson
             {
@@ -47,7 +50,8 @@ namespace DataAccessLayer.Mappings
                 LessonName = "Biyoloji",
                 LessonCredit = 3,
                 IsDeleted = false,
-                GradeId = 4
+                GradeId = 4,
+                UserId = Guid.Parse("97B90210-A67F-426D-BE2C-8ADCAB3100FB")
             });
         }
     }

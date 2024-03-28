@@ -22,7 +22,7 @@ namespace DataAccessLayer.Mappings
                 "zamanda hayalindeki lise ve üniversiteleri kazanmaları için elimizden geleni yapıyoruz. Okulda yapılan eğitimin yanı sıra web sitemiz sayesinde " +
                 "konuları pekiştirebilme ve birebir öğretmenle iletişime geçme imkanına sahip olabilecekler. Bu güne kadar mezunlarımızın çoğuna Türkiye'de oldukça " +
                 "ünlü okulları kazanabilmelerine vesile olduk. Hemen siz de iletişime geçin ve uygun fiyatlarla kolejimize " +
-                "kaydolarak hayallerinize ulaşın."
+                "kaydolarak hayallerinize ulaşın.",
             });
         }
     }
