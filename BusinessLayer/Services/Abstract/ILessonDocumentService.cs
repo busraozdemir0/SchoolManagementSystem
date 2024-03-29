@@ -12,5 +12,8 @@ namespace BusinessLayer.Services.Abstract
     {
         Task<List<LessonDocument>> TGetAllDocumentsByLesson(Lesson lesson); // Gelen ders nesnesine gore o derse yuklenmis ders materyalleri
         Task<string> TAddLessonDocumentAsync(LessonDocumentAddDto lessonDocumentAddDto);
+        Task<string> TUpdateLessonDocumentAsync(LessonDocumentUpdateDto lessonDocumentUpdateDto);
+        Task<string> TSafeDeleteLessonDocumentAsync(Guid lessonDocumentId);
+        Task<string> TUndoDeleteLessonDocumentAsync(Guid lessonDocumentId);
     }
 }

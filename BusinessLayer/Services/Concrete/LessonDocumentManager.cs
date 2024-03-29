@@ -4,9 +4,11 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonDocuments;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,12 +29,12 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<List<LessonDocument>> GetDeletedListAsync()
         {
-            return await _lessonDocumentDal.GetAllAsync(x=>x.IsDeleted);
+            return await _lessonDocumentDal.GetAllAsync(x=>x.IsDeleted, l=>l.Lesson, d=>d.Document);
         }
 
         public async Task<List<LessonDocument>> GetListAsync()
         {
-            return await _lessonDocumentDal.GetAllAsync(x => !x.IsDeleted);
+            return await _lessonDocumentDal.GetAllAsync(x => !x.IsDeleted, l => l.Lesson, d => d.Document);
 
         }
 
@@ -46,9 +48,10 @@ namespace BusinessLayer.Services.Concrete
             return await _lessonDocumentDal.AddLessonDocumentAsync(lessonDocumentAddDto);
         }
 
-        public Task TDeleteAsync(LessonDocument t)
+        public async Task TDeleteAsync(LessonDocument t)
         {
-            throw new NotImplementedException();
+            await _lessonDocumentDal.DeleteAsync(t);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<List<LessonDocument>> TGetAllDocumentsByLesson(Lesson lesson)
@@ -58,12 +61,28 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<LessonDocument> TGetByGuidAsync(Guid id)
         {
-            return await _lessonDocumentDal.GetByGuidAsync(id);
+            return await _unitOfWork.GetRepository<LessonDocument>().
+                GetAsync(x => x.Id == id, d => d.Document, l=>l.Lesson);
+        }
+
+        public Task<string> TSafeDeleteLessonDocumentAsync(Guid lessonDocumentId)
+        {
+            return _lessonDocumentDal.SafeDeleteLessonDocumentAsync(lessonDocumentId);
+        }
+
+        public Task<string> TUndoDeleteLessonDocumentAsync(Guid lessonDocumentId)
+        {
+            return _lessonDocumentDal.UndoDeleteLessonDocumentAsync(lessonDocumentId);
         }
 
         public Task TUpdateAsync(LessonDocument t)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<string> TUpdateLessonDocumentAsync(LessonDocumentUpdateDto lessonDocumentUpdateDto)
+        {
+            return await _lessonDocumentDal.UpdateLessonDocumentAsync(lessonDocumentUpdateDto);
         }
     }
 }

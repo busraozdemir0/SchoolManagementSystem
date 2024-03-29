@@ -13,5 +13,8 @@ namespace DataAccessLayer.Abstract
     {
         Task<List<LessonDocument>> GetAllDocumentsByLesson(Lesson lesson); // Gelen ders nesnesine gore o derse yuklenmis ders materyalleri
         Task<string> AddLessonDocumentAsync(LessonDocumentAddDto lessonDocumentAddDto);
+        Task<string> UpdateLessonDocumentAsync(LessonDocumentUpdateDto lessonDocumentUpdateDto);
+        Task<string> SafeDeleteLessonDocumentAsync(Guid lessonDocumentId);
+        Task<string> UndoDeleteLessonDocumentAsync(Guid lessonDocumentId);
     }
 }

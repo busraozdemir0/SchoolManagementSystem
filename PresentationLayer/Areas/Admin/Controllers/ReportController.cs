@@ -65,7 +65,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 await _reportService.TAddReportAndImageAsync(reportAddDto);
                 _toast.AddSuccessToastMessage(Messages.Report.Add(reportAddDto.Title), new ToastrOptions { Title = "Başarılı!" });
 
-                return RedirectToAction("Index", "Report", new {Area="Admin"});
+                return RedirectToAction("Index", "Report", new { Area = "Admin" });
             }
             else
             {
@@ -81,7 +81,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var report = await _reportService.TGetByGuidAsync(reportId);
-            var mapReport=_mapper.Map<ReportUpdateDto>(report);
+            var mapReport = _mapper.Map<ReportUpdateDto>(report);
             return View(mapReport);
         }
         [HttpPost]
@@ -89,7 +89,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var mapReportAddDto =_mapper.Map<ReportAddDto>(reportUpdateDto);
+            var mapReportAddDto = _mapper.Map<ReportAddDto>(reportUpdateDto);
             var result = await _validator.ValidateAsync(mapReportAddDto);
 
             if (result.IsValid)
@@ -106,7 +106,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             var report = await _reportService.TGetByGuidAsync(reportUpdateDto.Id);
             var mapReport = _mapper.Map<ReportUpdateDto>(report);
-            return View(new ReportUpdateDto { ImageId=mapReport.ImageId, Image=mapReport.Image});
+            return View(new ReportUpdateDto { ImageId = mapReport.ImageId, Image = mapReport.Image });
         }
 
         public async Task<IActionResult> SafeDelete(Guid reportId)
@@ -115,7 +115,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             var reportTitle = await _reportService.TSafeDeleteReportAsync(reportId);
 
-            _toast.AddSuccessToastMessage(Messages.Report.Delete(reportTitle), new ToastrOptions { Title = "Başarılı!"});
+            _toast.AddSuccessToastMessage(Messages.Report.Delete(reportTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "Report", new { Area = "Admin" });
         }
         public async Task<IActionResult> UndoDelete(Guid reportId)
@@ -127,14 +127,14 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(Messages.Report.UndoDelete(reportTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
         }
-		public async Task<IActionResult> HardDelete(Guid reportId)
-		{
+        public async Task<IActionResult> HardDelete(Guid reportId)
+        {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var report = await _reportService.TGetByGuidAsync(reportId);
-			await _reportService.TDeleteAsync(report);
-			_toast.AddSuccessToastMessage("Haber tamamen kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
-			return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
-		}
-	}
+            await _reportService.TDeleteAsync(report);
+            _toast.AddSuccessToastMessage("Haber tamamen kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
+        }
+    }
 }
