@@ -170,7 +170,6 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var lessonDocumentTitle = await _lessonDocumentService.TUndoDeleteLessonDocumentAsync(lessonDocumentId);
-            var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentId);
 
             _toast.AddSuccessToastMessage(Messages.LessonDocument.Delete(lessonDocumentTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Teacher" });

@@ -29,6 +29,7 @@ namespace DataAccessLayer.Context
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Video> Videos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -2,6 +2,7 @@
 using DataAccessLayer.Helpers.Documents;
 using DataAccessLayer.Helpers.Images;
 using DataAccessLayer.Helpers.Search;
+using DataAccessLayer.Helpers.Videos;
 using DataAccessLayer.Repository.Abstract;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
@@ -28,6 +29,7 @@ namespace DataAccessLayer.Extensions
 
             services.AddScoped<IImageHelper, ImageHelper>(); // Gorselleri Image tablosunda tutacagimiz icin Helper yazdik.
             services.AddScoped<IDocumentHelper, DocumentHelper>(); // Ders dokumanlarini LessonDocument tablosunda tutacak helper
+            services.AddScoped<IVideoHelper, VideoHelper>(); // Ders videolarini LessonVideo tablosunda tutacak helper
             
             services.AddScoped<ISearchProcess, SearchProcess>(); 
 

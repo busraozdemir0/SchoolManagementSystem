@@ -13,16 +13,19 @@ namespace EntityLayer.Entities
         {
             
         }
-        public LessonVideo(string title, string videoName, string videoPath)
+        public LessonVideo(string title, Guid lessonId, Guid videoId, string createdBy)
         {
             Title = title;
-            VideoName= videoName;
-            VideoPath = videoPath;
+            LessonId = lessonId;
+            VideoId = videoId;
+            CreatedBy = createdBy;
         }
-        public string Title { get; set; }
-        public string VideoName { get; set; }
-        public string VideoPath { get; set; }
-        public Guid LessonId { get; set; } // O video hangi derse yuklendigi bilgisi
+        public string Title { get; set; } // O dokumanin yuklendigi konuya ait baslik
+        public string? YoutubeVideoPath { get; set; } // Kullanici dilerse Youtube'daki bir videoyu entegre edebilir.
+        public Guid? VideoId { get; set; }
+        public Video Video { get; set; }
+        public Guid LessonId { get; set; } // O dokuman hangi derse yuklendigi bilgisi
         public Lesson Lesson { get; set; }
+        
     }
 }
