@@ -14,6 +14,10 @@ namespace BusinessLayer.AutoMapper.LessonVideos
         public LessonVideoProfile()
         {
             CreateMap<LessonVideo, LessonVideoAddDto>().ReverseMap();
+            CreateMap<LessonVideo, LessonVideoUpdateDto>().ReverseMap();
+            CreateMap<LessonVideo, LessonVideoListDto>().ReverseMap();
+            CreateMap<LessonVideoAddDto, LessonVideoUpdateDto>().ReverseMap();
+
         }
     }
 }

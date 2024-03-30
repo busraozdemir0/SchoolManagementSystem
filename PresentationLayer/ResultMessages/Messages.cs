@@ -110,5 +110,25 @@
                 return $"{lessonDocumentTitle} başlıklı materyal başarıyla geri alındı.";
             }
         }
+
+        public static class LessonVideo
+        {
+            public static string Add(string lessonVideoTitle)
+            {
+                return $"{lessonVideoTitle} başlıklı ders videosu başarıyla eklendi.";
+            }
+            public static string Update(string lessonVideoTitle)
+            {
+                return $"{lessonVideoTitle} başlıklı ders videosu başarıyla güncellendi.";
+            }
+            public static string Delete(string lessonVideoTitle)
+            {
+                return $"{lessonVideoTitle} başlıklı ders videosu başarıyla silindi.";
+            }
+            public static string UndoDelete(string lessonVideoTitle)
+            {
+                return $"{lessonVideoTitle} başlıklı ders videosu başarıyla geri alındı.";
+            }
+        }
     }
 }

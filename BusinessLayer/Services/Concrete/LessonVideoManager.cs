@@ -3,6 +3,7 @@ using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonVideos;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +23,14 @@ namespace BusinessLayer.Services.Concrete
             _unitOfWork = unitOfWork;
         }
 
-        public Task<List<LessonVideo>> GetDeletedListAsync()
+        public async Task<List<LessonVideo>> GetDeletedListAsync()
         {
-            throw new NotImplementedException();
+            return await _lessonVideoDal.GetAllAsync(x => x.IsDeleted, l => l.Lesson, d => d.Video);
         }
 
-        public Task<List<LessonVideo>> GetListAsync()
+        public async Task<List<LessonVideo>> GetListAsync()
         {
-            throw new NotImplementedException();
+            return await _lessonVideoDal.GetAllAsync(x => !x.IsDeleted, l => l.Lesson, d => d.Video);
         }
 
         public Task TAddAsync(LessonVideo t)
@@ -37,39 +38,44 @@ namespace BusinessLayer.Services.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<string> TAddLessonVideoAsync(LessonVideoAddDto lessonVideoAddDto)
+        public async Task<string> TAddLessonVideoAsync(LessonVideoAddDto lessonVideoAddDto)
         {
-            throw new NotImplementedException();
+            return await _lessonVideoDal.AddLessonVideoAsync(lessonVideoAddDto);
+        }
+        public async Task TDeleteAsync(LessonVideo t)
+        {
+            await _lessonVideoDal.DeleteAsync(t);
+            await _unitOfWork.SaveAsync();
         }
 
-        public Task TDeleteAsync(LessonVideo t)
+        public async Task<List<LessonVideo>> TGetAllVideosByLesson(Lesson lesson)
         {
-            throw new NotImplementedException();
+            return await _lessonVideoDal.GetAllVideosByLesson(lesson);
         }
 
-        public Task<List<LessonVideo>> TGetAllVideosByLesson(Lesson lesson)
+        public async Task<LessonVideo> TGetByGuidAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.GetRepository<LessonVideo>().
+                GetAsync(x => x.Id == id, d => d.Video, l => l.Lesson);
         }
 
-        public Task<LessonVideo> TGetByGuidAsync(Guid id)
+        public async Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId)
         {
-            throw new NotImplementedException();
+            return await _lessonVideoDal.SafeDeleteLessonVideoAsync(lessonVideoId);
         }
 
-        public Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId)
+        public async Task<string> TUndoDeleteLessonVideoAsync(Guid lessonVideoId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<string> TUndoDeleteLessonVideoAsync(Guid lessonVideoId)
-        {
-            throw new NotImplementedException();
+            return await _lessonVideoDal.UndoDeleteLessonVideoAsync(lessonVideoId);
         }
 
         public Task TUpdateAsync(LessonVideo t)
         {
             throw new NotImplementedException();
+        }
+        public async Task<string> TUpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto)
+        {
+            return await _lessonVideoDal.UpdateLessonVideoAsync(lessonVideoUpdateDto);
         }
     }
 }

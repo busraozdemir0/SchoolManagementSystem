@@ -1,0 +1,99 @@
+﻿@model LessonVideoAddDto
+
+@{
+    ViewData["Title"] = "Ders Videosu Yükle";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 20em;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Ders Videosu Yükle</li>
+                        </ol>
+                    </nav>
+                    <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="Lesson" asp-action="Index" style="margin-bottom:1.7em;">
+                        <i class="fa fa-arrow-left"></i> Geri Dön
+                    </a>
+                    <form asp-area="Teacher" asp-controller="LessonVideo" asp-action="Add" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <input type="hidden" asp-for="LessonId" value="@ViewBag.LessonId" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Ders</label>
+                                <input type="text"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       value="@ViewBag.LessonName"
+                                       readonly
+                                       aria-describedby="defaultFormControlHelp" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Title" class="form-label">Ders Videosu Başlığı</label>
+                                <input asp-for="Title" type="text"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       placeholder="Lütfen ders videosunun başlığını giriniz."
+                                       aria-describedby="defaultFormControlHelp" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label asp-for="YoutubeVideoPath" class="form-label">Youtube Ders Videosu Entegre Edin</label>
+                                            <input asp-for="YoutubeVideoPath" type="text"
+                                                   class="form-control mb-1"
+                                                   id="defaultFormControlInput"
+                                                   placeholder="Entegre etmek istediğiniz youtube videosunun yolunu giriniz."
+                                                   aria-describedby="defaultFormControlHelp" />
+                                            <small class="text-bold" style="font-size:11px;">
+                                                Eklemek istediğiniz Youtube videousunun "Paylaş" kısmından "Yerleştir" e tıklayın. <br />
+                                                Ardından çıkan HTML kodunun yalnızca src içerisini kopyalayın. <br />
+                                            </small>
+
+                                            <small class="text-muted" style="font-size:11px;">
+                                                Örneğin: <strike><</strike><strike>iframe width="560" height="315" src=</strike>"https://www.youtube.com/embed/fuZBrTHoygc?si=mNj2DL_VXsQXJwxW" <br />
+                                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
+                                                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                                                <strike>allowfullscreen><</strike><strike>/iframe </strike>>
+                                            </small>
+                                            <span asp-validation-for="YoutubeVideoPath" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1" style="margin-left:1em; margin-top:1.5em;">
+                                        <p style="margin-bottom:1em;">Ya da</p>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label asp-for="Video" class="form-label">Video Seçin</label>
+                                            <input asp-for="Video" type="file" accept="video/*"
+                                                   class="form-control mb-1"
+                                                   id="defaultFormControlInput"
+                                                   aria-describedby="defaultFormControlHelp" />
+                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu 512 MB olmalıdır!</small>
+                                            <span asp-validation-for="Video" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Ders Videosu Yükle</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

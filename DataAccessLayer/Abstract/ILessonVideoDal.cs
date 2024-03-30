@@ -13,7 +13,7 @@ namespace DataAccessLayer.Abstract
     {
         Task<List<LessonVideo>> GetAllVideosByLesson(Lesson lesson); // Gelen ders nesnesine gore o derse yuklenmis ders videolari
         Task<string> AddLessonVideoAsync(LessonVideoAddDto lessonVideoAddDto);
-       // Task<string> UpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto);
+        Task<string> UpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto);
         Task<string> SafeDeleteLessonVideoAsync(Guid lessonVideoId);
         Task<string> UndoDeleteLessonVideoAsync(Guid lessonVideoId);
     }

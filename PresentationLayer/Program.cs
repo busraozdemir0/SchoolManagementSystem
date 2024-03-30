@@ -10,6 +10,11 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 536870912; // Ýcerisine yuklenecek dosya max 512 mb olmasi gerektigini belirtiyoruz.
+});
+
 // DataAccess katmani icin yazilan Extensions'lar
 builder.Services.LoadDataLayerExtension(builder.Configuration);
 builder.Services.LoadBusinessLayerExtension();

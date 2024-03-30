@@ -1,0 +1,77 @@
+﻿@model List<LessonVideoListDto>
+
+@{
+    ViewData["Title"] = "Ders Videoları";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 20em;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">@ViewBag.LessonName Dersine Ait Yüklenen Materyaller</li>
+                        </ol>
+                    </nav>
+                    <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="Lesson" asp-action="Index" style="margin-bottom:1.7em;">
+                        <i class="fa fa-arrow-left"></i> Geri Dön
+                    </a>
+                    <table class="table table-hover" id="lessonVideosTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Ders</th>
+                                <th>Başlık</th>
+                                <th>Ders Videosu</th>
+                                <th>Yüklenme Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Ders</th>
+                                <th>Başlık</th>
+                                <th>Ders Videosu</th>
+                                <th>Yüklenme Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="table-border-bottom-0">
+                            @foreach (var video in Model)
+                            {
+                                <tr name="@video.Id">
+                                    <td>@video.Lesson.LessonName</td>
+                                    <td>@video.Title</td>
+                                    <td>
+                                        @if(video.YoutubeVideoPath is not null)
+                                        {
+                                            <iframe width="180" height="120"
+                                                    src=@Html.Raw(video.YoutubeVideoPath)
+                                                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                        }
+                                        @if(video.VideoId.ToString() is not null)
+                                        {
+                                            <video width="180" height="120" controls>
+                                                <source src="~/videos/@video.Video.FileName" />
+                                                Tarayıcınız video etiketini desteklemiyor.
+                                            </video>
+                                        }
+                                        <td>@video.CreatedDate.ToShortDateString()</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-primary btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="Update" asp-route-lessonVideoId="@video.Id"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="SafeDelete" asp-route-lessonVideoId="@video.Id"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lessonVideoIndex.js" type="application/ecmascript"></script>
+}

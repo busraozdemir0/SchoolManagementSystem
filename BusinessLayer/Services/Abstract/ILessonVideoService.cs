@@ -12,7 +12,7 @@ namespace BusinessLayer.Services.Abstract
     {
         Task<List<LessonVideo>> TGetAllVideosByLesson(Lesson lesson); // Gelen ders nesnesine gore o derse yuklenmis ders videolari
         Task<string> TAddLessonVideoAsync(LessonVideoAddDto lessonVideoAddDto);
-        // Task<string> TUpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto);
+        Task<string> TUpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto);
         Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId);
         Task<string> TUndoDeleteLessonVideoAsync(Guid lessonVideoId);
     }
