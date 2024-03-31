@@ -53,11 +53,11 @@ namespace DataAccessLayer.EntityFramework
         {
             var loginTeacherId = _user.GetLoggedInUserId();
 
-            if (lessonDocumentAddDto.Document != null) // Eger dokuman secmisse
+            if (lessonDocumentAddDto.Material != null) // Eger dokuman secmisse
             {
                 // Dokuman yukleme islemleri
-                var documentUpload = await _documentHelper.Upload(lessonDocumentAddDto.Title, lessonDocumentAddDto.Document);
-                Document document = new(documentUpload.FullName, lessonDocumentAddDto.Document.ContentType);
+                var documentUpload = await _documentHelper.Upload(lessonDocumentAddDto.Title, lessonDocumentAddDto.Material);
+                Document document = new(documentUpload.FullName, lessonDocumentAddDto.Material.ContentType);
                 await _unitOfWork.GetRepository<Document>().AddAsync(document);
 
                 // Entity Constructure sayesinde Dokuman Entity'si ile beraber ders dokumani olusturduk.

@@ -21,6 +21,10 @@ namespace BusinessLayer.FluentValidations
             RuleFor(x => x.YoutubeVideoPath)
                 .MinimumLength(3)
                 .WithName("Youtube Video Yolu");
+
+            RuleFor(x => x.File)
+                .Must(file => file == null || file.Length <= 128 * 1024 * 1024) // Material bos degilse dosya boyutu kontrolu yap.
+                .WithMessage("Video boyutu 128 MB'den büyük olamaz!");
         }
     }
 }

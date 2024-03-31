@@ -3,6 +3,7 @@ using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.LessonDocuments;
 using EntityLayer.DTOs.LessonVideos;
 using EntityLayer.DTOs.LessonVideos;
 using EntityLayer.DTOs.LessonVideos;
@@ -61,7 +62,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lesson = await _lessonService.TGetByGuidAsync(lessonId);
             ViewBag.LessonId = lessonId;
             ViewBag.LessonName = lesson.LessonName;
-            return View();
+            return View(new LessonVideoAddDto { LessonId = lessonId });
         }
 
         [HttpPost]
@@ -105,6 +106,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             ViewBag.LessonName = lesson.LessonName;
             ViewBag.CreatedBy = lessonVideo.CreatedBy;
 
+            mapLessonVideo.LessonId = lesson.Id;
+            mapLessonVideo.VideoId = lessonVideo.VideoId;
             return View(mapLessonVideo);
         }
 
@@ -130,7 +133,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 _toast.AddErrorToastMessage("Ders materyali güncellenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
             }
 
-            var lessonVideo = await _lessonVideoService.TGetByGuidAsync(lessonVideoUpdateDto.LessonId);
+            var lessonVideo = await _lessonVideoService.TGetByGuidAsync(lessonVideoUpdateDto.Id);
             var lesson = await _lessonService.TGetByGuidAsync(lessonVideo.LessonId); // Gelen dokumandaki LessonId'ye gore o dersi bul.
             var mapLessonVideoDto = _mapper.Map<LessonVideoUpdateDto>(lessonVideo);
 

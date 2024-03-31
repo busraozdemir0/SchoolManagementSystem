@@ -2,17 +2,31 @@ using BusinessLayer.Describers;
 using BusinessLayer.Extensions;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using EntityLayer.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Form'a yuklenen dosyanin boyutunu sinirlandirabilmek icin asagidaki ayarlamalar yapilmistir.
 builder.Services.Configure<IISServerOptions>(options =>
 {
-    options.MaxRequestBodySize = 536870912; // Ýcerisine yuklenecek dosya max 512 mb olmasi gerektigini belirtiyoruz.
+    options.MaxRequestBodySize = int.MaxValue;
+});
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MultipartBoundaryLengthLimit = int.MaxValue;
+    o.MultipartHeadersCountLimit = int.MaxValue;
+    o.MultipartHeadersLengthLimit = int.MaxValue;
+    o.BufferBodyLengthLimit = int.MaxValue;
+    o.BufferBody = true;
+    o.ValueCountLimit = int.MaxValue;
 });
 
 // DataAccess katmani icin yazilan Extensions'lar

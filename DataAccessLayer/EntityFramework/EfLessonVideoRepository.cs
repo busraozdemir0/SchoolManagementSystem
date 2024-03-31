@@ -54,11 +54,11 @@ namespace DataAccessLayer.EntityFramework
         {
             var loginTeacherId = _user.GetLoggedInUserId();
 
-            if (lessonVideoAddDto.Video != null) // Eger video secmisse
+            if (lessonVideoAddDto.File != null) // Eger video secmisse
             {
                 // Video yukleme islemleri
-                var videoUpload = await _videoHelper.Upload(lessonVideoAddDto.Title, lessonVideoAddDto.Video);
-                Video video = new(videoUpload.FullName, lessonVideoAddDto.Video.ContentType);
+                var videoUpload = await _videoHelper.Upload(lessonVideoAddDto.Title, lessonVideoAddDto.File);
+                Video video = new(videoUpload.FullName, lessonVideoAddDto.File.ContentType);
                 await _unitOfWork.GetRepository<Video>().AddAsync(video);
 
                 // Entity Constructure sayesinde Video Entity'si ile beraber ders videosu olusturduk.

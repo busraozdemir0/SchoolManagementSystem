@@ -76,13 +76,13 @@
 
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <label asp-for="Video" class="form-label">Video Seçin</label>
-                                            <input asp-for="Video" type="file" accept="video/*"
+                                            <label asp-for="File" class="form-label">Video Seçin</label>
+                                            <input asp-for="File" type="file" accept="video/*"
                                                    class="form-control mb-1"
                                                    id="defaultFormControlInput"
                                                    aria-describedby="defaultFormControlHelp" />
-                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu 512 MB olmalıdır!</small>
-                                            <span asp-validation-for="Video" class="text-danger"></span>
+                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu 128 MB olmalıdır!</small><br />
+                                            <span asp-validation-for="File" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>

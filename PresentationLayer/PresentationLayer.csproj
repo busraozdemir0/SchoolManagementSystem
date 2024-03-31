@@ -29,6 +29,7 @@
     <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="wwwroot\images\post-images\" />
     <Folder Include="wwwroot\images\user-images\" />
+    <Folder Include="wwwroot\videos\" />
   </ItemGroup>
 
   <ItemGroup>

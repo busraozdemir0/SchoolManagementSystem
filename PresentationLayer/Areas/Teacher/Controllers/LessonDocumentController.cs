@@ -62,18 +62,13 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lesson = await _lessonService.TGetByGuidAsync(lessonId);
             ViewBag.LessonId = lessonId;
             ViewBag.LessonName = lesson.LessonName;
-            return View();
+            return View(new LessonDocumentAddDto { LessonId = lessonId });
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(LessonDocumentAddDto lessonDocumentAddDto)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
-
-            var lesson = await _lessonService.TGetByGuidAsync(lessonDocumentAddDto.LessonId);
-
-            ViewBag.LessonId = lessonDocumentAddDto.LessonId;
-            ViewBag.LessonName = lesson.LessonName;
 
             var result = await _validator.ValidateAsync(lessonDocumentAddDto);
 
@@ -89,6 +84,12 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 result.AddToModelState(this.ModelState);
                 _toast.AddErrorToastMessage("Ders materyali yüklenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
             }
+
+            var lesson = await _lessonService.TGetByGuidAsync(lessonDocumentAddDto.LessonId);
+
+            ViewBag.LessonId = lessonDocumentAddDto.LessonId;
+            ViewBag.LessonName = lesson.LessonName;
+
             return View();
         }
 
@@ -99,13 +100,15 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
             var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentId);
             var mapLessonDocument = _mapper.Map<LessonDocumentUpdateDto>(lessonDocument);
-
+            
             var lesson = await _lessonService.TGetByGuidAsync(lessonDocument.LessonId); // Gelen dokumandaki Lessonıd'ye gore o dersi bul.
 
             ViewBag.LessonId = lessonDocument.LessonId;
             ViewBag.LessonName = lesson.LessonName;
             ViewBag.CreatedBy = lessonDocument.CreatedBy;
 
+            mapLessonDocument.LessonId = lesson.Id;
+            mapLessonDocument.DocumentId = lessonDocument.DocumentId;
             return View(mapLessonDocument);
         }
 
@@ -122,7 +125,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 await _lessonDocumentService.TUpdateLessonDocumentAsync(lessonDocumentUpdateDto);
                 _toast.AddSuccessToastMessage(Messages.LessonDocument.Update(lessonDocumentUpdateDto.Title), new ToastrOptions { Title = "Başarılı!" });
 
-                return RedirectToAction("ListDocumentByLesson", "LessonDocument", 
+                return RedirectToAction("ListDocumentByLesson", "LessonDocument",
                     new { Area = "Teacher", lessonId = lessonDocumentUpdateDto.LessonId });  // lessonId ile ListDocumentByLesson action'una dersin id'si ile gitmesini sagliyoruz.
             }
             else
@@ -131,7 +134,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 _toast.AddErrorToastMessage("Ders materyali güncellenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
             }
 
-            var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentUpdateDto.LessonId);
+            var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentUpdateDto.Id);
             var lesson = await _lessonService.TGetByGuidAsync(lessonDocument.LessonId); // Gelen dokumandaki LessonId'ye gore o dersi bul.
             var mapLessonDocumentDto = _mapper.Map<LessonDocumentUpdateDto>(lessonDocument);
 
@@ -159,7 +162,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         {
             var loginTeacherId = _user.GetLoggedInUserId();
             var lessonDocuments = await _unitOfWork.GetRepository<EntityLayer.Entities.LessonDocument>().
-                GetAllAsync(x=>x.IsDeleted && x.CreatedBy==loginTeacherId.ToString(), l=>l.Lesson, d=>d.Document);
+                GetAllAsync(x => x.IsDeleted && x.CreatedBy == loginTeacherId.ToString(), l => l.Lesson, d => d.Document);
 
             var mapLessonDocuments = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
             return View(mapLessonDocuments);
@@ -181,9 +184,9 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
             var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentId);
             await _lessonDocumentService.TDeleteAsync(lessonDocument);
-           
+
             _toast.AddSuccessToastMessage("Materyal tamamen kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("DeletedLessonDocuments", "LessonDocument",new { Area = "Teacher"});
+            return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Teacher" });
         }
     }
 }

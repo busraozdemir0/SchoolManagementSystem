@@ -46,14 +46,14 @@
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="Document" class="form-label">Dosya seçiniz</label>
-                                <input asp-for="Document" type="file" accept="*"
+                                <label asp-for="Material" class="form-label">Dosya seçiniz</label>
+                                <input asp-for="Material" type="file" accept="*"
                                        class="form-control mb-1"
                                        id="defaultFormControlInput"
                                        aria-describedby="defaultFormControlHelp" />
-                                <span asp-validation-for="Document" class="text-danger"></span> 
+                                <small class="text-muted" style="font-size:11px;">Yüklenecek dosya'nın maksimum boyutu 128 MB olmalıdır!</small><br />
+                                <span asp-validation-for="Material" class="text-danger"></span>
                             </div>
-
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Ders Materyali Yükle</button>
                             </div>
