@@ -15,7 +15,7 @@ namespace EntityLayer.DTOs.LessonVideos
         public DateTime CreatedDate { get; set; }
         public Guid LessonId { get; set; }
         public Lesson Lesson { get; set; }
-        public Guid VideoId { get; set; }
+        public Guid? VideoId { get; set; }
         public Video Video { get; set; }
     }
 }

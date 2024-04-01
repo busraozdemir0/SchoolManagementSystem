@@ -151,7 +151,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(lessonName + " adlı ders başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
         }
-
+        [HttpPost]
 		public async Task<IActionResult> HardDelete(Guid lessonId) // Tablodan tamamen silme islemi icin
 		{
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();

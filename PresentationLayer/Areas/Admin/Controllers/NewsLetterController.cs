@@ -62,7 +62,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(newsLetterEMail + " adlı mail başarıyla geri alındı", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedNewsLetters", "NewsLetter", new { Area = "Admin" });
         }
-
+        [HttpPost]
 		public async Task<IActionResult> HardDelete(int newsLetterId)
 		{
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();

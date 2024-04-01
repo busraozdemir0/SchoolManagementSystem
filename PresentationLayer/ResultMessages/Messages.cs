@@ -15,7 +15,7 @@
             }
             public static string Delete(string reportTitle)
             {
-                return $"{reportTitle} başlıklı haber başarıyla silindi.";
+                return $"{reportTitle} başlıklı haber başarıyla kaldırıldı.";
             }
             public static string UndoDelete(string reportTitle)
             {
@@ -31,7 +31,7 @@
             }
             public static string Delete(string contactTitle)
             {
-                return $"{contactTitle} konulu mesaj başarıyla silindi.";
+                return $"{contactTitle} konulu mesaj başarıyla kaldırıldı.";
             }
             public static string UndoDelete(string contactTitle)
             {
@@ -83,7 +83,7 @@
             }
             public static string Delete(string announcementTitle)
             {
-                return $"{announcementTitle} başlıklı duyuru başarıyla silindi.";
+                return $"{announcementTitle} başlıklı duyuru başarıyla kaldırıldı.";
             }
             public static string UndoDelete(string announcementTitle)
             {
@@ -103,7 +103,7 @@
             }
             public static string Delete(string lessonDocumentTitle)
             {
-                return $"{lessonDocumentTitle} başlıklı materyal başarıyla silindi.";
+                return $"{lessonDocumentTitle} başlıklı materyal başarıyla kaldırıldı.";
             }
             public static string UndoDelete(string lessonDocumentTitle)
             {
@@ -123,7 +123,7 @@
             }
             public static string Delete(string lessonVideoTitle)
             {
-                return $"{lessonVideoTitle} başlıklı ders videosu başarıyla silindi.";
+                return $"{lessonVideoTitle} başlıklı ders videosu başarıyla kaldırıldı.";
             }
             public static string UndoDelete(string lessonVideoTitle)
             {

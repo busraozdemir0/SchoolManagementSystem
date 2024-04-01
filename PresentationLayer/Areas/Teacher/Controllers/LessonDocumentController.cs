@@ -177,7 +177,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _toast.AddSuccessToastMessage(Messages.LessonDocument.Delete(lessonDocumentTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Teacher" });
         }
-
+        [HttpPost]
         public async Task<IActionResult> HardDelete(Guid lessonDocumentId)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
@@ -185,7 +185,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentId);
             await _lessonDocumentService.TDeleteAsync(lessonDocument);
 
-            _toast.AddSuccessToastMessage("Materyal tamamen kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
+            _toast.AddSuccessToastMessage("Materyal tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Teacher" });
         }
     }

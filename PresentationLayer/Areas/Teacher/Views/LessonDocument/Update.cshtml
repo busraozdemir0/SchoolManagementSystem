@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Ders Materyali Güncelle</li>
                         </ol>
                     </nav>
-                    <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="LessonDocument" asp-action="ListDocumentByLesson" style="margin-bottom:1.7em;">
+                    <a class="btn btn-warning mb-3" data-id="@ViewBag.LessonId" asp-area="Teacher" asp-controller="LessonDocument" asp-action="ListDocumentByLesson" asp-route-lessonId="@ViewBag.LessonId" style="margin-bottom:1.7em;">
                         <i class="fa fa-arrow-left"></i> Geri Dön
                     </a>
                     <form asp-area="Teacher" asp-controller="LessonDocument" asp-action="Update" method="post" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
                                                class="form-control mb-1"
                                                id="defaultFormControlInput"
                                                aria-describedby="defaultFormControlHelp" />
-                                        <small class="text-muted" style="font-size:11px;">Yüklenecek dosya'nın maksimum boyutu 128 MB olmalıdır!</small><br />
+                                        <small class="text-muted" style="font-size:11px;">Yüklenecek dosya'nın maksimum boyutu <b>128 MB</b> olmalıdır!</small><br />
                                         <span asp-validation-for="Material" class="text-danger"></span>
                                     </div>
                                     <div class="col-md-8">

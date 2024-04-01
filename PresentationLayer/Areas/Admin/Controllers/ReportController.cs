@@ -127,13 +127,14 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(Messages.Report.UndoDelete(reportTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
         }
+        [HttpPost]
         public async Task<IActionResult> HardDelete(Guid reportId)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var report = await _reportService.TGetByGuidAsync(reportId);
             await _reportService.TDeleteAsync(report);
-            _toast.AddSuccessToastMessage("Haber tamamen kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
+            _toast.AddSuccessToastMessage("Haber tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedReports", "Report", new { Area = "Admin" });
         }
     }

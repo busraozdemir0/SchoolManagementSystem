@@ -61,8 +61,14 @@
                                         <td>@announcement.CreatedDate.ToShortDateString()</td>
                                         <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
-                                            <a class="btn btn-warning btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="UndoDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-undo"></i></a>
-                                            <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-minus-circle"></i></a>
+                                            <div class="row">
+                                                <a class="btn btn-warning btn-sm" style="margin-right:0.5em;" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="UndoDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-undo"></i></a>
+                                                
+                                                <form id="deleteForm" asp-area="Admin" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-circle"></i></button>
+                                                </form>
+
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -78,4 +84,44 @@
 
 @section Scripts {
     <script src="~/js/announcementIndex.js" type="application/ecmascript"></script>
+
+    
+    @*  <script> // Varsayılan alert ile 
+        function confirmDelete() {
+            var result = confirm("Silmek istediğinize emin misiniz?");
+            if (result) {
+                // Silme islemini gerceklestir
+                document.getElementById("deleteForm").submit();
+            } else {
+                // İptal edildiginde yapilacak islemler
+                console.log("Silme işlemi iptal edildi.");
+                return false;
+            }
+        }
+    </script> *@
+
+
+    <script>
+        function confirmDelete(event) {
+            Swal.fire({
+                title: 'Silmek istediğinize emin misiniz?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Silme islemini gerceklestir
+                    document.getElementById("deleteForm").submit();
+                } else {
+                    // İptal edildiginde yapilacak islemler
+                    console.log("Silme işlemi iptal edildi.");
+                    return false;
+                }
+            });
+        }
+    </script>
+
 }

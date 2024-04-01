@@ -1082,6 +1082,20 @@ ul.dropdown-menu.drp-mnu li {
     line-height: 1.7em;
 }
 
+.market-update-right i.fa.fa-book {
+    font-size: 3em;
+    color: #68AE00;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    text-align: center;
+    border-radius: 49px;
+    -webkit-border-radius: 49px;
+    -moz-border-radius: 49px;
+    -o-border-radius: 49px;
+    line-height: 1.7em;
+}
+
 .market-update-right i.fa.fa-bullhorn {
     font-size: 3em;
     color: #FC8213;
@@ -3904,6 +3918,13 @@ p.bottom {
         margin-top: 0.7em;
     }
 
+    .market-update-right i.fa.fa-book {
+        font-size: 2em;
+        width: 60px;
+        height: 60px;
+        margin-top: 0.7em;
+    }
+
     .market-update-right i.fa.fa-bullhorn {
         font-size: 2em;
         width: 60px;
@@ -4246,6 +4267,14 @@ p.bottom {
     }
 
     .market-update-right i.fa.fa-user {
+        font-size: 2em;
+        width: 60px;
+        height: 60px;
+        line-height: 1.9em;
+        margin-top: 0px;
+    }
+
+    .market-update-right i.fa.fa-book {
         font-size: 2em;
         width: 60px;
         height: 60px;
@@ -4721,6 +4750,8 @@ p.bottom {
 
     .inner-block {
         padding: 10em 2em 2em 2em;
+        background: #fafafa;
+        width: fit-content;
     }
 
     .chart-layer1-left {
@@ -4886,6 +4917,9 @@ p.bottom {
 }
 
 @media (max-width:600px) {
+    .copyrights{
+        width:34em;
+    }
     .page-container {
         min-width: 600px;
     }
@@ -4919,9 +4953,18 @@ p.bottom {
     canvas#line {
         width: 415px !important;
     }
+
+    .inner-block {
+        padding: 7em 1.5em 1.5em 1.5em;
+        background: #fafafa;
+        width: fit-content;
+    }
 }
 
 @media (max-width:480px) {
+    .copyrights {
+        width: 33em;
+    }
     .page-container {
         min-width: 495px;
     }
@@ -4961,7 +5004,9 @@ p.bottom {
     }
 
     .inner-block {
-        padding: 10em 1em 2em 1em;
+        padding: 7em 1em 2em 1em;
+        background: #fafafa;
+        width: fit-content;
     }
 
     .chit-chat-layer1 {
@@ -5215,6 +5260,9 @@ p.bottom {
 }
 
 @media (max-width:384px) {
+    .copyrights {
+        width: 32.7em;
+    }
     .page-container {
         min-width: 380px;
     }

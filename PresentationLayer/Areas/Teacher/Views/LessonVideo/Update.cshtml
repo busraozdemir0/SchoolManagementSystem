@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Ders Videosu Yükle</li>
                         </ol>
                     </nav>
-                    <a class="btn btn-warning mb-3" asp-area="Teacher" asp-controller="LessonVideo" asp-action="ListVideoByLesson" style="margin-bottom:1.7em;">
+                    <a class="btn btn-warning mb-3" data-id="@ViewBag.LessonId" asp-area="Teacher" asp-controller="LessonVideo" asp-action="ListVideoByLesson" asp-route-lessonId="@ViewBag.LessonId" style="margin-bottom:1.7em;">
                         <i class="fa fa-arrow-left"></i> Geri Dön
                     </a>
                     <form asp-area="Teacher" asp-controller="LessonVideo" asp-action="Update" method="post" enctype="multipart/form-data">
@@ -62,17 +62,19 @@
                                                    aria-describedby="defaultFormControlHelp" />
                                             <small class="text-bold" style="font-size:11px;">
                                                 Eklemek istediğiniz Youtube videousunun "Paylaş" kısmından "Yerleştir" e tıklayın. <br />
-                                                Ardından çıkan HTML kodunun yalnızca src içerisini kopyalayın. <br />
+                                                Ardından çıkan HTML kodunun yalnızca src içerisini kopyalayın.<br />
                                             </small>
 
                                             <small class="text-muted" style="font-size:11px;">
-                                                Örneğin: <strike><</strike><strike>iframe width="560" height="315" src=</strike>"https://www.youtube.com/embed/fuZBrTHoygc?si=mNj2DL_VXsQXJwxW" <br />
-                                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
-                                                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                                                <b>Örneğin:</b> <strike><</strike><strike>iframe width="560" height="315" src=</strike>"https://www.youtube.com/embed/
+                                                <br />fuZBrTHoygc?si=mNj2DL_VXsQXJwxW" title="YouTube video player" frameborder="0"<br />
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
+                                                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"<br />
                                                 <strike>allowfullscreen><</strike><strike>/iframe </strike>>
                                             </small>
                                             <span asp-validation-for="YoutubeVideoPath" class="text-danger"></span>
                                         </div>
+
                                     </div>
 
                                     <div class="col-md-1" style="margin-left:1em; margin-top:1.5em;">
@@ -86,11 +88,41 @@
                                                    class="form-control mb-1"
                                                    id="defaultFormControlInput"
                                                    aria-describedby="defaultFormControlHelp" />
-                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu 128 MB olmalıdır!</small><br />
+                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu <b>128 MB</b> olmalıdır!</small><br />
                                             <span asp-validation-for="File" class="text-danger"></span>
                                         </div>
+
+
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <br />
+                                        @if (Model.YoutubeVideoPath is not null)
+                                        {
+                                            <label class="form-label">Mevcut Youtube Videosu</label>
+                                            <br />
+                                            <iframe width="300" height="200"
+                                                    src=@Html.Raw(Model.YoutubeVideoPath)
+                                                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                        }
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-5">
+                                        <br />
+                                        @if (Model.VideoId is not null)
+                                        {
+                                            <label class="form-label">Mevcut Ders Videosu</label>
+                                            <br />
+                                            <video width="300" height="200" controls>
+                                                <source src="~/videos/@Model.Video.FileName" />
+                                                Tarayıcınız video etiketini desteklemiyor.
+                                            </video>
+                                        }
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Ders Videosu Bilgilerini Güncelle</button>

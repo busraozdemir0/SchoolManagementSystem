@@ -8,21 +8,20 @@ namespace PresentationLayer.Areas.Teacher.ViewComponents
     public class DashboardStatisticsFirstViewComponent:ViewComponent
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserService _userService;
+        private readonly ILessonService _lessonService;
         private readonly IAnnouncementService _announcementService;
 
-        public DashboardStatisticsFirstViewComponent(IUnitOfWork unitOfWork, IUserService userService, IAnnouncementService announcementService)
+        public DashboardStatisticsFirstViewComponent(IUnitOfWork unitOfWork, IAnnouncementService announcementService, ILessonService lessonService)
         {
             _unitOfWork = unitOfWork;
-            _userService = userService;
             _announcementService = announcementService;
+            _lessonService = lessonService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var users = await _userService.TGetAllUsersWithRoleAsync();
-            var studentCount=users.Count(x=>x.Role==RoleConsts.Student); // Student rolune sahip kullanicilari say
-            ViewBag.StudentCount=studentCount;
+            var lessons = await _lessonService.TGetAllTeacherLessonsAsync();
+            ViewBag.LessonCount = lessons.Count();
 
             var announcementCount = await _announcementService.TTeacherAnnouncementListAsync();
             ViewBag.AnnouncementCount=announcementCount.Count();

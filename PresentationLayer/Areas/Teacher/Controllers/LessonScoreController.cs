@@ -147,13 +147,14 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _toast.AddSuccessToastMessage("Not bilgileri başarıyla kaldırıldı.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "LessonScore", new { Area = "Teacher" });
         }
+        [HttpPost]
         public async Task<IActionResult> HardDelete(Guid lessonScoreId)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var lessonScore = await _lessonScoreService.TGetByGuidAsync(lessonScoreId);
             await _lessonScoreService.TDeleteAsync(lessonScore);
-            _toast.AddSuccessToastMessage("Not bilgileri başarıyla silindi.", new ToastrOptions { Title = "Başarılı!" });
+            _toast.AddSuccessToastMessage("Not bilgileri tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessonScores", "LessonScore", new { Area = "Teacher" });
         }
 

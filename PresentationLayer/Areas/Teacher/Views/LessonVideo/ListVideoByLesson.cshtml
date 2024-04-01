@@ -43,20 +43,20 @@
                                     <td>@video.Lesson.LessonName</td>
                                     <td>@video.Title</td>
                                     <td>
-                                        @if(video.YoutubeVideoPath is not null)
+                                        @if (video.YoutubeVideoPath is not null)
                                         {
                                             <iframe width="180" height="120"
                                                     src=@Html.Raw(video.YoutubeVideoPath)
                                                     title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                         }
-                                        @if(video.VideoId.ToString() is not null)
+                                        @if (video.VideoId is not null)
                                         {
                                             <video width="180" height="120" controls>
                                                 <source src="~/videos/@video.Video.FileName" />
                                                 Tarayıcınız video etiketini desteklemiyor.
                                             </video>
                                         }
-                                        <td>@video.CreatedDate.ToShortDateString()</td>
+                                    <td>@video.CreatedDate.ToShortDateString()</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="Update" asp-route-lessonVideoId="@video.Id"><i class="fa fa-edit"></i></a>
                                         <a class="btn btn-danger btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="SafeDelete" asp-route-lessonVideoId="@video.Id"><i class="fa fa-trash"></i></a>

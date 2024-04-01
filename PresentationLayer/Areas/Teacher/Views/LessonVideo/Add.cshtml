@@ -61,9 +61,10 @@
                                             </small>
 
                                             <small class="text-muted" style="font-size:11px;">
-                                                Örneğin: <strike><</strike><strike>iframe width="560" height="315" src=</strike>"https://www.youtube.com/embed/fuZBrTHoygc?si=mNj2DL_VXsQXJwxW" <br />
-                                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
-                                                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                                                <b>Örneğin:</b> <strike><</strike><strike>iframe width="560" height="315" src=</strike>"https://www.youtube.com/embed/
+                                                <br />fuZBrTHoygc?si=mNj2DL_VXsQXJwxW" title="YouTube video player" frameborder="0"<br />
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
+                                                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"<br />
                                                 <strike>allowfullscreen><</strike><strike>/iframe </strike>>
                                             </small>
                                             <span asp-validation-for="YoutubeVideoPath" class="text-danger"></span>
@@ -81,7 +82,7 @@
                                                    class="form-control mb-1"
                                                    id="defaultFormControlInput"
                                                    aria-describedby="defaultFormControlHelp" />
-                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu 128 MB olmalıdır!</small><br />
+                                            <small class="text-muted" style="font-size:11px;">Yüklenecek video'nun maksimum boyutu <b>128 MB</b> olmalıdır!</small><br />
                                             <span asp-validation-for="File" class="text-danger"></span>
                                         </div>
                                     </div>

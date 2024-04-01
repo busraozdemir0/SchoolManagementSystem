@@ -64,7 +64,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _toast.AddSuccessToastMessage(Messages.Contact.UndoDelete(contact), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedContacts", "Contact", new { Area = "Admin" });
         }
-
+        [HttpPost]
 		public async Task<IActionResult> HardDelete(Guid contactId)
 		{
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();

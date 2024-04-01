@@ -201,5 +201,26 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             _toast.AddSuccessToastMessage(Messages.Announcement.UndoDelete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedAnnouncements", "Announcement", new { Area = "Teacher" });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> HardDelete(Guid announcementId) 
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var announcement = await _announcementService.TGetByGuidAsync(announcementId);
+
+            if (announcement is not null)
+            {
+                await _announcementService.TDeleteAsync(announcement);
+                _toast.AddSuccessToastMessage("Duyuru tamamen silindi", new ToastrOptions { Title = "Başarılı!" });
+                return RedirectToAction("DeletedAnnouncements", "Announcement", new { Area = "Teacher" });
+            }
+            else
+            {
+                _toast.AddErrorToastMessage("Duyuru silinirken bir hata oluştu", new ToastrOptions { Title = "Başarısız!" });
+            }
+            return View();
+
+        }
     }
 }

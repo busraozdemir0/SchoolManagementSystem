@@ -1,55 +1,55 @@
 ﻿<div class="sidebar-menu">
-	<div class="logo">
-		<a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#">
-			<span id="logo"></span>
-			<!--<img id="logo" src="" alt="Logo"/>-->
-		</a>
-	</div>
-	<div class="menu">
-		<ul id="menu">
-			<li id="menu-home"><a asp-area="Teacher" asp-controller="Home" asp-action="Index"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
-			<li>
-				<a asp-area="Teacher" asp-controller="Profile" asp-action="Update"><i class="fa fa-cogs"></i><span>Profil Ayarları</span></a>
-			</li>
-			<li>
-				<a href="#"><i class="fa fa-envelope"></i><span>Mesajlar</span><span class="fa fa-angle-right" style="float: right"></span></a>
-				<ul id="menu-academico-sub">
-					<li id="menu-academico-avaliacoes"><a href="inbox.html">Mesaj Kutusu</a></li>
-					<li id="menu-academico-boletim"><a href="inbox-details.html">Mesaj Oluştur</a></li>
-				</ul>
-			</li>
+    <div class="logo">
+        <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#">
+            <span id="logo"></span>
+            <!--<img id="logo" src="" alt="Logo"/>-->
+        </a>
+    </div>
+    <div class="menu">
+        <ul id="menu">
+            <li id="menu-home"><a asp-area="Teacher" asp-controller="Home" asp-action="Index"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+            <li>
+                <a asp-area="Teacher" asp-controller="Profile" asp-action="Update"><i class="fa fa-cogs"></i><span>Profil Ayarları</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-envelope"></i><span>Mesajlar</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-avaliacoes"><a href="inbox.html">Mesaj Kutusu</a></li>
+                    <li id="menu-academico-boletim"><a href="inbox-details.html">Mesaj Oluştur</a></li>
+                </ul>
+            </li>
 
-			<li>
-				<a href="#"><i class="fa fa-bell-o"></i><span>Duyurular</span><span class="fa fa-angle-right" style="float: right"></span></a>
-				<ul id="menu-academico-sub">
-					<li id="menu-academico-avaliacoes"><a asp-area="Teacher" asp-controller="Announcement" asp-action="Index">Okul Yönetimi Tarafından Yapılan Duyurular</a></li>
-					<li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Announcement" asp-action="StudentAnnouncements">Duyurularınız</a></li>
-				</ul>
-			</li>
+            <li>
+                <a href="#"><i class="fa fa-bell-o"></i><span>Duyurular</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-avaliacoes"><a asp-area="Teacher" asp-controller="Announcement" asp-action="Index">Okul Yönetimi Tarafından Yapılan Duyurular</a></li>
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Announcement" asp-action="StudentAnnouncements">Yaptığınız Duyurular</a></li>
+                </ul>
+            </li>
 
-			<li><a asp-area="Teacher" asp-controller="LessonScore" asp-action="Index"><i class="fa fa-edit"></i><span>Not Sistemi</span></a></li>
-			
-			<li><a asp-area="Teacher" asp-controller="Grade" asp-action="Index"><i class="fa fa-flask"></i><span>Sınıflar</span></a></li>
-			
-			<li><a asp-area="Teacher" asp-controller="Lesson" asp-action="Index"><i class="fa fa-book nav_icon"></i><span>Dersler</span></a></li>
-			
-			<li><a asp-area="Teacher" asp-controller="Student" asp-action="Index"><i class="fa fa-graduation-cap "></i><span>Öğrenciler</span></a></li>
+            <li><a asp-area="Teacher" asp-controller="LessonScore" asp-action="Index"><i class="fa fa-edit"></i><span>Not Sistemi</span></a></li>
 
-			<li>
-				<a href="#"><i class="fa fa-trash"></i><span>Silinmiş Öğeler</span><span class="fa fa-angle-right" style="float: right"></span></a>
-				<ul id="menu-academico-sub">
-					<li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonDocument" asp-action="DeletedLessonDocuments">Ders Materyalleri</a></li>
-					<li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonVideo" asp-action="DeletedLessonVideos">Ders Videoları</a></li>
-					<li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonScore" asp-action="DeletedLessonScores">Not Bilgileri</a></li>
-					<li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Announcement" asp-action="DeletedAnnouncements">Duyurular</a></li>
-					<li id="menu-academico-boletim"><a href="#">Mesajlar</a></li>
-				</ul>
-			</li>
-			
-			<li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i><span>Ana Sayfaya Git</span></a></li>
+            <li><a asp-area="Teacher" asp-controller="Lesson" asp-action="Index"><i class="fa fa-book nav_icon"></i><span>Ders Materyalleri</span></a></li>
 
-			<li><a asp-area="" asp-controller="Login" asp-action="LogOut"><i class="fa fa-sign-out"></i><span>Çıkış Yap</span></a></li>
-		</ul>
-	</div>
+            <li><a asp-area="Teacher" asp-controller="Grade" asp-action="Index"><i class="fa fa-flask"></i><span>Sınıflar</span></a></li>
+
+            <li><a asp-area="Teacher" asp-controller="Student" asp-action="Index"><i class="fa fa-graduation-cap "></i><span>Öğrenciler</span></a></li>
+
+            <li>
+                <a href="#"><i class="fa fa-trash"></i><span>Silinmiş Öğeler</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonDocument" asp-action="DeletedLessonDocuments">Ders Materyalleri</a></li>
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonVideo" asp-action="DeletedLessonVideos">Ders Videoları</a></li>
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonScore" asp-action="DeletedLessonScores">Not Bilgileri</a></li>
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Announcement" asp-action="DeletedAnnouncements">Yaptığınız Duyurular</a></li>
+                    <li id="menu-academico-boletim"><a href="#">Mesajlar</a></li>
+                </ul>
+            </li>
+
+            <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i><span>Ana Sayfaya Git</span></a></li>
+
+            <li><a asp-area="" asp-controller="Login" asp-action="LogOut"><i class="fa fa-sign-out"></i><span>Çıkış Yap</span></a></li>
+        </ul>
+    </div>
 </div>
 <div class="clearfix"> </div>
