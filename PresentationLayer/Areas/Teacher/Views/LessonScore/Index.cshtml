@@ -14,7 +14,13 @@
                             <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Not Sistemi</li>
                         </ol>
                     </nav>
+                    <a class="btn btn-primary mb-3" asp-area="Teacher" asp-controller="Student" asp-action="Index" style="margin-bottom:1.7em;">
+                        <i class="fa fa-group"></i> Öğrencileri Gör
+                    </a>
 
+                    <a class="btn btn-primary mb-3" asp-area="Teacher" asp-controller="Grade" asp-action="Index" style="margin-bottom:1.7em;">
+                        <i class="fa fa-flask"></i> Sınıfları Gör
+                    </a>
                     <table class="table table-hover" id="lessonScoresTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>

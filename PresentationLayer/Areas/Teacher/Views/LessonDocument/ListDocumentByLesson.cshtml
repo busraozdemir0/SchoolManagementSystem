@@ -24,6 +24,7 @@
                                 <th>Başlık</th>
                                 <th>Ders Materyali</th>
                                 <th>Yüklenme Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                                 <th>Başlık</th>
                                 <th>Ders Materyali</th>
                                 <th>Yüklenme Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </tfoot>
@@ -44,6 +46,7 @@
                                     <td>@document.Title</td>
                                     <td><a href="~/documents/@document.Document.FileName">@document.Document.FileName</a></td>
                                     <td>@document.CreatedDate.ToShortDateString()</td>
+                                    <td>@(document.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@document.Id" asp-area="Teacher" asp-controller="LessonDocument" asp-action="Update" asp-route-lessonDocumentId="@document.Id"><i class="fa fa-edit"></i></a>
                                         <a class="btn btn-danger btn-sm" data-id="@document.Id" asp-area="Teacher" asp-controller="LessonDocument" asp-action="SafeDelete" asp-route-lessonDocumentId="@document.Id"><i class="fa fa-trash"></i></a>

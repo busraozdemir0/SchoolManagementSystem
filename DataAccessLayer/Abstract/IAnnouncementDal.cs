@@ -11,11 +11,7 @@ namespace DataAccessLayer.Abstract
     public interface IAnnouncementDal : IRepository<Announcement>
     {
         Task<string> SafeDeleteAnnouncementAsync(Guid announcementId);
-        Task<string> SafeDeleteTeacherAnnouncementAsync(Guid announcementId); // Ogretmen panelinde admin kullanicisinin yaptigi duyurulari listeden kaldirmak icin
         Task<string> UndoDeleteAnnouncementAsync(Guid announcementId);
-        Task<string> UndoDeleteTeacherAnnouncementAsync(Guid announcementId);
-
-
 		Task<List<Announcement>> TeacherAnnouncementListAsync(); // Öğretmen panelinde - Teacher kullanicilarina yapilan duyurulari listelemek icin
 
         Task<List<Announcement>> TeacherAnnouncementToStudentsListAsync(); // Giren ogretmen kullanicisinin ogrencilere yaptigi duyurular

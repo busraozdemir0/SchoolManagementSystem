@@ -1,96 +1,52 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
-using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonDocuments;
-using EntityLayer.DTOs.Lessons;
-using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
-using System.Security.Claims;
-using static PresentationLayer.ResultMessages.Messages;
 
-namespace PresentationLayer.Areas.Teacher.Controllers
+namespace PresentationLayer.Areas.Admin.Controllers
 {
-    [Area("Teacher")]
+    [Area("Admin")]
     public class LessonDocumentController : Controller
     {
         private readonly IAboutService _aboutService;
         private readonly ILessonDocumentService _lessonDocumentService;
         private readonly ILessonService _lessonService;
-        private readonly IToastNotification _toast;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private readonly IValidator<LessonDocumentAddDto> _validator;
+        private readonly IToastNotification _toast;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ClaimsPrincipal _user;
 
-        public LessonDocumentController(ILessonDocumentService lessonDocumentService, IToastNotification toast, ILessonService lessonService, IMapper mapper, IValidator<LessonDocumentAddDto> validator, IAboutService aboutService, IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork)
+        public LessonDocumentController(IAboutService aboutService, ILessonDocumentService lessonDocumentService, ILessonService lessonService, IUserService userService, IMapper mapper, IValidator<LessonDocumentAddDto> validator, IToastNotification toast, IUnitOfWork unitOfWork)
         {
+            _aboutService = aboutService;
             _lessonDocumentService = lessonDocumentService;
-            _toast = toast;
             _lessonService = lessonService;
+            _userService = userService;
             _mapper = mapper;
             _validator = validator;
-            _aboutService = aboutService;
-            _httpContextAccessor = httpContextAccessor;
-            _user = httpContextAccessor.HttpContext.User;
+            _toast = toast;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ListDocumentByLesson(Guid lessonId)
+        public async Task<IActionResult> Index()
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var lesson = await _lessonService.TGetByGuidAsync(lessonId);
-            var lessonDocuments = await _lessonDocumentService.TGetAllDocumentsByLesson(lesson);
-            var mapLessonDocuments = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
-            ViewBag.LessonName = lesson.LessonName;
-
-            return View(mapLessonDocuments);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Add(Guid lessonId)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
-
-            var lesson = await _lessonService.TGetByGuidAsync(lessonId);
-            ViewBag.LessonId = lessonId;
-            ViewBag.LessonName = lesson.LessonName;
-            return View(new LessonDocumentAddDto { LessonId = lessonId });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add(LessonDocumentAddDto lessonDocumentAddDto)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
-
-            var result = await _validator.ValidateAsync(lessonDocumentAddDto);
-
-            if (result.IsValid)
+            var lessonDocuments = await _lessonDocumentService.GetListAsync();
+            var mapLessonDocument = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
+            foreach (var lessonDocument in mapLessonDocument)
             {
-                await _lessonDocumentService.TAddLessonDocumentAsync(lessonDocumentAddDto);
-                _toast.AddSuccessToastMessage(Messages.LessonDocument.Add(lessonDocumentAddDto.Title), new ToastrOptions { Title = "Başarılı!" });
-
-                return RedirectToAction("Index", "Lesson", new { Area = "Teacher" });
+                var teacher = await _userService.TGetAppUserByIdAsync(lessonDocument.CreatedBy); // Dokumani yukleyen ogretmeni bul
+                lessonDocument.LessonDocumentTeacherInfo = teacher.Name + " " + teacher.Surname; // Dersi veren ogretmenin ad soyad bilgisini view'da gosterebilmek icin
             }
-            else
-            {
-                result.AddToModelState(this.ModelState);
-                _toast.AddErrorToastMessage("Ders materyali yüklenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
-            }
-
-            var lesson = await _lessonService.TGetByGuidAsync(lessonDocumentAddDto.LessonId);
-
-            ViewBag.LessonId = lessonDocumentAddDto.LessonId;
-            ViewBag.LessonName = lesson.LessonName;
-
-            return View();
+            return View(mapLessonDocument);
         }
 
         [HttpGet]
@@ -100,8 +56,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
             var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentId);
             var mapLessonDocument = _mapper.Map<LessonDocumentUpdateDto>(lessonDocument);
-            
-            var lesson = await _lessonService.TGetByGuidAsync(lessonDocument.LessonId); // Gelen dokumandaki Lessonıd'ye gore o dersi bul.
+
+            var lesson = await _lessonService.TGetByGuidAsync(lessonDocument.LessonId); // Gelen dokumandaki LessonId'ye gore o dersi bul.
 
             ViewBag.LessonId = lessonDocument.LessonId;
             ViewBag.LessonName = lesson.LessonName;
@@ -125,8 +81,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                 await _lessonDocumentService.TUpdateLessonDocumentAsync(lessonDocumentUpdateDto);
                 _toast.AddSuccessToastMessage(Messages.LessonDocument.Update(lessonDocumentUpdateDto.Title), new ToastrOptions { Title = "Başarılı!" });
 
-                return RedirectToAction("ListDocumentByLesson", "LessonDocument",
-                    new { Area = "Teacher", lessonId = lessonDocumentUpdateDto.LessonId });  // lessonId ile ListDocumentByLesson action'una dersin id'si ile gitmesini sagliyoruz.
+                return RedirectToAction("Index", "LessonDocument", new { Area = "Admin" });
             }
             else
             {
@@ -154,18 +109,21 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lessonDocument = await _lessonDocumentService.TGetByGuidAsync(lessonDocumentId);
 
             _toast.AddSuccessToastMessage(Messages.LessonDocument.Delete(lessonDocumentTitle), new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("ListDocumentByLesson", "LessonDocument",
-                    new { Area = "Teacher", lessonId = lessonDocument.LessonId });
+            return RedirectToAction("Index", "LessonDocument", new { Area = "Admin" });
         }
 
         public async Task<IActionResult> DeletedLessonDocuments()
         {
-            var loginTeacherId = _user.GetLoggedInUserId();
-            var lessonDocuments = await _unitOfWork.GetRepository<EntityLayer.Entities.LessonDocument>().
-                GetAllAsync(x => x.IsDeleted && x.CreatedBy == loginTeacherId.ToString(), l => l.Lesson, d => d.Document);
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var mapLessonDocuments = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
-            return View(mapLessonDocuments);
+            var lessonDocuments = await _lessonDocumentService.GetDeletedListAsync(); // Silinmis tum dokumanlari listele
+            var mapLessonDocument = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
+            foreach (var lessonDocument in mapLessonDocument)
+            {
+                    var teacher = await _userService.TGetAppUserByIdAsync(lessonDocument.CreatedBy); // Dokumani yukleyen ogretmeni bul
+                    lessonDocument.LessonDocumentTeacherInfo = teacher.Name + " " + teacher.Surname; // Dersi veren ogretmenin ad soyad bilgisini view'da gosterebilmek icin              
+            }
+            return View(mapLessonDocument);
         }
 
         public async Task<IActionResult> UndoDelete(Guid lessonDocumentId)
@@ -175,7 +133,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lessonDocumentTitle = await _lessonDocumentService.TUndoDeleteLessonDocumentAsync(lessonDocumentId);
 
             _toast.AddSuccessToastMessage(Messages.LessonDocument.UndoDelete(lessonDocumentTitle), new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Teacher" });
+            return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Admin" });
         }
         [HttpPost]
         public async Task<IActionResult> HardDelete(Guid lessonDocumentId)
@@ -186,7 +144,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             await _lessonDocumentService.TDeleteAsync(lessonDocument);
 
             _toast.AddSuccessToastMessage("Materyal tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Teacher" });
+            return RedirectToAction("DeletedLessonDocuments", "LessonDocument", new { Area = "Admin" });
         }
     }
 }

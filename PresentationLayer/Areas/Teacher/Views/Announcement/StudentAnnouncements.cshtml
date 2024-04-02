@@ -1,7 +1,7 @@
 ﻿@model List<AnnouncementListDto>
 
 @{
-    ViewData["Title"] = "Duyurular";
+    ViewData["Title"] = "Yaptığınız Duyurular";
 }
 
 <div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 20em;">
@@ -27,6 +27,7 @@
                                 <th>Oluşturan</th>
                                 <th>Duyuru Yapılan Kullanıcı</th>
                                 <th>Oluşturulma Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
@@ -37,6 +38,7 @@
                                 <th>Oluşturan</th>
                                 <th>Duyuru Yapılan Kullanıcı</th>
                                 <th>Oluşturulma Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </tfoot>
@@ -49,6 +51,7 @@
                                     <td>@announcement.CreatedBy</td>
                                     <td>@announcement.Role.Name</td>
                                     <td>@announcement.CreatedDate.ToShortDateString()</td>
+                                    <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Update" asp-route-announcementId="@announcement.Id"><i class="fa fa-edit"></i></a>
                                         <a class="btn btn-danger btn-sm" data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Delete" asp-route-announcementId="@announcement.Id"><i class="fa fa-trash"></i></a>

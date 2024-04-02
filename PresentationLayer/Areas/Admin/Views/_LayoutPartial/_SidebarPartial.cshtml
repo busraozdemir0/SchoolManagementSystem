@@ -58,6 +58,13 @@
                 <a asp-area="Admin" asp-controller="Lesson" asp-action="Index"><i class="fa fa-book"></i> <span class="nav-label">Dersler</span></a>
             </li>
             <li>
+                <a href="#"><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Ders Materyalleri</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a asp-area="Admin" asp-controller="LessonDocument" asp-action="Index">Dokümanlar</a></li>
+                    <li><a asp-area="Admin" asp-controller="LessonVideo" asp-action="Index">Videolar</a></li>
+                </ul>
+            </li>
+            <li>
                 <a asp-area="Admin" asp-controller="LessonScore" asp-action="Index"><i class="fa fa-edit"></i> <span class="nav-label">Not Sistemi</span></a>
             </li>
             <li>
@@ -80,6 +87,13 @@
                     <li><a asp-area="Admin" asp-controller="Lesson" asp-action="DeletedLessons">Dersler</a></li>
                     <li><a asp-area="Admin" asp-controller="Grade" asp-action="DeletedGrades">Sınıflar</a></li>
                     <li><a asp-area="Admin" asp-controller="Contact" asp-action="DeletedContacts">İletişim Mesajları</a></li>
+                    <li>
+                        <a href="#"><span class="nav-label">Ders Materyalleri</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a asp-area="Admin" asp-controller="LessonDocument" asp-action="DeletedLessonDocuments">Dokümanlar</a></li>
+                            <li><a asp-area="Admin" asp-controller="LessonVideo" asp-action="DeletedLessonVideos">Videolar</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li>

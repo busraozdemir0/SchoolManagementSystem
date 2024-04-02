@@ -173,7 +173,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
             var lessonVideoTitle = await _lessonVideoService.TUndoDeleteLessonVideoAsync(lessonVideoId);
 
-            _toast.AddSuccessToastMessage(Messages.LessonVideo.Delete(lessonVideoTitle), new ToastrOptions { Title = "Başarılı!" });
+            _toast.AddSuccessToastMessage(Messages.LessonVideo.UndoDelete(lessonVideoTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedLessonVideos", "LessonVideo", new { Area = "Teacher" });
         }
         [HttpPost]

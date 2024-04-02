@@ -17,6 +17,5 @@ namespace EntityLayer.DTOs.Announcements
         public AppRole Role { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; }
-		public bool TeacherStatusView { get; set; }
 	}
 }

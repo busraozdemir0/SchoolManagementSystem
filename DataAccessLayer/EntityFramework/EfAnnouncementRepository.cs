@@ -44,18 +44,6 @@ namespace DataAccessLayer.EntityFramework
 
             return announcement.Title;
         }
-        public async Task<string> SafeDeleteTeacherAnnouncementAsync(Guid announcementId)
-        {
-            var announcement = await _unitOfWork.GetRepository<Announcement>().GetAsync(x => x.Id == announcementId);
-
-            announcement.TeacherStatusView = false;
-
-            await _unitOfWork.GetRepository<Announcement>().UpdateAsync(announcement);
-            await _unitOfWork.SaveAsync();
-
-            return announcement.Title;
-        }
-
         public async Task<string> UndoDeleteAnnouncementAsync(Guid announcementId)
         {
             var announcement = await _unitOfWork.GetRepository<Announcement>().GetAsync(x => x.Id == announcementId);
@@ -69,18 +57,6 @@ namespace DataAccessLayer.EntityFramework
             return announcement.Title;
         }
 
-		public async Task<string> UndoDeleteTeacherAnnouncementAsync(Guid announcementId)
-		{
-			var announcement = await _unitOfWork.GetRepository<Announcement>().GetAsync(x => x.Id == announcementId);
-
-			announcement.TeacherStatusView = true;
-
-			await _unitOfWork.GetRepository<Announcement>().UpdateAsync(announcement);
-			await _unitOfWork.SaveAsync();
-
-			return announcement.Title;
-		}
-
 		public async Task<List<Announcement>> TeacherAnnouncementListAsync()
         {
             var teacherRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.Teacher); // Teacher rolunun id'sini bul
@@ -89,17 +65,7 @@ namespace DataAccessLayer.EntityFramework
             var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
                     x=>x.RoleId == teacherRoleId || x.RoleId == userRoleId && !x.IsDeleted, r=>r.Role, u=>u.User);
 
-            List<Announcement> announcementList = new();
-
-            foreach(var announcement in announcements) 
-            {
-                // Eger Ogretmen kullanicisi o duyuruyu panelinden kaldirmamis ise listeye ekle.
-                if (announcement.TeacherStatusView==true)
-                {
-                    announcementList.Add(announcement);
-                }
-            }
-            return announcementList;
+            return announcements;
         }
 
         public async Task<List<Announcement>> TeacherAnnouncementToStudentsListAsync()
@@ -113,11 +79,9 @@ namespace DataAccessLayer.EntityFramework
 
 			foreach (var announcement in announcements)
 			{
-				// Eger Ogretmen kullanicisi o duyuruyu panelinden kaldirmamis ise listeye ekle.
-				if (announcement.TeacherStatusView == true)
-				{
+				
 					announcementList.Add(announcement);
-				}
+				
 			}
 			return announcementList;
 		}
@@ -127,19 +91,9 @@ namespace DataAccessLayer.EntityFramework
 			var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
 
 			var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
-				x => x.UserId == userId && !x.IsDeleted, r => r.Role, u => u.User);
+				x => x.UserId == userId && x.IsDeleted, r => r.Role, u => u.User);
 
-			List<Announcement> announcementList = new();
-
-			foreach (var announcement in announcements)
-			{
-				// Eger Ogretmen kullanicisi o duyuruyu panelinden kaldirmis ise listeye ekle.
-				if (announcement.TeacherStatusView == false)
-				{
-					announcementList.Add(announcement);
-				}
-			}
-			return announcementList;
+			return announcements;
 		}
 
 

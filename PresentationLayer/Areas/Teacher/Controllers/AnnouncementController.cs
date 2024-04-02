@@ -67,16 +67,6 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var mapAnnouncement = _mapper.Map<AnnouncementListDto>(announcement);
             return View(mapAnnouncement);
         }
-        // Admin kullanicisi tarafindan yapilan duyurulari safe delete yontemiyle listeden kaldirma
-        public async Task<IActionResult> SafeDeleteTeacherAnnouncement(Guid announcementId) 
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
-
-            var announcementTitle = await _announcementService.TSafeDeleteTeacherAnnouncementAsync(announcementId); 
-            _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
-            return RedirectToAction("Index", "Announcement", new { Area = "Teacher" });
-        }
-
         public async Task<IActionResult> StudentAnnouncements() // Ogrencilere yapilan duyurular listesi
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
@@ -189,7 +179,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var announcementTitle = await _announcementService.TSafeDeleteTeacherAnnouncementAsync(announcementId);
+            var announcementTitle = await _announcementService.TSafeDeleteAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.Delete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("StudentAnnouncements", "Announcement", new { Area = "Teacher" });
         }
@@ -197,7 +187,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var announcementTitle = await _announcementService.TUndoDeleteTeacherAnnouncementAsync(announcementId);
+            var announcementTitle = await _announcementService.TUndoDeleteAnnouncementAsync(announcementId);
             _toast.AddSuccessToastMessage(Messages.Announcement.UndoDelete(announcementTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedAnnouncements", "Announcement", new { Area = "Teacher" });
         }

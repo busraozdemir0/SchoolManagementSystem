@@ -80,12 +80,6 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _announcementDal.SafeDeleteAnnouncementAsync(announcementId);
         }
-
-        public async Task<string> TSafeDeleteTeacherAnnouncementAsync(Guid announcementId)
-        {
-            return await _announcementDal.SafeDeleteTeacherAnnouncementAsync(announcementId);
-        }
-
         public async Task<List<Announcement>> TTeacherAnnouncementListAsync()
         {
             return await _announcementDal.TeacherAnnouncementListAsync();
@@ -100,11 +94,6 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _announcementDal.UndoDeleteAnnouncementAsync(announcementId);
         }
-
-		public async Task<string> TUndoDeleteTeacherAnnouncementAsync(Guid announcementId)
-		{
-			return await _announcementDal.UndoDeleteTeacherAnnouncementAsync(announcementId);
-		}
 
 		public async Task TUpdateAsync(Announcement t)
         {

@@ -23,6 +23,7 @@
                                 <th>Oluşturan</th>
                                 <th>Duyuru Yapılan Kullanıcı</th>
                                 <th>Oluşturulma Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                                 <th>Oluşturan</th>
                                 <th>Duyuru Yapılan Kullanıcı</th>
                                 <th>Oluşturulma Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </tfoot>
@@ -45,6 +47,7 @@
                                     <td>@announcement.CreatedBy</td>
                                     <td>@announcement.Role.Name</td>
                                     <td>@announcement.CreatedDate.ToShortDateString()</td>
+                                    <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                     <td class="text-center">
                                         <div class="row" style="display:flex; justify-content:space-between;">
                                             <a class="btn btn-warning btn-sm" data-id="@announcement.Id" style="margin-right:0.5em;" asp-area="Teacher" asp-controller="Announcement" asp-action="UndoDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-undo"></i></a>

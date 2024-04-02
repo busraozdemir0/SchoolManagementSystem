@@ -1,18 +1,18 @@
-﻿@model List<AnnouncementListDto>
+﻿@model List<LessonDocumentListDto>
 
 @{
-    ViewData["Title"] = "Öğretmenlerin Duyuruları";
+    ViewData["Title"] = "Silinmiş Ders Dokümanları";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>Duyurular</h2>
+        <h2>Ders Materyalleri</h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a asp-area="Admin" asp-controller="Announcement" asp-action="Index">Duyurular</a>
+                <a href="#">Silinmiş Öğeler</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Öğretmenlerin Duyuruları</strong>
+                <strong>Ders Dokümanları</strong>
             </li>
         </ol>
     </div>
@@ -26,50 +26,47 @@
             <div class="ibox ">
                 <div class="card">
                     <div class="text-nowrap m-5">
-                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Announcement" asp-action="Index">
-                            <i class="fa fa-arrow-left"></i> Geri Dön 
-                        </a>
-                        <table class="table table-striped" id="announcementsTable" width="100%" cellspacing="0">
+
+                        <table class="table table-striped" id="lessonScoresTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>Ders</th>
                                     <th>Başlık</th>
-                                    <th>İçerik</th>
-                                    <th>Duyuruyu Yapan Kullanıcı</th>
-                                    <th>Alıcılar</th>
-                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Ders Materyali</th>
+                                    <th>Yükleyen</th>
+                                    <th>Yüklenme Tarihi</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
+                                    <th>Ders</th>
                                     <th>Başlık</th>
-                                    <th>İçerik</th>
-                                    <th>Duyuruyu Yapan Kullanıcı</th>
-                                    <th>Alıcılar</th>
-                                    <th>Oluşturulma Tarihi</th>
+                                    <th>Ders Materyali</th>
+                                    <th>Yükleyen</th>
+                                    <th>Yüklenme Tarihi</th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
                             </tfoot>
                             <tbody class="table-border-bottom-0">
-                                @foreach (var announcement in Model)
+                                @foreach (var document in Model)
                                 {
-                                    <tr name="@announcement.Id">
-                                        <td>@announcement.Title</td>
-                                        <td>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 5)...</td>
-                                        <td>@announcement.CreatedBy</td>
-                                        <td>@announcement.Role.Name</td>
-                                        <td>@announcement.CreatedDate.ToShortDateString()</td>
-                                        <td>@(announcement.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                    <tr name="@document.Id">
+                                        <td>@document.Lesson.LessonName</td>
+                                        <td>@document.Title</td>
+                                        <td><a href="~/documents/@document.Document.FileName">@document.Document.FileName</a></td>
+                                        <td>@document.LessonDocumentTeacherInfo</td>
+                                        <td>@document.CreatedDate.ToShortDateString()</td>
+                                        <td>@(document.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             <div class="row">
-                                                <a class="btn btn-primary btn-sm" style="margin-right:0.5em;" data-id="@announcement.Id" asp-area="Admin" asp-controller="Announcement" asp-action="Update" asp-route-announcementId="@announcement.Id"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn-sm" style="margin-right:0.5em;" data-id="@document.Id" asp-area="Admin" asp-controller="LessonDocument" asp-action="UndoDelete" asp-route-lessonDocumentId="@document.Id"><i class="fa fa-undo"></i></a>
 
-                                                <form id="deleteForm" asp-area="Admin" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                <form id="deleteForm" asp-area="Admin" asp-controller="LessonDocument" asp-action="HardDelete" asp-route-lessonDocumentId="@document.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
                                                     <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-circle"></i></button>
                                                 </form>
-
                                             </div>
                                         </td>
                                     </tr>
@@ -85,7 +82,7 @@
 
 
 @section Scripts {
-    <script src="~/js/announcementIndex.js" type="application/ecmascript"></script>
+    <script src="~/js/lessonScoreIndex.js" type="application/ecmascript"></script>
 
     <script>
         function confirmDelete(event) {
