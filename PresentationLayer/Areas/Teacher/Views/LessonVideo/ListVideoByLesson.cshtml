@@ -24,6 +24,7 @@
                                 <th>Başlık</th>
                                 <th>Ders Videosu</th>
                                 <th>Yüklenme Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                                 <th>Başlık</th>
                                 <th>Ders Videosu</th>
                                 <th>Yüklenme Tarihi</th>
+                                <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
                         </tfoot>
@@ -51,12 +53,13 @@
                                         }
                                         @if (video.VideoId is not null)
                                         {
-                                            <video width="180" height="120" controls>
+                                            <video width="180" height="139" controls>
                                                 <source src="~/videos/@video.Video.FileName" />
                                                 Tarayıcınız video etiketini desteklemiyor.
                                             </video>
                                         }
                                     <td>@video.CreatedDate.ToShortDateString()</td>
+                                    <td>@(video.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="Update" asp-route-lessonVideoId="@video.Id"><i class="fa fa-edit"></i></a>
                                         <a class="btn btn-danger btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="SafeDelete" asp-route-lessonVideoId="@video.Id"><i class="fa fa-trash"></i></a>

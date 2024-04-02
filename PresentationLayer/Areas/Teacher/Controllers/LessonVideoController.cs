@@ -130,7 +130,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             else
             {
                 result.AddToModelState(this.ModelState);
-                _toast.AddErrorToastMessage("Ders materyali güncellenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
+                _toast.AddErrorToastMessage("Ders videosu güncellenirken bir sorun oluştu", new ToastrOptions { Title = "Başarısız!" });
             }
 
             var lessonVideo = await _lessonVideoService.TGetByGuidAsync(lessonVideoUpdateDto.Id);

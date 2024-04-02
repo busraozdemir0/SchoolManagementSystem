@@ -17,5 +17,8 @@ namespace EntityLayer.DTOs.LessonVideos
         public Lesson Lesson { get; set; }
         public Guid? VideoId { get; set; }
         public Video Video { get; set; }
+        public Guid CreatedBy { get; set; }
+        public string LessonVideoTeacherInfo { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

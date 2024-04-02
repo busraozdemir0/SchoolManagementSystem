@@ -1,0 +1,122 @@
+﻿@model List<LessonVideoListDto>
+
+@{
+    ViewData["Title"] = "Silinmiş Ders Videoları";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Ders Materyalleri</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Silinmiş Öğeler</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Ders Videoları</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="text-nowrap m-5">
+
+                        <table class="table table-striped" id="lessonScoresTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Ders</th>
+                                    <th>Başlık</th>
+                                    <th>Ders Materyali</th>
+                                    <th>Yükleyen</th>
+                                    <th>Yüklenme Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Ders</th>
+                                    <th>Başlık</th>
+                                    <th>Ders Materyali</th>
+                                    <th>Yükleyen</th>
+                                    <th>Yüklenme Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var video in Model)
+                                {
+                                    <tr name="@video.Id">
+                                        <td>@video.Lesson.LessonName</td>
+                                        <td>@video.Title</td>
+                                        <td>
+                                            @if (video.YoutubeVideoPath is not null)
+                                            {
+                                                <iframe width="180" height="120"
+                                                        src=@Html.Raw(video.YoutubeVideoPath)
+                                                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                            }
+                                            @if (video.VideoId is not null)
+                                            {
+                                                <video width="180" height="138" controls>
+                                                    <source src="~/videos/@video.Video.FileName" />
+                                                    Tarayıcınız video etiketini desteklemiyor.
+                                                </video>
+                                            }
+                                        <td>@video.LessonVideoTeacherInfo</td>
+                                        <td>@video.CreatedDate.ToShortDateString()</td>
+                                        <td>@(video.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">
+                                            <div class="row">
+                                                <a class="btn btn-warning btn-sm" style="margin-right:0.5em;" data-id="@video.Id" asp-area="Admin" asp-controller="LessonVideo" asp-action="UndoDelete" asp-route-lessonVideoId="@video.Id"><i class="fa fa-undo"></i></a>
+
+                                                <form id="deleteForm" asp-area="Admin" asp-controller="LessonVideo" asp-action="HardDelete" asp-route-lessonVideoId="@video.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                    <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-circle"></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lessonScoreIndex.js" type="application/ecmascript"></script>
+
+    <script>
+        function confirmDelete(event) {
+            Swal.fire({
+                title: 'Silmek istediğinize emin misiniz?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Silme islemini gerceklestir
+                    document.getElementById("deleteForm").submit();
+                } else {
+                    // İptal edildiginde yapilacak islemler
+                    console.log("Silme işlemi iptal edildi.");
+                    return false;
+                }
+            });
+        }
+    </script>
+}

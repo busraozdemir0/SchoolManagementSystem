@@ -49,6 +49,20 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View(mapLessonDocument);
         }
 
+        public async Task<IActionResult> DeletedLessonDocuments()
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var lessonDocuments = await _lessonDocumentService.GetDeletedListAsync(); // Silinmis tum dokumanlari listele
+            var mapLessonDocument = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
+            foreach (var lessonDocument in mapLessonDocument)
+            {
+                var teacher = await _userService.TGetAppUserByIdAsync(lessonDocument.CreatedBy); // Dokumani yukleyen ogretmeni bul
+                lessonDocument.LessonDocumentTeacherInfo = teacher.Name + " " + teacher.Surname; // Dersi veren ogretmenin ad soyad bilgisini view'da gosterebilmek icin              
+            }
+            return View(mapLessonDocument);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Update(Guid lessonDocumentId)
         {
@@ -110,20 +124,6 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             _toast.AddSuccessToastMessage(Messages.LessonDocument.Delete(lessonDocumentTitle), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "LessonDocument", new { Area = "Admin" });
-        }
-
-        public async Task<IActionResult> DeletedLessonDocuments()
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
-
-            var lessonDocuments = await _lessonDocumentService.GetDeletedListAsync(); // Silinmis tum dokumanlari listele
-            var mapLessonDocument = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
-            foreach (var lessonDocument in mapLessonDocument)
-            {
-                    var teacher = await _userService.TGetAppUserByIdAsync(lessonDocument.CreatedBy); // Dokumani yukleyen ogretmeni bul
-                    lessonDocument.LessonDocumentTeacherInfo = teacher.Name + " " + teacher.Surname; // Dersi veren ogretmenin ad soyad bilgisini view'da gosterebilmek icin              
-            }
-            return View(mapLessonDocument);
         }
 
         public async Task<IActionResult> UndoDelete(Guid lessonDocumentId)

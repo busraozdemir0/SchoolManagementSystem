@@ -4468,10 +4468,10 @@ a:focus {
   margin-top: 15px;
   margin-bottom: 15px;
 }
-video {
+/*video {
   width: 100% !important;
   height: auto !important;
-}
+}*/
 /* GALLERY */
 .gallery > .row > div {
   margin-bottom: 15px;

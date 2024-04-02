@@ -1,0 +1,94 @@
+﻿@model List<LessonVideoListDto>
+
+@{
+    ViewData["Title"] = "Videolar";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Videolar</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Ders Materyalleri</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Videolar</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="text-nowrap m-5">
+
+                        <table class="table table-hover" id="lessonVideosTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Ders</th>
+                                    <th>Başlık</th>
+                                    <th>Ders Videosu</th>
+                                    <th>Yükleyen</th>
+                                    <th>Yüklenme Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Ders</th>
+                                    <th>Başlık</th>
+                                    <th>Ders Videosu</th>
+                                    <th>Yükleyen</th>
+                                    <th>Yüklenme Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var video in Model)
+                                {
+                                    <tr name="@video.Id">
+                                        <td>@video.Lesson.LessonName</td>
+                                        <td>@video.Title</td>
+                                        <td>
+                                            @if (video.YoutubeVideoPath is not null)
+                                            {
+                                                <iframe width="180" height="120"
+                                                        src=@Html.Raw(video.YoutubeVideoPath)
+                                                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                            }
+                                            @if (video.VideoId is not null)
+                                            {
+                                                <video width="180" height="138" controls>
+                                                    <source src="~/videos/@video.Video.FileName" />
+                                                    Tarayıcınız video etiketini desteklemiyor.
+                                                </video>
+                                            }
+                                        <td>@video.LessonVideoTeacherInfo</td>
+                                        <td>@video.CreatedDate.ToShortDateString()</td>
+                                        <td>@(video.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm" data-id="@video.Id" asp-area="Admin" asp-controller="LessonVideo" asp-action="Update" asp-route-lessonVideoId="@video.Id"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm" data-id="@video.Id" asp-area="Admin" asp-controller="LessonVideo" asp-action="SafeDelete" asp-route-lessonVideoId="@video.Id"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/lessonVideoIndex.js" type="application/ecmascript"></script>
+}
