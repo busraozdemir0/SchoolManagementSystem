@@ -1,0 +1,109 @@
+﻿<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	@await Html.PartialAsync("/Areas/Student/Views/_LayoutPartial/_HeaderPartial.cshtml")
+
+</head>
+<body>
+	<div class="page-container">
+		<div class="left-content">
+			<div class="mother-grid-inner">
+				<!--header start here-->
+				@await Html.PartialAsync("/Areas/Student/Views/_LayoutPartial/_NavbarPartial.cshtml")
+
+				<!--heder end here-->
+				<!-- script-for sticky-nav -->
+				<script>
+					$(document).ready(function () {
+						var navoffeset = $(".header-main").offset().top;
+						$(window).scroll(function () {
+							var scrollpos = $(window).scrollTop();
+							if (scrollpos >= navoffeset) {
+								$(".header-main").addClass("fixed");
+							} else {
+								$(".header-main").removeClass("fixed");
+							}
+						});
+
+					});
+				</script>
+				<!-- /script-for sticky-nav -->
+				<!--inner block start here-->
+
+				@RenderBody()
+
+				<!--inner block end here-->
+				<!--copy rights start here-->
+				@await Html.PartialAsync("/Areas/Student/Views/_LayoutPartial/_FooterPartial.cshtml")
+
+				<!--COPY rights end here-->
+			</div>
+		</div>
+		<!--slider menu-->
+		@await Html.PartialAsync("/Areas/Student/Views/_LayoutPartial/_SidebarPartial.cshtml")
+
+	</div>
+	<!--slide bar menu end here-->
+
+	<script>
+		var toggle = true;
+
+		$(".sidebar-icon").click(function () {
+			if (toggle) {
+				$(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+				$("#menu span").css({ "position": "absolute" });
+			}
+			else {
+				$(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+				setTimeout(function () {
+					$("#menu span").css({ "position": "relative" });
+				}, 400);
+			}
+			toggle = !toggle;
+		});
+	</script>
+	<!--scrolling js-->
+	<script src="~/Teacher-Student/js/jquery.nicescroll.js"></script>
+	<script src="~/Teacher-Student/js/scripts.js"></script>
+	<!--//scrolling js-->
+	<script src="~/Teacher-Student/js/bootstrap.js"> </script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<!-- mother grid end here-->
+
+	<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.3/js/dataTables.buttons.min.js" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.tiny.cloud/1/khi50j745n59fxjdfkobluectpb0ilf3975uk04o61i7lnvu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+	<script>
+		// https://www.tiny.cloud/my-account/integrate/ => sitesi ile text editor tool'u ekliyoruz.
+
+		tinymce.init({
+			selector: '#textEdit', // id'si textEdit olanlara yazi duzenleme araci gelecek.
+			plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+			tinycomments_mode: 'embedded',
+			tinycomments_author: 'Author name',
+			mergetags_list: [
+				{ value: 'First.Name', title: 'First Name' },
+				{ value: 'Email', title: 'Email' },
+			],
+			ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+		});
+	</script>
+
+	@await RenderSectionAsync("Scripts", false)
+
+	@await Component.InvokeAsync("NToastNotify")
+</body>
+</html>                     

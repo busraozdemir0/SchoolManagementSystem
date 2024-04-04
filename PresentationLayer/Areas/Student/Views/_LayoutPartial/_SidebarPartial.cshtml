@@ -1,0 +1,36 @@
+﻿<div class="sidebar-menu">
+    <div class="logo">
+        <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a> <a href="#">
+            <span id="logo"></span>
+            <!--<img id="logo" src="" alt="Logo"/>-->
+        </a>
+    </div>
+    <div class="menu">
+        <ul id="menu">
+            <li id="menu-home"><a asp-area="Student" asp-controller="Home" asp-action="Index"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+            <li>
+                <a asp-area="Student" asp-controller="Profile" asp-action="Update"><i class="fa fa-cogs"></i><span>Profil Ayarları</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-envelope"></i><span>Mesajlar</span><span class="fa fa-angle-right" style="float: right"></span></a>
+                <ul id="menu-academico-sub">
+                    <li id="menu-academico-avaliacoes"><a href="inbox.html">Mesaj Kutusu</a></li>
+                    <li id="menu-academico-boletim"><a href="inbox-details.html">Mesaj Oluştur</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a asp-area="Student" asp-controller="Announcement" asp-action="Index"><i class="fa fa-bell-o"></i><span>Duyurular</span></a>
+            </li>
+
+            <li><a asp-area="Student" asp-controller="Lesson" asp-action="Index"><i class="fa fa-book nav_icon"></i><span>Dersleriniz</span></a></li>
+
+            <li><a asp-area="Student" asp-controller="LessonScore" asp-action="Index"><i class="fa fa-edit"></i><span>Not Sistemi</span></a></li>
+
+            <li><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i><span>Ana Sayfaya Git</span></a></li>
+
+            <li><a asp-area="" asp-controller="Login" asp-action="LogOut"><i class="fa fa-sign-out"></i><span>Çıkış Yap</span></a></li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"> </div>

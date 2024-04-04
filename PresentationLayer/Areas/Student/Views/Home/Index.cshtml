@@ -1,20 +1,17 @@
-﻿
-@{
-    ViewData["Title"] = "Ana sayfa";
+﻿@{
+	ViewData["Title"] = "Ana sayfa";
 }
 
 <div class="inner-block">
 	<!--market updates updates-->
-
-	@await Component.InvokeAsync("DashboardStatisticsFirst")
-
+	@await Component.InvokeAsync("DashboardStudentStatisticsFirst")
 	<!--market updates end here-->
 	<!--mainpage chit-chating-->
 	<div class="chit-chat-layer1">
-		
-		@await Component.InvokeAsync("DashboardLastSixReport")
 
-		@await Component.InvokeAsync("DashboardUserInfo")
+		@await Component.InvokeAsync("DashboardStudentLastSixReport")
+
+		@await Component.InvokeAsync("DashboardStudentUserInfo")
 
 		<div class="clearfix"> </div>
 	</div>
@@ -23,7 +20,7 @@
 	<div class="main-page-charts">
 		<div class="main-page-chart-layer1">
 
-			@await Component.InvokeAsync("DashboardMap")
+			@await Component.InvokeAsync("DashboardStudentMap")
 
 			<div class="clearfix"> </div>
 		</div>

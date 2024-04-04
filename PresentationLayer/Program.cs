@@ -94,7 +94,13 @@ app.UseEndpoints(endpoints =>
         pattern: "Teacher/{controller=Home}/{action=Dashboard}/{id?}" 
         );
 
-    endpoints.MapDefaultControllerRoute();
+	endpoints.MapAreaControllerRoute(
+		name: "Student",
+		areaName: "Student",
+		pattern: "Student/{controller=Home}/{action=Dashboard}/{id?}"
+		);
+
+	endpoints.MapDefaultControllerRoute();
 });
 
 app.Run();

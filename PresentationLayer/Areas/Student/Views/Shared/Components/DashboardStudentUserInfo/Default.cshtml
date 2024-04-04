@@ -1,0 +1,24 @@
+﻿
+
+<div class="col-md-6 chart-layer1-right">
+    <div class="user-marorm" style="overflow:auto;">
+        <div class="malorum-top-bg">
+        </div>
+        <div class="malorm-bottom" style="height:11.2em;">
+            <span>
+                @if (@ViewBag.GetLoggedInImageId is not null)
+                {
+                    <img src="~/images/@ViewBag.GetLoggedInImage" class="malorum-pro" alt="profile">
+                }
+                else
+                {
+                    <img src="~/icons/@ViewBag.GetLoggedInImage" class="malorum-pro" alt="profile">
+                }
+            </span>
+            <h4>@ViewBag.SchoolName ~ Öğretmen Hakkında</h4>
+            <h2>@ViewBag.NameSurname</h2>
+            <p>@Html.Raw(ViewBag.UserAbout)</p>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model List<AnnouncementListDto>
+
+<li class="dropdown head-dpdn">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">@ViewBag.AnnouncementsCount</span></a>
+    <ul class="dropdown-menu">
+        <li>
+            <div class="notification_header">
+                <h3>@ViewBag.AnnouncementsCount yeni bildiriminiz var</h3>
+            </div>
+        </li>
+        @foreach (var announcement in Model)
+        {
+            <li>
+                <a data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
+                    <div class="user_img"><img src="~/icons/announcement.png" alt=""></div>
+                    <div class="notification_desc">
+                        <h5>@announcement.Title</h5>
+                        <p>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</p>
+                        <p>
+                            @{
+                                TimeSpan difference = DateTime.Now - announcement.CreatedDate; // iki tarih arasi fark
+                                var secondDifference = 0;
+                                var minuteDifference = 0;
+                                var hourDifference = 0;
+                                var dayDifference = 0;
+
+                                TimeSpan twentyFourHours = TimeSpan.FromHours(24);
+
+                                // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.  
+                                @if (announcement.CreatedDate.Day == DateTime.Now.Day 
+                                && announcement.CreatedDate.Hour == DateTime.Now.Hour
+                                && difference.TotalSeconds < 60)
+                                {
+                                    secondDifference = Convert.ToInt32(Math.Floor(difference.TotalSeconds));
+                                    <span>@secondDifference saniye önce</span>
+                                }
+
+                                // Hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam dakika 1'den az ise 0 dakika gostermemesi icin 1 dakika once yaz.
+                                else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
+                                announcement.CreatedDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 1) // Fark 1 dakikadan azsa
+                                {
+                                    <span>1 dakika önce</span>
+                                }
+
+                                // Fark 1 saatten azsa
+                                else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
+                                announcement.CreatedDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 60) 
+                                {
+                                    minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
+                                    <span>@minuteDifference dakika önce</span>
+                                }
+                                // Fark 24 saatten azsa
+                                else if (difference <= twentyFourHours) 
+                                {
+                                    hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
+                                    <span>@hourDifference saat önce</span>
+                                }
+                                // Fark 24 saatten fazlaysa
+                                else 
+                                {
+                                    dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
+                                    <span>@dayDifference gün önce</span>
+                                }
+                            }
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+        }
+        <li>
+            <div class="notification_bottom">
+                <a asp-area="Teacher" asp-controller="Announcement" asp-action="Index">Tüm duyuruları gör</a>
+            </div>
+        </li>
+    </ul>
+</li>
