@@ -14,6 +14,7 @@ namespace BusinessLayer.Services.Abstract
         Task<string> TSafeDeleteLessonAsync(Guid lessonId);
         Task<string> TUndoDeleteLessonAsync(Guid lessonId);
         Task<List<LessonListDto>> TLessonsInTheStudentsGrade(Guid userId);  // Ogrencinin bulundugu siniftaki dersler listelencek (sadece o ogretmenin verdigi dersler)
+        Task<List<LessonListDto>> TLessonsInTheStudent(List<Lesson> lessons);  // Giris yapan ogrencinin bulundugu siniftaki tum dersler listeleniyor.
 
     }
 }

@@ -50,7 +50,7 @@ namespace BusinessLayer.Services.Concrete
             throw new NotImplementedException();
         }
 
-        public async Task<Grade> TGetGradeByIdAsync(int id)
+        public async Task<Grade> TGetGradeByIdAsync(int? id)
         {
             return await _gradeDal.GetGradeByIdAsync(id);
         }

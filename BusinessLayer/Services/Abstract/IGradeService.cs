@@ -9,7 +9,7 @@ namespace BusinessLayer.Services.Abstract
 {
     public interface IGradeService:IGenericService<Grade>
     {
-        Task<Grade> TGetGradeByIdAsync(int id);
+        Task<Grade> TGetGradeByIdAsync(int? id);
         Task<string> TSafeDeleteGradeAsync(int gradeId);
         Task<string> TUndoDeleteGradeAsync(int gradeId);
     }

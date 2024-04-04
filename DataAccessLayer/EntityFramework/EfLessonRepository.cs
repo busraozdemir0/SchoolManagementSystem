@@ -81,5 +81,23 @@ namespace DataAccessLayer.EntityFramework
             return lessonsInTheStudentsGrade;
         }
 
+        public async Task<List<LessonListDto>> LessonsInTheStudent(List<Lesson> lessons)
+        {
+            var studentId = _user.GetLoggedInUserId(); // Giris yapan ogrencinin id'si
+            var student = await _unitOfWork.GetRepository<AppUser>()
+                .GetAsync(x => x.Id == studentId, g => g.Grade, i => i.Image);
+
+            var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
+
+            List<LessonListDto> lessonsInTheStudentsGrade = new();
+            foreach (var lesson in mapLessons)
+            {
+                if (lesson.GradeId == student.GradeId)  // Ogrencinin sinif bilgisi ile dersin eklendigi sinif bilgisi esit ise listeye ekle
+                    lessonsInTheStudentsGrade.Add(lesson);
+            }
+
+            return lessonsInTheStudentsGrade; // Giris yapan ogrencinin bulundugu siniftaki tum dersler listeleniyor.
+
+        }
     }
 }

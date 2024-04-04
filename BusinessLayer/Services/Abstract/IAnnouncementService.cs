@@ -11,7 +11,8 @@ namespace BusinessLayer.Services.Abstract
     {
         Task<string> TSafeDeleteAnnouncementAsync(Guid announcementId);
         Task<string> TUndoDeleteAnnouncementAsync(Guid announcementId);
-		Task<List<Announcement>> TTeacherAnnouncementListAsync();
+		Task<List<Announcement>> TTeacherAnnouncementListAsync(); // Öğretmen panelinde - Teacher kullanicilarina yapilan duyurulari listelemek icin
+        Task<List<Announcement>> TStudentAnnouncementListAsync(); // Öğrenci panelinde - Student kullanicilarina yapilan duyurulari listelemek icin
         Task<List<Announcement>> TTeacherAnnouncementToStudentsListAsync();
 		Task<List<Announcement>> TTeacherAnnouncementToStudentsDeletedListAsync();
 	}

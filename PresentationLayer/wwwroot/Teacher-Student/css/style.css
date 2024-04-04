@@ -1331,7 +1331,7 @@ span.malorum-pro {
     display: inline-block;
     position: absolute;
     top: -60px;
-    left: 265px;
+    left: 285px;
     border: 2px solid #ccc;
     border-radius: 63px;
     -webkit-border-radius: 63px;
@@ -3654,6 +3654,11 @@ p.bottom {
     font-size: 2.2em;
     margin-top: 0.2em;
 }
+@media(max-width:1496px){
+    .malorum-pro {
+        left: 225px;
+    }
+}
 /*--prices end here--*/
 /*--meadia quiries start here--*/
 @media (max-width:1440px) {
@@ -4550,7 +4555,7 @@ p.bottom {
     }
 
     .malorum-pro {
-        left: 220px;
+        left: 320px;
     }
 
     .chit-chat-layer1-rit {
@@ -4579,6 +4584,10 @@ p.bottom {
         position: absolute;
         float: left;
         width: 170px;
+    }
+
+    .malorum-pro{
+        left:220px;
     }
 
     .left-content {
@@ -4692,6 +4701,10 @@ p.bottom {
         margin: 1em 0.9em;
     }
 
+    .malorum-pro{
+        left:220px;
+    }
+
     .user-name {
         margin-left: 5px;
     }
@@ -4774,7 +4787,7 @@ p.bottom {
     }
 
     .malorum-pro {
-        left: 180px;
+        left: 210px;
     }
 
     .chart-layer2-right {
@@ -5030,7 +5043,7 @@ p.bottom {
     }
 
     .malorum-pro {
-        left: 150px;
+        left: 200px;
     }
 
     .chart-layer-2 {
@@ -5238,7 +5251,7 @@ p.bottom {
     }
 
     .malorum-pro {
-        left: 120px;
+        left: 200px;
     }
 
     .popular-bran-left p {
@@ -5457,7 +5470,7 @@ p.bottom {
         width: 60px;
         height: 60px;
         top: -35px;
-        left: 83px;
+        left: 220px;
         background-size: 100%;
     }
 
@@ -5465,7 +5478,7 @@ p.bottom {
         width: 60px;
         height: 60px;
         top: -35px;
-        left: 83px;
+        left: 220px;
         background-size: 100%;
     }
 

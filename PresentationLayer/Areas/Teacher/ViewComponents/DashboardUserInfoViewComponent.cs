@@ -13,16 +13,18 @@ namespace PresentationLayer.Areas.Teacher.ViewComponents
 		private readonly ClaimsPrincipal _user;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserService _userService;
+        private readonly IAboutService _aboutService;
 
-		public DashboardUserInfoViewComponent(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService)
-		{
-			_httpContextAccessor = httpContextAccessor;
+        public DashboardUserInfoViewComponent(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService, IAboutService aboutService)
+        {
+            _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
             _unitOfWork = unitOfWork;
-			_userService = userService;
-		}
+            _userService = userService;
+            _aboutService = aboutService;
+        }
 
-		public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
 		{
 			var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
 			var userName = _user.GetLoggedInUserName(); // Giren kisinin kullanici adi
@@ -37,10 +39,10 @@ namespace PresentationLayer.Areas.Teacher.ViewComponents
 				ViewBag.UserAbout = user.UserAbout;
 
 			else
-				ViewBag.UserAbout = "Okulumuzda en yetkin öğretmenlerimizden biridir.";
+                ViewBag.UserAbout = await _aboutService.TGetSchoolNameAsync() + " Öğretmen Paneline hoş geldiniz.";
 
 
-			ViewBag.GetLoggedInImageId = user.ImageId;
+            ViewBag.GetLoggedInImageId = user.ImageId;
 
 			if (user.ImageId is null)
 				ViewBag.GetLoggedInImage = "user-avatar-profile.png"; // Profil resmi yuklenmemisse varsayilan resim gelsin.

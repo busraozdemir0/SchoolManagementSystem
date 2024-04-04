@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using DataAccessLayer.Extensions;
+using EntityLayer.DTOs.Lessons;
 
 namespace DataAccessLayer.EntityFramework
 {
@@ -57,46 +58,65 @@ namespace DataAccessLayer.EntityFramework
             return announcement.Title;
         }
 
-		public async Task<List<Announcement>> TeacherAnnouncementListAsync()
+        public async Task<List<Announcement>> TeacherAnnouncementListAsync()
         {
             var teacherRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.Teacher); // Teacher rolunun id'sini bul
             var userRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.User); // Tum kullanicilara duyuru yapilmissa user kullanicisinin rolunu bul.
 
             var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
-                    x=>x.RoleId == teacherRoleId || x.RoleId == userRoleId && !x.IsDeleted, r=>r.Role, u=>u.User);
+                    x => x.RoleId == teacherRoleId || x.RoleId == userRoleId && !x.IsDeleted, r => r.Role, u => u.User);
 
             return announcements;
         }
 
+        public async Task<List<Announcement>> StudentAnnouncementListAsync()
+        {
+            var studentRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.Student); // Student rolunun id'sini bul
+            var userRoleId = await _roleDal.GetByIdRoleAsync(RoleConsts.User); // Tum kullanicilara duyuru yapilmissa user kullanicisinin rolunu bul.
+
+            var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
+                    x => x.RoleId == studentRoleId || x.RoleId == userRoleId && !x.IsDeleted, r => r.Role, u => u.User);
+
+            List<Announcement> announcementsList = new();
+
+            foreach(var item in announcements)
+            {
+                if(!item.IsDeleted)
+                    announcementsList.Add(item);
+            }
+
+            return announcementsList;
+        }
+
         public async Task<List<Announcement>> TeacherAnnouncementToStudentsListAsync()
         {
-			var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
+            var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
 
-			var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
-				x => x.UserId == userId && !x.IsDeleted, r => r.Role, u => u.User);
+            var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
+                x => x.UserId == userId && !x.IsDeleted, r => r.Role, u => u.User);
 
-			List<Announcement> announcementList = new();
+            List<Announcement> announcementList = new();
 
-			foreach (var announcement in announcements)
-			{
-				
-					announcementList.Add(announcement);
-				
-			}
-			return announcementList;
-		}
+            foreach (var announcement in announcements)
+            {
 
-		public async Task<List<Announcement>> TeacherAnnouncementToStudentsDeletedListAsync()
+                announcementList.Add(announcement);
+
+            }
+            return announcementList;
+        }
+
+        public async Task<List<Announcement>> TeacherAnnouncementToStudentsDeletedListAsync()
         {
-			var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
+            var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
 
-			var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
-				x => x.UserId == userId && x.IsDeleted, r => r.Role, u => u.User);
+            var announcements = await _unitOfWork.GetRepository<Announcement>().GetAllAsync(
+                x => x.UserId == userId && x.IsDeleted, r => r.Role, u => u.User);
 
-			return announcements;
-		}
+            return announcements;
+        }
 
 
 
-	}
+    }
 }

@@ -14,7 +14,14 @@
                 <a data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
                     <div class="user_img"><img src="~/icons/announcement.png" alt=""></div>
                     <div class="notification_desc">
-                        <h5>@announcement.Title</h5>
+                        @if (announcement.Title.Length < 22)
+                        {
+                            <h5>@announcement.Title</h5>
+                        }
+                        else
+                        {
+                            <h5>@announcement.Title.Substring(0, 21)...</h5>
+                        }
                         <p>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</p>
                         <p>
                             @{
@@ -26,10 +33,10 @@
 
                                 TimeSpan twentyFourHours = TimeSpan.FromHours(24);
 
-                                // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.  
-                                @if (announcement.CreatedDate.Day == DateTime.Now.Day 
-                                && announcement.CreatedDate.Hour == DateTime.Now.Hour
-                                && difference.TotalSeconds < 60)
+                                // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.
+                                @if (announcement.CreatedDate.Day == DateTime.Now.Day
+                        && announcement.CreatedDate.Hour == DateTime.Now.Hour
+                        && difference.TotalSeconds < 60)
                                 {
                                     secondDifference = Convert.ToInt32(Math.Floor(difference.TotalSeconds));
                                     <span>@secondDifference saniye önce</span>
@@ -46,19 +53,19 @@
                                 // Fark 1 saatten azsa
                                 else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
                                 announcement.CreatedDate.Hour == DateTime.Now.Hour &&
-                                difference.TotalMinutes < 60) 
+                                difference.TotalMinutes < 60)
                                 {
                                     minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
                                     <span>@minuteDifference dakika önce</span>
                                 }
                                 // Fark 24 saatten azsa
-                                else if (difference <= twentyFourHours) 
+                                else if (difference <= twentyFourHours)
                                 {
                                     hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
                                     <span>@hourDifference saat önce</span>
                                 }
                                 // Fark 24 saatten fazlaysa
-                                else 
+                                else
                                 {
                                     dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
                                     <span>@dayDifference gün önce</span>

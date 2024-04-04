@@ -10,7 +10,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IGradeDal : IRepository<Grade>
     {
-        Task<Grade> GetGradeByIdAsync(int id);
+        Task<Grade> GetGradeByIdAsync(int? id);
         Task<string> SafeDeleteGradeAsync(int gradeId);
         Task<string> UndoDeleteGradeAsync(int gradeId);
     }

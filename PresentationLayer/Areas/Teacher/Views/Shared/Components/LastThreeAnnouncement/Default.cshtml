@@ -14,7 +14,14 @@
                 <a data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
                     <div class="user_img"><img src="~/icons/announcement.png" alt=""></div>
                     <div class="notification_desc">
-                        <h5>@announcement.Title</h5>
+                        @if (announcement.Title.Length < 22)
+                        {
+                            <h5>@announcement.Title</h5>
+                        }
+                        else
+                        {
+                            <h5>@announcement.Title.Substring(0, 21)...</h5>
+                        }
                         <p>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</p>
                         <p>
                             @{

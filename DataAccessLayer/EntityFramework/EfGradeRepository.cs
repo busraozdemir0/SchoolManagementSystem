@@ -21,7 +21,7 @@ namespace DataAccessLayer.EntityFramework
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Grade> GetGradeByIdAsync(int id)
+        public async Task<Grade> GetGradeByIdAsync(int? id)
         {
             return await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == id && !x.IsDeleted);
         }

@@ -15,7 +15,7 @@
                         </ol>
                     </nav>
                     <div class="card mb-4">
-                        <form asp-area="Teacher" asp-controller="Profile" asp-action="Update" method="POST" enctype="multipart/form-data">
+                        <form asp-area="Student" asp-controller="Profile" asp-action="Update" method="POST" enctype="multipart/form-data">
                             <!-- Account -->
                             <div class="card-body">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -46,6 +46,25 @@
                                 <div asp-validation-summary="ModelOnly" style="color:red;"></div>
                                 <div class="row">
                                     <div class="row">
+
+                                        <input hidden asp-for="Gender" value="@ViewBag.Gender" />
+                                        <input hidden asp-for="GradeId" value="@ViewBag.GradeId" />
+
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label asp-for="StudentNo" class="form-label">Öğrenci Numarası</label>
+                                            <input asp-for="StudentNo" class="form-control"
+                                                   type="text"
+                                                   value="@ViewBag.StudentNo"
+                                                   readonly />
+                                        </div>
+
+                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
+                                            <label class="form-label">Sınıf</label>
+                                            <input value="@ViewBag.GradeName" class="form-control"
+                                                   type="text"
+                                                   readonly />
+                                        </div>
+
                                         <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
                                             <label asp-for="Name" class="form-label">İsim <small style="color:red;">*</small> </label>
                                             <input asp-for="Name" class="form-control"
@@ -111,19 +130,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
-                                            <label asp-for="Gender" class="form-label">Cinsiyeti</label>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    @Html.RadioButtonFor(model => model.Gender, "Kadın")
-                                                    <label for="Kadın" style="font-size:17px; color:black;">Kadın</label><br>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    @Html.RadioButtonFor(model => model.Gender, "Erkek")
-                                                    <label for="Erkek" style="font-size:17px; color:black;">Erkek</label><br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-md-6" style="margin-bottom:1.2em;">
                                             <label asp-for="UserAbout" class="form-label">Hakkımda Yazısı</label>
                                             <textarea asp-for="UserAbout" id="textEdit" class="form-control"
                                                       type="text"
@@ -139,9 +145,9 @@
                         </form>
                     </div>
                     <!-- /Account -->
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+

@@ -15,5 +15,6 @@ namespace DataAccessLayer.Abstract
         Task<string> SafeDeleteLessonAsync(Guid lessonId);
         Task<string> UndoDeleteLessonAsync(Guid lessonId);
         Task<List<LessonListDto>> LessonsInTheStudentsGrade(Guid userId);  // Ogrencinin bulundugu siniftaki dersler listelencek (sadece o ogretmenin verdigi dersler)
+        Task<List<LessonListDto>> LessonsInTheStudent(List<Lesson> lessons);  // Giris yapan ogrencinin bulundugu siniftaki tum dersler listeleniyor.
     }
 }

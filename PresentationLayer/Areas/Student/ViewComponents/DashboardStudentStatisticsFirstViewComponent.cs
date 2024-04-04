@@ -20,11 +20,12 @@ namespace PresentationLayer.Areas.Student.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var lessons = await _lessonService.TGetAllTeacherLessonsAsync();
-            ViewBag.LessonCount = lessons.Count();
+            var lessons = await _lessonService.GetListAsync(); // Tum dersler lessons listesinde.
+            var lessonsStudent = await _lessonService.TLessonsInTheStudent(lessons); // lessons listesi gonderilerek giris yapan ogrenci kullanicisinin dersleri listeleniyor. 
+            ViewBag.LessonCount = lessonsStudent.Count();
 
-            var announcementCount = await _announcementService.TTeacherAnnouncementListAsync();
-            ViewBag.AnnouncementCount=announcementCount.Count();
+            var announcement = await _announcementService.TStudentAnnouncementListAsync();
+            ViewBag.AnnouncementCount=announcement.Count();
 
             ViewBag.MessageCount = 12; // Toplam mesaj sayisi listelenecek
 

@@ -107,5 +107,10 @@ namespace BusinessLayer.Services.Concrete
             await _announcementDal.UpdateAsync(t);
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task<List<Announcement>> TStudentAnnouncementListAsync()
+        {
+            return await _announcementDal.StudentAnnouncementListAsync();
+        }
     }
 }

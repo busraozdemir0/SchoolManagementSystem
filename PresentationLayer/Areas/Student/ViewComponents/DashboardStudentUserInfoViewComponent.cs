@@ -13,31 +13,33 @@ namespace PresentationLayer.Areas.Student.ViewComponents
 		private readonly ClaimsPrincipal _user;
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IUserService _userService;
+		private readonly IAboutService _aboutService;
+		private readonly IGradeService _gradeService;
 
-		public DashboardStudentUserInfoViewComponent(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService)
-		{
-			_httpContextAccessor = httpContextAccessor;
+        public DashboardStudentUserInfoViewComponent(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService, IAboutService aboutService, IGradeService gradeService)
+        {
+            _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
             _unitOfWork = unitOfWork;
-			_userService = userService;
-		}
+            _userService = userService;
+            _aboutService = aboutService;
+            _gradeService = gradeService;
+        }
 
-		public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
 		{
-			var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
+            var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
 			var userName = _user.GetLoggedInUserName(); // Giren kisinin kullanici adi
-			var user = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, i => i.Image);
-			var userRole = await _userService.TGetUserRoleAsync(user);
+            ViewBag.UserName = userName;
 
-			ViewBag.UserName = userName;
-
-			ViewBag.NameSurname = user.Name+" "+user.Surname;
-
+            var user = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, i => i.Image);
+            ViewBag.NameSurname = user.Name + " " + user.Surname;
+            
 			if (user.UserAbout is not null)
 				ViewBag.UserAbout = user.UserAbout;
 
 			else
-				ViewBag.UserAbout = "Okulumuzda en yetkin öğretmenlerimizden biridir.";
+				ViewBag.UserAbout = await _aboutService.TGetSchoolNameAsync() + " Öğrenci Paneline hoş geldiniz.";
 
 
 			ViewBag.GetLoggedInImageId = user.ImageId;
@@ -48,9 +50,15 @@ namespace PresentationLayer.Areas.Student.ViewComponents
 			else
 				ViewBag.GetLoggedInImage = user.Image.FileName;
 
-			ViewBag.GetLoggedInRoleName = userRole;
+            var userRole = await _userService.TGetUserRoleAsync(user); // Kullanicinin rolu(ogrenci)
+            ViewBag.GetLoggedInRoleName = userRole;
 
-			return View();
+            var profile = await _userService.TGetUserProfileAsync(); // Giren kisinin bilgileri
+            var grade = await _gradeService.TGetGradeByIdAsync(profile.GradeId); // Giren ogrencinin sınıfını bul
+            ViewBag.GradeName = grade.Name;
+            ViewBag.StudentNo = profile.StudentNo;
+
+            return View();
 		}
 	}
 }

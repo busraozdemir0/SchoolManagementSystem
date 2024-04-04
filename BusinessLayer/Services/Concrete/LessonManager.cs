@@ -83,5 +83,10 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _lessonDal.LessonsInTheStudentsGrade(userId);
         }
+
+        public async Task<List<LessonListDto>> TLessonsInTheStudent(List<Lesson> lessons)
+        {
+            return await _lessonDal.LessonsInTheStudent(lessons);
+        }
     }
 }

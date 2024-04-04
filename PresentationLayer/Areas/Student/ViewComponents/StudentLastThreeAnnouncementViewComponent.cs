@@ -24,7 +24,7 @@ namespace PresentationLayer.Areas.Student.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
 		{
-			var announcements = await _announcementService.TTeacherAnnouncementListAsync();
+			var announcements = await _announcementService.TStudentAnnouncementListAsync();
 
 			var announcementsLastThree=announcements.OrderByDescending(x => x.CreatedDate).Take(3);
 
