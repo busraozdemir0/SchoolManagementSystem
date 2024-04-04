@@ -64,11 +64,14 @@
                     <label>E-Mail:</label>
                     @ViewBag.GetLoggedInEmail
                 </li>
-                <li>
-                    <span class="fa fa-home m-r-xs"></span>
-                    <label>Adres:</label>
-                    @ViewBag.GetLoggedInAddress
-                </li>
+                @if (ViewBag.GetLoggedInAddress is not null) // Eger kullanici adres bilgisini girmisse dashboarda gosterilecek.
+                {
+                    <li>
+                        <span class="fa fa-home m-r-xs"></span>
+                        <label>Adres:</label>
+                        @ViewBag.GetLoggedInAddress
+                    </li>
+                }
                 <li>
                     <span class="fa fa-phone m-r-xs"></span>
                     <label>İletişim:</label>

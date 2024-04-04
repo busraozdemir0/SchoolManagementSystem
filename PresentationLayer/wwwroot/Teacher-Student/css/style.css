@@ -2429,6 +2429,7 @@ p.grid1 {
 .map-system {
     margin-bottom: 2em;
 }
+
 /*--maps end here--*/
 /*--balank page start here--*/
 .blank {
@@ -3864,7 +3865,6 @@ p.bottom {
         padding: 0.9em 1em;
         background: #fff;
     }
-
     li.dropdown.head-dpdn a.dropdown-toggle {
         margin: 1em 1.1em;
     }

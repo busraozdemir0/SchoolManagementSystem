@@ -167,18 +167,17 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View(mapLessons);
 
         }
-        public async Task<IActionResult> StudentExcelReport(int gradeId) // Ogrenciler listesini excel formatinda indirmek icin
+        public async Task<IActionResult> StudentExcelReport(int gradeId) // O sinifta olan ogrenciler listesini excel formatinda indirmek icin
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var users = await _userService.TGetAllUsersWithRoleAsync();
-            var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
-            HashSet<UserListDto> students = new();
+            var students = await _userService.TGetAllStudentsWithRoleAsync(); // Ogrenciler listesi
+            HashSet<UserListDto> studentsInClasses = new();
 
-            foreach (var item in studentInClasses)
+            foreach (var item in students)
             {
-                if (item.GradeId == gradeId && item.Role == RoleConsts.Student) // Eger kullanici ogrenci rolundeyse ve gelen sinif id'si ile eslesiyorsa listeye ekle
-                    students.Add(item);
+                if (item.GradeId == gradeId) // Ogrenci gelen sinif id'si ile eslesiyorsa listeye ekle
+                    studentsInClasses.Add(item);
             }
 
             var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
@@ -195,7 +194,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 workSheet.Cell(1, 7).Value = "E-Mail";
 
                 int rowCount = 2;
-                foreach (var item in students)
+                foreach (var item in studentsInClasses)
                 {
                     workSheet.Cell(rowCount, 1).Value = item.StudentNo;
                     workSheet.Cell(rowCount, 2).Value = item.Name;

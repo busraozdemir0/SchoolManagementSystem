@@ -16,58 +16,53 @@
                     <div class="notification_desc">
                         <h5>@announcement.Title</h5>
                         <p>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</p>
-
-                        @{
-                            var difference = DateTime.Now - announcement.CreatedDate; // iki tarih arasi fark
-                            var minuteDifference = 0;
-                            var hourDifference = 0;
-                            var dayDifference = 0;
-
-                            // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse aradaki toplam dk farkini bul.
-                            if (announcement.CreatedDate.Day == DateTime.Now.Day && announcement.CreatedDate.Hour == DateTime.Now.Hour)
-                            {
-                                minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
-                            }
-
-                            // Eger yayinlanan duyuru gun yonunden su an ki gune esitse aradaki toplam saat farkini bul.
-                            else if (announcement.CreatedDate.Day == DateTime.Now.Day)
-                            {
-                                hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
-                            }
-
-                            // Aksi takdirde aradaki toplam gun farkini bul
-                            else
-                            {
-                                dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
-                            }
-                        }
-
                         <p>
+                            @{
+                                TimeSpan difference = DateTime.Now - announcement.CreatedDate; // iki tarih arasi fark
+                                var secondDifference = 0;
+                                var minuteDifference = 0;
+                                var hourDifference = 0;
+                                var dayDifference = 0;
 
-                            @if (announcement.CreatedDate.Day == DateTime.Now.Day && announcement.CreatedDate.Hour == DateTime.Now.Hour)
-                            {
-                                <span>@minuteDifference</span>
-                            }
-                            else if (announcement.CreatedDate.Day == DateTime.Now.Day)
-                            {
-                                <span>@hourDifference</span>
-                            }
-                            else
-                            {
-                                <span>@dayDifference</span>
-                            }
+                                TimeSpan twentyFourHours = TimeSpan.FromHours(24);
 
-                            @if (announcement.CreatedDate.Day == DateTime.Now.Day && announcement.CreatedDate.Hour == DateTime.Now.Hour)
-                            {
-                                <span>dakika önce</span>
-                            }
-                            else if (announcement.CreatedDate.Day == DateTime.Now.Day)
-                            {
-                                <span>saat önce</span>
-                            }
-                            else
-                            {
-                                <span>gün önce</span>
+                                // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.  
+                                @if (announcement.CreatedDate.Day == DateTime.Now.Day 
+                                && announcement.CreatedDate.Hour == DateTime.Now.Hour
+                                && difference.TotalSeconds < 60)
+                                {
+                                    secondDifference = Convert.ToInt32(Math.Floor(difference.TotalSeconds));
+                                    <span>@secondDifference saniye önce</span>
+                                }
+
+                                // Hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam dakika 1'den az ise 0 dakika gostermemesi icin 1 dakika once yaz.
+                                else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
+                                announcement.CreatedDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 1) // Fark 1 dakikadan azsa
+                                {
+                                    <span>1 dakika önce</span>
+                                }
+
+                                // Fark 1 saatten azsa
+                                else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
+                                announcement.CreatedDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 60) 
+                                {
+                                    minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
+                                    <span>@minuteDifference dakika önce</span>
+                                }
+                                // Fark 24 saatten azsa
+                                else if (difference <= twentyFourHours) 
+                                {
+                                    hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
+                                    <span>@hourDifference saat önce</span>
+                                }
+                                // Fark 24 saatten fazlaysa
+                                else 
+                                {
+                                    dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
+                                    <span>@dayDifference gün önce</span>
+                                }
                             }
                         </p>
                     </div>

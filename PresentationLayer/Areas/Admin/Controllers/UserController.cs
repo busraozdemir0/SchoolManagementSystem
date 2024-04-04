@@ -440,8 +440,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var users = await _userService.TGetAllUsersWithRoleAsync();
-            var studentInClasses = await _userService.TStudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+            var students = await _userService.TGetAllStudentsWithRoleAsync(); // Ogrenciler listesi
 
             using (var workBook = new XLWorkbook())
             {
@@ -455,7 +454,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 workSheet.Cell(1, 7).Value = "E-Mail";
 
                 int rowCount = 2;
-                foreach (var item in studentInClasses)
+                foreach (var item in students)
                 {
                     workSheet.Cell(rowCount, 1).Value = item.StudentNo;
                     workSheet.Cell(rowCount, 2).Value = item.Name;
