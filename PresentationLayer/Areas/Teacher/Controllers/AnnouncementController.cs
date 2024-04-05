@@ -56,7 +56,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
                     announcementList.Add(item);
                 }
             }
-            var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcementList);
+            var announcementsOrderBy = announcementList.OrderByDescending(x => x.CreatedDate);
+            var mapAnnouncements = _mapper.Map<List<AnnouncementListDto>>(announcementsOrderBy);     
             return View(mapAnnouncements);
         }
         public async Task<IActionResult> Detail(Guid announcementId)

@@ -13,21 +13,22 @@ namespace PresentationLayer.Areas.Student.ViewComponents
         private readonly ClaimsPrincipal _user;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
+		private readonly IGradeService _gradeService;
 
-        public StudentLoginProfileViewComponent(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _user = httpContextAccessor.HttpContext.User;
-            _unitOfWork = unitOfWork;
-            _userService = userService;
-        }
+		public StudentLoginProfileViewComponent(IHttpContextAccessor httpContextAccessor, IUnitOfWork unitOfWork, IUserService userService, IGradeService gradeService)
+		{
+			_httpContextAccessor = httpContextAccessor;
+			_user = httpContextAccessor.HttpContext.User;
+			_unitOfWork = unitOfWork;
+			_userService = userService;
+			_gradeService = gradeService;
+		}
 
-        public async Task<IViewComponentResult> InvokeAsync()
+		public async Task<IViewComponentResult> InvokeAsync()
         {
             var userId = _user.GetLoggedInUserId(); // Giren kisinin id'si
             var userName = _user.GetLoggedInUserName(); // Giren kisinin kullanici adi
             var user = await _unitOfWork.GetRepository<AppUser>().GetAsync(x=>x.Id==userId,i=>i.Image);
-            var userRole = await _userService.TGetUserRoleAsync(user);
 
             ViewBag.UserName = userName;
 
@@ -39,9 +40,12 @@ namespace PresentationLayer.Areas.Student.ViewComponents
             else
                 ViewBag.GetLoggedInImage = user.Image.FileName;
 
-            ViewBag.GetLoggedInRoleName = userRole;
-
-            return View();
+			var profile = await _userService.TGetUserProfileAsync(); // Giren kisinin bilgileri
+			var grade = await _gradeService.TGetGradeByIdAsync(profile.GradeId); // Giren ogrencinin sınıfını bul
+			ViewBag.StudentNo = profile.StudentNo;
+			ViewBag.GradeName = grade.Name;
+			
+			return View();
         }
     }
 }

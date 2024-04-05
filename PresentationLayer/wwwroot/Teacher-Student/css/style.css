@@ -1377,6 +1377,14 @@ span.malorum-pro {
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
 }
 
+.user-marorm-m {
+    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
+    margin-top:1.5em;
+    margin-bottom:1.5em;
+    margin-left:6.5em;
+    margin-right:6.5em;
+}
+
 .malorm-bottom ul {
     list-style: none;
     padding: 0px;
@@ -1463,7 +1471,6 @@ span.malorum-pro {
     transition: all .15s ease;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    font-size: 17px;
 }
 
 .malorum-icons a:hover .tooltip {
@@ -1517,7 +1524,6 @@ span.malorum-pro {
 .malorum-icons i {
     position: relative;
     top: 1px;
-    font-size: 1.5rem;
 }
 /*--chit chart layer start here--*/
 .panel {
@@ -4930,9 +4936,9 @@ p.bottom {
 }
 
 @media (max-width:600px) {
-    .copyrights{
-        width:34em;
-    }
+    /*.copyrights{
+        width:44em;
+    }*/
     .page-container {
         min-width: 600px;
     }
@@ -4975,8 +4981,15 @@ p.bottom {
 }
 
 @media (max-width:480px) {
-    .copyrights {
-        width: 33em;
+    /*.copyrights {
+        width: 42em;
+    }*/
+    .user-marorm-m {
+        box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
+        margin-top: 1.5em;
+        margin-bottom: 1em;
+        margin-left: 1.5em;
+        margin-right: 1.5em;
     }
     .page-container {
         min-width: 495px;
@@ -5273,9 +5286,9 @@ p.bottom {
 }
 
 @media (max-width:384px) {
-    .copyrights {
-        width: 32.7em;
-    }
+    /*.copyrights {
+        width: 42em;
+    }*/
     .page-container {
         min-width: 380px;
     }

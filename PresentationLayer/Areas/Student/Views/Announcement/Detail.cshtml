@@ -1,7 +1,7 @@
 ﻿@model AnnouncementListDto
 
 @{
-	ViewData["Title"] = "Duyuru "+ Model.Title;
+	ViewData["Title"] = "Duyuru " + Model.Title;
 }
 
 <div class="col-md-12 chart-layer1 m-5" style="margin-bottom:400px; margin-top:150px;">
@@ -13,7 +13,7 @@
 			<p>@Html.Raw(Model.Content)</p>
 			<ul class="malorum-icons">
 				<li>
-					<a class="btn btn-primary" asp-area="Teacher" asp-controller="Announcement" asp-action="Index"><i class="fa fa-arrow-left"></i>&nbsp; Geri Dön</a>
+					<a class="btn btn-primary" asp-area="Student" asp-controller="Announcement" asp-action="Index"><i class="fa fa-arrow-left"></i>&nbsp; Geri Dön</a>
 				</li>
 			</ul>
 		</div>

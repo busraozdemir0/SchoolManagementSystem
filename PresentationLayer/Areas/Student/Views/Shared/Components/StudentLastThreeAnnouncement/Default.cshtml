@@ -11,7 +11,7 @@
         @foreach (var announcement in Model)
         {
             <li>
-                <a data-id="@announcement.Id" asp-area="Teacher" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
+                <a data-id="@announcement.Id" asp-area="Student" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
                     <div class="user_img"><img src="~/icons/announcement.png" alt=""></div>
                     <div class="notification_desc">
                         @if (announcement.Title.Length < 22)
