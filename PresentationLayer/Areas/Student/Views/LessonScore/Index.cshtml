@@ -1,0 +1,157 @@
+﻿@model List<LessonScoreListDto>
+
+@{
+    ViewData["Title"] = "Not Sistemi";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 20em;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Not Bilgileriniz</li>
+                        </ol>
+                    </nav>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="background-color:black; color:#fff;">Dersler</th>
+                                    <th style="background-color:black; color:#fff;">1. Sınav Notu</th>
+                                    <th style="background-color:black; color:#fff;">2. Sınav Notu</th>
+                                    <th style="background-color:black; color:#fff;">Performans Notu</th>
+                                    <th style="background-color:black; color:#fff;">Puan</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var lessonScore in Model)
+                                {
+                                    <tr name="@lessonScore.Id">
+                                        <td scope="row">@lessonScore.Lesson.LessonName</td>
+                                        <td>
+                                            @if (lessonScore.Score1 == 0)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                @lessonScore.Score1
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (lessonScore.Score2 == 0)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                @lessonScore.Score2
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (lessonScore.PerformanceScore == 0)
+                                            {
+                                                <p>-</p>
+                                            }
+                                            else
+                                            {
+                                                @lessonScore.PerformanceScore
+                                            }
+                                        </td>
+
+                                        <td>
+
+                                            @if (lessonScore.Score1 != 0 || lessonScore.Score2 != 0 || lessonScore.PerformanceScore != 0)
+                                            {
+                                                double? result = 0;
+                                                int notSayisi = 0;
+
+                                                if (lessonScore.Score1 != 0)
+                                                {
+                                                    result += lessonScore.Score1;
+                                                    notSayisi++;
+                                                }
+
+                                                if (lessonScore.Score2 != 0)
+                                                {
+                                                    result += lessonScore.Score2;
+                                                    notSayisi++;
+                                                }
+
+                                                if (lessonScore.PerformanceScore != 0)
+                                                {
+                                                    result += lessonScore.PerformanceScore;
+                                                    notSayisi++;
+                                                }
+
+                                                result /= notSayisi;
+
+                                                @* @String.Format("{0:0.##}", result) => double degiskenindeki degerin virgulden sonra 
+                                                sadece 2 basamak gosterilmesi icin formatlama islemi *@
+                                                <p style="color:limegreen; font-weight: bold;">@String.Format("{0:0.##}", result)</p>
+                                            }
+                                            else
+                                            {
+                                                <p style="color:limegreen; font-weight: bold;">0</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+            
+                    </div>
+                    @*
+                    Agirlikli ortalama hesabi => Her ders icin hesaplanan ortalamalarin, o dersin haftalik ders
+                    saatine carpiminin, ders saatleri toplamina bolunmesi ile elde edilen degerdir.
+                    Not ortalamasi da hesaplanan bu agirlikli ortalamalarin toplamidir.
+                    *@
+                    @{
+                        List<double?> resultList = new List<double?>();
+
+                        foreach (var lessonScore in Model)
+                        {
+                            double? result = 0;
+                            int notSayisi = 0;
+
+                            if (lessonScore.Score1 != 0)
+                            {
+                                result += lessonScore.Score1;
+                                notSayisi++;
+                            }
+
+                            if (lessonScore.Score2 != 0)
+                            {
+                                result += lessonScore.Score2;
+                                notSayisi++;
+                            }
+
+                            if (lessonScore.PerformanceScore != 0)
+                            {
+                                result += lessonScore.PerformanceScore;
+                                notSayisi++;
+                            }
+                            result = result * (lessonScore.Lesson.LessonCredit) / @ViewBag.TotalLessonCredit;
+                            if (notSayisi > 0)
+                            {
+                                result /= notSayisi;
+                                resultList.Add(result);
+                            }
+                        }
+
+                        double? genelOrtalama = 0;
+                        if (resultList.Count > 0)
+                        {
+                            genelOrtalama = resultList.Sum();
+                        }
+                    }
+
+                    <h4>Genel Ortalama: <span style="color:limegreen; font-weight: bold;">@String.Format("{0:0.##}", genelOrtalama)</span></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

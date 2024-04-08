@@ -76,6 +76,11 @@ namespace BusinessLayer.Services.Concrete
             return await _lessonScoreDal.GetDeletedListLoginTeacherLessonScore();
         }
 
+        public async Task<List<LessonScore>> TGetListLoginStudentLessonScore()
+        {
+            return await _lessonScoreDal.GetListLoginStudentLessonScore();
+        }
+
         public async Task<List<LessonScore>> TGetListLoginTeacherLessonScore()
         {
             return await _lessonScoreDal.GetListLoginTeacherLessonScore();

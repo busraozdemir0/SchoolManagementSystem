@@ -70,5 +70,16 @@ namespace DataAccessLayer.EntityFramework
             await _unitOfWork.GetRepository<LessonScore>().UpdateAsync(lessonScore);
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task<List<LessonScore>> GetListLoginStudentLessonScore()
+        {
+            // Giris yapan ogrencinin not bilgileri listelenecek
+
+            var loginStudentId = _user.GetLoggedInUserId();
+            var loginStudentLessonScores = await _unitOfWork.GetRepository<LessonScore>().
+                GetAllAsync(x => x.UserId == loginStudentId && !x.IsDeleted, u => u.User, l => l.Lesson);
+
+            return loginStudentLessonScores;
+        }
     }
 }
