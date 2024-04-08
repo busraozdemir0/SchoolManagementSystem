@@ -53,6 +53,11 @@ namespace BusinessLayer.Services.Concrete
             return await _lessonVideoDal.GetAllVideosByLesson(lesson);
         }
 
+        public async Task<List<LessonVideo>> TGetAllVideosByLesson(Guid lessonId)
+        {
+            return await _lessonVideoDal.GetAllVideosByLesson(lessonId);
+        }
+
         public async Task<LessonVideo> TGetByGuidAsync(Guid id)
         {
             return await _unitOfWork.GetRepository<LessonVideo>().

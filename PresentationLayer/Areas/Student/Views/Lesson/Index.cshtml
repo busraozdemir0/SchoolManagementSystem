@@ -1,0 +1,41 @@
+﻿@model List<LessonListDto>
+
+@{
+    ViewData["Title"] = "Dersler";
+}
+
+<div class="inner-block" style="margin-bottom: 10em;">
+    <div class="price-block-main">
+        <div class="prices-head">
+            <h2>Dersler</h2>
+        </div>
+        <div class="price-tables">
+            @foreach (var lesson in Model)
+            {
+                <div class="col-md-4 price-grid">
+                    <div class="price-block">
+                        <div class="price-gd-top pric-clr2">
+                            <h4>@lesson.LessonName</h4>
+                            <h5>    </h5>
+                            <h5><span style="font-weight:bold;">Dersin Kodu:</span> @lesson.LessonCode </h5>
+                            <h5><span style="font-weight:bold;">Haftalık Saati:</span> @lesson.LessonCredit Saat </h5>
+                            <h5><span style="font-weight:bold;">Öğretmen Bilgisi:</span> @lesson.User.Name @lesson.User.Name</h5>
+                        </div>
+                        <div class="price-gd-bottom">
+                            <div class="price-list">
+                                <ul>
+                                    <li><a data-id="@lesson.Id" asp-area="Student" asp-controller="LessonDocument" asp-action="ListDocumentByLesson" asp-route-lessonId="@lesson.Id" style="color:black;">Ders Materyallerini Gör</a></li>
+                                    <li><a data-id="@lesson.Id" asp-area="Student" asp-controller="LessonVideo" asp-action="ListVideoByLesson" asp-route-lessonId="@lesson.Id" style="color:black;">Ders Videolarını Gör</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"> </div>

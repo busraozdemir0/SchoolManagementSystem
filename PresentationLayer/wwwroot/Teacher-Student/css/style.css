@@ -960,7 +960,6 @@ ul.dropdown-menu.drp-mnu li {
 /*inner-block--*/
 .inner-block {
     padding: 8em 2em 8em 2em;
-    background: #fafafa;
 }
 
 .market-update-block {
@@ -4769,7 +4768,6 @@ p.bottom {
 
     .inner-block {
         padding: 10em 2em 2em 2em;
-        background: #fafafa;
         width: fit-content;
     }
 
@@ -4975,7 +4973,6 @@ p.bottom {
 
     .inner-block {
         padding: 7em 1.5em 1.5em 1.5em;
-        background: #fafafa;
         width: fit-content;
     }
 }
@@ -5031,7 +5028,6 @@ p.bottom {
 
     .inner-block {
         padding: 7em 1em 2em 1em;
-        background: #fafafa;
         width: fit-content;
     }
 

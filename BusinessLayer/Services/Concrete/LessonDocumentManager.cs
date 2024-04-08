@@ -59,6 +59,11 @@ namespace BusinessLayer.Services.Concrete
             return await _lessonDocumentDal.GetAllDocumentsByLesson(lesson);
         }
 
+        public async Task<List<LessonDocument>> TGetAllDocumentsByLesson(Guid lessonId)
+        {
+            return await _lessonDocumentDal.GetAllDocumentsByLesson(lessonId);
+        }
+
         public async Task<LessonDocument> TGetByGuidAsync(Guid id)
         {
             return await _unitOfWork.GetRepository<LessonDocument>().

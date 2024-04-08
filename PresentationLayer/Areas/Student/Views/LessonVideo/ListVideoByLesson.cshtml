@@ -1,0 +1,80 @@
+﻿@model List<LessonVideoListDto>
+
+@{
+    ViewData["Title"] = "Ders Videoları";
+}
+
+<div class="inner-block" style="margin-bottom: 24em;">
+    <div class="product-block">
+        <div class="pro-head">
+            <h2>@ViewBag.LessonName Dersine Ait Ders Videoları</h2>
+        </div>
+        <a class="btn btn-success mb-3" asp-area="Student" asp-controller="Lesson" asp-action="Index" style="margin-left: 1.1em; margin-bottom:1.7em;">
+            <i class="fa fa-arrow-left"></i> Geri Dön
+        </a>
+        <br />
+        @foreach (var video in Model)
+        {
+            // Hem youtube videosu entegre edilmis hem de video yuklenmisse her bir video icin ayri ayri kart gosterilecek.
+
+            @if (video.YoutubeVideoPath is not null) // Eger ogretmen o ders ve konu basligi icin yotube ders videosu entegre etmisse bir kart olustur.
+            {
+                <div class="col-md-3 product-grid">
+                    <div class="product-items">
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    @* video responsive olabilmesi icin bootstrap'tan gelen class *@
+                                    <p>
+                                        @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
+                                        <iframe class="embed-responsive-item" width="322" height="235"
+                                                src=@Html.Raw(video.YoutubeVideoPath)
+                                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produ-cost">
+                            <h4>@video.Title</h4>
+                            <h5>Yüklenme Tarihi: @video.CreatedDate.ToShortDateString()</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (video.VideoId is not null) // Eger ogretmen o ders ve konu basligi icin ders videosu yuklemisse bir kart olustur.
+            {
+                <div class="col-md-3 product-grid">
+                    <div class="product-items">
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    @* video responsive olabilmesi icin bootstrap'tan gelen class *@
+                                    <p>
+                                        @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
+                                        <video class="embed-responsive-item" width="322" height="235" controls>
+                                            <source src="~/videos/@video.Video.FileName" />
+                                            Tarayıcınız video etiketini desteklemiyor.
+                                        </video>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produ-cost">
+                            <h4>@video.Title</h4>
+                            <h5>Yüklenme Tarihi: @video.CreatedDate.ToShortDateString()</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        @if (Model.Count == 0) // Eger derse ait hic video yoksa
+        {
+            <h3 style="margin-left: 0.7em; margin-bottom:1.7em; margin-top:0.5em; color:#da2222;">
+                Bu derse ait henüz video yüklenmedi.
+            </h3>
+        }
+
+        <div class="clearfix"> </div>
+    </div>
+</div>

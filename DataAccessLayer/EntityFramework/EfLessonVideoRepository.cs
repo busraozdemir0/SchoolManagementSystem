@@ -140,6 +140,12 @@ namespace DataAccessLayer.EntityFramework
             return lessonVideo.Title;
         }
 
-       
+        public async Task<List<LessonVideo>> GetAllVideosByLesson(Guid lessonId)
+        {
+            var videos = await _unitOfWork.GetRepository<LessonVideo>()
+               .GetAllAsync(x => x.LessonId == lessonId && !x.IsDeleted, l => l.Lesson, d => d.Video);
+
+            return videos;
+        }
     }
 }

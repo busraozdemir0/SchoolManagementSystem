@@ -138,5 +138,14 @@ namespace DataAccessLayer.EntityFramework
 
             return lessonDocument.Title;
         }
+
+        public async Task<List<LessonDocument>> GetAllDocumentsByLesson(Guid lessonId)
+        {
+            // Gelen ders id'sine gore o derse yuklenen ders dokumanlari
+            var documents = await _unitOfWork.GetRepository<LessonDocument>()
+                .GetAllAsync(x => x.LessonId == lessonId && !x.IsDeleted, l => l.Lesson, d => d.Document);
+
+            return documents;
+        }
     }
 }
