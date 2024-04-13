@@ -82,14 +82,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.datatables.net/buttons/1.6.3/js/dataTables.buttons.min.js" crossorigin="anonymous"></script>
 
-	<script src="https://cdn.tiny.cloud/1/khi50j745n59fxjdfkobluectpb0ilf3975uk04o61i7lnvu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
+@* 	<script src="https://cdn.tiny.cloud/1/khi50j745n59fxjdfkobluectpb0ilf3975uk04o61i7lnvu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
 	<script>
-		// https://www.tiny.cloud/my-account/integrate/ => sitesi ile text editor tool'u ekliyoruz.
+	// https://www.tiny.cloud/my-account/integrate/ => sitesi ile text editor tool'u ekliyoruz. (Fakat ucretli)
 
 		tinymce.init({
-			selector: '#textEdit', // id'si textEdit olanlara yazi duzenleme araci gelecek.
+			selector: '#editor', // id'si editor olanlara yazi duzenleme araci gelecek.
 			plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
 			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
 			tinycomments_mode: 'embedded',
@@ -100,6 +99,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			],
 			ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
 		});
+	</script> *@
+
+	<script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+	<script>
+		CKEDITOR.config.autoParagraph = false;
+		CKEDITOR.replace("editor");
 	</script>
 
 	@await RenderSectionAsync("Scripts", false)

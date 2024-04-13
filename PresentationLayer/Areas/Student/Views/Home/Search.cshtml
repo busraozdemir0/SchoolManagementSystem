@@ -1,0 +1,78 @@
+﻿ @model SearchModel
+
+@{
+    ViewData["Title"] = "Arama Sonuçları";
+}
+<div class="inner-block">
+    <div class="blank">
+        @if (ViewBag.Keyword is null)
+        {
+            <h2 style="margin-bottom:2em;">
+                Aradığınız “@ViewBag.Keyword” kelimesine ait sonuç bulunamadı... :(
+            </h2>
+            <p style="color:gray;">Lütfen tekrar deneyin.</p>
+
+            <div class="clearfix"> </div>
+        }
+
+        else if (Model.Announcements.Count != 0)
+        {
+
+            <h2 style="margin-bottom:2em;">
+                Şunun için @Model.Announcements.TotalItemCount sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+            </h2>
+            @foreach (var announcement in Model.Announcements)
+            {
+                <hr />
+                <div class="search-result">
+                    <h3><a class="a-custom-link" asp-area="Student" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">@announcement.Title</a></h3>
+                    <a href="#" class="a-custom-link">@(((DateTime)announcement.CreatedDate).ToString("dd-MM-yyyy"))</a>
+                    <p>
+                        @Html.Raw(announcement.Content)
+                    </p>
+                </div>
+                <hr />
+            }
+            @if (Model.Announcements.TotalItemCount > 5)
+            {
+                @Html.PagedListPager((IPagedList)Model.Announcements, page => Url.Action("Search", new { keyword = ViewBag.Keyword, page }))
+            }
+            <div class="clearfix"> </div>
+
+        }
+
+        else if (Model.Lessons.Count != 0)
+        {
+            <h2 style="margin-bottom:2em;">
+                Şunun için @Model.Lessons.TotalItemCount sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+            </h2>
+            @foreach (var lesson in Model.Lessons)
+            {
+                <hr />
+                <div class="search-result">
+                    <h3><a class="a-custom-link" asp-area="Student" asp-controller="LessonDocument" asp-action="ListDocumentByLesson" asp-route-lessonId="@lesson.Id">@lesson.LessonName</a></h3>
+                    <a href="#" class="a-custom-link">Ders Kodu: @lesson.LessonCode - Ders Saati: @lesson.LessonCredit</a>
+                </div>
+                <hr />
+            }
+            @if (Model.Lessons.TotalItemCount > 5)
+            {
+                @Html.PagedListPager((IPagedList)Model.Lessons, page => Url.Action("Search", new { keyword = ViewBag.Keyword, page }))
+            }
+            <div class="clearfix"> </div>
+        }
+
+        else
+        {
+            <h2 style="margin-bottom:2em;">
+                Aradığınız “@ViewBag.Keyword” kelimesine ait sonuç bulunamadı... :(
+            </h2>
+            <p style="color:gray;">Lütfen tekrar deneyin.</p>
+
+            <div class="clearfix"> </div>
+
+        }
+
+    </div>
+</div>
+

@@ -57,30 +57,30 @@ namespace DataAccessLayer.Helpers.Search
         public async Task<SearchModel> SearchAsync(string keyword, int page=1)
         {
             var announcement = await _unitOfWork.GetRepository<Announcement>()
-                .GetAllAsync(x => !x.IsDeleted && (x.Title.Contains(keyword)) || keyword.ToLower().Contains("duyuru"));
+                .GetAllAsync(x => !x.IsDeleted && (x.Title.ToLower().Contains(keyword)) || keyword.ToLower().Contains("duyuru"));
 
             var contact = await _unitOfWork.GetRepository<Contact>()
-                .GetAllAsync(x => !x.IsDeleted && (x.Subject.Contains(keyword)) || keyword.ToLower().Contains("iletişim"));
+                .GetAllAsync(x => !x.IsDeleted && (x.Subject.ToLower().Contains(keyword)) || keyword.ToLower().Contains("iletişim"));
 
             var grade = await _unitOfWork.GetRepository<Grade>()
-                .GetAllAsync(x => !x.IsDeleted && (x.Name.Contains(keyword)));
+                .GetAllAsync(x => !x.IsDeleted && (x.Name.ToLower().Contains(keyword)));
 
             var lesson = await _unitOfWork.GetRepository<Lesson>()
-                .GetAllAsync(x => !x.IsDeleted && (x.LessonName.Contains(keyword)) || keyword.ToLower().Contains("ders"));
+                .GetAllAsync(x => !x.IsDeleted && (x.LessonName.ToLower().Contains(keyword)) || keyword.ToLower().Contains("ders"));
             
             var lessonScore = await _unitOfWork.GetRepository<LessonScore>()
                 .GetAllAsync(x => !x.IsDeleted && (keyword.ToLower().Contains("not")) || (keyword.ToLower().Contains("puan")), l=>l.Lesson, u=>u.User);
 
             var report = await _unitOfWork.GetRepository<Report>()
-                .GetAllAsync(x => !x.IsDeleted && (x.Title.Contains(keyword)) || keyword.ToLower().Contains("haber"));
+                .GetAllAsync(x => !x.IsDeleted && (x.Title.ToLower().Contains(keyword)) || keyword.ToLower().Contains("haber"));
 
             var role = await _unitOfWork.GetRepository<AppRole>()
-                .GetAllAsync(x => (x.Name.Contains(keyword)) || keyword.ToLower().Contains("rol"));
+                .GetAllAsync(x => (x.Name.ToLower().Contains(keyword)) || keyword.ToLower().Contains("rol"));
 
             var user = await _unitOfWork.GetRepository<AppUser>()
-                                            .GetAllAsync(x => (x.Name.Contains(keyword)) || 
-                                            (x.Surname.Contains(keyword)) || (x.Email.Contains(keyword)) || 
-                                            (x.UserName.Contains(keyword)) || keyword.ToLower().Contains("kullanıcı"));
+                                            .GetAllAsync(x => (x.Name.ToLower().Contains(keyword)) || 
+                                            (x.Surname.ToLower().Contains(keyword)) || (x.Email.ToLower().Contains(keyword)) || 
+                                            (x.UserName.ToLower().Contains(keyword)) || keyword.ToLower().Contains("kullanıcı"));
 
             return new SearchModel
             {
@@ -96,13 +96,41 @@ namespace DataAccessLayer.Helpers.Search
 
         }
 
+        public async Task<SearchModel> SearchStudentAsync(string keyword, int page = 1)
+        {
+            var lessons = await _unitOfWork.GetRepository<Lesson>()
+                .GetAllAsync(x => !x.IsDeleted); // Silinmemis olan tum dersleri listele
+            var lessonStudent = await _lessonDal.LessonsInTheStudent(lessons); // lessons gonderilerek giris yapan ogrenci kullanicisinin dersleri listeleniyor. 
+            var mapLessonStudent = _mapper.Map<List<Lesson>>(lessonStudent);
+            HashSet<Lesson> studentLessons = new();
+            foreach (var item in mapLessonStudent)
+            {
+                if (item.LessonName.ToLower().Contains(keyword) || keyword.ToLower().Contains("ders"))
+                    studentLessons.Add(item);
+            }
+
+            var announcements = await _announcementDal.StudentAnnouncementListAsync(); // Duyurular icerisinde Ogrenci ve User rolu kullanilarak yapilan duyurular listelenecek.
+            HashSet<Announcement> studentAnnouncement = new();
+            foreach (var item in announcements)
+            {
+                if (item.Title.ToLower().Contains(keyword) || keyword.ToLower().Contains("duyuru"))
+                    studentAnnouncement.Add(item);
+            }
+
+            return new SearchModel
+            { 
+                Lessons = studentLessons.ToPagedList(page, 5),
+                Announcements = studentAnnouncement.ToPagedList(page, 5),
+            };
+        }
+
         public async Task<SearchModel> SearchTeacherAsync(string keyword, int page = 1)
         {
             var announcements = await _announcementDal.TeacherAnnouncementListAsync();
             HashSet<Announcement> teacherAnnouncement = new();
             foreach (var item in announcements)
             {
-                if (item.Title.Contains(keyword) || keyword.ToLower().Contains("duyuru"))
+                if (item.Title.ToLower().Contains(keyword) || keyword.ToLower().Contains("duyuru"))
                     teacherAnnouncement.Add(item);
             }
 
@@ -110,7 +138,7 @@ namespace DataAccessLayer.Helpers.Search
             HashSet<Lesson> teacherLessons = new();
             foreach (var item in lessons)
             {
-                if (item.LessonName.Contains(keyword) || keyword.ToLower().Contains("ders"))
+                if (item.LessonName.ToLower().Contains(keyword) || keyword.ToLower().Contains("ders"))
                     teacherLessons.Add(item);
             }
 
@@ -118,7 +146,7 @@ namespace DataAccessLayer.Helpers.Search
             foreach (var item in lessons)
             {
                 var grade = await _gradeDal.GetGradeByIdAsync(item.GradeId); // Dersin ait oldugu sinifin id'sine gore o sinif entity'sini getir.
-                if(item.Grade.Name.Contains(keyword) || keyword.ToLower().Contains("sınıf"))
+                if(item.Grade.Name.ToLower().Contains(keyword) || keyword.ToLower().Contains("sınıf"))
                     teacherGrades.Add(grade); // Map'lenen sinifi listeye ekle
             }
 
@@ -136,7 +164,7 @@ namespace DataAccessLayer.Helpers.Search
             HashSet<AppUser> teacherStudents = new();
             foreach (var item in mapStudents)
             {
-                if (item.Name.Contains(keyword) || item.Surname.Contains(keyword) || keyword.ToLower().Contains("öğrenci"))
+                if (item.Name.ToLower().Contains(keyword) || item.Surname.Contains(keyword) || keyword.ToLower().Contains("öğrenci"))
                     teacherStudents.Add(item);
             }
 

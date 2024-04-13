@@ -1338,7 +1338,7 @@ span.malorum-pro {
     -o-border-radius: 63px;
 }
 
-.malorm-bottom h2 {
+.malorm-bottom #nameSurname {  /*h2*/
     font-size: 1.3em;
     color: #68AE00;
     text-align: center;
@@ -1347,7 +1347,7 @@ span.malorum-pro {
     font-style: italic;
 }
 
-.malorm-bottom h1 {
+.malorm-bottom #title {  /*h1*/
     font-size: 1.8em;
     color: #337AB7;
     text-align: center;
@@ -1356,11 +1356,15 @@ span.malorum-pro {
     font-weight: bold;
 }
 
-.malorm-bottom h4 {
+.malorm-bottom #subTitle { /*h4*/
     font-size: 1em;
     margin: 0.5em 0em;
     color: #FC8213;
     font-family: 'Carrois Gothic', sans-serif;
+}
+
+#centered{
+    text-align:center;
 }
 
 .malorm-bottom p {
@@ -4370,11 +4374,11 @@ p.bottom {
             font-size: 0.75em;
         }
 
-        .malorm-bottom h2 {
+        .malorm-bottom #nameSurname {
             font-size: 1.2em;
         }
 
-        .malorm-bottom h4 {
+        .malorm-bottom #subTitle {
             font-size: 0.85em;
         }
 
@@ -5495,7 +5499,7 @@ p.bottom {
         padding: 1.5em 0.8em;
     }
 
-        .malorm-bottom h2 {
+        .malorm-bottom #nameSurname {
             font-size: 1em;
         }
 

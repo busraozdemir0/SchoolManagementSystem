@@ -11,5 +11,6 @@ namespace DataAccessLayer.Helpers.Search
     {
         Task<SearchModel> SearchAsync(string keyword, int page = 1);
         Task<SearchModel> SearchTeacherAsync(string keyword, int page = 1);
+        Task<SearchModel> SearchStudentAsync(string keyword, int page = 1);
     }
 }
