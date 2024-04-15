@@ -1,0 +1,134 @@
+﻿@model LessonVideoListDto
+
+@{
+    ViewData["Title"] = @ViewBag.LessonVideoTitle;
+}
+
+<div class="inner-block" style="margin-bottom: 24em;">
+    <div class="product-block">
+        <div class="pro-head">
+            <h2>"@ViewBag.LessonVideoTitle" Başlıklı Video</h2>
+        </div>
+        <a class="btn btn-success mb-3" data-id="@Model.LessonId" asp-area="Student" asp-controller="LessonVideo" asp-action="ListVideoByLesson" asp-route-lessonId="@Model.LessonId" style="margin-left: 1.1em; margin-bottom:1.7em;">
+            <i class="fa fa-arrow-left"></i> Geri Dön
+        </a>
+        <br />
+        @if (Model.YoutubeVideoPath is not null && Model.VideoId is not null)
+        {
+            <div class="col-md-6 product-grid" style="text-align:center;">
+                <div class="product-items">
+                    <div class="project-eff">
+                        <div id="nivo-lightbox-demo">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                @* video responsive olabilmesi icin bootstrap'tan gelen class *@
+                                <p>
+                                    @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
+
+                                    <iframe class="embed-responsive-item" width="322" height="235"
+                                            src="@Html.Raw(Model.YoutubeVideoPath)&autoplay=1"
+                                            title="YouTube video player" frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                    </iframe>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="produ-cost">
+                        <h4>@Model.Title</h4>
+                        <h5>Yüklenme Tarihi: @Model.CreatedDate.ToShortDateString()</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 product-grid" style="text-align:center;">
+                <div class="product-items">
+                    <div class="project-eff">
+                        <div id="nivo-lightbox-demo">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                @* video responsive olabilmesi icin bootstrap'tan gelen class *@
+                                <p>
+                                    @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
+                                    <video class="embed-responsive-item" width="322" height="235" controls>
+                                        <source src="~/videos/@Model.Video.FileName" />
+                                        Tarayıcınız video etiketini desteklemiyor.
+                                    </video>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="produ-cost">
+                        <h4>@Model.Title</h4>
+                        <h5>Yüklenme Tarihi: @Model.CreatedDate.ToShortDateString()</h5>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (Model.VideoId is null) // Eger ogretmen video yukleme kismini bos birakmissa iframe ile youtube videosunu goster
+        {
+            <div class="row">
+                <div class="col-md-1"></div>
+
+                <div class="col-md-10 product-grid" style="text-align:center;">
+                    <div class="product-items">
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    @* video responsive olabilmesi icin bootstrap'tan gelen class *@
+                                    <p>
+                                        @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
+
+                                        <iframe class="embed-responsive-item" width="322" height="235"
+                                                src="@Html.Raw(Model.YoutubeVideoPath)&autoplay=1"
+                                                title="YouTube video player" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                                        </iframe>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produ-cost">
+                            <h4>@Model.Title</h4>
+                            <h5>Yüklenme Tarihi: @Model.CreatedDate.ToShortDateString()</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1"></div>
+            </div>
+        }
+
+        else if (Model.YoutubeVideoPath is null) // Eger ogretmen youtube videosu entegre etme kismini bos birakmissa yuklenen video icin kart olustur.
+        {
+            <div class="row">
+                <div class="col-md-1"></div>
+
+                <div class="col-md-10 product-grid" style="text-align:center;">
+                    <div class="product-items">
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    @* video responsive olabilmesi icin bootstrap'tan gelen class *@
+                                    <p>
+                                        @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
+                                        <video class="embed-responsive-item" width="322" height="235" controls autoplay >
+                                            <source src="~/videos/@Model.Video.FileName" />
+                                            Tarayıcınız video etiketini desteklemiyor.
+                                        </video>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="produ-cost">
+                            <h4>@Model.Title</h4>
+                            <h5>Yüklenme Tarihi: @Model.CreatedDate.ToShortDateString()</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1"></div>
+            </div>
+        }
+        <div class="clearfix"> </div>
+    </div>
+</div>

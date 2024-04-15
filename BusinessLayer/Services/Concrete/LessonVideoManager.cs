@@ -64,6 +64,11 @@ namespace BusinessLayer.Services.Concrete
                 GetAsync(x => x.Id == id, d => d.Video, l => l.Lesson);
         }
 
+        public async Task TIncreaseTheCountOfViewsOfTheLessonVideo(LessonVideo lessonVideo)
+        {
+             await _lessonVideoDal.IncreaseTheCountOfViewsOfTheLessonVideo(lessonVideo);
+        }
+
         public async Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId)
         {
             return await _lessonVideoDal.SafeDeleteLessonVideoAsync(lessonVideoId);

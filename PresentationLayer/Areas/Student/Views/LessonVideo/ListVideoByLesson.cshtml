@@ -15,54 +15,64 @@
         <br />
         @foreach (var video in Model)
         {
-            // Hem youtube videosu entegre edilmis hem de video yuklenmisse her bir video icin ayri ayri kart gosterilecek.
+            // Hem youtube videosu entegre edilmis hem de video yuklenmisse tek bir kart gosterilecek. Fakat video detayinda iki video da yan yana gosterilecek.
 
-            @if (video.YoutubeVideoPath is not null) // Eger ogretmen o ders ve konu basligi icin yotube ders videosu entegre etmisse bir kart olustur.
+            @if (video.YoutubeVideoPath is not null && video.VideoId is not null) // Eger ogretmen o ders icin hem youtube videosu hem de normal video yuklemisse tek bir kart olustur.
             {
                 <div class="col-md-3 product-grid">
+
                     <div class="product-items">
-                        <div class="project-eff">
-                            <div id="nivo-lightbox-demo">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    @* video responsive olabilmesi icin bootstrap'tan gelen class *@
-                                    <p>
-                                        @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
-                                        <iframe class="embed-responsive-item" width="322" height="235"
-                                                src=@Html.Raw(video.YoutubeVideoPath)
-                                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                         <div class="produ-cost">
-                            <h4>@video.Title</h4>
+                            <h4>Başlık: @video.Title</h4>
                             <h5>Yüklenme Tarihi: @video.CreatedDate.ToShortDateString()</h5>
                         </div>
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo" style="text-align:center;">
+                                <a style="font-size:17px; color:black;" data-id="@video.Id" asp-area="Student" asp-controller="LessonVideo" asp-action="Detail" asp-route-lessonVideoId="@video.Id" class="btn btn-link">
+                                    <i class="fa fa-play"></i> Videoyu İzlemek İçin Tıklayın
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             }
-            @if (video.VideoId is not null) // Eger ogretmen o ders ve konu basligi icin ders videosu yuklemisse bir kart olustur.
+            else if (video.YoutubeVideoPath is null) // Eger ogretmen o ders ve konu basligi icin yotube ders videosu entegre etmemisse yuklenen video icin bir kart olustur.
+            {
+                <div class="col-md-3 product-grid">
+
+                    <div class="product-items">
+                        <div class="produ-cost">
+                            <h4>Başlık: @video.Title</h4>
+                            <h5>Yüklenme Tarihi: @video.CreatedDate.ToShortDateString()</h5>
+                        </div>
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo" style="text-align:center;">
+                                <a style="font-size:17px; color:black;" data-id="@video.Id" asp-area="Student" asp-controller="LessonVideo" asp-action="Detail" asp-route-lessonVideoId="@video.Id" class="btn btn-link">
+                                    <i class="fa fa-play"></i> Videoyu İzlemek İçin Tıklayın
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+            else if (video.VideoId is null) // Eger ogretmen o ders ve konu basligi icin ders videosu yuklememisse youtube videosu icin bir kart olustur.
             {
                 <div class="col-md-3 product-grid">
                     <div class="product-items">
-                        <div class="project-eff">
-                            <div id="nivo-lightbox-demo">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    @* video responsive olabilmesi icin bootstrap'tan gelen class *@
-                                    <p>
-                                        @* class="embed-responsive-item"=> bootstrap'tan geliyor' *@
-                                        <video class="embed-responsive-item" width="322" height="235" controls>
-                                            <source src="~/videos/@video.Video.FileName" />
-                                            Tarayıcınız video etiketini desteklemiyor.
-                                        </video>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                         <div class="produ-cost">
-                            <h4>@video.Title</h4>
+                            <h4>Başlık: @video.Title</h4>
                             <h5>Yüklenme Tarihi: @video.CreatedDate.ToShortDateString()</h5>
                         </div>
+                        <div class="project-eff">
+                            <div id="nivo-lightbox-demo" style="text-align:center;">
+                                <a style="font-size:17px; color:black;" data-id="@video.Id" asp-area="Student" asp-controller="LessonVideo" asp-action="Detail" asp-route-lessonVideoId="@video.Id" class="btn btn-link">
+                                    <i class="fa fa-play"></i> Videoyu İzlemek İçin Tıklayın
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             }

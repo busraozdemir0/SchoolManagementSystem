@@ -30,6 +30,8 @@ namespace DataAccessLayer.Context
         public DbSet<Image> Images { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Video> Videos { get; set; }
+        public DbSet<Visitor> Visitors { get; set; } // Kullanicinin id'sini ve ip adresi gibi bilgileri tutacak (ayni user id bilgisi varsa tekrar eklenmeyecek)
+        public DbSet<LessonVideoVisitor> LessonVideoVisitors { get; set; } // Videoya tiklayan ogrenci id'sini ve o videonun id'sini tutacak tablo
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

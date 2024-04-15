@@ -17,5 +17,7 @@ namespace DataAccessLayer.Abstract
         Task<string> UpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto);
         Task<string> SafeDeleteLessonVideoAsync(Guid lessonVideoId);
         Task<string> UndoDeleteLessonVideoAsync(Guid lessonVideoId);
+        Task IncreaseTheCountOfViewsOfTheLessonVideo(LessonVideo lessonVideo); // Student panelinde ogrenci videonun detayina basarak o videoyu izlemeye basladigi an
+                                                        // Visitor ve LessonVideoVisitor tablolarina ilgili bilgiler kaydedilecek ve O videonun goruntulenme sayisi bir arttirilacak.
     }
 }

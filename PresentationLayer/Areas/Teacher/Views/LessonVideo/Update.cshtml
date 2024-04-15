@@ -11,7 +11,7 @@
                 <div class="text-nowrap m-5">
                     <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Ders Videosu Yükle</li>
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">Ders Videosu Güncelle</li>
                         </ol>
                     </nav>
                     <a class="btn btn-warning mb-3" data-id="@ViewBag.LessonId" asp-area="Teacher" asp-controller="LessonVideo" asp-action="ListVideoByLesson" asp-route-lessonId="@ViewBag.LessonId" style="margin-bottom:1.7em;">
@@ -66,10 +66,15 @@
                                             </small>
 
                                             <small class="text-muted" style="font-size:11px;">
-                                                <b>Örneğin:</b> <strike><</strike><strike>iframe width="560" height="315" src=</strike>"https://www.youtube.com/embed/
-                                                <br />fuZBrTHoygc?si=mNj2DL_VXsQXJwxW" title="YouTube video player" frameborder="0"<br />
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
-                                                gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"<br />
+                                                <b>Örneğin:</b> <strike><</strike><strike>
+                                                    iframe width="560" height="315"
+                                                    src="
+                                                </strike> https://www.youtube.com/embed/
+                                                <br />fuZBrTHoygc?si=mNj2DL_VXsQXJwxW <strike>
+                                                    " title="YouTube video player" frameborder="0"<br />
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media;<br />
+                                                    gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                                                </strike><br />
                                                 <strike>allowfullscreen><</strike><strike>/iframe </strike>>
                                             </small>
                                             <span asp-validation-for="YoutubeVideoPath" class="text-danger"></span>

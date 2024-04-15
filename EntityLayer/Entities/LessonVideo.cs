@@ -26,6 +26,8 @@ namespace EntityLayer.Entities
         public Video Video { get; set; }
         public Guid LessonId { get; set; } // O dokuman hangi derse yuklendigi bilgisi
         public Lesson Lesson { get; set; }
+        public int ViewCount { get; set; } = 0; // Video goruntulenme sayisi (ogrenciler tarafindan video detayina tiklandiginda artacak)
+        public ICollection<LessonVideoVisitor> LessonVideoVisitors { get; set; } // Coka cok iliski kurmak icin
         
     }
 }

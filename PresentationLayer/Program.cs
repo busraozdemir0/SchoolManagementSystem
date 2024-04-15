@@ -2,13 +2,12 @@ using BusinessLayer.Describers;
 using BusinessLayer.Extensions;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using EntityLayer.Entities;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
-using System.Globalization;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,14 +32,17 @@ builder.Services.Configure<FormOptions>(o =>
 builder.Services.LoadDataLayerExtension(builder.Configuration);
 builder.Services.LoadBusinessLayerExtension();
 
+builder.Services.AddSession();
+
 // Add services to the container.
+
 builder.Services.AddControllersWithViews()
-     .AddNToastNotifyToastr(new ToastrOptions() // Toastr bildirimleri icin configurasyon
-     {
-         PositionClass = ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
-         TimeOut = 3000   // bildirim kac ms gosterilsin (3 sn olarak belirttik)
-     })
-     .AddRazorRuntimeCompilation(); // .AddRazorRuntimeCompilation() ile proje calisirken yapilan degisikliklerin sayfa yenilendigi gibi yansimasi icin;
+    .AddNToastNotifyToastr(new ToastrOptions() // Toastr bildirimleri icin configurasyon
+   {
+       PositionClass = ToastPositions.TopRight,  // bildirimin sag ustte cikmasini sagladik
+       TimeOut = 3000   // bildirim kac ms gosterilsin (3 sn olarak belirttik)
+   })
+     .AddRazorRuntimeCompilation();
 
 // * Identity yapilandirmasi
 builder.Services.AddIdentity<AppUser, AppRole>(option =>
@@ -56,6 +58,23 @@ builder.Services.AddIdentity<AppUser, AppRole>(option =>
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
 
+// Session yapilandirmasi
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = new PathString("/Login/Index");  // Kisi belli sayfalar icin oturum acmamissa otomatikmen bu dizine yonlendirilecektir.
+    config.LogoutPath = new PathString("/Login/LogOut");
+    config.Cookie = new CookieBuilder
+    {
+        Name = "SchoolManagementSystem",
+        HttpOnly = true,
+        SameSite = SameSiteMode.Strict,
+        SecurePolicy = CookieSecurePolicy.SameAsRequest // Hem http hem de https tarafindan istek alabilecegimiz anlamina gelir - sadece https'den alabilmek icin always secenegi secilmelidir.
+    };
+    config.SlidingExpiration = true;
+    config.ExpireTimeSpan = TimeSpan.FromDays(1);  // Oturumun 1 gun boyunca acik kalacagi anlamina geliyor - cookie 1 gun boyunca tutulacaktir.
+    config.AccessDeniedPath = new PathString("/Login/AccessDenied");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,6 +89,7 @@ app.UseNToastNotify();  // Ornegin haber eklendiginde bicimli bir sekilde bildir
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthentication();
@@ -91,16 +111,16 @@ app.UseEndpoints(endpoints =>
     endpoints.MapAreaControllerRoute(
         name: "Teacher",
         areaName: "Teacher",
-        pattern: "Teacher/{controller=Home}/{action=Dashboard}/{id?}" 
+        pattern: "Teacher/{controller=Home}/{action=Dashboard}/{id?}"
         );
 
-	endpoints.MapAreaControllerRoute(
-		name: "Student",
-		areaName: "Student",
-		pattern: "Student/{controller=Home}/{action=Dashboard}/{id?}"
-		);
+    endpoints.MapAreaControllerRoute(
+        name: "Student",
+        areaName: "Student",
+        pattern: "Student/{controller=Home}/{action=Dashboard}/{id?}"
+        );
 
-	endpoints.MapDefaultControllerRoute();
+    endpoints.MapDefaultControllerRoute();
 });
 
 app.Run();

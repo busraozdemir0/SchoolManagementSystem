@@ -16,5 +16,7 @@ namespace BusinessLayer.Services.Abstract
         Task<string> TUpdateLessonVideoAsync(LessonVideoUpdateDto lessonVideoUpdateDto);
         Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId);
         Task<string> TUndoDeleteLessonVideoAsync(Guid lessonVideoId);
+        Task TIncreaseTheCountOfViewsOfTheLessonVideo(LessonVideo lessonVideo); // Student panelinde ogrenci videonun detayina basarak o videoyu izlemeye basladigi an
+                                                                               // Visitor ve LessonVideoVisitor tablolarina ilgili bilgiler kaydedilecek ve O videonun goruntulenme sayisi bir arttirilacak.
     }
 }
