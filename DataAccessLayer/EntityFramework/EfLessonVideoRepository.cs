@@ -1,12 +1,12 @@
-﻿using DataAccessLayer.Abstract;
+﻿using AutoMapper;
+using DataAccessLayer.Abstract;
 using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.Helpers.Videos;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonVideos;
-using EntityLayer.DTOs.LessonVideos;
-using EntityLayer.DTOs.LessonVideos;
+using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +23,16 @@ namespace DataAccessLayer.EntityFramework
     {
         private readonly IVideoHelper _videoHelper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
-        public EfLessonVideoRepository(AppDbContext context, IVideoHelper videoHelper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor) : base(context)
+        public EfLessonVideoRepository(AppDbContext context, IVideoHelper videoHelper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, IMapper mapper) : base(context)
         {
             _videoHelper = videoHelper;
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
+            _mapper = mapper;
         }
         public async Task<List<LessonVideo>> GetAllVideosByLesson(Lesson lesson)
         {
@@ -38,7 +40,8 @@ namespace DataAccessLayer.EntityFramework
 
             // Giris yapan kisinin o derse yukledigi ders videolari
             var videos = await _unitOfWork.GetRepository<LessonVideo>()
-                .GetAllAsync(x => x.CreatedBy == loginTeacherId.ToString() && !x.IsDeleted, l => l.Lesson, d => d.Video);
+                .GetAllAsync(x => x.CreatedBy == loginTeacherId.ToString() && !x.IsDeleted,
+                l => l.Lesson, d => d.Video, v => v.LessonVideoVisitors);
 
             List<LessonVideo> lessonVideosByLesson = new();
             foreach (var Video in videos)
@@ -75,7 +78,7 @@ namespace DataAccessLayer.EntityFramework
                 var lessonVideo = new LessonVideo()
                 {
                     Title = lessonVideoAddDto.Title,
-                    YoutubeVideoPath=lessonVideoAddDto.YoutubeVideoPath,
+                    YoutubeVideoPath = lessonVideoAddDto.YoutubeVideoPath,
                     LessonId = lessonVideoAddDto.LessonId,
                     CreatedBy = loginTeacherId.ToString(),    // Giris yapan yani videoyu yukleyen kisinin id'si
                 };
@@ -140,10 +143,10 @@ namespace DataAccessLayer.EntityFramework
             return lessonVideo.Title;
         }
 
-        public async Task<List<LessonVideo>> GetAllVideosByLesson(Guid lessonId)
+        public async Task<List<LessonVideo>> GetAllVideosByLessonId(Guid lessonId)
         {
             var videos = await _unitOfWork.GetRepository<LessonVideo>()
-               .GetAllAsync(x => x.LessonId == lessonId && !x.IsDeleted, l => l.Lesson, d => d.Video);
+               .GetAllAsync(x => x.LessonId == lessonId && !x.IsDeleted, l => l.Lesson, d => d.Video, v=>v.LessonVideoVisitors);
 
             return videos;
         }
@@ -174,13 +177,42 @@ namespace DataAccessLayer.EntityFramework
 
             if (!lessonVideoVisitors.Any(x => x.VisitorId == addLessonVideoVisitors.VisitorId     // Eger ayni kullanici ayni videoya tekrar tiklamissa ViewCount artmayacak
                                     && x.LessonVideoId == addLessonVideoVisitors.LessonVideoId))  // Bu satir ile kullanici ayni videoya tekrar tiklamadigi vakit o videonun ViewCount sayisini bir arttirma islemi gerceklestiriyoruz.
-                                                                                                                
+
             {
                 await _unitOfWork.GetRepository<LessonVideoVisitor>().AddAsync(addLessonVideoVisitors); // LessonVideoVisitor tablosuna kayit ekleme
                 lessonVideo.ViewCount += 1; // Tiklanan ders videosunun ViewCount sayisini bir arttirma
                 await _unitOfWork.GetRepository<LessonVideo>().UpdateAsync(lessonVideo); // ViewCount sayisini bir arttirdigimiz icin LessonVideo tablosunu guncelleme islemi
                 await _unitOfWork.SaveAsync(); // degisiklikleri kaydetme islemi
             }
+        }
+
+        public async Task<HashSet<AppUser>> StudentsWatchingTheLessonVideo(Guid lessonVideoId)
+        {
+            // Gelen lessonVideoId'ye esit olanlar LessonVideoVisitors kayitlarini listele
+            var lessonVideoVisitors = await _unitOfWork.GetRepository<LessonVideoVisitor>()
+                .GetAllAsync(v => v.LessonVideoId == lessonVideoId, x => x.Visitor, y => y.LessonVideo);
+
+            List<Visitor> visitors = await _unitOfWork.GetRepository<Visitor>().GetAllAsync(); // Tum visitor'lari al
+
+            // O ders videosunu izleyen ogrencilerin userId bilgilerini studentsId adli listeye kaydet.
+            List<Guid> studentsId = new();
+            foreach (var lessonVideoVisitor in lessonVideoVisitors)
+            {
+                foreach (var visitor in visitors)
+                {
+                    if (lessonVideoVisitor.VisitorId == visitor.Id)
+                        studentsId.Add(visitor.UserId);
+                }
+            }
+
+            HashSet<AppUser> studentsWatchingTheLessonVideo = new(); // Videoyu izleyen ogrencilerin kaydedilecegi liste
+            foreach(var studentId in studentsId)
+            {
+                var user = await _unitOfWork.GetRepository<AppUser>().GetAsync(x=>x.Id==studentId, g=>g.Grade);
+                studentsWatchingTheLessonVideo.Add(user);
+            }
+
+            return studentsWatchingTheLessonVideo;
         }
     }
 }

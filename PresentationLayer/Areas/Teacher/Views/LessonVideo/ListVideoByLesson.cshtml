@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Ders Videoları";
 }
-
 <div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 20em;">
     <div class="row">
         <div class="col-lg-12">
@@ -24,6 +23,8 @@
                                 <th>Başlık</th>
                                 <th>Ders Videosu</th>
                                 <th>Yüklenme Tarihi</th>
+                                <th>Görüntülenme Sayısı</th>
+                                <th>Görüntüleyenler <i class="fa fa-eye"></i></th>
                                 <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
@@ -34,6 +35,8 @@
                                 <th>Başlık</th>
                                 <th>Ders Videosu</th>
                                 <th>Yüklenme Tarihi</th>
+                                <th>Görüntülenme Sayısı</th>
+                                <th>Görüntüleyenler <i class="fa fa-eye"></i></th>
                                 <th>Durum</th>
                                 <th>İşlemler</th>
                             </tr>
@@ -59,6 +62,12 @@
                                             </video>
                                         }
                                     <td>@video.CreatedDate.ToShortDateString()</td>
+                                    <td>@video.ViewCount</td>
+                                    <td>    
+                                        <a data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="StudentsWatchingTheLessonVideo" asp-route-lessonVideoId="@video.Id" class="btn text-primary">
+                                            Görüntüleyenleri Gör
+                                        </a>
+                                    </td>
                                     <td>@(video.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary btn-sm" data-id="@video.Id" asp-area="Teacher" asp-controller="LessonVideo" asp-action="Update" asp-route-lessonVideoId="@video.Id"><i class="fa fa-edit"></i></a>

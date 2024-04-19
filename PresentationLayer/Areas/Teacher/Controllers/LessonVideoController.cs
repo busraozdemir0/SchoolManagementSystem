@@ -3,16 +3,15 @@ using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
-using EntityLayer.DTOs.LessonDocuments;
 using EntityLayer.DTOs.LessonVideos;
-using EntityLayer.DTOs.LessonVideos;
-using EntityLayer.DTOs.LessonVideos;
-using EntityLayer.DTOs.LessonVideos;
+using EntityLayer.DTOs.Users;
+using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
 using System.Security.Claims;
+using static PresentationLayer.ResultMessages.Messages;
 
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
@@ -52,6 +51,24 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             ViewBag.LessonName = lesson.LessonName;
 
             return View(mapLessonVideos);
+        }
+
+        public async Task<IActionResult> StudentsWatchingTheLessonVideo(Guid lessonVideoId)
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var lessonVideo = await _lessonVideoService.TGetByGuidAsync(lessonVideoId); // Gonderilen lessonVideoId ile o nesne bulunuyor.
+            var lesson = await _lessonService.TGetByGuidAsync(lessonVideo.LessonId);
+            ViewBag.LessonId = lessonVideo.LessonId;
+            ViewBag.LessonName = lesson.LessonName;
+            ViewBag.LessonVideoTitle = lessonVideo.Title;
+            
+            
+            //İlgili dersteki videolari ve ilgili videoyu izleyen ogrenciler listeleniyor.
+            var studentsWatchingTheLessonVideo = await _lessonVideoService.TStudentsWatchingTheLessonVideo(lessonVideoId);
+            var mapStudentsWatchingTheLessonVideo = _mapper.Map<HashSet<UserListDto>>(studentsWatchingTheLessonVideo);
+
+            return View(mapStudentsWatchingTheLessonVideo);
         }
 
         [HttpGet]

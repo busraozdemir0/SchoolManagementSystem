@@ -1,0 +1,59 @@
+﻿@model HashSet<UserListDto>
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight" style="margin-bottom: 20em;">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:4.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">@ViewBag.LessonName Dersine Ait "@ViewBag.LessonVideoTitle" Başlıklı Videoyu İzleyen Öğrenciler</li>
+                        </ol>
+                    </nav>
+                    <a class="btn btn-warning mb-3" data-id="@ViewBag.LessonId" asp-area="Teacher" asp-controller="LessonVideo" asp-action="ListVideoByLesson" asp-route-lessonId="@ViewBag.LessonId" style="margin-bottom:1.7em;">
+                        <i class="fa fa-arrow-left"></i> Geri Dön
+                    </a>
+
+                    @if (Model.Count == 0)
+                    {
+                        <h3 style="color:red;">Bu videoyu herhangi bir öğrenci izlemedi.</h3>
+                    }
+                    else
+                    {
+                        @* Videoyu izleyen ogrencilerin listesi modal icerisinde gosteriliyor *@
+
+                        <table class="table table-hover" id="lessonVideosTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Öğrenci No</th>
+                                    <th>Sınıfı</th>
+                                    <th>İsim</th>
+                                    <th>Soyisim</th>
+                                    <th>Cinsiyeti</th>
+                                    <th>Email</th>
+                                    <th>Telefon Numarası</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var user in Model)
+                                {
+                                    <tr name="@user.Id">
+                                        <td>@user.StudentNo</td>
+                                        <td>@user.Grade.Name</td>
+                                        <td>@user.Name</td>
+                                        <td>@user.Surname</td>
+                                        <td>@user.Gender</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.PhoneNumber</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

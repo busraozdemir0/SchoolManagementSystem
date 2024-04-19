@@ -2,6 +2,7 @@
 using DataAccessLayer.Abstract;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonVideos;
+using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -53,9 +54,9 @@ namespace BusinessLayer.Services.Concrete
             return await _lessonVideoDal.GetAllVideosByLesson(lesson);
         }
 
-        public async Task<List<LessonVideo>> TGetAllVideosByLesson(Guid lessonId)
+        public async Task<List<LessonVideo>> TGetAllVideosByLessonId(Guid lessonId)
         {
-            return await _lessonVideoDal.GetAllVideosByLesson(lessonId);
+            return await _lessonVideoDal.GetAllVideosByLessonId(lessonId);
         }
 
         public async Task<LessonVideo> TGetByGuidAsync(Guid id)
@@ -72,6 +73,11 @@ namespace BusinessLayer.Services.Concrete
         public async Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId)
         {
             return await _lessonVideoDal.SafeDeleteLessonVideoAsync(lessonVideoId);
+        }
+
+        public async Task<HashSet<AppUser>> TStudentsWatchingTheLessonVideo(Guid lessonVideoId)
+        {
+            return await _lessonVideoDal.StudentsWatchingTheLessonVideo(lessonVideoId);
         }
 
         public async Task<string> TUndoDeleteLessonVideoAsync(Guid lessonVideoId)

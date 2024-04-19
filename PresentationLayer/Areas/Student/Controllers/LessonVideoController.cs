@@ -35,7 +35,7 @@ namespace PresentationLayer.Areas.Student.Controllers
         public async Task<IActionResult> ListVideoByLesson(Guid lessonId)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
-            var lessonVideos = await _lessonVideoService.TGetAllVideosByLesson(lessonId); // Bulunan ders nesnesi ile o derse yuklenmis videolar.
+            var lessonVideos = await _lessonVideoService.TGetAllVideosByLessonId(lessonId); // Bulunan ders nesnesi ile o derse yuklenmis videolar.
             var mapLessonVideos = _mapper.Map<List<LessonVideoListDto>>(lessonVideos);
 
             var lesson = await _lessonService.TGetByGuidAsync(lessonId); // Gelen ders id'sine gore ders nesnesi bulunuyor
