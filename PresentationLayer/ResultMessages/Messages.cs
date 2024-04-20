@@ -130,5 +130,25 @@
                 return $"{lessonVideoTitle} başlıklı ders videosu başarıyla geri alındı.";
             }
         }
+
+        public static class Grade
+        {
+            public static string Add(string gradeName)
+            {
+                return $"{gradeName} adlı sınıf başarıyla eklendi.";
+            }
+            public static string Update(string gradeName)
+            {
+                return $"{gradeName} adlı sınıf başarıyla güncellendi.";
+            }
+            public static string Delete(string gradeName)
+            {
+                return $"{gradeName} adlı sınıf başarıyla kaldırıldı.";
+            }
+            public static string UndoDelete(string gradeName)
+            {
+                return $"{gradeName} adlı sınıf başarıyla geri alındı.";
+            }
+        }
     }
 }

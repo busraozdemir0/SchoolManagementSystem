@@ -38,144 +38,146 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View(mapRoles);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Add()
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+        // ** Proje seneryosu gereği Rol ekleme, silme, guncelleme islemleri pasiflestirildi.
 
-            return View();
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Add()
+        //{
+        //    ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-        [HttpPost]
-        public async Task<IActionResult> Add(RoleAddDto roleAddDto)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+        //    return View();
+        //}
 
-            var mapRole = _mapper.Map<AppRole>(roleAddDto);
-            var validation = await _validator.ValidateAsync(mapRole);
+        //[HttpPost]
+        //public async Task<IActionResult> Add(RoleAddDto roleAddDto)
+        //{
+        //    ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            if (validation.IsValid)
-            {
-                var result = await _roleService.TCreateRoleAsync(roleAddDto);
+        //    var mapRole = _mapper.Map<AppRole>(roleAddDto);
+        //    var validation = await _validator.ValidateAsync(mapRole);
 
-                if (result.Succeeded)
-                {
-                    _toast.AddSuccessToastMessage(Messages.Role.Add(roleAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
-                    return RedirectToAction("Index", "Role", new { Area = "Admin" });
-                }
-                else
-                {
-                    result.AddToIdentityModelState(this.ModelState);
-                    _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+        //    if (validation.IsValid)
+        //    {
+        //        var result = await _roleService.TCreateRoleAsync(roleAddDto);
 
-                    validation.AddToModelState(this.ModelState);
-                    return View();
-                }
-            }
-            else
-            {
-                validation.AddToModelState(this.ModelState);
+        //        if (result.Succeeded)
+        //        {
+        //            _toast.AddSuccessToastMessage(Messages.Role.Add(roleAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
+        //            return RedirectToAction("Index", "Role", new { Area = "Admin" });
+        //        }
+        //        else
+        //        {
+        //            result.AddToIdentityModelState(this.ModelState);
+        //            _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
 
-                _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
-                return View();
-            }
+        //            validation.AddToModelState(this.ModelState);
+        //            return View();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        validation.AddToModelState(this.ModelState);
 
-        }
+        //        _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+        //        return View();
+        //    }
 
-        [HttpGet]
-        public async Task<IActionResult> Update(Guid roleId)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+        //}
 
-            var role = await _roleService.TFindByIdRoleAsync(roleId);
-            var mapRole = _mapper.Map<RoleUpdateDto>(role);
+        //[HttpGet]
+        //public async Task<IActionResult> Update(Guid roleId)
+        //{
+        //    ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            return View(mapRole);
-        }
+        //    var role = await _roleService.TFindByIdRoleAsync(roleId);
+        //    var mapRole = _mapper.Map<RoleUpdateDto>(role);
 
-        [HttpPost]
-        public async Task<IActionResult> Update(RoleUpdateDto roleUpdateDto)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+        //    return View(mapRole);
+        //}
 
-            var mapRole = _mapper.Map<AppRole>(roleUpdateDto);
-            var validation = await _validator.ValidateAsync(mapRole);
+        //[HttpPost]
+        //public async Task<IActionResult> Update(RoleUpdateDto roleUpdateDto)
+        //{
+        //    ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            if (validation.IsValid)
-            {
-                var result = await _roleService.TUpdateRoleAsync(roleUpdateDto);
+        //    var mapRole = _mapper.Map<AppRole>(roleUpdateDto);
+        //    var validation = await _validator.ValidateAsync(mapRole);
 
-                if (result.Succeeded)
-                {
-                    _toast.AddSuccessToastMessage(Messages.Role.Update(roleUpdateDto.Name), new ToastrOptions { Title = "Başarılı!" });
-                    return RedirectToAction("Index", "Role", new { Area = "Admin" });
-                }
-                else
-                {
-                    result.AddToIdentityModelState(this.ModelState);
+        //    if (validation.IsValid)
+        //    {
+        //        var result = await _roleService.TUpdateRoleAsync(roleUpdateDto);
 
-                    _toast.AddErrorToastMessage("Rol güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
-                    return View();
-                }
-            }
-            else
-            {
-                validation.AddToModelState(this.ModelState);
-                _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+        //        if (result.Succeeded)
+        //        {
+        //            _toast.AddSuccessToastMessage(Messages.Role.Update(roleUpdateDto.Name), new ToastrOptions { Title = "Başarılı!" });
+        //            return RedirectToAction("Index", "Role", new { Area = "Admin" });
+        //        }
+        //        else
+        //        {
+        //            result.AddToIdentityModelState(this.ModelState);
 
-                return View();
-            }
-        }
+        //            _toast.AddErrorToastMessage("Rol güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+        //            return View();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        validation.AddToModelState(this.ModelState);
+        //        _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
 
-        public async Task<IActionResult> Delete(Guid roleId)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+        //        return View();
+        //    }
+        //}
 
-            var result = await _roleService.TDeleteRoleAsync(roleId);
+        //public async Task<IActionResult> Delete(Guid roleId)
+        //{
+        //    ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            if (result.identityResult.Succeeded)
-            {
-                _toast.AddSuccessToastMessage(Messages.Role.Delete(result.roleName), new ToastrOptions { Title = "Başarılı!" });
-                return RedirectToAction("Index", "Role", new { Area = "Admin" });
-            }
-            else
-            {
-                result.identityResult.AddToIdentityModelState(this.ModelState);
-                _toast.AddErrorToastMessage("Rol silinirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
-            }
-            return View();
-        }
+        //    var result = await _roleService.TDeleteRoleAsync(roleId);
 
-        [HttpPost]
-        public async Task<IActionResult> AddWithAjax([FromBody] RoleAddDto roleAddDto)
-        {
-            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+        //    if (result.identityResult.Succeeded)
+        //    {
+        //        _toast.AddSuccessToastMessage(Messages.Role.Delete(result.roleName), new ToastrOptions { Title = "Başarılı!" });
+        //        return RedirectToAction("Index", "Role", new { Area = "Admin" });
+        //    }
+        //    else
+        //    {
+        //        result.identityResult.AddToIdentityModelState(this.ModelState);
+        //        _toast.AddErrorToastMessage("Rol silinirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+        //    }
+        //    return View();
+        //}
 
-            var mapRole = _mapper.Map<AppRole>(roleAddDto);
-            var validation = await _validator.ValidateAsync(mapRole);
+    //    [HttpPost]
+    //    public async Task<IActionResult> AddWithAjax([FromBody] RoleAddDto roleAddDto)
+    //    {
+    //        ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            if (validation.IsValid)
-            {
-                var result = await _roleService.TCreateRoleAsync(roleAddDto);
+    //        var mapRole = _mapper.Map<AppRole>(roleAddDto);
+    //        var validation = await _validator.ValidateAsync(mapRole);
 
-                if (result.Succeeded)
-                {
-                    _toast.AddSuccessToastMessage(Messages.Role.Add(roleAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
-                    return Json(Messages.Role.Add(roleAddDto.Name));
-                }
-                else
-                {
-                    result.AddToIdentityModelState(this.ModelState);
-                    _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+    //        if (validation.IsValid)
+    //        {
+    //            var result = await _roleService.TCreateRoleAsync(roleAddDto);
 
-                    return Json(result.Errors.First().Description);
-                }
-            }
-            else
-            {
-                _toast.AddErrorToastMessage(validation.Errors.First().ErrorMessage, new ToastrOptions { Title = "Başarısız!" });
-                return Json(validation.Errors.First().ErrorMessage);
-            }
-        }
+    //            if (result.Succeeded)
+    //            {
+    //                _toast.AddSuccessToastMessage(Messages.Role.Add(roleAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
+    //                return Json(Messages.Role.Add(roleAddDto.Name));
+    //            }
+    //            else
+    //            {
+    //                result.AddToIdentityModelState(this.ModelState);
+    //                _toast.AddErrorToastMessage("Rol eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+
+    //                return Json(result.Errors.First().Description);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            _toast.AddErrorToastMessage(validation.Errors.First().ErrorMessage, new ToastrOptions { Title = "Başarısız!" });
+    //            return Json(validation.Errors.First().ErrorMessage);
+    //        }
+    //    }
     }
 }

@@ -5,7 +5,14 @@
         <div class="row pb-xl-5 align-items-center">
             <div class="col-lg-6 position-relative home-block-3-left pb-lg-0 pb-5">
                 <div class="position-relative">
-                    <img src="~/images/@Model.Image.FileName" style="height:30em; width:40em;" alt="@Model.Title" class="img-fluid radius-image">
+                    @if (Model.ImageId is not null)
+                    {
+                        <img src="~/images/@Model.Image.FileName" style="height:30em; width:40em;" alt="@Model.Title" class="img-fluid radius-image">
+                    }
+                    else
+                    {
+                        <img src="~/icons/about_image.jpg" style="height:30em; width:40em;" alt="" class="img-fluid radius-image">
+                    }
                 </div>
             </div>
             <div class="col-xl-5 col-lg-6 offset-xl-1 mt-lg-0 mt-5 pt-lg-0 pt-5">

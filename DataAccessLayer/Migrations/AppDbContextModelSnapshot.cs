@@ -72,7 +72,7 @@ namespace DataAccessLayer.Migrations
                             Id = 1,
                             Content = "Atlas Koleji olarak 2009 yılında başladığımız yolculuğumuzda, ortaokul ve lise öğrencilerimizin başarıya ulaşmasını hedefliyor aynı zamanda hayalindeki lise ve üniversiteleri kazanmaları için elimizden geleni yapıyoruz. Okulda yapılan eğitimin yanı sıra web sitemiz sayesinde konuları pekiştirebilme ve birebir öğretmenle iletişime geçme imkanına sahip olabilecekler. Bu güne kadar mezunlarımızın çoğuna Türkiye'de oldukça ünlü okulları kazanabilmelerine vesile olduk. Hemen siz de iletişime geçin ve uygun fiyatlarla kolejimize kaydolarak hayallerinize ulaşın.",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 636, DateTimeKind.Local).AddTicks(8486),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 46, DateTimeKind.Local).AddTicks(6573),
                             IsDeleted = false,
                             SchoolName = "Atlas Koleji",
                             Title = "Çocuğunuz İçin En İyi Seçim Biziz"
@@ -132,7 +132,7 @@ namespace DataAccessLayer.Migrations
                             Id = 1,
                             AddressInfo = "Düzce Ünv., 81620 Yörük/Düzce Merkez/Düzce",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 637, DateTimeKind.Local).AddTicks(281),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 46, DateTimeKind.Local).AddTicks(8206),
                             EMail = "atlaskolej@gmail.com",
                             IsDeleted = false,
                             MapLocation = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12062.0903918608!2d31.180443!3d40.904286!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x409da0c35c97aa71%3A0x93cc0b0387c8fc40!2zRMO8emNlIMOcbml2ZXJzaXRlc2kgTcO8aGVuZGlzbGlrIEZha8O8bHRlc2k!5e0!3m2!1str!2str!4v1711622193416!5m2!1str!2str\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade",
@@ -216,28 +216,28 @@ namespace DataAccessLayer.Migrations
                         new
                         {
                             Id = new Guid("c54083a8-1ff1-43d0-9b51-c2fea5b3e60d"),
-                            ConcurrencyStamp = "3a9cccd5-06d7-4d34-980e-011e115d61b9",
+                            ConcurrencyStamp = "559b056f-9edf-4a13-bb92-a4011e025669",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("23420044-c9ae-462e-8317-88db8c734de1"),
-                            ConcurrencyStamp = "764fb919-f254-4234-98b7-14f87f6ab638",
+                            ConcurrencyStamp = "8be10ad4-d5ca-4e74-95d1-05cf603c9b9d",
                             Name = "Öğretmen",
                             NormalizedName = "ÖĞRETMEN"
                         },
                         new
                         {
                             Id = new Guid("2157a98d-0223-4ae6-afb9-5f586e9ba4ae"),
-                            ConcurrencyStamp = "36d11c49-4ea9-4f78-aeb1-c31db9ccc8b3",
+                            ConcurrencyStamp = "db425899-0bf9-4db3-80df-781be5bfb8a4",
                             Name = "Öğrenci",
                             NormalizedName = "ÖĞRENCI"
                         },
                         new
                         {
                             Id = new Guid("8db4507c-ee16-4f5f-82a6-d187a2acb21d"),
-                            ConcurrencyStamp = "0f916fda-e073-42d1-bc86-6c9efacc7ae7",
+                            ConcurrencyStamp = "da9661cd-4282-4c2d-b2c2-968361aa8cdb",
                             Name = "Kullanıcı",
                             NormalizedName = "KULLANICI"
                         });
@@ -367,7 +367,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = new Guid("a61f597b-2c8d-4cb4-80a6-6822178322a8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6e451588-5e79-40e6-b474-55733ad8b8a3",
+                            ConcurrencyStamp = "ff00a1f8-0be6-4dbe-92c0-3e77efe6ee45",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             Gender = "Erkek",
@@ -375,10 +375,10 @@ namespace DataAccessLayer.Migrations
                             Name = "Admin",
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEI+vlGSbuLQHpaSwn5pzicxViMHtULVHmfkYF//8kmqk9zGmtKufPcBhPlLA/kz87w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB0IiooeRBKhnwAUTpSb9uMjYK92wakZWye/U64thKRLVIx87p4Xw6DLlMbBZN4Y/Q==",
                             PhoneNumber = "(111) 111 1111",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "ac361773-66f5-4b3c-b996-4314247e9230",
+                            SecurityStamp = "ed0de48e-cdb5-4c12-89b1-33e1604848c0",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "admin"
@@ -387,7 +387,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = new Guid("97b90210-a67f-426d-be2c-8adcab3100fb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b4c8b5dc-d887-4bbf-8b13-e12d666ad35c",
+                            ConcurrencyStamp = "837e5e70-d75a-4065-803d-46c45363d091",
                             Email = "ogretmen@gmail.com",
                             EmailConfirmed = true,
                             Gender = "Kadın",
@@ -395,10 +395,10 @@ namespace DataAccessLayer.Migrations
                             Name = "Öğretmen",
                             NormalizedEmail = "OGRETMEN@GMAIL.COM",
                             NormalizedUserName = "OGRETMEN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEObyGU7hznNPazfd7RHsXKFBrhL2Gd0mt/zGVpfERM/uTiG52nlUYvpOG3BIQkON5w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENfwT5e5M/dZ4/jC7j6M+qyvN1u0RGJbaihNWIebag06UuZHcRVYv0wYIzQPVzcV7A==",
                             PhoneNumber = "(222) 222 2222",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "8e9216ff-8827-470c-b945-66aa2df7d425",
+                            SecurityStamp = "5c595435-f4f2-4433-8932-192827567d48",
                             Surname = "Öğretmen",
                             TwoFactorEnabled = false,
                             UserName = "ogretmen"
@@ -407,7 +407,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = new Guid("a9949a78-7413-484e-a62a-eb0fb01b7f76"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5d4903cb-57b8-4f86-9dc0-980028874bc2",
+                            ConcurrencyStamp = "277b813c-d5e4-4299-b2ea-8dc0539c3ef2",
                             Email = "ogrenci@gmail.com",
                             EmailConfirmed = true,
                             Gender = "Kadın",
@@ -416,10 +416,10 @@ namespace DataAccessLayer.Migrations
                             Name = "Öğrenci",
                             NormalizedEmail = "OGRENCİ@GMAIL.COM",
                             NormalizedUserName = "OGRENCİ",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJM48+JyV8orWKtwCbiNMr+b7cGb6xTm0ApFYvUq+xJ6mACw4u0o3XpMmhJqgYepRw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJlnKRH4d7LYECQ/SpH7pNaka3KGuqjyZ6YB/U8UBIhEKnuXAIJY66eTMcp/Mgp4+A==",
                             PhoneNumber = "(333) 333 3333",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "7a84faec-5f7c-4893-9933-50b15c47b39c",
+                            SecurityStamp = "accd793f-c484-4b8f-8892-6048af51e27c",
                             StudentNo = 1234,
                             Surname = "Öğrenci",
                             TwoFactorEnabled = false,
@@ -635,7 +635,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 1,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(3036),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(2940),
                             IsDeleted = false,
                             Name = "9. Sınıf"
                         },
@@ -643,7 +643,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 2,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(3057),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(2962),
                             IsDeleted = false,
                             Name = "10. Sınıf"
                         },
@@ -651,7 +651,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 3,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(3058),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(2964),
                             IsDeleted = false,
                             Name = "11. Sınıf"
                         },
@@ -659,7 +659,7 @@ namespace DataAccessLayer.Migrations
                         {
                             Id = 4,
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(3060),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(2965),
                             IsDeleted = false,
                             Name = "12. Sınıf"
                         });
@@ -748,9 +748,9 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ecb68e10-f444-4090-9d5b-60fa73b2503f"),
+                            Id = new Guid("1bb1842f-d0be-4bdc-bede-7d9f5678af2e"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(4864),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(4786),
                             GradeId = 1,
                             IsDeleted = false,
                             LessonCode = "B100",
@@ -760,9 +760,9 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0e712d9a-8d88-4f37-9bd9-83ad0b5615d0"),
+                            Id = new Guid("361182e6-e970-4ab8-b192-bb90ce39f1cf"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(4904),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(4829),
                             GradeId = 2,
                             IsDeleted = false,
                             LessonCode = "M102",
@@ -772,9 +772,9 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f502d33f-283a-4257-8310-bbe281310a47"),
+                            Id = new Guid("ae2fc38e-88fc-43fe-bd4f-fe202a28464e"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(4908),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(4833),
                             GradeId = 3,
                             IsDeleted = false,
                             LessonCode = "F205",
@@ -784,9 +784,9 @@ namespace DataAccessLayer.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0c6be6d1-58d7-4761-a3fe-222fd75c27b9"),
+                            Id = new Guid("e68f0fce-4313-4d18-ac11-1fa17a99ca42"),
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 882, DateTimeKind.Local).AddTicks(4911),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 298, DateTimeKind.Local).AddTicks(4836),
                             GradeId = 4,
                             IsDeleted = false,
                             LessonCode = "B101",
@@ -949,6 +949,49 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("LessonVideoVisitors");
                 });
 
+            modelBuilder.Entity("EntityLayer.Entities.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReceiverUserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReceiverUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SenderUserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SenderUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverUserId");
+
+                    b.HasIndex("SenderUserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("EntityLayer.Entities.NewsLetter", b =>
                 {
                     b.Property<int>("Id")
@@ -1022,55 +1065,55 @@ namespace DataAccessLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ceaaaa0e-e115-4f9c-9edd-10b976c05f90"),
+                            Id = new Guid("b4dced7f-708b-4a08-955e-3b793c08d94b"),
                             Content = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 883, DateTimeKind.Local).AddTicks(5273),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 299, DateTimeKind.Local).AddTicks(5040),
                             IsDeleted = false,
                             Title = "Deneme"
                         },
                         new
                         {
-                            Id = new Guid("64d7be14-440e-4e4b-a773-fec6749b3102"),
+                            Id = new Guid("3288f782-f8bb-49c4-b631-b73b30ba3cb2"),
                             Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 883, DateTimeKind.Local).AddTicks(5308),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 299, DateTimeKind.Local).AddTicks(5060),
                             IsDeleted = false,
                             Title = "Gelecekte Yapay Zeka"
                         },
                         new
                         {
-                            Id = new Guid("82ab0bb1-2c9b-47ad-a516-d709d671e5ad"),
+                            Id = new Guid("59d556c3-cef0-4a9d-8f8e-504220c75404"),
                             Content = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 883, DateTimeKind.Local).AddTicks(5310),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 299, DateTimeKind.Local).AddTicks(5062),
                             IsDeleted = false,
                             Title = "Lorem İpsum"
                         },
                         new
                         {
-                            Id = new Guid("e9196b12-06e9-49e0-a12a-7ee17fd145ce"),
+                            Id = new Guid("ea6ccbaf-3081-4737-9dc1-984a62d89f90"),
                             Content = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 883, DateTimeKind.Local).AddTicks(5345),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 299, DateTimeKind.Local).AddTicks(5064),
                             IsDeleted = false,
                             Title = "Where can I get some?"
                         },
                         new
                         {
-                            Id = new Guid("2a81b003-14b6-4414-aaae-1ab59295c952"),
+                            Id = new Guid("fa7e12ae-79e8-49d3-aa32-f230a4541b71"),
                             Content = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 883, DateTimeKind.Local).AddTicks(5347),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 299, DateTimeKind.Local).AddTicks(5121),
                             IsDeleted = false,
                             Title = "Okulumuz Türkiye En'leri Arasında"
                         },
                         new
                         {
-                            Id = new Guid("56c363ea-b61c-4a67-9002-0d38c2a335b2"),
+                            Id = new Guid("f3932317-dba3-45c9-8f9e-b6a9603f14e8"),
                             Content = "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary",
                             CreatedBy = "Undefined",
-                            CreatedDate = new DateTime(2024, 4, 13, 22, 6, 7, 883, DateTimeKind.Local).AddTicks(5349),
+                            CreatedDate = new DateTime(2024, 4, 20, 14, 36, 40, 299, DateTimeKind.Local).AddTicks(5123),
                             IsDeleted = false,
                             Title = "Bir Ödül Daha Kazandık"
                         });
@@ -1318,6 +1361,25 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Visitor");
                 });
 
+            modelBuilder.Entity("EntityLayer.Entities.Message", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.AppUser", "ReceiverUser")
+                        .WithMany("ReceiverUserMessages")
+                        .HasForeignKey("ReceiverUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Entities.AppUser", "SenderUser")
+                        .WithMany("SenderUserMessages")
+                        .HasForeignKey("SenderUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("SenderUser");
+                });
+
             modelBuilder.Entity("EntityLayer.Entities.Report", b =>
                 {
                     b.HasOne("EntityLayer.Entities.Image", "Image")
@@ -1339,6 +1401,10 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("LessonScores");
 
                     b.Navigation("Lessons");
+
+                    b.Navigation("ReceiverUserMessages");
+
+                    b.Navigation("SenderUserMessages");
                 });
 
             modelBuilder.Entity("EntityLayer.Entities.Document", b =>

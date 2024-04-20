@@ -62,10 +62,19 @@
                                 </div>
 
                                 <div class="form-group">
-
-                                    @*  Sinif listesini dropdown icerisinde listeliyoruz *@
-                                    <label asp-for="GradeId" class="form-label">Sınıf Bilgisi <span style="color:red;">*</span></label>
-                                    <select id="gradeList" class="form-control mb-3" asp-for="GradeId" asp-items="@(new SelectList(Model.Grades,"Id","Name"))"></select>
+                                    <div class="row">
+                                        <div class="col-xl-11 col-lg-10 col-md-9 col-sm-9 ">
+                                            @*  Sinif listesini dropdown icerisinde listeliyoruz *@
+                                            <label asp-for="GradeId" class="form-label">Sınıf Bilgisi</label> <span style="color:red;">*</span>
+                                        </div>
+                                        @* data- ile baslayan kisimlara bs eklersek bootstrapten gelecegini anlar ve projedeki digerleriyle cakismaz *@
+                                        <div class="col-xl-1 col-lg-2 col-md-3 col-sm-3 ">
+                                            <a class="btn link-primary mb-2" style="color:dodgerblue;" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                                Sınıf Ekle <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <select asp-for="GradeId" class="form-control mb-3" asp-items="@(new SelectList(Model.Grades,"Id","Name"))"></select>
                                     <span asp-validation-for="GradeId" class="text-danger"></span>
 
                                 </div>
@@ -92,3 +101,43 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">Sınıf Ekleme</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="d-block form-label">Sınıf İsmi</label>
+                        <input class="form-control" type="text" id="gradeName" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="button" data-keyboard="false" class="btn btn-primary" id="btnSave">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* AJAX - Bootstrap modal ile sinif ekleme islemi *@
+
+    <script src="~/js/gradeAddWithAjax.js"></script>
+
+    <script>
+        var app = app || [];
+        app.Urls = app.Urls || [];
+
+        app.Urls.baseUrl = '@Url.Content("~")';
+        app.Urls.gradeAddUrl = "@(Url.Action("AddWithAjax", "Grade"))";
+        app.Urls.lessonAddUrl = "@(Url.Action("Add", "Lesson"))";
+    </script>
+}

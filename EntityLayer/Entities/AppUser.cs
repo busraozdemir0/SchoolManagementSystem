@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,5 +23,7 @@ namespace EntityLayer.Entities
         public ICollection<Lesson> Lessons { get; set; }
         public ICollection<LessonScore> LessonScores { get; set; }
         public ICollection<Announcement> Announcements { get; set; }
+        public virtual ICollection<Message> SenderUserMessages { get; set; }
+        public virtual ICollection<Message> ReceiverUserMessages { get; set; }
     }
 }

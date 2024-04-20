@@ -12,7 +12,7 @@
                 <a asp-area="Admin" asp-controller="Role" asp-action="Index">Roller</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong>Rol Yönetimi</strong>
+                <strong>Rol Listesi</strong>
             </li>
         </ol>
     </div>
@@ -27,23 +27,23 @@
                 <div class="card">
                     <div class="text-nowrap m-5">
 
-                        <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Role" asp-action="Add">
+                       @*  <a class="btn btn-outline-primary mb-3" asp-area="Admin" asp-controller="Role" asp-action="Add">
                             Rol Ekle <i class="fa fa-plus"></i>
-                        </a>
+                        </a> *@
 
                         <table class="table table-striped" id="rolesTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Rol Adı</th>
                                     <th>Normalleştirilmiş Adı</th>
-                                    <th>İşlemler</th>
+                                   @*  <th>İşlemler</th> *@
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Rol Adı</th>
                                     <th>Normalleştirilmiş Adı</th>
-                                    <th>İşlemler</th>
+                                    @* <th>İşlemler</th> *@
                                 </tr>
                             </tfoot>
                             <tbody class="table-border-bottom-0">
@@ -52,10 +52,10 @@
                                     <tr name="@role.Id">
                                         <td>@role.Name</td>
                                         <td>@role.NormalizedName</td>
-                                        <td class="text-center">
+                                       @*  <td class="text-center">
                                             <a class="btn btn-primary btn-sm" data-id="@role.Id" asp-area="Admin" asp-controller="Role" asp-action="Update" asp-route-roleId="@role.Id"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm" data-id="@role.Id" asp-area="Admin" asp-controller="Role" asp-action="Delete" asp-route-roleId="@role.Id"><i class="fa fa-minus-circle"></i></a>
-                                        </td>
+                                        </td> *@
                                     </tr>
                                 }
                             </tbody>

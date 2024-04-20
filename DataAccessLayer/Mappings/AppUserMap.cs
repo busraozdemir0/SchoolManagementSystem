@@ -20,6 +20,16 @@ namespace DataAccessLayer.Mappings
         }
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
+            builder.HasMany(u => u.SenderUserMessages)
+            .WithOne(m => m.SenderUser)
+            .HasForeignKey(m => m.SenderUserId)
+            .OnDelete(DeleteBehavior.Restrict); // İstege bagli: Silme davranisini belirleyebiliriz.
+
+            builder.HasMany(u => u.ReceiverUserMessages)
+                .WithOne(m => m.ReceiverUser)
+                .HasForeignKey(m => m.ReceiverUserId)
+                .OnDelete(DeleteBehavior.Restrict); // İstege bagli: Silme davranisini belirleyebiliriz.
+
             var admin = new AppUser
             {
                 Id = Guid.Parse("A61F597B-2C8D-4CB4-80A6-6822178322A8"),

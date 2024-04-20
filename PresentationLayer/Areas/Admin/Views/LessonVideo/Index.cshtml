@@ -35,6 +35,8 @@
                                     <th>Ders Videosu</th>
                                     <th>Yükleyen</th>
                                     <th>Yüklenme Tarihi</th>
+                                    <th>Görüntülenme Sayısı</th>
+                                    <th>Görüntüleyenler <i class="fa fa-eye"></i></th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -46,6 +48,8 @@
                                     <th>Ders Videosu</th>
                                     <th>Yükleyen</th>
                                     <th>Yüklenme Tarihi</th>
+                                    <th>Görüntülenme Sayısı</th>
+                                    <th>Görüntüleyenler <i class="fa fa-eye"></i></th>
                                     <th>Durum</th>
                                     <th>İşlemler</th>
                                 </tr>
@@ -72,6 +76,12 @@
                                             }
                                         <td>@video.LessonVideoTeacherInfo</td>
                                         <td>@video.CreatedDate.ToShortDateString()</td>
+                                        <td>@video.ViewCount</td>
+                                        <td>
+                                            <a data-id="@video.Id" asp-area="Admin" asp-controller="LessonVideo" asp-action="StudentsWatchingTheLessonVideo" asp-route-lessonVideoId="@video.Id" class="btn text-primary">
+                                                Görüntüleyenleri Gör
+                                            </a>
+                                        </td>
                                         <td>@(video.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">
                                             <a class="btn btn-primary btn-sm" data-id="@video.Id" asp-area="Admin" asp-controller="LessonVideo" asp-action="Update" asp-route-lessonVideoId="@video.Id"><i class="fa fa-edit"></i></a>

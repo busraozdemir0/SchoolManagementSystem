@@ -101,12 +101,12 @@
                                         <div class="col-xl-11 col-lg-10 col-md-9 col-sm-9 ">
                                             <label asp-for="RoleId" class="form-label">Kullanıcının Rolü</label> <span style="color:red;">*</span>
                                         </div>
-                                        <div class="col-xl-1 col-lg-2 col-md-3 col-sm-3 ">
-                                            <a class="btn link-primary mb-2" style="color:dodgerblue;" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                                @* data- ile baslayan kisimlara bs eklersek bootstrapten gelecegini anlar ve projedeki digerleriyle cakismaz *@
+                                        @* data- ile baslayan kisimlara bs eklersek bootstrapten gelecegini anlar ve projedeki digerleriyle cakismaz *@
+                                       @*  <div class="col-xl-1 col-lg-2 col-md-3 col-sm-3 ">
+                                            <a class="btn link-primary mb-2" style="color:dodgerblue;" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">   
                                                 Rol Ekle <i class="fa fa-plus"></i>
                                             </a>
-                                        </div>
+                                        </div> *@
                                     </div>
                                     <select asp-for="RoleId" class="form-control mb-3" asp-items="@(new SelectList(Model.Roles,"Id","Name"))"></select>
                                 </div>
@@ -147,8 +147,9 @@
     </div>
 </div>
 
+@* Proje seneryosu geregi Rol Ekleme islemi pasiflestirildi. *@
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@* <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -171,7 +172,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
 @section Scripts {
 
@@ -186,7 +187,7 @@
 
     @* AJAX - Bootstrap modal ile rol ekleme islemi *@
 
-    <script src="~/js/roleAdd.js"></script>
+   @*  <script src="~/js/roleAdd.js"></script>
 
     <script>
         var app = app || [];
@@ -195,5 +196,5 @@
         app.Urls.baseUrl = '@Url.Content("~")';
         app.Urls.roleAddUrl = "@(Url.Action("AddWithAjax", "Role"))";
         app.Urls.userAddUrl = "@(Url.Action("Add", "User"))";
-    </script>
+    </script> *@
 }

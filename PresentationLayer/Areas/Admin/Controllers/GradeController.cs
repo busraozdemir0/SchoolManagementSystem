@@ -2,16 +2,16 @@
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using ClosedXML.Excel;
-using DataAccessLayer.Consts;
+using DocumentFormat.OpenXml.Wordprocessing;
 using EntityLayer.DTOs.Grades;
 using EntityLayer.DTOs.Lessons;
+using EntityLayer.DTOs.Roles;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
-using static PresentationLayer.ResultMessages.Messages;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
@@ -41,8 +41,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var grades =await _gradeService.GetListAsync();
-            var mapGrades=_mapper.Map<List<GradeListDto>>(grades);
+            var grades = await _gradeService.GetListAsync();
+            var mapGrades = _mapper.Map<List<GradeListDto>>(grades);
             return View(mapGrades);
         }
         public async Task<IActionResult> DeletedGrades()
@@ -67,17 +67,17 @@ namespace PresentationLayer.Areas.Admin.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var mapGrade = _mapper.Map<Grade>(gradeAddDto);
-            var result=await _validator.ValidateAsync(mapGrade);
+            var result = await _validator.ValidateAsync(mapGrade);
 
             if (result.IsValid)
             {
                 await _gradeService.TAddAsync(mapGrade);
-                _toast.AddSuccessToastMessage(gradeAddDto.Name + " adlı sınıf başarıyla eklendi.", new ToastrOptions { Title = "Başarılı!" });
+                _toast.AddSuccessToastMessage(Messages.Grade.Add(gradeAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
                 return RedirectToAction("Index", "Grade", new { Area = "Admin" });
             }
             else
             {
-                _toast.AddSuccessToastMessage(gradeAddDto.Name + " adlı sınıf eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                _toast.AddSuccessToastMessage("Sınıf eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
                 result.AddToModelState(this.ModelState);
             }
             return View();
@@ -88,7 +88,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
-            var mapGrade=_mapper.Map<GradeUpdateDto>(grade);
+            var mapGrade = _mapper.Map<GradeUpdateDto>(grade);
             return View(mapGrade);
         }
         [HttpPost]
@@ -102,7 +102,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 await _gradeService.TUpdateAsync(mapGrade);
-                _toast.AddSuccessToastMessage(gradeUpdateDto.Name + " adlı sınıf başarıyla güncellendi.", new ToastrOptions { Title = "Başarılı!" });
+                _toast.AddSuccessToastMessage(Messages.Grade.Update(gradeUpdateDto.Name), new ToastrOptions { Title = "Başarılı!" });
                 return RedirectToAction("Index", "Grade", new { Area = "Admin" });
             }
             else
@@ -116,8 +116,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var gradeName =await _gradeService.TSafeDeleteGradeAsync(gradeId);
-            _toast.AddSuccessToastMessage(gradeName+" adlı sınıf başarıyla silindi.", new ToastrOptions { Title = "Başarılı!" });
+            var gradeName = await _gradeService.TSafeDeleteGradeAsync(gradeId);
+            _toast.AddSuccessToastMessage(Messages.Grade.Delete(gradeName), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("Index", "Grade", new { Area = "Admin" });
         }
         public async Task<IActionResult> UndoDelete(int gradeId)
@@ -125,19 +125,19 @@ namespace PresentationLayer.Areas.Admin.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var gradeName = await _gradeService.TUndoDeleteGradeAsync(gradeId);
-            _toast.AddSuccessToastMessage(gradeName + " adlı sınıf başarıyla geri alındı.", new ToastrOptions { Title = "Başarılı!" });
+            _toast.AddSuccessToastMessage(Messages.Grade.UndoDelete(gradeName), new ToastrOptions { Title = "Başarılı!" });
             return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
         }
         [HttpPost]
         public async Task<IActionResult> HardDelete(int gradeId)
-		{
+        {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var grade =await _gradeService.TGetGradeByIdAsync(gradeId);
-			await _gradeService.TDeleteAsync(grade);
-			_toast.AddSuccessToastMessage("Sınıf tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
-			return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
-		}
+            var grade = await _gradeService.TGetGradeByIdAsync(gradeId);
+            await _gradeService.TDeleteAsync(grade);
+            _toast.AddSuccessToastMessage("Sınıf tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("DeletedGrades", "Grade", new { Area = "Admin" });
+        }
 
         public async Task<IActionResult> GetAllStudentsWithGrade(int gradeId) // Gelen sinif id'sine gore o sinifta bulunan ogrencileri listeleyecek
         {
@@ -211,6 +211,28 @@ namespace PresentationLayer.Areas.Admin.Controllers
                     var content = stream.ToArray();
                     return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", grade.Name + "StudentsList.xlsx");
                 }
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddWithAjax([FromBody] GradeAddDto gradeAddDto) // Ajax ile sinif ekleme islemi
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var mapGrade = _mapper.Map<Grade>(gradeAddDto);
+            var validation = await _validator.ValidateAsync(mapGrade);
+
+            if (validation.IsValid)
+            {
+                await _gradeService.TAddAsync(mapGrade);
+                _toast.AddSuccessToastMessage(Messages.Grade.Add(gradeAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
+                return Json(Messages.Grade.Add(gradeAddDto.Name));
+            }
+            else
+            {
+                validation.AddToModelState(this.ModelState);
+                _toast.AddErrorToastMessage("Sınıf eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                return Json(validation.Errors.First().ErrorMessage);
             }
         }
     }

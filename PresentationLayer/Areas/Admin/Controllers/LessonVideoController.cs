@@ -3,6 +3,7 @@ using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonVideos;
+using EntityLayer.DTOs.Users;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -60,6 +61,24 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 lessonVideo.LessonVideoTeacherInfo = teacher.Name + " " + teacher.Surname; // Dersi veren ogretmenin ad soyad bilgisini view'da gosterebilmek icin              
             }
             return View(mapLessonVideo);
+        }
+
+        public async Task<IActionResult> StudentsWatchingTheLessonVideo(Guid lessonVideoId)
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var lessonVideo = await _lessonVideoService.TGetByGuidAsync(lessonVideoId); // Gonderilen lessonVideoId ile o nesne bulunuyor.
+            var lesson = await _lessonService.TGetByGuidAsync(lessonVideo.LessonId);
+            ViewBag.LessonId = lessonVideo.LessonId;
+            ViewBag.LessonName = lesson.LessonName;
+            ViewBag.LessonVideoTitle = lessonVideo.Title;
+
+
+            //İlgili dersteki videolari ve ilgili videoyu izleyen ogrenciler listeleniyor.
+            var studentsWatchingTheLessonVideo = await _lessonVideoService.TStudentsWatchingTheLessonVideo(lessonVideoId);
+            var mapStudentsWatchingTheLessonVideo = _mapper.Map<HashSet<UserListDto>>(studentsWatchingTheLessonVideo);
+
+            return View(mapStudentsWatchingTheLessonVideo);
         }
 
         [HttpGet]

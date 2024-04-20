@@ -68,6 +68,8 @@ namespace DataAccessLayer.EntityFramework
                 var lessonVideo = new LessonVideo(lessonVideoAddDto.Title,
                     lessonVideoAddDto.LessonId, video.Id, loginTeacherId.ToString());
 
+                lessonVideo.YoutubeVideoPath = lessonVideoAddDto.YoutubeVideoPath; // Eger video sectikten sonra Youtube videosu da entegre ettiyse Youtube video yolunu ilgili nesneye atiyoruz.
+
                 await _unitOfWork.GetRepository<LessonVideo>().AddAsync(lessonVideo);
                 await _unitOfWork.SaveAsync();
 
