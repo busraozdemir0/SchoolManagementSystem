@@ -26,8 +26,8 @@
             <li>
                 <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Mesajlar </span> <span class="fa arrow"></span> @* <span class="label label-warning float-right">16/24</span> *@</a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="#">Gelen Mesajlar</a></li>
-                    <li><a href="#">Giden Mesajlar</a></li>
+                    <li><a asp-area="Admin" asp-controller="Message" asp-action="InBox">Gelen Kutusu</a></li>
+                    <li><a asp-area="Admin" asp-controller="Message" asp-action="SendBox">Gönderilmiş Mesajlar</a></li>
                     <li><a href="#">Çöp Kutusu</a></li>
                 </ul>
             </li>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityLayer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,9 @@ namespace EntityLayer.DTOs.Messages
         public DateTime CreatedDate { get; set; }
         public bool IsDeleted { get; set; }
         public string SenderUserEmail { get; set; }
+        public AppUser SenderUser { get; set; }
         public string ReceiverUserEmail { get; set; }
+        public AppUser ReceiverUser { get; set; }
+
     }
 }

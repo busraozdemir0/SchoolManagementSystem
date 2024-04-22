@@ -1,0 +1,84 @@
+﻿@model MessageAddDto
+@{
+    ViewData["Title"] = "Mesaj Gönder";
+}
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox ">
+                <div class="ibox-content mailbox-content">
+                    <div class="file-manager">
+                        <a class="btn btn-block btn-primary compose-mail" asp-area="Admin" asp-controller="Message" asp-action="SendMessage">Mesaj Oluştur</a>
+                        <div class="space-25"></div>
+                        <h5>Klasörler</h5>
+                        <ul class="folder-list m-b-md" style="padding: 0">
+                            <li><a asp-area="Admin" asp-controller="Message" asp-action="InBox"> <i class="fa fa-inbox "></i> Gelen Kutusu <span class="label label-warning float-right">@ViewBag.inboxMessageCount</span> </a></li>
+                            <li><a asp-area="Admin" asp-controller="Message" asp-action="SendBox"> <i class="fa fa-send "></i> Gönderilmiş Mesajlar <span class="label label-warning float-right">@ViewBag.sendboxMessageCount</span> </a></li>
+                            <li><a asp-area="Admin" asp-controller="Message" asp-action="SendMessage"> <i class="fa fa-envelope-o"></i> Mesaj Oluştur</a></li>
+                            <li><a href="mailbox.html"> <i class="fa fa-star"></i> Önemli</a></li>
+                            <li><a href="mailbox.html"> <i class="fa fa-trash-o"></i> Çöp Kutusu</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 animated fadeInRight">
+            <div class="mail-box-header">
+                
+                <h2>
+                    Mesaj Gönder
+                </h2>
+            </div>
+            <form asp-area="Admin" asp-controller="Message" asp-action="SendMessage" method="post">
+                <div class="mail-box">
+                    <div class="mail-body">
+
+                        <div asp-validation-summary="All" style="color:red;"></div>
+                        
+                        <div class="form-group row">
+                            <label asp-for="ReceiverUserEmail" class="col-sm-2 col-form-label">E-Mail:</label>
+                            <div class="col-sm-10">
+                                <input asp-for="ReceiverUserEmail" type="email" id="eMail" class="form-control" value="" placeholder="E-Mail">
+                                <span style="color:red;" asp-validation-for="ReceiverUserEmail"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label asp-for="Subject" class="col-sm-2 col-form-label">Konu:</label>
+                            <div class="col-sm-10">
+                                <input asp-for="Subject" type="text" id="subject" class="form-control" value="" placeholder="Konu">
+                                <span style="color:red;" asp-validation-for="Subject"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mail-text h-200">
+                            <label asp-for="Content" class="col-sm-2 col-form-label">Mesaj:</label>
+                            <textarea asp-for="Content" id="editor" class="form-control"
+                                      type="text"
+                                      autofocus style="min-height:200px"></textarea>
+                            <span style="color:red;" asp-validation-for="Content"></span>               
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="mail-body text-right tooltip-demo">
+                        <button type="submit" class="btn btn-sm btn-primary" title="Send"><i class="fa fa-reply"></i> Gönder</button>
+                        <a href="#" id="discard" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email"><i class="fa fa-times"></i> İptal</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('discard').addEventListener('click', function() {
+        document.getElementById('eMail').value = ''; // Email inputunu temizle
+        document.getElementById('subject').value = ''; // Subject inputunu temizle
+        
+        var editor = CKEDITOR.instances['editor'];
+        editor.setData(''); // CKEditor icerigini temizle
+    });
+</script>

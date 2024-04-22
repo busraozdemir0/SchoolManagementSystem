@@ -68,6 +68,9 @@ namespace BusinessLayer.Extensions
             services.AddScoped<ILessonVideoService, LessonVideoManager>();
             services.AddScoped<ILessonVideoDal, EfLessonVideoRepository>();
 
+            services.AddScoped<IMessageService, MessageManager>();
+            services.AddScoped<IMessageDal, EfMessageRepository>();
+
             services.AddAutoMapper(assembly);
 
             // Fluent validation hata mesajlarinin turkcelestirilmesi

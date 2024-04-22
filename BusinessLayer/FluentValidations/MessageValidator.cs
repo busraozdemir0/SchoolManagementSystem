@@ -22,16 +22,6 @@ namespace BusinessLayer.FluentValidations
                 .NotNull()
                 .MinimumLength(2)
                 .WithName("Mesaj");
-
-            RuleFor(x => x.SenderUserEmail)
-                .NotEmpty()
-                .EmailAddress()
-                .WithName("Gönderen E-Mail");
-
-            RuleFor(x => x.ReceiverUserEmail)
-                .NotEmpty()
-                .EmailAddress()
-                .WithName("Alıcı E-Mail");
         }
     }
 }

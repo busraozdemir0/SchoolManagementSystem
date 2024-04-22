@@ -150,5 +150,21 @@
                 return $"{gradeName} adlı sınıf başarıyla geri alındı.";
             }
         }
+
+        public static class Message
+        {
+            public static string Add(string messageSubject)
+            {
+                return $"{messageSubject} konulu mesaj başarıyla gönderildi.";
+            }
+            public static string Delete(string messageSubject)
+            {
+                return $"{messageSubject} konulu mesaj başarıyla kaldırıldı.";
+            }
+            public static string UndoDelete(string messageSubject)
+            {
+                return $"{messageSubject} konulu mesaj başarıyla geri alındı.";
+            }
+        }
     }
 }
