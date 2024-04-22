@@ -26,8 +26,8 @@ namespace EntityLayer.Entities
         public Guid Id { get; set; }
         public string Subject { get; set; }
         public string Content { get; set; }
-        public DateTime CreatedDate { get; set; }=DateTime.Now;
-        public bool Status { get; set; } = true;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public bool IsDeleted { get; set; } = false; // Message eger silindiyse cop kutusunda duracak
         public Guid SenderUserId { get; set; }
         public string SenderUserEmail { get; set; }
         public AppUser SenderUser { get; set; }              
