@@ -5,22 +5,7 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-lg-3">
-            <div class="ibox ">
-                <div class="ibox-content mailbox-content">
-                    <div class="file-manager">
-                        <a class="btn btn-block btn-primary compose-mail" asp-area="Admin" asp-controller="Message" asp-action="SendMessage">Mesaj Oluştur</a>
-                        <div class="space-25"></div>
-                        <h5>Klasörler</h5>
-                        <ul class="folder-list m-b-md" style="padding: 0">
-                            <li><a asp-area="Admin" asp-controller="Message" asp-action="InBox"> <i class="fa fa-inbox "></i> Gelen Kutusu <span class="label label-warning float-right">@ViewBag.inboxMessageCount</span> </a></li>
-                            <li><a asp-area="Admin" asp-controller="Message" asp-action="SendBox"> <i class="fa fa-send "></i> Gönderilmiş Mesajlar <span class="label label-warning float-right">@ViewBag.sendboxMessageCount</span> </a></li>
-                            <li><a asp-area="Admin" asp-controller="Message" asp-action="SendMessage"> <i class="fa fa-envelope-o"></i> Mesaj Oluştur</a></li>
-                            <li><a href="mailbox.html"> <i class="fa fa-star"></i> Önemli</a></li>
-                            <li><a href="mailbox.html"> <i class="fa fa-trash-o"></i> Çöp Kutusu</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            @await Component.InvokeAsync("MessageSidebar")
         </div>
         <div class="col-lg-9 animated fadeInRight">
             <div class="mail-box-header">

@@ -29,9 +29,7 @@
                         <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
                         <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
                     </div>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Yenile</button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as important"><i class="fa fa-exclamation"></i> </button>
+                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Yenile</button>
                     <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
 
                 </div>
@@ -56,3 +54,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('btn').addEventListener('click', function () {
+        location.reload(); // Btn id'ye sahip butona tiklandiginda sayfa yeniden yuklenmesi icin.
+    });
+</script>

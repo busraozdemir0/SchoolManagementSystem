@@ -23,7 +23,7 @@
                     </div>
                 </form>
                 <h2>
-                    Gönderilen Mesajlar (@ViewBag.sendboxMessageCount)
+                    Yıldızlı Mesajlar (@ViewBag.ImportantMessageCount)
                 </h2>
                 <div class="mail-tools tooltip-demo m-t-md">
                     <div class="btn-group float-right">
@@ -44,7 +44,17 @@
                         {
                             <tr class="read">
                                 <td class="check-mail">
-                                    <input type="checkbox" class="i-checks">
+                                    <div class="row">
+                                        <input type="checkbox" class="i-checks mr-2 ml-1">
+                                        @if (message.IsImportant == false)
+                                        {
+                                            <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star-o"></i></a>
+                                        }
+                                        else
+                                        {
+                                            <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star"></i></a>
+                                        }
+                                    </div>
                                 </td>
                                 <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.ReceiverUser.Name @message.ReceiverUser.Surname</a></td>
                                 <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>

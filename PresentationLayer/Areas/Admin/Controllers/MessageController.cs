@@ -39,7 +39,6 @@ namespace PresentationLayer.Areas.Admin.Controllers
             // Giris yapan kisiye ait gelen mesajlar listeleniyor
             var inboxMessages = await _messageService.TGetInBoxWithMessageByLoginUser(); // Giris yapan kisinin id bilgisi ile message tablosunda ReceiverUserId esit olan mesajlar listelenecek.
             var mapMessages = _mapper.Map<List<MessageListDto>>(inboxMessages);
-            ViewBag.inboxMessageCount = mapMessages.Count();
 
             return View(mapMessages);
         }
@@ -128,6 +127,30 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var message = await _messageService.TUndoDeleteMessageAsync(messageId);
             _toast.AddSuccessToastMessage(Messages.Message.UndoDelete(message), new ToastrOptions { Title = "İşlem Başarılı!" });
             return RedirectToAction("SendBox", "Message", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> MakeImportantMessage(Guid messageId) // Mesaji yildizlayacak action
+        {
+            await _messageService.TMakeTheMessageImportant(messageId);
+            _toast.AddSuccessToastMessage("Mesaj başarıyla yıldızlandı.", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("InBox", "Message", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> UndoMakeImportantMessage(Guid messageId) // Mesaji yildizli klasorunden kaldiracak olan action
+        {
+            await _messageService.TUndoMakeTheMessageImportant(messageId);
+            _toast.AddSuccessToastMessage("Mesaj yıldızlı klasöründen kaldırıldı.", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("InBox", "Message", new { Area = "Admin" });
+        }
+
+        public async Task<IActionResult> GetAllImportant()
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            // Giris yapan kisiye ait ve yildizladigi mesajlar listeleniyor.
+            var importantMessages = await _messageService.TGetAllImportantMessages();
+            var mapMessages = _mapper.Map<List<MessageListDto>>(importantMessages);
+            
+            ViewBag.ImportantMessageCount=mapMessages.Count;
+            return View(mapMessages);
         }
     }
 }

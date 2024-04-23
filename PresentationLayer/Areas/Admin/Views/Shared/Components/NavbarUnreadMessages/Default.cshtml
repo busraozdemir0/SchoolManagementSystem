@@ -1,0 +1,115 @@
+﻿@model List<MessageListDto>
+
+<li class="dropdown">
+    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+        <i class="fa fa-envelope"></i>
+        @if (ViewBag.UnreadMessagesCount != 0)
+        {
+            <span class="label label-danger">@ViewBag.UnreadMessagesCount</span>
+        }
+    </a>
+    <ul class="dropdown-menu dropdown-messages">
+        @if (ViewBag.UnreadMessagesCount != 0)
+        {
+            <div class="text-center"><strong>@ViewBag.UnreadMessagesCount Yeni Mesajınız Var</strong></div>
+            <li class="dropdown-divider"></li>
+        }
+        else
+        {
+            <div class="text-center"><strong>Henüz Yeni Bir Mesajınız Yok.</strong></div>
+            <li class="dropdown-divider"></li>
+        } 
+        @foreach (var message in Model)
+        {
+            <li>
+                <div class="dropdown-messages-box">
+                    <a class="dropdown-item float-left" data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">
+                        @if (message.SenderUser.ImageId is not null)
+                        {
+                            <img alt="image" class="rounded-circle" src="~/images/@message.SenderUser.Image.FileName">
+                        }
+                        else
+                        {
+                            @* Eger mesaj atan kisinin gorseli yoksa varsayilan gorsel gelecek. *@
+                            <img alt="image" class="rounded-circle" src="~/icons/user-avatar-profile.png">
+                        }
+                    </a>
+                    <div class="media-body">
+                        @* Mesajin ne kadar sure once geldigini belirtmek icin *@
+                        <small class="float-right">
+                            @{
+                                TimeSpan difference = DateTime.Now - message.CreatedDate; // iki tarih arasi fark
+                                var secondDifference = 0;
+                                var minuteDifference = 0;
+                                var hourDifference = 0;
+                                var dayDifference = 0;
+
+                                TimeSpan twentyFourHours = TimeSpan.FromHours(24);
+
+                                // Eger yapilan mesaj hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.
+                                @if (message.CreatedDate.Day == DateTime.Now.Day
+                        && message.CreatedDate.Hour == DateTime.Now.Hour
+                        && difference.TotalSeconds < 60)
+                                {
+                                    secondDifference = Convert.ToInt32(Math.Floor(difference.TotalSeconds));
+                                    <span>@secondDifference saniye önce</span>
+                                }
+
+                                // Hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam dakika 1'den az ise 0 dakika gostermemesi icin 1 dakika once yaz.
+                                else if (message.CreatedDate.Day == DateTime.Now.Day &&
+                                message.CreatedDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 1) // Fark 1 dakikadan azsa
+                                {
+                                    <span>1 dakika önce</span>
+                                }
+
+                                // Fark 1 saatten azsa
+                                else if (message.CreatedDate.Day == DateTime.Now.Day &&
+                                message.CreatedDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 60)
+                                {
+                                    minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
+                                    <span>@minuteDifference dakika önce</span>
+                                }
+                                // Fark 24 saatten azsa
+                                else if (difference <= twentyFourHours)
+                                {
+                                    hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
+                                    <span>@hourDifference saat önce</span>
+                                }
+                                // Fark 24 saatten fazlaysa
+                                else
+                                {
+                                    dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
+                                    <span>@dayDifference gün önce</span>
+                                }
+                            }
+
+                        </small>
+
+                        <strong>@message.SenderUser.Name @message.SenderUser.Surname</strong> <br />
+                        <a style="margin-left: -1.4em; color:black;" data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">
+                            @message.Subject  <br>
+                            @if (message.Content.Length < 20)
+                            {
+                                <small class="text-muted">@Html.Raw(message.Content)</small>
+                            }
+                            else
+                            {
+                                <small class="text-muted">@Regex.Replace(HttpUtility.HtmlDecode(message.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 20)...</small>
+                            }
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="dropdown-divider"></li>
+        }
+        <li>
+            <div class="text-center link-block">
+                <a asp-area="Admin" asp-controller="Message" asp-action="InBox" class="dropdown-item">
+                    <i class="fa fa-envelope"></i> <strong>Tüm Mesajları Gör</strong>
+                </a>
+            </div>
+        </li>
+    </ul>
+</li>

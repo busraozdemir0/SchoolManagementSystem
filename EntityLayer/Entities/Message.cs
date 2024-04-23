@@ -34,6 +34,7 @@ namespace EntityLayer.Entities
         public Guid ReceiverUserId { get; set; }
         public string ReceiverUserEmail { get; set; }
         public AppUser ReceiverUser { get; set; }
-               
+        public bool IsRead { get; set; } = false; // Mesajin detayina tiklandiysa okundu bilgisi true olacak.
+        public bool IsImportant { get; set; } = false; // Mesajda eger onemli/yildizli iconuna tiklandiysa onemli klasorunde listelenecek.
     }
 }

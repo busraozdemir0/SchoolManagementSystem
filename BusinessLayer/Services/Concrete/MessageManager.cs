@@ -61,9 +61,18 @@ namespace BusinessLayer.Services.Concrete
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task<List<Message>> TGetAllImportantMessages()
+        {
+            return await _messageDal.GetAllImportantMessages();
+        }
+
         public async Task<Message> TGetByGuidAsync(Guid id)
         {
-            return await _messageDal.GetByGuidAsync(id);
+            var message = await _messageDal.GetByGuidAsync(id);
+            message.IsRead = true; // Mesaj detay sayfasina gidildiginde mesa okundu bilgisi true olacak
+            await _messageDal.UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+            return message;
         }
 
         public async Task<List<Message>> TGetDeletedMessageByLoginUser()
@@ -81,6 +90,16 @@ namespace BusinessLayer.Services.Concrete
             return await _messageDal.GetSendBoxWithMessageByLoginUser();
         }
 
+        public async Task<List<Message>> TGetUnreadMessagesByLoginUser()
+        {
+            return await _messageDal.GetUnreadMessagesByLoginUser();
+        }
+
+        public async Task TMakeTheMessageImportant(Guid messageId)
+        {
+            await _messageDal.MakeTheMessageImportant(messageId);
+        }
+
         public async Task<string> TSafeDeleteMessageAsync(Guid messageId)
         {
             return await _messageDal.SafeDeleteMessageAsync(messageId);
@@ -89,6 +108,11 @@ namespace BusinessLayer.Services.Concrete
         public async Task<string> TUndoDeleteMessageAsync(Guid messageId)
         {
             return await _messageDal.UndoDeleteMessageAsync(messageId);
+        }
+
+        public async Task TUndoMakeTheMessageImportant(Guid messageId)
+        {
+            await _messageDal.UndoMakeTheMessageImportant(messageId);
         }
 
         public Task TUpdateAsync(Message t)

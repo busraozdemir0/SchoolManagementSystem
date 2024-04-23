@@ -16,13 +16,9 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            // Giris yapan kisiye ait gelen mesajlar listeleniyor
-            var inboxMessages = await _messageService.TGetInBoxWithMessageByLoginUser(); 
-            ViewBag.inboxMessageCount = inboxMessages.Count();
-
-            // Giris yapan kisiye ait gonderilen mesajlar listeleniyor
-            var sendboxMessages = await _messageService.TGetSendBoxWithMessageByLoginUser(); 
-            ViewBag.sendboxMessageCount = sendboxMessages.Count();
+            // Giris yapan kisiye ait gelen mesajlardan okunmayanlarin kac adet oldugu bilgisi
+            var inboxUnreadMessages = await _messageService.TGetUnreadMessagesByLoginUser(); 
+            ViewBag.inboxMessageCount = inboxUnreadMessages.Count(); 
 
             return View();
         }

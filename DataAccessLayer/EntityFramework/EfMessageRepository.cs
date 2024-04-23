@@ -78,5 +78,44 @@ namespace DataAccessLayer.EntityFramework
 
             return message.Subject;
         }
+
+        public async Task<List<Message>> GetUnreadMessagesByLoginUser()
+        {
+            var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
+
+            List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
+                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false
+                                        && x.IsRead == false, r => r.SenderUser, i => i.SenderUser.Image); // Giren kisinin okumadigi yani IsRead bilgisi false olan mesajlari mesaj bildirimleri kisminda listeleyecegiz.
+
+            return loginMessagesUser;
+        }
+
+        public async Task MakeTheMessageImportant(Guid messageId)
+        {
+            var message = await _unitOfWork.GetRepository<Message>()
+                .GetAsync(x => x.Id == messageId, s => s.SenderUser);
+            message.IsImportant = true; // Mesaj onemli mi bilgisi true yapiliyor. Yani mesaj onemli klasorune tasindi.
+            await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UndoMakeTheMessageImportant(Guid messageId)
+        {
+            var message = await _unitOfWork.GetRepository<Message>()
+                .GetAsync(x => x.Id == messageId, s => s.SenderUser);
+            message.IsImportant = false; // Mesaj onemli mi bilgisi false yapiliyor. Yani mesaj onemli klasorunden kaldirildi.
+            await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<List<Message>> GetAllImportantMessages() // Giris yapan kisinin kendisine gelen mesajlardan yildizli olanlari listeliyoruz.
+        {
+            var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
+
+            List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
+                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false && x.IsImportant == true, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse o mesajlari InBox'ta listeleyecegiz.
+
+            return loginMessagesUser;
+        }
     }
 }

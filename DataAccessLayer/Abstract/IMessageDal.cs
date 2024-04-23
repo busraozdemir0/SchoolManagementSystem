@@ -15,5 +15,10 @@ namespace DataAccessLayer.Abstract
         Task<List<Message>> GetDeletedMessageByLoginUser(); // Giris yapan kisinin sildigi mesajlar tutulacak.
         Task<string> SafeDeleteMessageAsync(Guid messageId);
         Task<string> UndoDeleteMessageAsync(Guid messageId);
+        Task<List<Message>> GetUnreadMessagesByLoginUser(); // Giris yapan kullanicinin mesaj detayina girdigi an mesaj okundu varsayilacak bu metodda ise okunmamış mesajlar listelenecek.
+        Task MakeTheMessageImportant(Guid messageId); // Kullanici inbox'ta listelenen mesajlarda yani kendisine gelen mesajlarda yildiz iconuna tikladigi takdirde mesaj yildizli olacak.
+        Task UndoMakeTheMessageImportant(Guid messageId); // Yildizli olan mesaji geri almak icin metod.
+        Task<List<Message>> GetAllImportantMessages(); // Yildizli mesajlari getir
+
     }
 }

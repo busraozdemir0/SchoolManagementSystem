@@ -5,10 +5,20 @@
             <div class="space-25"></div>
             <h5>Klasörler</h5>
             <ul class="folder-list m-b-md" style="padding: 0">
-                <li><a asp-area="Admin" asp-controller="Message" asp-action="InBox"> <i class="fa fa-inbox "></i> Gelen Kutusu <span class="label label-warning float-right">@ViewBag.inboxMessageCount</span> </a></li>
-                <li><a asp-area="Admin" asp-controller="Message" asp-action="SendBox"> <i class="fa fa-send "></i> Gönderilmiş Mesajlar <span class="label label-warning float-right">@ViewBag.sendboxMessageCount</span> </a></li>
+                <li>
+                    @if (ViewBag.inboxMessageCount != 0)
+                    {
+                        <a asp-area="Admin" asp-controller="Message" asp-action="InBox"> <i class="fa fa-inbox "></i> Gelen Kutusu <span class="label label-warning float-right">@ViewBag.inboxMessageCount</span> </a>
+                    }
+                    else
+
+                    {
+                        <a asp-area="Admin" asp-controller="Message" asp-action="InBox"> <i class="fa fa-inbox "></i> Gelen Kutusu </a>
+                    }
+                </li>
+                <li><a asp-area="Admin" asp-controller="Message" asp-action="SendBox"> <i class="fa fa-send "></i> Gönderilmiş Mesajlar </a></li>
                 <li><a asp-area="Admin" asp-controller="Message" asp-action="SendMessage"> <i class="fa fa-envelope-o"></i> Mesaj Oluştur</a></li>
-                <li><a href="#"> <i class="fa fa-star"></i> Önemli</a></li>
+                <li><a asp-area="Admin" asp-controller="Message" asp-action="GetAllImportant"> <i class="fa fa-star"></i> Yıldızlı</a></li>
                 <li><a asp-area="Admin" asp-controller="Message" asp-action="TrashBox"> <i class="fa fa-trash-o"></i> Çöp Kutusu</a></li>
             </ul>
         </div>
