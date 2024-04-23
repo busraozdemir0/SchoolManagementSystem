@@ -141,7 +141,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return RedirectToAction("InBox", "Message", new { Area = "Admin" });
         }
 
-        public async Task<IActionResult> GetAllImportant()
+        public async Task<IActionResult> GetAllImportant() // Yildizli mesajlarin listelendigi sayfa
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 

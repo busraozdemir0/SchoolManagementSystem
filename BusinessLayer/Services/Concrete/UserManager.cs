@@ -131,5 +131,20 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _userDal.GetAllStudentsWithRoleAsync();
         }
+
+        public async Task<(IdentityResult identityResult, string? userName)> TSafeDeleteUserAsync(Guid userId)
+        {
+            return await _userDal.SafeDeleteUserAsync(userId);
+        }
+
+        public async Task<string> TUndoDeleteUserAsync(Guid userId)
+        {
+            return await _userDal.UndoDeleteUserAsync(userId);
+        }
+
+        public async Task<List<UserListDto>> TGetAllDeletedUserAsync()
+        {
+            return await _userDal.GetAllDeletedUserAsync();
+        }
     }
 }

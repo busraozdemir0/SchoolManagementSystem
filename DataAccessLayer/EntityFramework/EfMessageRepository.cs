@@ -113,7 +113,8 @@ namespace DataAccessLayer.EntityFramework
             var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
 
             List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
-                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false && x.IsImportant == true, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse o mesajlari InBox'ta listeleyecegiz.
+                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false 
+                                        && x.IsImportant == true, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse ve mesaj yildizlanmissa o mesajlari Yildizli sayfasinda listeleyecegiz.
 
             return loginMessagesUser;
         }

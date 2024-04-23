@@ -53,6 +53,10 @@
             {
                 return $"{userName} kullanıcısı başarıyla silindi.";
             }
+            public static string UndoDelete(string userName)
+            {
+                return $"{userName} kullanıcısı başarıyla geri alındı.";
+            }
         }
 
         public static class Role

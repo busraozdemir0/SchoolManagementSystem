@@ -343,7 +343,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var map = _mapper.Map(userUpdateDto, user); 
+                    var map = _mapper.Map(userUpdateDto, user);
                     var validation = await _validator.ValidateAsync(map);
 
                     if (validation.IsValid)
@@ -372,13 +372,30 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             return NotFound(); // User'ı bulamazsa NotFound donecek.
         }
+        // Kullaniciyi tamamen silme pasifleştiriliyor
+        //public async Task<IActionResult> Delete(Guid userId)
+        //{
+        //    ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-        public async Task<IActionResult> Delete(Guid userId)
+        //    // Identity'nin ondelete metodlarında eger bir kullanici silinirse kullaniciya bagli olan roller de silindigi icin ayriyetten rol silme islemine gerek kalmamaktadir.
+        //    var result = await _userService.TDeleteUserAsync(userId); // Buradan hem identityResult hem de kullanici adi donecek.
+        //    if (result.identityResult.Succeeded)
+        //    {
+        //        _toast.AddSuccessToastMessage(Messages.User.Delete(result.userName), new ToastrOptions { Title = "Başarılı!" });
+        //        return RedirectToAction("Index", "User", new { Area = "Admin" });
+        //    }
+        //    else
+        //    {
+        //        result.identityResult.AddToIdentityModelState(this.ModelState);
+        //        _toast.AddErrorToastMessage("Kullanıcı silinirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+        //    }
+        //    return View();
+        //}
+        public async Task<IActionResult> SafeDelete(Guid userId) // Kullaniciyi tamamen silmek yerine SafeDelete yontemi kullanilmaktadir.
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            // Identity'nin ondelete metodlarında eger bir kullanici silinirse kullaniciya bagli olan roller de silindigi icin ayriyetten rol silme islemine gerek kalmamaktadir.
-            var result = await _userService.TDeleteUserAsync(userId); // Buradan hem identityResult hem de kullanici adi donecek.
+            var result = await _userService.TSafeDeleteUserAsync(userId); // Buradan hem identityResult hem de kullanici adi donecek.
             if (result.identityResult.Succeeded)
             {
                 _toast.AddSuccessToastMessage(Messages.User.Delete(result.userName), new ToastrOptions { Title = "Başarılı!" });
@@ -391,6 +408,22 @@ namespace PresentationLayer.Areas.Admin.Controllers
             }
             return View();
         }
+        public async Task<IActionResult> UndoDelete(Guid userId)
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var result = await _userService.TUndoDeleteUserAsync(userId);
+            _toast.AddSuccessToastMessage(Messages.User.UndoDelete(result), new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("GetAllDeletedUsers", "User", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> GetAllDeletedUsers()
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+
+            var deletedUsers = await _userService.TGetAllDeletedUserAsync();
+            return View(deletedUsers);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Profile()
         {

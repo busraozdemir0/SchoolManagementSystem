@@ -27,6 +27,9 @@ namespace BusinessLayer.Services.Abstract
         Task<(IdentityResult identityResult, string? userName)> TDeleteUserAsync(Guid userId); // Birden fazla geriye deger dondurme islemi
                                                                                                // (IdentityResult identityResult,string? userName) => hem IdentityResulttan bir deger hem de kullanicinin adini dondurmek istedigimiz icin yan yana yazildi (string? => string null deger olabilir)
                                                                                                // Controller'da Item1, Item2 cikmasi yerine identityResult, email seklinde cikacak.
+        Task<(IdentityResult identityResult, string? userName)> TSafeDeleteUserAsync(Guid userId); // Kullaniciyi tamamen db'den kaldirmak yerine SafeDelete yontemini kullanacagiz.
+        Task<string> TUndoDeleteUserAsync(Guid userId);
+        Task<List<UserListDto>> TGetAllDeletedUserAsync(); // Silinmis olan tum kullanicilar
         Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto);
         Task LogOutUserAsync();
         Task<UserProfileDto> TGetUserProfileAsync();

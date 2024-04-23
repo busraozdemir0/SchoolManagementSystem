@@ -154,7 +154,8 @@ namespace DataAccessLayer.EntityFramework
 
         public async Task<List<UserListDto>> GetAllUsersWithRoleAsync()
         {
-            var users = await _userManager.Users.ToListAsync();
+            //var users = await _userManager.Users.ToListAsync();
+            var users = await _unitOfWork.GetRepository<AppUser>().GetAllAsync(x => x.IsDeleted == false);
             var mapUser = _mapper.Map<List<UserListDto>>(users);
 
             foreach (var user in mapUser) // Map'lenmis user'lar uzerinde gez
@@ -163,7 +164,7 @@ namespace DataAccessLayer.EntityFramework
                 var role = string.Join("", await _userManager.GetRolesAsync(findUser)); // Bulunan kullanicinin rolunu bul
                 user.Role = role;
 
-                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id, g => g.Grade, i => i.Image);
+                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id && x.IsDeleted == false, g => g.Grade, i => i.Image);
                 foreach (var item in userInclude.ToList())
                 {
                     user.Grade = item.Grade;
@@ -174,7 +175,8 @@ namespace DataAccessLayer.EntityFramework
 
         public async Task<List<UserListDto>> GetAllTeachersWithRoleAsync()
         {
-            var users = await _userManager.Users.ToListAsync();
+            //var users = await _userManager.Users.ToListAsync();
+            var users = await _unitOfWork.GetRepository<AppUser>().GetAllAsync(x => x.IsDeleted == false);
             var mapUser = _mapper.Map<List<UserListDto>>(users);
             List<UserListDto> teachers = new();
 
@@ -187,7 +189,7 @@ namespace DataAccessLayer.EntityFramework
                 if (role == RoleConsts.Teacher)
                     teachers.Add(user);
 
-                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id, g => g.Grade, i => i.Image);
+                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id && x.IsDeleted == false, g => g.Grade, i => i.Image);
                 foreach (var item in userInclude.ToList())
                 {
                     user.TeacherInfo = "Ad: " + item.Name + " " + item.Surname + " ~ Email: " + item.Email;
@@ -198,7 +200,8 @@ namespace DataAccessLayer.EntityFramework
 
         public async Task<List<UserListDto>> GetAllStudentsWithRoleAsync()  // Ogrenci kullanicilari listeleniyor
         {
-            var users = await _userManager.Users.ToListAsync();
+            //var users = await _userManager.Users.ToListAsync();
+            var users = await _unitOfWork.GetRepository<AppUser>().GetAllAsync(x => x.IsDeleted == false);
             var mapUser = _mapper.Map<List<UserListDto>>(users);
             List<UserListDto> students = new();
 
@@ -211,7 +214,7 @@ namespace DataAccessLayer.EntityFramework
                 if (role == RoleConsts.Student)
                     students.Add(user);
 
-                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id, g => g.Grade, i => i.Image);
+                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id && x.IsDeleted == false, g => g.Grade, i => i.Image);
                 foreach (var item in userInclude.ToList())
                 {
                     user.Grade = item.Grade;
@@ -229,7 +232,7 @@ namespace DataAccessLayer.EntityFramework
         {
             var userId = _user.GetLoggedInUserId();
 
-            var getUserWithImage = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId, i => i.Image);
+            var getUserWithImage = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == userId && x.IsDeleted == false, i => i.Image);
 
             var map = _mapper.Map<UserProfileDto>(getUserWithImage);
             return map;
@@ -241,14 +244,14 @@ namespace DataAccessLayer.EntityFramework
         }
         public async Task<int> GetUserGradeIdAsync(AppUser user)
         {
-            var grade = await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == user.GradeId);
+            var grade = await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == user.GradeId && x.IsDeleted == false);
             return grade.Id;
         }
 
         public async Task<SignInResult> LoginUserAsync(UserLoginDto userLoginDto)
         {
             var user = await _userManager.FindByNameAsync(userLoginDto.UserName);
-            if (user != null)
+            if (user != null && user.IsDeleted == false) // Kullanici varsa ve kullanici silinmemisse
             {
                 var result = await _signInManager.CheckPasswordSignInAsync(user, userLoginDto.Password, false);
 
@@ -430,6 +433,55 @@ namespace DataAccessLayer.EntityFramework
                 }
             }
             return teacherStudents;
+        }
+
+        public async Task<(IdentityResult identityResult, string? userName)> SafeDeleteUserAsync(Guid userId)
+        {
+            var user = await GetAppUserByIdAsync(userId);
+            user.IsDeleted = true; // Kullaniciyi tamamen silmek yerine SafeDelete yontemi kulaniliyor.
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                await _unitOfWork.SaveAsync();
+                return (result, user.UserName); // Birden fazla veri dondurme islemi bu sekilde yapilir.
+            }
+            else
+                return (result, null);
+        }
+
+        public async Task<string> UndoDeleteUserAsync(Guid userId)
+        {
+            var user = await GetAppUserByIdAsync(userId);
+            user.IsDeleted = false; // Silinen kullaniciyi geri dondurme islemi.
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                await _unitOfWork.SaveAsync();
+                return user.UserName;
+            }
+            else
+                return null;
+        }
+
+        public async Task<List<UserListDto>> GetAllDeletedUserAsync() // Silinmis olan tum kullanicilar
+        {
+            var users = await _unitOfWork.GetRepository<AppUser>().GetAllAsync(x => x.IsDeleted == true);
+            var mapUser = _mapper.Map<List<UserListDto>>(users);
+
+            foreach (var user in mapUser) // Map'lenmis user'lar uzerinde gez
+            {
+                var findUser = await _userManager.FindByIdAsync(user.Id.ToString()); // User'in id'sine gore kullaniciyi bul
+                var role = string.Join("", await _userManager.GetRolesAsync(findUser)); // Bulunan kullanicinin rolunu bul
+                user.Role = role;
+
+                var userInclude = await GetAllFilterAndIncludeUsersAsync(x => x.Id == user.Id, g => g.Grade, i => i.Image);
+                foreach (var item in userInclude.ToList())
+                {
+                    user.Grade = item.Grade;
+                }
+
+            }
+            return mapUser;
         }
     }
 }

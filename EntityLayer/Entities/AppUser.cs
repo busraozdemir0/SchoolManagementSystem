@@ -20,6 +20,7 @@ namespace EntityLayer.Entities
         public Grade Grade { get; set; }
         public Guid? ImageId { get; set; } // Kisinin gorseli Image tablosunda tutulacak.
         public Image Image { get; set; }
+        public bool IsDeleted { get; set; } = false; // Kullaniciyi olabilecek hatalarin onune gecmek adina tamamen silmek yerine SafeDelete islemi kullanacagiz.
         public ICollection<Lesson> Lessons { get; set; }
         public ICollection<LessonScore> LessonScores { get; set; }
         public ICollection<Announcement> Announcements { get; set; }

@@ -21,6 +21,7 @@ namespace EntityLayer.DTOs.Users
         public int? GradeId { get; set; }
         public Grade Grade { get; set; }
         public int? StudentNo { get; set; }
+        public bool IsDeleted { get; set; } // Kullanicinin silinip silinmedigi bilgisi
 
         public bool Equals(UserListDto? other)
         {
