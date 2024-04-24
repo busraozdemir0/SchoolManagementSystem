@@ -1,0 +1,46 @@
+﻿@model MessageListDto
+@{
+    ViewData["Title"] = "Mesaj Detayları";
+}
+<div class="inner-block" style="margin-bottom: 20em;">
+    <div class="inbox">
+        <h2>Mesaj Detay</h2>
+
+        @await Component.InvokeAsync("MessageSidebarTeacher")
+
+        <div class="col-md-8 mailbox-content panel panel-default  tab-content tab-content-in">
+            <div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <strong>Gönderen:</strong> @Model.SenderUserEmail
+
+                        </div>
+                        <div class="col-md-5">
+                            <span class="float-right" style="float:inline-end;">@Model.CreatedDate.ToString("dd MMM yyyy HH:mm")</span>
+                        </div>
+                    </div>
+                    <strong>Konu:</strong> @Model.Subject
+                </div>
+
+                <div class="panel-body">
+                    <strong>Mesaj:</strong><br />
+                    <p>
+                        @Html.Raw(Model.Content)
+                    </p>
+                    
+                </div>
+                <a data-id="@ViewBag.messageId" asp-area="Teacher" asp-controller="Message" asp-action="SafeDelete" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Sil
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('btn').addEventListener('click', function () {
+        location.reload(); // Btn id'ye sahip butona tiklandiginda sayfa yeniden yuklenmesi icin.
+    });
+</script>

@@ -48,7 +48,6 @@
                                 </td>
                                 <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.ReceiverUser.Name @message.ReceiverUser.Surname</a></td>
                                 <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
-
                                 <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
                             </tr>
                         }

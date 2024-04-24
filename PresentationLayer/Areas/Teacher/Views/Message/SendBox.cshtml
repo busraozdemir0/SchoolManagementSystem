@@ -1,0 +1,63 @@
+﻿@model List<MessageListDto>
+@{
+    ViewData["Title"] = "Gönderilmiş Mesajlar";
+}
+<div class="inner-block" style="margin-bottom: 20em;">
+    <div class="inbox">
+        <h2>Gönderilmiş Mesajlar (@ViewBag.sendboxMessageCount)</h2>
+
+        @await Component.InvokeAsync("MessageSidebarTeacher")
+
+        <div class="col-md-8 mailbox-content  tab-content tab-content-in">
+            <div class="tab-pane active text-style" id="tab1">
+                <div class="mailbox-border">
+                    <div class="mail-toolbar clearfix">
+                        <div class="float-left">
+                            <button class="btn btn-light" id="btn">
+                                <div class="btn btn_1 mrg5R">
+                                    <i class="fa fa-refresh"> </i>
+                                </div>
+                            </button>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="float-right">
+                            <div class="btn-group" style="float:inline-end;">
+                                <a class="btn btn-default"><i class="fa fa-angle-left"></i></a>
+                                <a class="btn btn-default"><i class="fa fa-angle-right"></i></a>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <table class="table tab-border">
+                        <tbody>
+                            @foreach (var message in Model)
+                            {
+                                    <tr class="read checked">
+                                        <td class="hidden-xs">
+                                            <input type="checkbox" class="checkbox">
+                                        </td>
+                                        <td class="hidden-xs">
+                                            <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
+                                        </td>
+                                        <td>
+                                            <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
+                                        </td>
+                                        <td>
+                                            @message.CreatedDate.ToString("dd MMM yyyy")
+                                        </td>
+                                    </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('btn').addEventListener('click', function () {
+        location.reload(); // Btn id'ye sahip butona tiklandiginda sayfa yeniden yuklenmesi icin.
+    });
+</script>

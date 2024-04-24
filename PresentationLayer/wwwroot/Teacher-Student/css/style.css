@@ -866,7 +866,7 @@ ul.dropdown-menu.drp-mnu i.fa {
 
 ul.dropdown-menu {
     padding: 0;
-    min-width: 230px;
+    min-width: 250px;
     top: 101%;
 }
 
@@ -2723,6 +2723,18 @@ table.table.tab-border {
     color: #797878;
 }
 
+.compose-bottom i.fa.fa-send{
+    font-size: 1.1em;
+    margin-right: 12px;
+    color: #797878;
+}
+
+.compose-bottom i.fa.fa-star {
+    font-size: 1.1em;
+    margin-right: 12px;
+    color: #797878;
+}
+
 .compose-bottom i.fa.fa-envelope-o {
     font-size: 1.1em;
     margin-right: 12px;
@@ -2824,6 +2836,23 @@ ul.nav.tabs li a span {
 }
 
 .inbox-details-body input[type="text"] {
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    color: #616161;
+    background: #fff;
+    box-shadow: none !important;
+    width: 100%;
+    font-size: 0.85em;
+    font-weight: 300;
+    height: 40px;
+    border-radius: 0;
+    -webkit-appearance: none;
+    resize: none;
+    margin-bottom: 1em;
+    font-family: 'Carrois Gothic', sans-serif;
+}
+
+.inbox-details-body input[type="email"] {
     border: 1px solid #ccc;
     padding: 5px 8px;
     color: #616161;
@@ -4110,7 +4139,7 @@ p.bottom {
     }
 
         .mail-pic img {
-            width: 100%;
+            width: 75%;
         }
 
     .btn.btn_1.btn-default.mrg5R {
@@ -5911,6 +5940,11 @@ p.bottom {
     }
 
     .inbox-details-body input[type="text"] {
+        font-size: 0.8em;
+        height: 33px;
+    }
+
+    .inbox-details-body input[type="email"] {
         font-size: 0.8em;
         height: 33px;
     }

@@ -1,0 +1,41 @@
+﻿<div class="col-md-4 compose">
+    <div class="mail-profile">
+        <div class="mail-pic">
+
+            @if (ViewBag.ImageId is not null)
+            {
+                <a href="#"><img src="~/images/@ViewBag.Image" alt="" style="width:5em; height:5em; border-radius:50%;"></a>
+            }
+            else
+            {
+                <a href="#"><img src="~/icons/@ViewBag.DefaultImage" alt="" style="width:5em; height:5em; border-radius:50%;"></a>
+            }
+        </div>
+        <div class="mailer-name">
+            <h5><a href="#">@ViewBag.UserNameSurname</a></h5>
+            <h6><a href="mailto:@ViewBag.UserEmail">@ViewBag.UserEmail</a></h6>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="compose-block">
+        <a asp-area="Teacher" asp-controller="Message" asp-action="SendMessage">Mesaj Oluştur</a>
+    </div>
+    <div class="compose-bottom">
+        <nav class="nav-sidebar">
+            <ul class="nav tabs">
+                @if (ViewBag.inboxMessageCount != 0)
+                {
+                    <li class="active"><a asp-area="Teacher" asp-controller="Message" asp-action="InBox"><i class="fa fa-inbox"></i>Gelen Kutusu <span>@ViewBag.inboxMessageCount</span><div class="clearfix"></div></a></li>
+                }
+                else
+                {
+                    <li class="active"><a asp-area="Teacher" asp-controller="Message" asp-action="InBox"><i class="fa fa-inbox"></i>Gelen Kutusu<div class="clearfix"></div></a></li>
+                }
+                <li class=""><a asp-area="Teacher" asp-controller="Message" asp-action="SendBox"><i class="fa fa-send"></i>Gönderilmiş Mesajlar</a></li>
+                <li class=""><a asp-area="Teacher" asp-controller="Message" asp-action="SendMessage"><i class="fa fa-envelope-o"></i>Mesaj Oluştur</a></li>
+                <li class=""><a asp-area="Teacher" asp-controller="Message" asp-action="GetAllImportant"><i class="fa fa-star"></i>Yıldızlı</a></li>
+                <li class=""><a asp-area="Teacher" asp-controller="Message" asp-action="TrashBox"><i class="fa fa-trash-o"></i>Çöp Kutusu</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

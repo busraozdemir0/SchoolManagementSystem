@@ -3,14 +3,14 @@ using BusinessLayer.Services.Abstract;
 using EntityLayer.DTOs.Messages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PresentationLayer.Areas.Admin.ViewComponents
+namespace PresentationLayer.Areas.Teacher.ViewComponents
 {
-    public class NavbarUnreadMessagesViewComponent:ViewComponent
+    public class NavbarTeacherUnreadMessagesViewComponent:ViewComponent
     {
         private readonly IMessageService _messageService;
         private readonly IMapper _mapper;
 
-        public NavbarUnreadMessagesViewComponent(IMessageService messageService, IMapper mapper)
+        public NavbarTeacherUnreadMessagesViewComponent(IMessageService messageService, IMapper mapper)
         {
             _messageService = messageService;
             _mapper = mapper;
@@ -21,7 +21,7 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
             // Mesaj bildirimleri kisminda sadece okunmamis mesajlar listelenecek.
             var unreadMessageList = await _messageService.TGetUnreadMessagesByLoginUser();
             var mapMessages = _mapper.Map<List<MessageListDto>>(unreadMessageList);
-            
+
             ViewBag.UnreadMessagesCount = mapMessages.Count();
             return View(mapMessages);
         }

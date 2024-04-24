@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.UnitOfWorks;
+﻿using BusinessLayer.Services.Abstract;
+using DataAccessLayer.UnitOfWorks;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
@@ -8,10 +9,12 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
     public class DashboardStatistics1ViewComponent:ViewComponent
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMessageService _messageService;
 
-        public DashboardStatistics1ViewComponent(IUnitOfWork unitOfWork)
+        public DashboardStatistics1ViewComponent(IUnitOfWork unitOfWork, IMessageService messageService)
         {
             _unitOfWork = unitOfWork;
+            _messageService = messageService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -28,6 +31,10 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
 
             var totalLessonCount = await _unitOfWork.GetRepository<Lesson>().CountAsync();     
             ViewBag.TotalLessonCount = totalLessonCount;
+
+            // Giris yapan kisiye ait gelen mesajlardan okunmayanlarin kac adet oldugu bilgisi
+            var inboxUnreadMessages = await _messageService.TGetUnreadMessagesByLoginUser();
+            ViewBag.MessageCount = inboxUnreadMessages.Count();
 
             return View();
         }

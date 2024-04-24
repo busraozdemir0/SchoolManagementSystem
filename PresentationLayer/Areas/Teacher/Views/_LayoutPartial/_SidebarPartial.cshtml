@@ -14,8 +14,9 @@
             <li>
                 <a href="#"><i class="fa fa-envelope"></i><span>Mesajlar</span><span class="fa fa-angle-right" style="float: right"></span></a>
                 <ul id="menu-academico-sub">
-                    <li id="menu-academico-avaliacoes"><a href="inbox.html">Mesaj Kutusu</a></li>
-                    <li id="menu-academico-boletim"><a href="inbox-details.html">Mesaj Oluştur</a></li>
+                    <li id="menu-academico-avaliacoes"><a asp-area="Teacher" asp-controller="Message" asp-action="InBox">Mesaj Kutusu</a></li>
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Message" asp-action="SendMessage">Mesaj Oluştur</a></li>
+                    <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Message" asp-action="TrashBox">Çöp Kutusu</a></li>
                 </ul>
             </li>
 
@@ -42,7 +43,6 @@
                     <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonVideo" asp-action="DeletedLessonVideos">Ders Videoları</a></li>
                     <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="LessonScore" asp-action="DeletedLessonScores">Not Bilgileri</a></li>
                     <li id="menu-academico-boletim"><a asp-area="Teacher" asp-controller="Announcement" asp-action="DeletedAnnouncements">Yaptığınız Duyurular</a></li>
-                    <li id="menu-academico-boletim"><a href="#">Mesajlar</a></li>
                 </ul>
             </li>
 
