@@ -22,7 +22,7 @@
                 </form>
 
                 <h2>Gelen Kutusu </h2>
-             
+
                 <div class="mail-tools tooltip-demo m-t-md">
                     <div class="btn-group float-right">
                         <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
@@ -35,59 +35,68 @@
                 </div>
             </div>
             <div class="mail-box">
+                @if (Model.Count != 0)
+                {
+                    <table class="table table-hover table-mail">
+                        <tbody>
 
-                <table class="table table-hover table-mail">
-                    <tbody>
-
-                        @foreach (var message in Model)
-                        {
-                            @if (message.IsRead) @* Okunmamis mesaj icin unread, okunmus mesaj icin read classi kullaniliyor *@
-                            { @* Eger mesaj okunmus ise read classi kullaniyoruz. *@
-                                <tr class="read">
-                                    <td class="check-mail">
-                                        <div class="row">
-                                            <input type="checkbox" class="i-checks mr-2 ml-1">
-                                            @if (message.IsImportant == false)
-                                            {
-                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star-o"></i></a>
-                                            }
-                                            else
-                                            {
-                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star"></i></a>
-                                            }
-                                        </div>
-                                    </td>
-                                    <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
-                                    <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
-                                    @* <td class=""><i class="fa fa-paperclip"></i></td> *@
-                                    <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
-                                </tr>
-                            }
-                            else
+                            @foreach (var message in Model)
                             {
-                                <tr class="unread">
-                                    <td class="check-mail">
-                                        <div class="row">
-                                            <input type="checkbox" class="i-checks mr-2 ml-1">
-                                            @if (message.IsImportant == false)
-                                            {
-                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star-o"></i></a>
-                                            }
-                                            else
-                                            {
-                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star"></i></a>
-                                            }
-                                        </div>
-                                    </td>
-                                    <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
-                                    <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
-                                    @* <td class=""><i class="fa fa-paperclip"></i></td> *@
-                                    <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
-                                </tr>
+                                @if (message.IsRead) @* Okunmamis mesaj icin unread, okunmus mesaj icin read classi kullaniliyor *@
+                                { @* Eger mesaj okunmus ise read classi kullaniyoruz. *@
+                                    <tr class="read">
+                                        <td class="check-mail">
+                                            <div class="row">
+                                                <input type="checkbox" class="i-checks mr-2 ml-1">
+                                                @if (message.IsImportant == false)
+                                                {
+                                                    <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star-o"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star"></i></a>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
+                                        <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
+                                        @* <td class=""><i class="fa fa-paperclip"></i></td> *@
+                                        <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="unread">
+                                        <td class="check-mail">
+                                            <div class="row">
+                                                <input type="checkbox" class="i-checks mr-2 ml-1">
+                                                @if (message.IsImportant == false)
+                                                {
+                                                    <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star-o"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star"></i></a>
+                                                }
+                                            </div>
+                                        </td>
+                                        <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
+                                        <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
+                                        @* <td class=""><i class="fa fa-paperclip"></i></td> *@
+                                        <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                }
                             }
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div style="margin-left:1.5em; margin-bottom:2em; padding-top:1em;">
+                        <h4>Henüz yeni bir mesajınız yok.</h4>
+                    </div>
+                }
+
             </div>
         </div>
     </div>

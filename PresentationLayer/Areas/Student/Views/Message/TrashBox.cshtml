@@ -1,19 +1,18 @@
 ﻿@model List<MessageListDto>
 @{
-    ViewData["Title"] = "Yıldızlı Mesajlar";
+    ViewData["Title"] = "Çöp Kutusu";
 }
 <div class="inner-block" style="margin-bottom: 20em;">
     <div class="inbox">
-        @if (ViewBag.ImportantMessageCount != 0)
+        @if (ViewBag.trashMessageCount != 0)
         {
-            <h2> Yıldızlı Mesajlar (@ViewBag.ImportantMessageCount)</h2>
+            <h2>Çöp Kutusu (@ViewBag.trashMessageCount)</h2>
         }
         else
         {
-            <h2> Yıldızlı Mesajlar</h2>
+            <h2>Çöp Kutusu</h2>
         }
-
-        @await Component.InvokeAsync("MessageSidebarTeacher")
+        @await Component.InvokeAsync("MessageSidebarStudent")
 
         <div class="col-md-8 mailbox-content  tab-content tab-content-in">
             <div class="tab-pane active text-style" id="tab1">
@@ -34,7 +33,7 @@
                             </div>
                             <div class="clearfix"> </div>
                         </div>
-                    </div>         
+                    </div>
                     @if (Model.Count != 0)
                     {
                         <table class="table tab-border">
@@ -46,24 +45,10 @@
                                             <input type="checkbox" class="checkbox">
                                         </td>
                                         <td class="hidden-xs">
-                                            @if (!message.IsImportant) @* Mesaj onemli klasorunde degilse *@
-                                            {
-                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id">
-                                                    <i class="fa fa-star-o icon-state-warning"> </i>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id">
-                                                    <i class="fa fa-star icon-state-warning"> </i>
-                                                </a>
-                                            }
-                                        </td>
-                                        <td class="hidden-xs">
-                                            <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
+                                            <a style="color:black" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
                                         </td>
                                         <td>
-                                            <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
+                                            <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
                                         </td>
                                         <td>
                                             @message.CreatedDate.ToString("dd MMM yyyy")
@@ -76,7 +61,7 @@
                     else
                     {
                         <div style="margin-left:1.5em; margin-bottom:2em; margin-top:2em;">
-                            <h4>Henüz yıldızlamış olduğunuz bir mesajınız yok.</h4>
+                            <h4>Henüz silmiş olduğunuz bir mesajınız yok.</h4>
                         </div>
                     }
                 </div>

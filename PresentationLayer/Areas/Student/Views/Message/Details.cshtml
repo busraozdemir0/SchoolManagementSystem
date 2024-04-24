@@ -6,7 +6,7 @@
     <div class="inbox">
         <h2>Mesaj Detay</h2>
 
-        @await Component.InvokeAsync("MessageSidebarTeacher")
+        @await Component.InvokeAsync("MessageSidebarStudent")
 
         <div class="col-md-8 mailbox-content panel panel-default  tab-content tab-content-in">
             <div>
@@ -15,6 +15,7 @@
                         <div class="col-md-7">
                             <strong>Gönderen:</strong> @Model.SenderUserEmail <br />
                             <strong>Alıcı:</strong> @Model.ReceiverUserEmail
+
                         </div>
                         <div class="col-md-5">
                             <span class="float-right" style="float:inline-end;">@Model.CreatedDate.ToString("dd MMM yyyy HH:mm")</span>
@@ -28,9 +29,9 @@
                     <p>
                         @Html.Raw(Model.Content)
                     </p>
-                    
+
                 </div>
-                <a data-id="@ViewBag.messageId" asp-area="Teacher" asp-controller="Message" asp-action="SafeDelete" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-danger">
+                <a data-id="@ViewBag.messageId" asp-area="Student" asp-controller="Message" asp-action="SafeDelete" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-danger">
                     <i class="fa fa-trash-o"></i> Sil
                 </a>
             </div>

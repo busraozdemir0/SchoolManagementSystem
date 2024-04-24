@@ -52,7 +52,7 @@ namespace DataAccessLayer.EntityFramework
 
             // Mesaj tablosunda Receiver ve Sender id bilgisi ile giris yapanin id bilgisi esitse ve silinmis mesaj ise o mesajlari Cop kutusunda listeleyecegiz.
             List<Message> loginDeletedMessagesUser = await _unitOfWork.GetRepository<Message>()
-                    .GetAllAsync(x => x.ReceiverUserId == loginUserId || x.SenderUserId == loginUserId && x.IsDeleted == true, s => s.SenderUser);
+                    .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == true, s => s.SenderUser);
 
             return loginDeletedMessagesUser;
         }

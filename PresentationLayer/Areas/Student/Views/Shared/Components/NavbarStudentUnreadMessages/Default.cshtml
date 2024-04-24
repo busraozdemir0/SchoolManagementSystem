@@ -1,46 +1,54 @@
-﻿@model List<AnnouncementListDto>
+﻿@model List<MessageListDto>
 
 <li class="dropdown head-dpdn">
-    @if (ViewBag.AnnouncementsCount != 0)
+    @if (ViewBag.UnreadMessagesCount != 0)
     {
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">@ViewBag.AnnouncementsCount</span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">@ViewBag.UnreadMessagesCount</span></a>
     }
     else
     {
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i></a>
     }
     <ul class="dropdown-menu">
         <li>
             <div class="notification_header">
-                @if (ViewBag.AnnouncementsCount != 0)
+                @if (ViewBag.UnreadMessagesCount != 0)
                 {
-                    <h3 style="text-align:center;">@ViewBag.AnnouncementsCount Yeni Bildiriminiz Var</h3>
+                    <h3 style="text-align:center;">@ViewBag.UnreadMessagesCount Yeni Mesajınız Var</h3>
                 }
                 else
                 {
-                    <h3 style="text-align:center;">Henüz Yeni Bir Bildiriminiz Yok</h3>
-
+                    <h3 style="text-align:center;">Henüz Yeni Bir Mesajınız Yok</h3>
                 }
             </div>
         </li>
-        @foreach (var announcement in Model)
+        @foreach (var message in Model)
         {
             <li>
-                <a data-id="@announcement.Id" asp-area="Student" asp-controller="Announcement" asp-action="Detail" asp-route-announcementId="@announcement.Id">
-                    <div class="user_img"><img src="~/icons/announcement.png" alt=""></div>
+                <a data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">
+                    @if (message.SenderUser.ImageId is not null)
+                    {
+                        <div class="user_img"><img src="~/images/@message.SenderUser.Image.FileName" alt=""></div>
+                    }
+                    else
+                    {
+                        @* Eger mesaj atan kisinin gorseli yoksa varsayilan gorsel gelecek. *@
+                        <div class="user_img"><img src="~/icons/user-avatar-profile.png" alt=""></div>
+                    }
                     <div class="notification_desc">
-                        @if (announcement.Title.Length < 22)
+                        <strong>@message.SenderUser.Name @message.SenderUser.Surname</strong>
+                        <p style="font-weight:bold;">@message.Subject</p>
+                        @if (message.Content.Length < 20)
                         {
-                            <h5>@announcement.Title</h5>
+                            <small class="text-muted">@Html.Raw(message.Content)</small>
                         }
                         else
                         {
-                            <h5>@announcement.Title.Substring(0, 21)...</h5>
+                            <small class="text-muted">@Regex.Replace(HttpUtility.HtmlDecode(message.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 20)...</small>
                         }
-                        <p>@Regex.Replace(HttpUtility.HtmlDecode(announcement.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 10)...</p>
-                        <p>
+                        <p style="">
                             @{
-                                TimeSpan difference = DateTime.Now - announcement.CreatedDate; // iki tarih arasi fark
+                                TimeSpan difference = DateTime.Now - message.CreatedDate; // iki tarih arasi fark
                                 var secondDifference = 0;
                                 var minuteDifference = 0;
                                 var hourDifference = 0;
@@ -48,9 +56,9 @@
 
                                 TimeSpan twentyFourHours = TimeSpan.FromHours(24);
 
-                                // Eger yayinlanan duyuru hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.
-                                @if (announcement.CreatedDate.Day == DateTime.Now.Day
-                        && announcement.CreatedDate.Hour == DateTime.Now.Hour
+                                // Eger yapilan mesaj hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.
+                                @if (message.CreatedDate.Day == DateTime.Now.Day
+                        && message.CreatedDate.Hour == DateTime.Now.Hour
                         && difference.TotalSeconds < 60)
                                 {
                                     secondDifference = Convert.ToInt32(Math.Floor(difference.TotalSeconds));
@@ -58,16 +66,16 @@
                                 }
 
                                 // Hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam dakika 1'den az ise 0 dakika gostermemesi icin 1 dakika once yaz.
-                                else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
-                                announcement.CreatedDate.Hour == DateTime.Now.Hour &&
+                                else if (message.CreatedDate.Day == DateTime.Now.Day &&
+                                message.CreatedDate.Hour == DateTime.Now.Hour &&
                                 difference.TotalMinutes < 1) // Fark 1 dakikadan azsa
                                 {
                                     <span>1 dakika önce</span>
                                 }
 
                                 // Fark 1 saatten azsa
-                                else if (announcement.CreatedDate.Day == DateTime.Now.Day &&
-                                announcement.CreatedDate.Hour == DateTime.Now.Hour &&
+                                else if (message.CreatedDate.Day == DateTime.Now.Day &&
+                                message.CreatedDate.Hour == DateTime.Now.Hour &&
                                 difference.TotalMinutes < 60)
                                 {
                                     minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
@@ -94,7 +102,7 @@
         }
         <li>
             <div class="notification_bottom">
-                <a asp-area="Student" asp-controller="Announcement" asp-action="Index">Tüm duyuruları gör</a>
+                <a asp-area="Student" asp-controller="Message" asp-action="InBox">Tüm mesajları gör</a>
             </div>
         </li>
     </ul>

@@ -1,0 +1,41 @@
+﻿@model MessageAddDto
+@{
+    ViewData["Title"] = "Mesaj Gönder";
+}
+<div class="inner-block">
+    <div class="inbox">
+        <h2>Mesaj Gönder</h2>
+
+        @await Component.InvokeAsync("MessageSidebarStudent")
+
+        <div class="col-md-8 compose-right">
+            <div class="inbox-details-default">
+                <div class="inbox-details-heading">
+                    Yeni Mesaj Oluştur
+                </div>
+                <div class="inbox-details-body">
+                    <div class="alert alert-info">
+                        Yeni bir mesaj göndermek için lütfen aşağıdaki alanları doldurun.
+                    </div>
+                    <form class="com-mail" asp-area="Student" asp-controller="Message" asp-action="SendMessage" method="post">
+
+                        <div asp-validation-summary="All" style="color:red;"></div>
+
+                        <input asp-for="ReceiverUserEmail" type="email" value="E-Mail :" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-Mail';}">
+                        <span style="color:red;" asp-validation-for="ReceiverUserEmail"></span>
+
+                        <input asp-for="Subject" type="text" value="Konu :" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Konu';}">
+                        <span style="color:red;" asp-validation-for="Subject"></span>
+
+                        <small style="color:#616161;">Mesaj : </small>
+                        <textarea asp-for="Content" autofocus id="editor" style="min-height:200px"> </textarea>
+                        <span style="color:red;" asp-validation-for="Content"></span>
+
+                        <input type="submit" value="Mesaj Gönder">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>

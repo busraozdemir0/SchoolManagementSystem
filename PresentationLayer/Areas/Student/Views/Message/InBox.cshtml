@@ -6,7 +6,7 @@
     <div class="inbox">
         <h2>Gelen Kutusu</h2>
 
-        @await Component.InvokeAsync("MessageSidebarTeacher")
+        @await Component.InvokeAsync("MessageSidebarStudent")
 
         <div class="col-md-8 mailbox-content  tab-content tab-content-in">
             <div class="tab-pane active text-style" id="tab1">
@@ -27,7 +27,7 @@
                             </div>
                             <div class="clearfix"> </div>
                         </div>
-                    </div>       
+                    </div>
                     @if (Model.Count != 0)
                     {
                         <table class="table tab-border">
@@ -43,22 +43,22 @@
                                             <td class="hidden-xs">
                                                 @if (!message.IsImportant) @* Mesaj onemli klasorunde degilse *@
                                                 {
-                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id">
+                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id">
                                                         <i class="fa fa-star-o icon-state-warning"> </i>
                                                     </a>
                                                 }
                                                 else
                                                 {
-                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id">
+                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id">
                                                         <i class="fa fa-star icon-state-warning"> </i>
                                                     </a>
                                                 }
                                             </td>
                                             <td class="hidden-xs">
-                                                <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
+                                                <a style="color:black" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
                                             </td>
                                             <td>
-                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
+                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
                                             </td>
                                             <td>
                                                 @message.CreatedDate.ToString("dd MMM yyyy")
@@ -74,22 +74,22 @@
                                             <td class="hidden-xs">
                                                 @if (message.IsImportant == false) @* Mesaj onemli klasorunde degilse *@
                                                 {
-                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id">
+                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id">
                                                         <i class="fa fa-star-o icon-state-warning"> </i>
                                                     </a>
                                                 }
                                                 else
                                                 {
-                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id">
+                                                    <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id">
                                                         <i class="fa fa-star icon-state-warning"> </i>
                                                     </a>
                                                 }
                                             </td>
                                             <td class="hidden-xs">
-                                                <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
+                                                <a style="color:black" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
                                             </td>
                                             <td>
-                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
+                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
                                             </td>
                                             <td>
                                                 @message.CreatedDate.ToString("dd MMM yyyy")
