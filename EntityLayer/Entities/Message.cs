@@ -27,7 +27,6 @@ namespace EntityLayer.Entities
         public string Subject { get; set; }
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public bool IsDeleted { get; set; } = false; // Message eger silindiyse cop kutusunda duracak
         public Guid SenderUserId { get; set; }
         public string SenderUserEmail { get; set; }
         public AppUser SenderUser { get; set; }              
@@ -36,5 +35,9 @@ namespace EntityLayer.Entities
         public AppUser ReceiverUser { get; set; }
         public bool IsRead { get; set; } = false; // Mesajin detayina tiklandiysa okundu bilgisi true olacak.
         public bool IsImportant { get; set; } = false; // Mesajda eger onemli/yildizli iconuna tiklandiysa onemli klasorunde listelenecek.
+        public bool SenderStatus { get; set; } = true; // Mesaji gonderen kisinin ilgili mesaji cop kutusuna tasimasi (durumu false olursa cop kutusuna tasinmistir)
+        public bool SenderIsDeleted { get; set; } = false; // Mesaji gonderen kisinin ilgili mesaji cop kutusundan da silmesi
+        public bool ReceiverStatus { get; set; } = true; // Mesaji alan kisinin ilgili mesaji cop kutusuna tasimasi (durumu false olursa cop kutusuna tasinmistir)
+        public bool ReceiverIsDeleted { get; set; } = false; // Mesaji alan kisinin ilgili mesaji cop kutusundan da silmesi
     }
 }

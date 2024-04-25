@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Messages;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
+using System.Security.Claims;
 
 namespace PresentationLayer.Areas.Student.Controllers
 {
@@ -20,8 +23,10 @@ namespace PresentationLayer.Areas.Student.Controllers
         private readonly IToastNotification _toast;
         private readonly IValidator<Message> _validator;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ClaimsPrincipal _user;
 
-        public MessageController(IAboutService aboutService, IMessageService messageService, IMapper mapper, IToastNotification toast, IValidator<Message> validator, IUnitOfWork unitOfWork)
+        public MessageController(IAboutService aboutService, IMessageService messageService, IMapper mapper, IToastNotification toast, IValidator<Message> validator, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             _aboutService = aboutService;
             _messageService = messageService;
@@ -29,6 +34,8 @@ namespace PresentationLayer.Areas.Student.Controllers
             _toast = toast;
             _validator = validator;
             _unitOfWork = unitOfWork;
+            _httpContextAccessor = httpContextAccessor;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         public async Task<IActionResult> InBox()
@@ -105,6 +112,7 @@ namespace PresentationLayer.Areas.Student.Controllers
         public async Task<IActionResult> TrashBox()
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+            ViewBag.LoginUserId = _user.GetLoggedInUserId(); // Giren kisinin cop kutusunda kendi gonderdigi mesaji mi yoksa kendisine gelen mesaji sildigi kontrolunu view tarafinda yapabilmek icin login olan user id'sini tasiyoruz.
 
             var deletedMessages = await _messageService.TGetDeletedMessageByLoginUser(); // Giris yapan kisinin id bilgisi ile message tablosunda ReceiverUserId esit oldugu silinmis mesajlar listelenecek.
             var mapDeletedMessages = _mapper.Map<List<MessageListDto>>(deletedMessages);
@@ -112,18 +120,48 @@ namespace PresentationLayer.Areas.Student.Controllers
             ViewBag.trashMessageCount = mapDeletedMessages.Count();
             return View(mapDeletedMessages);
         }
-        public async Task<IActionResult> SafeDelete(Guid messageId)
+        public async Task<IActionResult> SafeDeleteInBox(Guid messageId) // Inbox'taki mesajlar giren kisiye gelen mesajlar oldugu icin yani ReceiverUserId ile giris yapanin id'si esit oldugu icin buradaki mesajlara ayri silme islemi uygulaniyor.
         {
-            var message = await _messageService.TSafeDeleteMessageAsync(messageId);
+            var message = await _messageService.TSafeDeleteReceiverMessageAsync(messageId);
+            _toast.AddSuccessToastMessage(Messages.Message.Delete(message), new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("InBox", "Message", new { Area = "Student" });
+        }
+        public async Task<IActionResult> UndoDeleteInbox(Guid messageId)
+        {
+            var message = await _messageService.TUndoDeleteReceiverMessageAsync(messageId);
+            _toast.AddSuccessToastMessage(Messages.Message.UndoDelete(message), new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("TrashBox", "Message", new { Area = "Student" });
+        }
+        // Bu metod ile mesaj DB'den tamamen silinmeyecek ama giren kisinin panelinde de gorunmemesini saglayacak+
+        // (Bir mesaji gonderdigimizde o mesaji db'den tamamen kaldirirsak bu sefer alici mesaji gormeden silme ihtimalimiz vardir. Bu da senaryo geregi istedigimiz bir şey degil
+        // Bundan dolayi projemizde mesajlasma sistemi icin hic bir mesaji DB'den tamamen silme islemini gerceklestirmiyoruz.)
+        [HttpPost]
+        public async Task<IActionResult> HardDeleteInbox(Guid messageId)
+        {
+            var message = await _messageService.THardDeleteReceiverMessageAsync(messageId);
+            _toast.AddSuccessToastMessage(message + " konulu mesaj başarıyla silindi.", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("TrashBox", "Message", new { Area = "Student" });
+        }
+        public async Task<IActionResult> SafeDeleteSendBox(Guid messageId) // SendBox'taki mesajlar giren kisinin gonderdigi mesajlar oldugu icin yani SenderUserId ile giris yapanin id'si esit oldugu icin buradaki mesajlara ayri silme islemi uygulaniyor.
+        {
+            var message = await _messageService.TSafeDeleteSenderMessageAsync(messageId);
             _toast.AddSuccessToastMessage(Messages.Message.Delete(message), new ToastrOptions { Title = "İşlem Başarılı!" });
             return RedirectToAction("SendBox", "Message", new { Area = "Student" });
         }
-        public async Task<IActionResult> UndoDelete(Guid messageId)
+        public async Task<IActionResult> UndoDeleteSendBox(Guid messageId)
         {
-            var message = await _messageService.TUndoDeleteMessageAsync(messageId);
+            var message = await _messageService.TUndoDeleteSenderMessageAsync(messageId);
             _toast.AddSuccessToastMessage(Messages.Message.UndoDelete(message), new ToastrOptions { Title = "İşlem Başarılı!" });
-            return RedirectToAction("SendBox", "Message", new { Area = "Student" });
+            return RedirectToAction("TrashBox", "Message", new { Area = "Student" });
         }
+        [HttpPost]
+        public async Task<IActionResult> HardDeleteSendbox(Guid messageId)
+        {
+            var message = await _messageService.THardDeleteSenderMessageAsync(messageId);
+            _toast.AddSuccessToastMessage(message + " konulu mesaj başarıyla silindi.", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("TrashBox", "Message", new { Area = "Student" });
+        }
+        // Yalnizca giren kisiye ait mesajlar yani InBox'ta olan mesajlar yildizlanabilecek.
         public async Task<IActionResult> MakeImportantMessage(Guid messageId) // Mesaji yildizlayacak action
         {
             await _messageService.TMakeTheMessageImportant(messageId);

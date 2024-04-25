@@ -20,18 +20,11 @@
                 <div class="mailbox-border">
                     <div class="mail-toolbar clearfix">
                         <div class="float-left">
-                            <button class="btn btn-light" id="btn">
+                            <button class="btn btn-light" id="btn" title="Yenile">
                                 <div class="btn btn_1 mrg5R">
                                     <i class="fa fa-refresh"> </i>
                                 </div>
                             </button>
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="float-right">
-                            <div class="btn-group" style="float:inline-end;">
-                                <a class="btn btn-default"><i class="fa fa-angle-left"></i></a>
-                                <a class="btn btn-default"><i class="fa fa-angle-right"></i></a>
-                            </div>
                             <div class="clearfix"> </div>
                         </div>
                     </div>         
@@ -43,18 +36,13 @@
                                 {
                                     <tr class="read checked">
                                         <td class="hidden-xs">
-                                            <input type="checkbox" class="checkbox">
+                                           @*  <input type="checkbox" class="checkbox"> *@
+                                            <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="SafeDeleteInBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         <td class="hidden-xs">
-                                            @if (!message.IsImportant) @* Mesaj onemli klasorunde degilse *@
+                                            @if (message.IsImportant) @* Mesaj onemli klasorunde ise yildizlamaktan vazgec butonu aktif olacak *@
                                             {
-                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id">
-                                                    <i class="fa fa-star-o icon-state-warning"> </i>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id">
+                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id" title="Yıldızlamaktan Vazgeç">
                                                     <i class="fa fa-star icon-state-warning"> </i>
                                                 </a>
                                             }

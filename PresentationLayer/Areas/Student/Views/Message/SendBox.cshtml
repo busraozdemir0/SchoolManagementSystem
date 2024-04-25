@@ -20,18 +20,11 @@
                 <div class="mailbox-border">
                     <div class="mail-toolbar clearfix">
                         <div class="float-left">
-                            <button class="btn btn-light" id="btn">
+                            <button class="btn btn-light" id="btn" title="Yenile">
                                 <div class="btn btn_1 mrg5R">
                                     <i class="fa fa-refresh"> </i>
                                 </div>
                             </button>
-                            <div class="clearfix"> </div>
-                        </div>
-                        <div class="float-right">
-                            <div class="btn-group" style="float:inline-end;">
-                                <a class="btn btn-default"><i class="fa fa-angle-left"></i></a>
-                                <a class="btn btn-default"><i class="fa fa-angle-right"></i></a>
-                            </div>
                             <div class="clearfix"> </div>
                         </div>
                     </div>
@@ -43,7 +36,8 @@
                                 {
                                     <tr class="read checked">
                                         <td class="hidden-xs">
-                                            <input type="checkbox" class="checkbox">
+                                            @* <input type="checkbox" class="checkbox"> *@
+                                            <a style="color:dimgray;" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="SafeDeleteSendBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         <td class="hidden-xs">
                                             <a style="color:black" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.ReceiverUser.Name @message.ReceiverUser.Surname</a>

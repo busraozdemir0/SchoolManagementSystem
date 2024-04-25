@@ -30,30 +30,56 @@
                     <h2> Çöp Kutusu</h2>
                 }
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <div class="btn-group float-right">
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-                    </div>
-                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Yenile</button>
+
+                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Yenile"><i class="fa fa-refresh"></i> Yenile</button>
                     <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
 
                 </div>
             </div>
-            <div class="mail-box">                
+            <div class="mail-box">
                 @if (Model.Count != 0)
                 {
                     <table class="table table-hover table-mail">
                         <tbody>
                             @foreach (var message in Model)
                             {
-                                <tr class="read">
-                                    <td class="check-mail">
-                                        <input type="checkbox" class="i-checks">
-                                    </td>
-                                    <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
-                                    <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
-                                    <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
-                                </tr>
+                                @if (message.ReceiverUserId == ViewBag.LoginUserId) @* Giren kisiye ait gelen mesajlardan cop kutusuna tasidigi mesajlar listelenecek *@
+                                {
+                                    <tr class="read">
+                                        <td class="check-mail">
+                                            @* <input type="checkbox" class="i-checks"> *@
+                                            <div class="btn-group">
+                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoDeleteInBox" asp-route-messageId="@message.Id" title="Geri Al" class="mr-2 ml-1 mt-1"><i class="fa fa-undo"></i></a>
+
+                                                <form id="deleteForm" asp-area="Admin" asp-controller="Message" asp-action="HardDeleteInBox" asp-route-messageId="@message.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                    <button type="submit" class="btn btn-white btn-sm" title="Tamamen Sil"><i class="fa fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
+                                        <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
+                                        <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                }
+                                else if (message.SenderUserId == ViewBag.LoginUserId) @* Giren kisinin baskasina gonderdigi mesajlardan cop kutusuna tasidigi mesajlar listelenecek *@
+                                {
+                                    <tr class="read">
+                                        <td class="check-mail">
+                                            @* <input type="checkbox" class="i-checks"> *@
+                                            <div class="btn-group">
+
+                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoDeleteSendBox" asp-route-messageId="@message.Id" title="Geri Al" class="mr-2 ml-1 mt-1"><i class="fa fa-undo"></i></a>
+                                                <form id="deleteForm" asp-area="Admin" asp-controller="Message" asp-action="HardDeleteSendBox" asp-route-messageId="@message.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                    <button type="submit" class="btn btn-white btn-sm"><i class="fa fa-trash"></i></button>
+                                                </form>
+
+                                            </div>
+                                        </td>
+                                        <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">Ben</a></td>
+                                        <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
+                                        <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
+                                    </tr>
+                                }
                             }
                         </tbody>
                     </table>
@@ -64,7 +90,7 @@
                         <h4>Henüz silmiş olduğunuz bir mesajınız yok.</h4>
                     </div>
                 }
-            
+
             </div>
         </div>
     </div>
@@ -74,4 +100,27 @@
     document.getElementById('btn').addEventListener('click', function () {
         location.reload(); // Btn id'ye sahip butona tiklandiginda sayfa yeniden yuklenmesi icin.
     });
+</script>
+
+<script>
+    function confirmDelete(event) {
+        Swal.fire({
+            title: 'Silmek istediğinize emin misiniz?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Silme islemini gerceklestir
+                document.getElementById("deleteForm").submit();
+            } else {
+                // İptal edildiginde yapilacak islemler
+                console.log("Silme işlemi iptal edildi.");
+                return false;
+            }
+        });
+    }
 </script>

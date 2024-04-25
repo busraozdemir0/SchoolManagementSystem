@@ -46,7 +46,7 @@
                             <tbody class="table-border-bottom-0">
                                 @foreach (var grade in Model)
                                 {
-                                    <tr name="@grade.Id">
+                                    <tr name="@grade.Id">                                           
                                         <td>@grade.Name</td>
                                         <td>@(grade.IsDeleted ? "Aktif Değil" : "Aktif")</td>
                                         <td class="text-center">

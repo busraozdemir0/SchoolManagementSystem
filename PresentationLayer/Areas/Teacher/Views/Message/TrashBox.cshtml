@@ -20,45 +20,78 @@
                 <div class="mailbox-border">
                     <div class="mail-toolbar clearfix">
                         <div class="float-left">
-                            <button class="btn btn-light" id="btn">
+                            <button class="btn btn-light" id="btn" title="Yenile">
                                 <div class="btn btn_1 mrg5R">
                                     <i class="fa fa-refresh"> </i>
                                 </div>
                             </button>
                             <div class="clearfix"> </div>
                         </div>
-                        <div class="float-right">
-                            <div class="btn-group" style="float:inline-end;">
-                                <a class="btn btn-default"><i class="fa fa-angle-left"></i></a>
-                                <a class="btn btn-default"><i class="fa fa-angle-right"></i></a>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
                     </div>
-                    
-                     @if (Model.Count != 0)
+
+                    @if (Model.Count != 0)
                     {
                         <table class="table tab-border">
-                        <tbody>
-                            @foreach (var message in Model)
-                            {
-                                <tr class="read checked">
-                                    <td class="hidden-xs">
-                                        <input type="checkbox" class="checkbox">
-                                    </td>
-                                    <td class="hidden-xs">
-                                        <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
-                                    </td>
-                                    <td>
-                                        <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
-                                    </td>
-                                    <td>
-                                        @message.CreatedDate.ToString("dd MMM yyyy")
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                            <tbody>
+                                @foreach (var message in Model)
+                                {
+                                    @if (message.ReceiverUserId == ViewBag.LoginUserId) @* Giren kisiye ait gelen mesajlardan cop kutusuna tasidigi mesajlar listelenecek *@
+                                    {
+                                        <tr class="read checked">
+                                            <td class="hidden-xs">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        @* <input type="checkbox" class="checkbox"> *@
+                                                        <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoDeleteInBox" asp-route-messageId="@message.Id" title="Geri Al"><i class="fa fa-undo"></i></a>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <form id="deleteForm" asp-area="Teacher" asp-controller="Message" asp-action="HardDeleteInBox" asp-route-messageId="@message.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                            <button type="submit" style="color:dimgray;" class="btn btn-light" title="Tamamen Sil"><i class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="hidden-xs">
+                                                <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a>
+                                            </td>
+                                            <td>
+                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
+                                            </td>
+                                            <td>
+                                                @message.CreatedDate.ToString("dd MMM yyyy")
+                                            </td>
+                                        </tr>
+                                    }
+                                    else if (message.SenderUserId == ViewBag.LoginUserId) @* Giren kisinin baskasina gonderdigi mesajlardan cop kutusuna tasidigi mesajlar listelenecek *@
+                                    {
+                                        <tr class="read checked">
+                                            <td class="hidden-xs">
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        @* <input type="checkbox" class="checkbox"> *@
+                                                        <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="UndoDeleteSendBox" asp-route-messageId="@message.Id" title="Geri Al"><i class="fa fa-undo"></i></a>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <form id="deleteForm" asp-area="Teacher" asp-controller="Message" asp-action="HardDeleteSendBox" asp-route-messageId="@message.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                                            <button type="submit" style="color:dimgray;" class="btn btn-light" title="Tamamen Sil"><i class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="hidden-xs">
+                                                <a style="color:black" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">Ben</a>
+                                            </td>
+                                            <td>
+                                                <a style="color:dimgray;" data-id="@message.Id" asp-area="Teacher" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a>
+                                            </td>
+                                            <td>
+                                                @message.CreatedDate.ToString("dd MMM yyyy")
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
                     }
                     else
                     {
@@ -77,4 +110,27 @@
     document.getElementById('btn').addEventListener('click', function () {
         location.reload(); // Btn id'ye sahip butona tiklandiginda sayfa yeniden yuklenmesi icin.
     });
+</script>
+
+<script>
+    function confirmDelete(event) {
+        Swal.fire({
+            title: 'Silmek istediğinize emin misiniz?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Silme islemini gerceklestir
+                document.getElementById("deleteForm").submit();
+            } else {
+                // İptal edildiginde yapilacak islemler
+                console.log("Silme işlemi iptal edildi.");
+                return false;
+            }
+        });
+    }
 </script>

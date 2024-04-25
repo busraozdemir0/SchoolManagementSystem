@@ -31,8 +31,9 @@ namespace DataAccessLayer.EntityFramework
             var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
 
             List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
-                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse o mesajlari InBox'ta listeleyecegiz.
-
+                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId &&
+                                        x.ReceiverStatus == true && x.ReceiverIsDeleted == false, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse o mesajlari InBox'ta listeleyecegiz.
+            // Listeleme isleminde eger giren kisi kendisine gelen mesajlarda o mesaji cop kutusuna tasimamissa(x.ReceiverStatus == true) veya Cop kutusunda iken o mesaji tamamen kaldirmamissa(&& x.ReceiverIsDeleted == false) listele
             return loginMessagesUser;
         }
 
@@ -41,7 +42,8 @@ namespace DataAccessLayer.EntityFramework
             var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
 
             List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
-                                        .GetAllAsync(x => x.SenderUserId == loginUserId && x.IsDeleted == false, r => r.ReceiverUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse o mesajlari SendBox'ta listeleyecegiz.
+                                        .GetAllAsync(x => x.SenderUserId == loginUserId &&
+                                        x.SenderStatus == true && x.SenderIsDeleted == false, r => r.ReceiverUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse o mesajlari SendBox'ta listeleyecegiz.
 
             return loginMessagesUser;
         }
@@ -52,40 +54,82 @@ namespace DataAccessLayer.EntityFramework
 
             // Mesaj tablosunda Receiver ve Sender id bilgisi ile giris yapanin id bilgisi esitse ve silinmis mesaj ise o mesajlari Cop kutusunda listeleyecegiz.
             List<Message> loginDeletedMessagesUser = await _unitOfWork.GetRepository<Message>()
-                    .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == true, s => s.SenderUser);
+                    .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverStatus == false && x.ReceiverIsDeleted == false 
+                    || x.SenderUserId==loginUserId && x.SenderStatus == false &&  x.SenderIsDeleted == false, s => s.SenderUser, r=>r.ReceiverUser);
 
             return loginDeletedMessagesUser;
         }
 
-        public async Task<string> SafeDeleteMessageAsync(Guid messageId)
+        public async Task<string> SafeDeleteReceiverMessageAsync(Guid messageId) // InBox'taki mesajlarin cop kutusuna tasinmasi
         {
             var message = await _unitOfWork.GetRepository<Message>().GetAsync(x => x.Id == messageId);
 
-            message.IsDeleted = true;
+            message.ReceiverStatus = false; // InBox'ta giren kisiye ait gelen mesaj durumunu false yaparak cop kutusuna tasiyoruz
             await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
             await _unitOfWork.SaveAsync();
 
             return message.Subject;
         }
 
-        public async Task<string> UndoDeleteMessageAsync(Guid messageId)
+        public async Task<string> UndoDeleteReceiverMessageAsync(Guid messageId)
         {
             var message = await _unitOfWork.GetRepository<Message>().GetAsync(x => x.Id == messageId);
 
-            message.IsDeleted = false;
+            message.ReceiverStatus = true; // Cop kutusunda giren kisiye ait gelen mesaj durumunu true yaparak cop kutusundan InBox'a geri aliyoruz.
+            await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+
+            return message.Subject;
+        }
+        public async Task<string> SafeDeleteSenderMessageAsync(Guid messageId)
+        {
+            var message = await _unitOfWork.GetRepository<Message>().GetAsync(x => x.Id == messageId);
+
+            message.SenderStatus = false; // SendBox'ta giren kisinin baskasina gonderdigi mesaj durumunu false yaparak cop kutusuna tasiyoruz.
             await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
             await _unitOfWork.SaveAsync();
 
             return message.Subject;
         }
 
+        public async Task<string> UndoDeleteSenderMessageAsync(Guid messageId)
+        {
+            var message = await _unitOfWork.GetRepository<Message>().GetAsync(x => x.Id == messageId);
+
+            message.SenderStatus = true; // Cop kutusunda giren kisinin baskasina gonderdigi mesaj durumunu true yaparak cop kutusundan InBox'a geri aliyoruz.
+            await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+
+            return message.Subject;
+        }
+        public async Task<string> HardDeleteReceiverMessageAsync(Guid messageId)
+        {
+            var message = await _unitOfWork.GetRepository<Message>().GetAsync(x => x.Id == messageId);
+
+            message.ReceiverIsDeleted = true; // Cop kutusunda giren kisiye ait gelen mesajlardan ReceiverIsDeleted alanini true yaparak kendi mesajlasma panelinden kaldiriyoruz.
+            await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+
+            return message.Subject;
+        }
+
+        public async Task<string> HardDeleteSenderMessageAsync(Guid messageId)
+        {
+            var message = await _unitOfWork.GetRepository<Message>().GetAsync(x => x.Id == messageId);
+
+            message.SenderIsDeleted = true; // Cop kutusunda giren kisinin gonderdigi mesajlardan SenderIsDeleted alanini true yaparak kendi mesajlasma panelinden kaldiriyoruz.
+            await _unitOfWork.GetRepository<Message>().UpdateAsync(message);
+            await _unitOfWork.SaveAsync();
+
+            return message.Subject;
+        }
         public async Task<List<Message>> GetUnreadMessagesByLoginUser()
         {
             var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
 
             List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
-                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false
-                                        && x.IsRead == false, r => r.SenderUser, i => i.SenderUser.Image); // Giren kisinin okumadigi yani IsRead bilgisi false olan mesajlari mesaj bildirimleri kisminda listeleyecegiz.
+                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId
+                                        && x.IsRead == false && x.ReceiverStatus == true && x.ReceiverIsDeleted == false, r => r.SenderUser, i => i.SenderUser.Image); // Giren kisinin okumadigi yani IsRead bilgisi false olan mesajlari mesaj bildirimleri kisminda listeleyecegiz.
 
             return loginMessagesUser;
         }
@@ -113,10 +157,12 @@ namespace DataAccessLayer.EntityFramework
             var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
 
             List<Message> loginMessagesUser = await _unitOfWork.GetRepository<Message>()
-                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.IsDeleted == false 
-                                        && x.IsImportant == true, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse ve mesaj yildizlanmissa o mesajlari Yildizli sayfasinda listeleyecegiz.
-
+                                        .GetAllAsync(x => x.ReceiverUserId == loginUserId
+                                        && x.IsImportant == true && x.ReceiverStatus == true && x.ReceiverIsDeleted == false, s => s.SenderUser); // Mesaj tablosunda id bilgisi ile giris yapanin id bilgisi esitse ve mesaj yildizlanmissa o mesajlari Yildizli sayfasinda listeleyecegiz.
+            // Listeleme yaparken mesaji alan kisi mesaji cop kutusuna tasimadigi takdirde listelenecek.
             return loginMessagesUser;
         }
+
+
     }
 }

@@ -31,13 +31,13 @@ namespace BusinessLayer.Services.Concrete
         public async Task<List<Message>> GetDeletedListAsync()
         {
             return await _messageDal
-                .GetAllAsync(x => x.IsDeleted == true); // Cop kutusunda listelemek icin silinmis olan mesajlari(IsDeleted bilgisi true olanlari) listeliyoruz.
+                .GetAllAsync(/*x => x.IsDeleted == true*/); // Cop kutusunda listelemek icin silinmis olan mesajlari(IsDeleted bilgisi true olanlari) listeliyoruz.
         }
 
         public async Task<List<Message>> GetListAsync()
         {
             return await _messageDal
-                .GetAllAsync(x => x.IsDeleted == true);
+                .GetAllAsync(/*x => x.IsDeleted == true*/);
         }
 
         public async Task TAddAsync(Message t)
@@ -93,23 +93,41 @@ namespace BusinessLayer.Services.Concrete
         public async Task<List<Message>> TGetUnreadMessagesByLoginUser()
         {
             return await _messageDal.GetUnreadMessagesByLoginUser();
-        }
+        }    
 
         public async Task TMakeTheMessageImportant(Guid messageId)
         {
             await _messageDal.MakeTheMessageImportant(messageId);
         }
 
-        public async Task<string> TSafeDeleteMessageAsync(Guid messageId)
+        public async Task<string> TSafeDeleteReceiverMessageAsync(Guid messageId)
         {
-            return await _messageDal.SafeDeleteMessageAsync(messageId);
+            return await _messageDal.SafeDeleteReceiverMessageAsync(messageId);
         }
 
-        public async Task<string> TUndoDeleteMessageAsync(Guid messageId)
+        public async Task<string> TSafeDeleteSenderMessageAsync(Guid messageId)
         {
-            return await _messageDal.UndoDeleteMessageAsync(messageId);
+            return await _messageDal.SafeDeleteSenderMessageAsync(messageId);
         }
 
+        public async Task<string> TUndoDeleteReceiverMessageAsync(Guid messageId)
+        {
+            return await _messageDal.UndoDeleteReceiverMessageAsync(messageId);
+        }
+
+        public async Task<string> TUndoDeleteSenderMessageAsync(Guid messageId)
+        {
+            return await _messageDal.UndoDeleteSenderMessageAsync(messageId);
+        }
+        public async Task<string> THardDeleteReceiverMessageAsync(Guid messageId)
+        {
+            return await _messageDal.HardDeleteReceiverMessageAsync(messageId);
+        }
+
+        public async Task<string> THardDeleteSenderMessageAsync(Guid messageId)
+        {
+            return await _messageDal.HardDeleteSenderMessageAsync(messageId);
+        }
         public async Task TUndoMakeTheMessageImportant(Guid messageId)
         {
             await _messageDal.UndoMakeTheMessageImportant(messageId);

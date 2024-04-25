@@ -32,14 +32,8 @@
                 }
 
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <div class="btn-group float-right">
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-
-                    </div>
-                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Yenile</button>
+                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Yenile"><i class="fa fa-refresh"></i> Yenile</button>
                     <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-
                 </div>
             </div>
             <div class="mail-box">
@@ -51,21 +45,18 @@
                             {
                                 <tr class="read">
                                     <td class="check-mail">
-                                        <div class="row">
-                                            <input type="checkbox" class="i-checks mr-2 ml-1">
-                                            @if (message.IsImportant == false)
+                                        <div class="btn-group">
+                                            @* <input type="checkbox" class="i-checks mr-2 ml-1"> *@
+                                            <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteInBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
+                                            @if (message.IsImportant == true) @* Mesaj onemli klasorunde ise yildizlamaktan vazgec butonu aktif olacak *@
                                             {
-                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star-o"></i></a>
+                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id" title="Yıldızlamaktan Vazgeç"><i class="fa fa-star"></i></a>
                                             }
-                                            else
-                                            {
-                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id"><i class="fa fa-star"></i></a>
-                                            }
+                                           
                                         </div>
                                     </td>
                                     <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>
                                     <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
-
                                     <td class="text-right mail-date">@message.CreatedDate.ToString("dd MMM yyyy")</td>
                                 </tr>
                             }

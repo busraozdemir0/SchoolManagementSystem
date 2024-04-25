@@ -31,14 +31,8 @@
                     <h2> Gönderilen Mesajlar</h2>
                 }
                 <div class="mail-tools tooltip-demo m-t-md">
-                    <div class="btn-group float-right">
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                        <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-
-                    </div>
-                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Yenile</button>
+                    <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Yenile"><i class="fa fa-refresh"></i> Yenile</button>
                     <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-
                 </div>
             </div>
             <div class="mail-box">
@@ -50,7 +44,8 @@
                             {
                                 <tr class="read">
                                     <td class="check-mail">
-                                        <input type="checkbox" class="i-checks">
+                                        @* <input type="checkbox" class="i-checks"> *@
+                                        <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteSendBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                     <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.ReceiverUser.Name @message.ReceiverUser.Surname</a></td>
                                     <td class="mail-subject"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.Subject</a></td>
