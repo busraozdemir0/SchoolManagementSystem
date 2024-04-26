@@ -11,16 +11,17 @@
         <div class="col-lg-9 animated fadeInRight">
             <div class="mail-box-header">
 
-                <form method="get" action="index.html" class="float-right mail-search">
+                <form asp-area="Admin" asp-controller="Message" asp-action="SearchMessage" method="get" class="float-right mail-search">
                     <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" name="search" placeholder="Mesaj Ara">
+                        <input type="text" class="form-control form-control-sm" name="keyword" placeholder="Mesajlarda arayın">
                         <div class="input-group-btn">
-                            <button type="submit" class="btn btn-sm btn-primary">
+                            <button type="submit" class="btn btn-sm btn-primary" style="padding-bottom:0.5em;">
                                 Ara
                             </button>
                         </div>
                     </div>
                 </form>
+
                 @if (ViewBag.trashMessageCount != 0)
                 {
                     <h2> Çöp Kutusu (@ViewBag.trashMessageCount)</h2>

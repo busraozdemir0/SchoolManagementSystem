@@ -46,6 +46,9 @@ namespace PresentationLayer.Areas.Student.Controllers
             else if (keyword.ToLower().Contains("not") || keyword.ToLower().Contains("sistem") || keyword.ToLower().Contains("puan"))
                 return RedirectToAction("Index", "LessonScore", new { Area = "Student" });
 
+            else if (keyword.ToLower().Contains("mesaj") || keyword.ToLower().Contains("mail"))
+                return RedirectToAction("InBox", "Message", new { Area = "Student" });
+
             else
             {
                 var result = await _searchProcess.SearchStudentAsync(keyword, page);

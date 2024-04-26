@@ -2,6 +2,7 @@
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using DataAccessLayer.Extensions;
+using DataAccessLayer.Helpers.Search;
 using DataAccessLayer.UnitOfWorks;
 using DocumentFormat.OpenXml.InkML;
 using EntityLayer.DTOs.Messages;
@@ -26,8 +27,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClaimsPrincipal _user;
+        private readonly ISearchProcess _searchProcess;
 
-        public MessageController(IAboutService aboutService, IMessageService messageService, IMapper mapper, IToastNotification toast, IValidator<Message> validator, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public MessageController(IAboutService aboutService, IMessageService messageService, IMapper mapper, IToastNotification toast, IValidator<Message> validator, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, ISearchProcess searchProcess)
         {
             _aboutService = aboutService;
             _messageService = messageService;
@@ -37,8 +39,28 @@ namespace PresentationLayer.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
             _user = httpContextAccessor.HttpContext.User;
+            _searchProcess = searchProcess;
         }
+        [HttpGet]
+        public async Task<IActionResult> SearchMessage([FromQuery] string keyword, int page = 1)
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+            ViewBag.LoginUserId = _user.GetLoggedInUserId(); // Silme butonunda kullanabilmek icin ilgili mesajin giren kisinin baskasina gonderdigi mesaj mi, yoksa kendisine gelen mesaj mi oldugunu view tarafinda kontrol ettirmek icin
 
+            ViewBag.Keyword = keyword;
+
+            if (keyword == null)
+            {
+                _toast.AddErrorToastMessage("Aradığınız ifadeye uygun sonuç bulunamadı.", new ToastrOptions { Title = "Başarısız!" });
+                return View();
+            }
+
+            else
+            {
+                var result = await _searchProcess.SearchMessageAdminAsync(keyword, page); // Mesajlasma kismindaki mesaj arama icin
+                return View(result);
+            }
+        }
         public async Task<IActionResult> InBox()
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
@@ -106,6 +128,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
             ViewBag.messageId = messageId;
+            ViewBag.LoginUserId = _user.GetLoggedInUserId(); // Detayina basilan mesaj giren kisinin kendi gonderdigi mesaj mi, yoksa kendisine gelen mesaj mi oldugunu view tarafinda kontrol ettirmek icin
 
             var message = await _messageService.TGetByGuidAsync(messageId);
             var mapMessage = _mapper.Map<MessageListDto>(message);

@@ -1,6 +1,7 @@
-﻿@model List<MessageListDto>
+﻿@model SearchModel
+
 @{
-    ViewData["Title"] = "Gelen Kutusu";
+    ViewData["Title"] = "Mesaj Arama Sonuçları";
 }
 
 <div class="wrapper wrapper-content">
@@ -22,19 +23,35 @@
                     </div>
                 </form>
 
-                <h2>Gelen Kutusu </h2>
+                <h2>Arama Sonuçları </h2>
 
                 <div class="mail-tools tooltip-demo m-t-md">
+                    <div class="btn-group float-right">
+                        @* Mesaj sayisi 5'ten fazla ise sayfalama islemi *@
+                        @if (Model.Messages.TotalItemCount > 5)
+                        {
+                            @Html.PagedListPager((IPagedList)Model.Messages, page => Url.Action("SearchMessage", new { keyword = ViewBag.Keyword, page }))
+                        }
+                    </div>
                     <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Yenile"><i class="fa fa-refresh"></i> Yenile</button>
                     <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Tümünü çöp kutusuna taşı"><i class="fa fa-trash-o"></i> </button>
                 </div>
             </div>
             <div class="mail-box">
-                @if (Model.Count != 0)
+                @if (ViewBag.Keyword is null || Model.Messages.Count == 0)
+                {
+                    <div style="margin-left:1.5em; margin-bottom:2em; padding-top:1em;">
+                        <h4>
+                            Aradığınız “@ViewBag.Keyword” kelimesine ait mesaj bulunamadı... :(
+                        </h4>
+                        <p style="color:gray;">Lütfen tekrar deneyin.</p>
+                    </div>
+                }
+                else if (Model.Messages.Count != 0)
                 {
                     <table class="table table-hover table-mail">
                         <tbody>
-                            @foreach (var message in Model)
+                            @foreach (var message in Model.Messages)
                             {
                                 @* Okunmamis mesaj icin unread, okunmus mesaj icin read classi kullaniliyor *@
                                 @* Eger mesaj okunmus ise read classi kullaniyoruz. *@
@@ -43,8 +60,17 @@
                                     <td class="check-mail">
                                         <div class="btn-group">
                                             @* <input type="checkbox" class="i-checks mr-2 ml-1"> *@
+                                            @if (message.ReceiverUserId == ViewBag.LoginUserId) @* Giren kisiye ait gelen mesajin silme butonuna basilmissa SafeDeleteInBox ile silme islemi gerceklestirilecek *@
+                                            {
+                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteInBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
 
-                                            <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteInBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
+                                            }
+                                            else if (message.SenderUserId == ViewBag.LoginUserId) @* Giren kisinin baskasina gonderdigi  mesajin silme butonuna basilmissa SafeDeleteSendBox ile silme islemi gerceklestirilecek *@
+                                            {
+                                                <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteSendBox" asp-route-messageId="@message.Id" class="mr-2 ml-1" title="Çöp Kutusuna Taşı"><i class="fa fa-trash-o"></i></a>
+                                            }
+
+
                                             @if (message.IsImportant == false)
                                             {
                                                 <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="MakeImportantMessage" asp-route-messageId="@message.Id" title="Yıldızla"><i class="fa fa-star-o"></i></a>
@@ -63,12 +89,6 @@
                             }
                         </tbody>
                     </table>
-                }
-                else
-                {
-                    <div style="margin-left:1.5em; margin-bottom:2em; padding-top:1em;">
-                        <h4>Henüz yeni bir mesajınız yok.</h4>
-                    </div>
                 }
             </div>
         </div>

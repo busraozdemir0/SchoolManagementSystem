@@ -28,11 +28,21 @@
                     <p>
                         @Html.Raw(Model.Content)
                     </p>
-                </div>         
-                <div class="mail-body text-right tooltip-demo">
-                   @*  <a data-id="@ViewBag.messageId" asp-area="Admin" asp-controller="Message" asp-action="SafeDelete" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm btn-white">
-                        <i class="fa fa-trash-o"></i> Sil</a> *@
-                </div> 
+                </div>
+                <div class="mail-body text-left tooltip-demo">
+                    @if (Model.ReceiverUserId == ViewBag.LoginUserId) @* Giren kisiye ait gelen mesajin detayina gidilmisse SafeDeleteInBox ile silme islemi gerceklestirilecek *@
+                    {                      
+                        <a data-id="@ViewBag.messageId" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteInBox" asp-route-messageId="@ViewBag.messageId" class="btn btn-danger btn-sm" title="Çöp Kutusuna Taşı">
+                            <i class="fa fa-trash-o"></i> Çöp Kutusuna Taşı
+                        </a>
+                    }
+                    else if (Model.SenderUserId == ViewBag.LoginUserId) @* Giren kisinin gonderdigi mesajin detayina gidilmisse SafeDeleteSendBox ile silme islemi gerceklestirilecek *@
+                    {
+                        <a data-id="@ViewBag.messageId" asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteSendBox" asp-route-messageId="@ViewBag.messageId" class="btn btn-danger btn-sm" title="Çöp Kutusuna Taşı">
+                            <i class="fa fa-trash-o"></i> Çöp Kutusuna Taşı
+                        </a>
+                    }
+                </div>
                 <div class="clearfix"></div>
             </div>
         </div>

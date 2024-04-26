@@ -57,6 +57,8 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             else if ( keyword.ToLower().Contains("duyuru yap") || keyword.ToLower().Contains("öğrenci duyuruları"))
                 return RedirectToAction("StudentAnnouncements", "Announcement", new { Area = "Teacher" });
 
+            else if (keyword.ToLower().Contains("mesaj") || keyword.ToLower().Contains("mail"))
+                return RedirectToAction("InBox", "Message", new { Area = "Teacher" });
 
             else
             {

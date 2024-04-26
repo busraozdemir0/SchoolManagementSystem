@@ -1,25 +1,14 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Abstract;
-using DataAccessLayer.Consts;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
-using EntityLayer.DTOs.Announcements;
-using EntityLayer.DTOs.Contacts;
-using EntityLayer.DTOs.Grades;
-using EntityLayer.DTOs.Lessons;
-using EntityLayer.DTOs.Reports;
-using EntityLayer.DTOs.Roles;
 using EntityLayer.DTOs.Search;
-using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,7 +43,7 @@ namespace DataAccessLayer.Helpers.Search
             _lessonScoreDal = lessonScoreDal;
         }
 
-        public async Task<SearchModel> SearchAsync(string keyword, int page=1)
+        public async Task<SearchModel> SearchAsync(string keyword, int page = 1)
         {
             var announcement = await _unitOfWork.GetRepository<Announcement>()
                 .GetAllAsync(x => !x.IsDeleted && (x.Title.ToLower().Contains(keyword)) || keyword.ToLower().Contains("duyuru"));
@@ -67,9 +56,9 @@ namespace DataAccessLayer.Helpers.Search
 
             var lesson = await _unitOfWork.GetRepository<Lesson>()
                 .GetAllAsync(x => !x.IsDeleted && (x.LessonName.ToLower().Contains(keyword)) || keyword.ToLower().Contains("ders"));
-            
+
             var lessonScore = await _unitOfWork.GetRepository<LessonScore>()
-                .GetAllAsync(x => !x.IsDeleted && (keyword.ToLower().Contains("not")) || (keyword.ToLower().Contains("puan")), l=>l.Lesson, u=>u.User);
+                .GetAllAsync(x => !x.IsDeleted && (keyword.ToLower().Contains("not")) || (keyword.ToLower().Contains("puan")), l => l.Lesson, u => u.User);
 
             var report = await _unitOfWork.GetRepository<Report>()
                 .GetAllAsync(x => !x.IsDeleted && (x.Title.ToLower().Contains(keyword)) || keyword.ToLower().Contains("haber"));
@@ -78,22 +67,60 @@ namespace DataAccessLayer.Helpers.Search
                 .GetAllAsync(x => (x.Name.ToLower().Contains(keyword)) || keyword.ToLower().Contains("rol"));
 
             var user = await _unitOfWork.GetRepository<AppUser>()
-                                            .GetAllAsync(x => (x.Name.ToLower().Contains(keyword)) || 
-                                            (x.Surname.ToLower().Contains(keyword)) || (x.Email.ToLower().Contains(keyword)) || 
+                                            .GetAllAsync(x => (x.Name.ToLower().Contains(keyword)) ||
+                                            (x.Surname.ToLower().Contains(keyword)) || (x.Email.ToLower().Contains(keyword)) ||
                                             (x.UserName.ToLower().Contains(keyword)) || keyword.ToLower().Contains("kullanıcı"));
 
+            var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id bilgisi
+
+            // Giren kisiye ait gonderdigi ve kendisine ait gelen mesajlarin tumu-cop kutusundakiler de dahil (ReceiverIsDeleted ve SenderIsDeleted true ise yani mesaji silmisse gosterilmeyecek)
+            var loginUserMessages = await _unitOfWork.GetRepository<Message>()
+                .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverIsDeleted == false ||
+                x.SenderUserId == loginUserId && x.SenderIsDeleted == false, r => r.ReceiverUser, s => s.SenderUser);
+            List<Message> messages = new();
+            foreach (var message in loginUserMessages)
+            {
+                if (message.Subject.ToLower().Contains(keyword)) // Eger gonderilen keyword mesajin konusuna esitse ilgili listeye ekle
+                {
+                    messages.Add(message);
+                }
+            }
             return new SearchModel
             {
-                Announcements = announcement.ToPagedList(page,5),
-                Contacts= contact.ToPagedList(page, 5),
+                Announcements = announcement.ToPagedList(page, 5),
+                Contacts = contact.ToPagedList(page, 5),
                 Grades = grade.ToPagedList(page, 5),
                 Lessons = lesson.ToPagedList(page, 5),
                 LessonScores = lessonScore.ToPagedList(page, 5),
                 Reports = report.ToPagedList(page, 5),
                 Roles = role.ToPagedList(page, 5),
                 Users = user.ToPagedList(page, 5),
+                Messages = messages.ToPagedList(page, 5),
             };
 
+        }
+
+        public async Task<SearchModel> SearchMessageAdminAsync(string keyword, int page = 1)
+        {
+            var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id bilgisi
+
+            // Giren kisiye ait gonderdigi ve kendisine ait gelen mesajlarin tumu-cop kutusundakiler de dahil (ReceiverIsDeleted ve SenderIsDeleted true ise yani mesaji silmisse gosterilmeyecek)
+            var loginUserMessages = await _unitOfWork.GetRepository<Message>()
+                .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverIsDeleted == false ||
+                x.SenderUserId == loginUserId && x.SenderIsDeleted == false, r=>r.ReceiverUser, s=>s.SenderUser);
+
+            List<Message> messages = new();
+            foreach (var message in loginUserMessages)
+            {
+                if (message.Subject.ToLower().Contains(keyword)) // Eger gonderilen keyword mesajin konusuna esitse ilgili listeye ekle
+                {
+                    messages.Add(message);
+                }
+            }
+            return new SearchModel
+            {
+                Messages = messages.ToPagedList(page, 5),
+            };
         }
 
         public async Task<SearchModel> SearchStudentAsync(string keyword, int page = 1)
@@ -117,10 +144,26 @@ namespace DataAccessLayer.Helpers.Search
                     studentAnnouncement.Add(item);
             }
 
+            var loginUserId = _user.GetLoggedInUserId(); // Giris yapan ogrencinin id bilgisi
+
+            // Giren kisiye ait gonderdigi ve kendisine ait gelen mesajlarin tumu-cop kutusundakiler de dahil (ReceiverIsDeleted ve SenderIsDeleted true ise yani mesaji silmisse gosterilmeyecek)
+            var loginUserMessages = await _unitOfWork.GetRepository<Message>()
+                .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverIsDeleted == false ||
+                x.SenderUserId == loginUserId && x.SenderIsDeleted == false, r => r.ReceiverUser, s => s.SenderUser);
+            List<Message> messages = new();
+            foreach (var message in loginUserMessages)
+            {
+                if (message.Subject.ToLower().Contains(keyword)) // Eger gonderilen keyword mesajin konusuna esitse ilgili listeye ekle
+                {
+                    messages.Add(message);
+                }
+            }
+
             return new SearchModel
-            { 
+            {
                 Lessons = studentLessons.ToPagedList(page, 5),
                 Announcements = studentAnnouncement.ToPagedList(page, 5),
+                Messages = messages.ToPagedList(page, 5),
             };
         }
 
@@ -146,7 +189,7 @@ namespace DataAccessLayer.Helpers.Search
             foreach (var item in lessons)
             {
                 var grade = await _gradeDal.GetGradeByIdAsync(item.GradeId); // Dersin ait oldugu sinifin id'sine gore o sinif entity'sini getir.
-                if(item.Grade.Name.ToLower().Contains(keyword) || keyword.ToLower().Contains("sınıf"))
+                if (item.Grade.Name.ToLower().Contains(keyword) || keyword.ToLower().Contains("sınıf"))
                     teacherGrades.Add(grade); // Map'lenen sinifi listeye ekle
             }
 
@@ -160,7 +203,7 @@ namespace DataAccessLayer.Helpers.Search
 
             var users = await _userDal.GetAllUsersWithRoleAsync();
             var studentInClasses = await _userDal.StudentInClassListAsync(users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
-            var mapStudents = _mapper.Map<List<AppUser>>(studentInClasses); 
+            var mapStudents = _mapper.Map<List<AppUser>>(studentInClasses);
             HashSet<AppUser> teacherStudents = new();
             foreach (var item in mapStudents)
             {
@@ -168,13 +211,29 @@ namespace DataAccessLayer.Helpers.Search
                     teacherStudents.Add(item);
             }
 
+            var loginUserId = _user.GetLoggedInUserId(); // Giris yapan ogretmenin id bilgisi
+
+            // Giren kisiye ait gonderdigi ve kendisine ait gelen mesajlarin tumu-cop kutusundakiler de dahil (ReceiverIsDeleted ve SenderIsDeleted true ise yani mesaji silmisse gosterilmeyecek)
+            var loginUserMessages = await _unitOfWork.GetRepository<Message>()
+                .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverIsDeleted == false ||
+                x.SenderUserId == loginUserId && x.SenderIsDeleted == false, r => r.ReceiverUser, s => s.SenderUser);
+            List<Message> messages = new();
+            foreach (var message in loginUserMessages)
+            {
+                if (message.Subject.ToLower().Contains(keyword)) // Eger gonderilen keyword mesajin konusuna esitse ilgili listeye ekle
+                {
+                    messages.Add(message);
+                }
+            }
+
             return new SearchModel
             {
                 Announcements = teacherAnnouncement.ToPagedList(page, 5),
                 Grades = teacherGrades.ToPagedList(page, 5),
                 Lessons = teacherLessons.ToPagedList(page, 5),
-                LessonScores=teacherLessonScores.ToPagedList(page, 5),
-                Users =teacherStudents.ToPagedList(page,5),
+                LessonScores = teacherLessonScores.ToPagedList(page, 5),
+                Users = teacherStudents.ToPagedList(page, 5),
+                Messages = messages.ToPagedList(page, 5),
             };
         }
     }

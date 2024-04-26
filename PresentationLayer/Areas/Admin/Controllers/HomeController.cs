@@ -50,6 +50,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
             else if (keyword.ToLower().Contains("abone") || keyword.ToLower().Contains("haber bülteni"))
                 return RedirectToAction("Index", "NewsLetter", new { Area = "Admin" });
 
+            else if (keyword.ToLower().Contains("mesaj") || keyword.ToLower().Contains("mail"))
+                return RedirectToAction("InBox", "Message", new { Area = "Admin" });
+
             else
             {
                 var result = await _searchProcess.SearchAsync(keyword, page);

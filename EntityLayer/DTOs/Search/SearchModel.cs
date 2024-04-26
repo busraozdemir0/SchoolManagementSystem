@@ -20,6 +20,7 @@ namespace EntityLayer.DTOs.Search
         public IPagedList<Report> Reports { get; set; }
         public IPagedList<AppRole> Roles { get; set; }
         public IPagedList<AppUser> Users { get; set; }
+        public IPagedList<Message> Messages { get; set; }
 
     }
 }

@@ -31,9 +31,21 @@
                     </p>
 
                 </div>
-@*                 <a data-id="@ViewBag.messageId" asp-area="Student" asp-controller="Message" asp-action="SafeDelete" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-danger">
-                    <i class="fa fa-trash-o"></i> Sil
-                </a> *@
+                @if (Model.ReceiverUserId == ViewBag.LoginUserId)@* Giren kisiye ait gelen mesajin detayina gidilmisse SafeDeleteInBox ile dilme islemi gerceklestirilecek *@
+                {
+                    <a data-id="@ViewBag.messageId" asp-area="Student" asp-controller="Message" asp-action="SafeDeleteInBox" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" title="Çöp Kutusuna Taşı" class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Çöp Kutusuna Taşı
+                    </a>
+
+                }
+                else if (Model.SenderUserId == ViewBag.LoginUserId)
+                @* Giren kisinin gonderdigi mesajin detayina gidilmisse SafeDeleteSendBox ile dilme islemi gerceklestirilecek *@
+                {
+                    <a data-id="@ViewBag.messageId" asp-area="Student" asp-controller="Message" asp-action="SafeDeleteSendBox" asp-route-messageId="@ViewBag.messageId" data-placement="top" data-toggle="tooltip" data-original-title="Trash" title="Çöp Kutusuna Taşı" class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i> Çöp Kutusuna Taşı
+                    </a>
+                }
+
             </div>
         </div>
         <div class="clearfix"> </div>

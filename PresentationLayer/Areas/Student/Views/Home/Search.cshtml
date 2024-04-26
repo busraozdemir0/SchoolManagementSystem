@@ -62,6 +62,27 @@
             <div class="clearfix"> </div>
         }
 
+        else if (Model.Messages.Count != 0)
+        {
+            <h2 style="margin-bottom:2em;">
+                Şunun için @Model.Messages.TotalItemCount sonuç bulundu: <span class="text-navy">“@ViewBag.Keyword”</span>
+            </h2>
+            @foreach (var message in Model.Messages)
+            {
+                <hr />
+                <div class="search-result">
+                    <h3><a class="a-custom-link" data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">Gönderen: @message.SenderUserEmail - @message.SenderUser.Name @message.SenderUser.Surname</a></h3>
+                    <a data-id="@message.Id" asp-area="Student" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id" class="a-custom-link">Konu: @message.Subject - Mesaj: @Html.Raw(message.Content)</a>
+                </div>
+                <hr />
+            }
+            @if (Model.Messages.TotalItemCount > 5)
+            {
+                @Html.PagedListPager((IPagedList)Model.Messages, page => Url.Action("Search", new { keyword = ViewBag.Keyword, page }))
+            }
+            <div class="clearfix"> </div>
+        }
+
         else
         {
             <h2 style="margin-bottom:2em;">

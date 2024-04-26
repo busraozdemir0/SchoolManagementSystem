@@ -103,6 +103,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
             ViewBag.messageId = messageId;
+            ViewBag.LoginUserId = _user.GetLoggedInUserId(); // Detayina basilan mesaj giren kisinin kendi gonderdigi mesaj mi, yoksa kendisine gelen mesaj mi oldugunu view tarafinda kontrol ettirmek icin
 
             var message = await _messageService.TGetByGuidAsync(messageId);
             var mapMessage = _mapper.Map<MessageListDto>(message);
