@@ -22,5 +22,10 @@ namespace BusinessLayer.Services.Abstract
         Task TMakeTheMessageImportant(Guid messageId); // Kullanici inbox'ta listelenen mesajlarda yani kendisine gelen mesajlarda yildiz iconuna tikladigi takdirde mesaj yildizli olacak.
         Task TUndoMakeTheMessageImportant(Guid messageId); // Yildizli olan mesaji geri almak icin metod.
         Task<List<Message>> TGetAllImportantMessages(); // Yildizli mesajlari getir
+
+        // *** Tumunu sil butonlari icin metodlar
+        Task THardDeleteTrashBoxAllMessagesAsync(List<Message> messages); // Cop kutusundaki tum mesajlari silme
+        Task TSafeDeleteAllMessagesAsync(List<Message> messages); // InBox veya SendBox'taki tum mesajlari silme (sadece status'u false yapma islemi)
+
     }
 }

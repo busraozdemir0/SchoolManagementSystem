@@ -1,4 +1,4 @@
-﻿@model List<MessageListDto>
+﻿@model IPagedList<MessageListDto>
 @{
     ViewData["Title"] = "Gönderilmiş Mesajlar";
 }
@@ -19,13 +19,28 @@
             <div class="tab-pane active text-style" id="tab1">
                 <div class="mailbox-border">
                     <div class="mail-toolbar clearfix">
-                        <div class="float-left">
+                        <div class="float-left" style="margin-top:0.7em;">
                             <button class="btn btn-light" id="btn" title="Yenile">
                                 <div class="btn btn_1 mrg5R">
                                     <i class="fa fa-refresh"> </i>
                                 </div>
                             </button>
+                            @if (Model.Count != 0) @* Eger sayfada hic veri listelenmiyorsa bu buton gozukmesin *@
+                            {
+                                <a asp-area="Student" asp-controller="Message" asp-action="SafeDeleteAllSendBoxMessages" title="Tümünü Sil" class="btn btn-light" style="color:black;">
+                                    <i class="fa fa-trash-o"></i> Tümünü Sil
+                                </a>
+                            }
                             <div class="clearfix"> </div>
+                        </div>
+                        <div class="float-right">
+                            <div class="btn-group" style="float:inline-end;">
+                                @* Mesaj sayisi 10'dan fazla ise sayfalama islemi *@
+                                @if (Model.Count >= 10)
+                                {
+                                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("SendBox", new { page }))
+                                }
+                            </div>
                         </div>
                     </div>
                     @if (Model.Count != 0)

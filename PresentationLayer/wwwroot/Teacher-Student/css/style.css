@@ -8,7 +8,6 @@ h4, h5, h6,
 h1, h2, h3 {
     margin: 0;
 }
-
 ul, ol {
     margin: 0;
 }
@@ -1338,7 +1337,7 @@ span.malorum-pro {
     -o-border-radius: 63px;
 }
 
-.malorm-bottom #nameSurname {  /*h2*/
+.malorm-bottom #nameSurname { /*h2*/
     font-size: 1.3em;
     color: #68AE00;
     text-align: center;
@@ -1347,7 +1346,7 @@ span.malorum-pro {
     font-style: italic;
 }
 
-.malorm-bottom #title {  /*h1*/
+.malorm-bottom #title { /*h1*/
     font-size: 1.8em;
     color: #337AB7;
     text-align: center;
@@ -1363,8 +1362,8 @@ span.malorum-pro {
     font-family: 'Carrois Gothic', sans-serif;
 }
 
-#centered{
-    text-align:center;
+#centered {
+    text-align: center;
 }
 
 .malorm-bottom p {
@@ -1382,10 +1381,10 @@ span.malorum-pro {
 
 .user-marorm-m {
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
-    margin-top:1.5em;
-    margin-bottom:1.5em;
-    margin-left:6.5em;
-    margin-right:6.5em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    margin-left: 6.5em;
+    margin-right: 6.5em;
 }
 
 .malorm-bottom ul {
@@ -2723,7 +2722,7 @@ table.table.tab-border {
     color: #797878;
 }
 
-.compose-bottom i.fa.fa-send{
+.compose-bottom i.fa.fa-send {
     font-size: 1.1em;
     margin-right: 12px;
     color: #797878;
@@ -3692,7 +3691,8 @@ p.bottom {
     font-size: 2.2em;
     margin-top: 0.2em;
 }
-@media(max-width:1496px){
+
+@media(max-width:1496px) {
     .malorum-pro {
         left: 225px;
     }
@@ -3908,6 +3908,7 @@ p.bottom {
         padding: 0.9em 1em;
         background: #fff;
     }
+
     li.dropdown.head-dpdn a.dropdown-toggle {
         margin: 1em 1.1em;
     }
@@ -4624,8 +4625,8 @@ p.bottom {
         width: 170px;
     }
 
-    .malorum-pro{
-        left:220px;
+    .malorum-pro {
+        left: 220px;
     }
 
     .left-content {
@@ -4739,8 +4740,8 @@ p.bottom {
         margin: 1em 0.9em;
     }
 
-    .malorum-pro{
-        left:220px;
+    .malorum-pro {
+        left: 220px;
     }
 
     .user-name {
@@ -5021,6 +5022,7 @@ p.bottom {
         margin-left: 1.5em;
         margin-right: 1.5em;
     }
+
     .page-container {
         min-width: 495px;
     }

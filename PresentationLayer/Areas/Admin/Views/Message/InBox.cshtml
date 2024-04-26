@@ -1,4 +1,4 @@
-﻿@model List<MessageListDto>
+﻿@model IPagedList<MessageListDto>
 @{
     ViewData["Title"] = "Gelen Kutusu";
 }
@@ -25,8 +25,19 @@
                 <h2>Gelen Kutusu </h2>
 
                 <div class="mail-tools tooltip-demo m-t-md">
+                    <div class="btn-group float-right">
+                        @* Mesaj sayisi 10'dan fazla ise sayfalama islemi *@
+                        @if (Model.Count >= 10)
+                        {
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("InBox", new { page }))
+                        }
+                    </div>
                     <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Yenile"><i class="fa fa-refresh"></i> Yenile</button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Tümünü çöp kutusuna taşı"><i class="fa fa-trash-o"></i> </button>
+
+                    @if (Model.Count != 0) @* Eger sayfada hic veri listelenmiyorsa bu buton gozukmesin *@
+                    {
+                        <a asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteAllInBoxMessages" title="Tümünü Sil" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Tümünü Sil</a>
+                    }
                 </div>
             </div>
             <div class="mail-box">

@@ -137,5 +137,16 @@ namespace BusinessLayer.Services.Concrete
         {
             throw new NotImplementedException();
         }
+
+        // *** Tumunu sil butonlari icin metodlar
+        public async Task THardDeleteTrashBoxAllMessagesAsync(List<Message> messages)
+        {
+            await _messageDal.HardDeleteTrashBoxAllMessagesAsync(messages);
+        }
+        public async Task TSafeDeleteAllMessagesAsync(List<Message> messages)
+        {
+            await _messageDal.SafeDeleteAllMessagesAsync(messages);
+        }
+        // ***
     }
 }

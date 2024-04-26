@@ -1,4 +1,4 @@
-﻿@model List<MessageListDto>
+﻿@model IPagedList<MessageListDto>
 
 @{
     ViewData["Title"] = "Giden Kutusu";
@@ -32,8 +32,19 @@
                 }
 
                 <div class="mail-tools tooltip-demo m-t-md">
+                    <div class="btn-group float-right">
+                        @* Mesaj sayisi 10'dan fazla ise sayfalama islemi *@
+                        @if (Model.Count >= 10)
+                        {
+                            @Html.PagedListPager((IPagedList)Model, page => Url.Action("GetAllImportant", new { page }))
+                        }
+                    </div>
                     <button class="btn btn-white btn-sm" id="btn" data-toggle="tooltip" data-placement="left" title="Yenile"><i class="fa fa-refresh"></i> Yenile</button>
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
+
+                    @if (Model.Count != 0) @* Eger sayfada hic veri listelenmiyorsa bu buton gozukmesin *@
+                    {
+                        <a asp-area="Admin" asp-controller="Message" asp-action="SafeDeleteAllImportantMessages" title="Tümünü Sil" class="btn btn-white btn-sm"><i class="fa fa-trash-o"></i> Tümünü Sil</a>
+                    }
                 </div>
             </div>
             <div class="mail-box">
@@ -52,7 +63,7 @@
                                             {
                                                 <a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="UndoMakeImportantMessage" asp-route-messageId="@message.Id" title="Yıldızlamaktan Vazgeç"><i class="fa fa-star"></i></a>
                                             }
-                                           
+
                                         </div>
                                     </td>
                                     <td class="mail-ontact"><a data-id="@message.Id" asp-area="Admin" asp-controller="Message" asp-action="Details" asp-route-messageId="@message.Id">@message.SenderUser.Name @message.SenderUser.Surname</a></td>

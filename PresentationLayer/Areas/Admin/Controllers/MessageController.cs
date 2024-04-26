@@ -13,6 +13,7 @@ using NToastNotify;
 using PresentationLayer.ResultMessages;
 using System.Net.Mail;
 using System.Security.Claims;
+using X.PagedList;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
@@ -61,7 +62,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 return View(result);
             }
         }
-        public async Task<IActionResult> InBox()
+        public async Task<IActionResult> InBox(int page = 1)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
@@ -69,9 +70,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var inboxMessages = await _messageService.TGetInBoxWithMessageByLoginUser(); // Giris yapan kisinin id bilgisi ile message tablosunda ReceiverUserId esit olan mesajlar listelenecek.
             var mapMessages = _mapper.Map<List<MessageListDto>>(inboxMessages);
 
-            return View(mapMessages);
+            return View(mapMessages.ToPagedList(page, 10)); // Her sayfada 10 veri olmasi icin sayfalamaislemi yaptik.
         }
-        public async Task<IActionResult> SendBox()
+        public async Task<IActionResult> SendBox(int page = 1)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
@@ -80,7 +81,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapMessages = _mapper.Map<List<MessageListDto>>(messages);
             ViewBag.sendboxMessageCount = mapMessages.Count();
 
-            return View(mapMessages);
+            return View(mapMessages.ToPagedList(page, 10));
         }
 
         [HttpGet]
@@ -101,8 +102,8 @@ namespace PresentationLayer.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 var users = await _unitOfWork.GetRepository<AppUser>().GetAllAsync();
-                
-                if(users.Any(x=>x.Email== messageAddDto.ReceiverUserEmail)) // Eger gonderilmek istenen mail adresine ait AppUser tablosunda mail varsa
+
+                if (users.Any(x => x.Email == messageAddDto.ReceiverUserEmail)) // Eger gonderilmek istenen mail adresine ait AppUser tablosunda mail varsa
                 {
                     var receiverUser = await _unitOfWork.GetRepository<AppUser>()
                     .GetAsync(x => x.Email == messageAddDto.ReceiverUserEmail);
@@ -135,7 +136,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return View(mapMessage);
         }
 
-        public async Task<IActionResult> TrashBox()
+        public async Task<IActionResult> TrashBox(int page = 1)
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
             ViewBag.LoginUserId = _user.GetLoggedInUserId(); // Giren kisinin cop kutusunda kendi gonderdigi mesaji mi yoksa kendisine gelen mesaji sildigi kontrolunu view tarafinda yapabilmek icin login olan user id'sini tasiyoruz.
@@ -144,8 +145,41 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var mapDeletedMessages = _mapper.Map<List<MessageListDto>>(deletedMessages);
 
             ViewBag.trashMessageCount = mapDeletedMessages.Count();
-            return View(mapDeletedMessages);
+            return View(mapDeletedMessages.ToPagedList(page, 10));
         }
+
+        // *** Tumunu sil butonlari icin action'lar
+        public async Task<IActionResult> SafeDeleteAllInBoxMessages() // InBox'ta listelenen mesajlari tumunu sil butonu ile silme
+        {
+            var inboxMessages = await _messageService.TGetInBoxWithMessageByLoginUser(); // Giris yapan kisiye ait gelen mesajlar listeleniyor
+            await _messageService.TSafeDeleteAllMessagesAsync(inboxMessages);
+            _toast.AddSuccessToastMessage("Tüm mesajlar başarıyla çöp kutusuna taşındı", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("InBox", "Message", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> SafeDeleteAllSendBoxMessages() // SendBox'ta listelenen mesajlari tumunu sil butonu ile silme
+        {
+            var inboxMessages = await _messageService.TGetSendBoxWithMessageByLoginUser(); // Giris yapan kisinin gonderdigi mesajlar listeleniyor
+            await _messageService.TSafeDeleteAllMessagesAsync(inboxMessages);
+            _toast.AddSuccessToastMessage("Tüm mesajlar başarıyla çöp kutusuna taşındı", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("SendBox", "Message", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> SafeDeleteAllImportantMessages() // Yildizli mesajlarda listelenen mesajlari tumunu sil butonu ile silme
+        {
+            var inboxMessages = await _messageService.TGetAllImportantMessages(); // Giris yapan kisinin yildizladigi mesajlar
+            await _messageService.TSafeDeleteAllMessagesAsync(inboxMessages);
+            _toast.AddSuccessToastMessage("Tüm mesajlar başarıyla çöp kutusuna taşındı", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("GetAllImportant", "Message", new { Area = "Admin" });
+        }
+        public async Task<IActionResult> HardDeleteAllTrashBox() // Cop kutusundaki listelenen mesajlari tumunu sil butonu ile silme
+        {
+            var trashboxMessages = await _messageService.TGetDeletedMessageByLoginUser(); // Giris yapan kisinin id bilgisi ile message tablosunda ReceiverUserId esit oldugu silinmis mesajlar listelenecek.
+            await _messageService.THardDeleteTrashBoxAllMessagesAsync(trashboxMessages);
+            _toast.AddSuccessToastMessage("Tüm mesajlar başarıyla silindi", new ToastrOptions { Title = "İşlem Başarılı!" });
+            return RedirectToAction("TrashBox", "Message", new { Area = "Admin" });
+
+        }
+        // ***
+
         public async Task<IActionResult> SafeDeleteInBox(Guid messageId) // Inbox'taki mesajlar giren kisiye gelen mesajlar oldugu icin yani ReceiverUserId ile giris yapanin id'si esit oldugu icin buradaki mesajlara ayri silme islemi uygulaniyor.
         {
             var message = await _messageService.TSafeDeleteReceiverMessageAsync(messageId);
@@ -162,10 +196,10 @@ namespace PresentationLayer.Areas.Admin.Controllers
         // (Bir mesaji gonderdigimizde o mesaji db'den tamamen kaldirirsak bu sefer alici mesaji gormeden silme ihtimalimiz vardir. Bu da senaryo geregi istedigimiz bir şey degil
         // Bundan dolayi projemizde mesajlasma sistemi icin hic bir mesaji DB'den tamamen silme islemini gerceklestirmiyoruz.)
         [HttpPost]
-        public async Task<IActionResult> HardDeleteInbox(Guid messageId) 
+        public async Task<IActionResult> HardDeleteInbox(Guid messageId)
         {
             var message = await _messageService.THardDeleteReceiverMessageAsync(messageId);
-            _toast.AddSuccessToastMessage(message+ " konulu mesaj başarıyla silindi.", new ToastrOptions { Title = "İşlem Başarılı!" });
+            _toast.AddSuccessToastMessage(message + " konulu mesaj başarıyla silindi.", new ToastrOptions { Title = "İşlem Başarılı!" });
             return RedirectToAction("TrashBox", "Message", new { Area = "Admin" });
         }
         public async Task<IActionResult> SafeDeleteSendBox(Guid messageId) // SendBox'taki mesajlar giren kisinin gonderdigi mesajlar oldugu icin yani SenderUserId ile giris yapanin id'si esit oldugu icin buradaki mesajlara ayri silme islemi uygulaniyor.
@@ -201,16 +235,16 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return RedirectToAction("InBox", "Message", new { Area = "Admin" });
         }
 
-        public async Task<IActionResult> GetAllImportant() // Yildizli mesajlarin listelendigi sayfa
+        public async Task<IActionResult> GetAllImportant(int page = 1) // Yildizli mesajlarin listelendigi sayfa
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             // Giris yapan kisiye ait ve yildizladigi mesajlar listeleniyor.
             var importantMessages = await _messageService.TGetAllImportantMessages();
             var mapMessages = _mapper.Map<List<MessageListDto>>(importantMessages);
-            
-            ViewBag.ImportantMessageCount=mapMessages.Count;
-            return View(mapMessages);
+
+            ViewBag.ImportantMessageCount = mapMessages.Count;
+            return View(mapMessages.ToPagedList(page, 10));
         }
     }
 }

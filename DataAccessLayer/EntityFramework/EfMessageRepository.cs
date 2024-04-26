@@ -54,11 +54,40 @@ namespace DataAccessLayer.EntityFramework
 
             // Mesaj tablosunda Receiver ve Sender id bilgisi ile giris yapanin id bilgisi esitse ve silinmis mesaj ise o mesajlari Cop kutusunda listeleyecegiz.
             List<Message> loginDeletedMessagesUser = await _unitOfWork.GetRepository<Message>()
-                    .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverStatus == false && x.ReceiverIsDeleted == false 
-                    || x.SenderUserId==loginUserId && x.SenderStatus == false &&  x.SenderIsDeleted == false, s => s.SenderUser, r=>r.ReceiverUser);
+                    .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverStatus == false && x.ReceiverIsDeleted == false
+                    || x.SenderUserId == loginUserId && x.SenderStatus == false && x.SenderIsDeleted == false, s => s.SenderUser, r => r.ReceiverUser);
 
             return loginDeletedMessagesUser;
         }
+
+        // *** Tumunu sil butonlari icin metodlar
+        public async Task SafeDeleteAllMessagesAsync(List<Message> messages)// Tumunu sil butonu ile tum mesajlari SafeDelete vasitasiyla silme
+        {
+            var loginUserId = _user.GetLoggedInUserId();
+
+            // Gelen listeye ait tumunu sil butonu ile her bir mesaji sil (ReceiverStatus==false veya SenderStatus==false yapma islemi)
+            foreach (var message in messages)
+            {
+                if (message.ReceiverUserId == loginUserId)
+                    await SafeDeleteReceiverMessageAsync(message.Id);
+                else if (message.SenderUserId == loginUserId)
+                    await SafeDeleteSenderMessageAsync(message.Id);
+            }
+        }
+        public async Task HardDeleteTrashBoxAllMessagesAsync(List<Message> messages) // Tumunu sil butonu ile tum mesajlari HardDelete vasitasiyla silme
+        {
+            var loginUserId = _user.GetLoggedInUserId();
+
+            // Gelen listeye ait tumunu sil butonu ile her bir mesaji sil (ReceiverIsDeleted==true veya SenderIsDeleted==true yapma islemi)
+            foreach (var message in messages)
+            {
+                if (message.ReceiverUserId == loginUserId)
+                    await HardDeleteReceiverMessageAsync(message.Id);
+                else if(message.SenderUserId == loginUserId)
+                    await HardDeleteSenderMessageAsync(message.Id);
+            }
+        }
+        // ***
 
         public async Task<string> SafeDeleteReceiverMessageAsync(Guid messageId) // InBox'taki mesajlarin cop kutusuna tasinmasi
         {
@@ -163,6 +192,6 @@ namespace DataAccessLayer.EntityFramework
             return loginMessagesUser;
         }
 
-
+    
     }
 }

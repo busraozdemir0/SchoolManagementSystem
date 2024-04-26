@@ -24,5 +24,9 @@ namespace DataAccessLayer.Abstract
         Task UndoMakeTheMessageImportant(Guid messageId); // Yildizli olan mesaji geri almak icin metod.
         Task<List<Message>> GetAllImportantMessages(); // Yildizli mesajlari getir
 
+        // *** Tumunu sil butonlari icin metodlar
+        Task HardDeleteTrashBoxAllMessagesAsync(List<Message> messages); // Cop kutusundaki tum mesajlari silme
+        Task SafeDeleteAllMessagesAsync(List<Message> messages); // InBox veya SendBox'taki tum mesajlari silme (sadece status'u false yapma islemi)
+
     }
 }
