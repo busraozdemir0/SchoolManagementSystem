@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonVideos;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,6 +13,7 @@ using System.Security.Claims;
 namespace PresentationLayer.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = RoleConsts.Student)]
     public class LessonVideoController : Controller
     {
         private readonly IAboutService _aboutService;

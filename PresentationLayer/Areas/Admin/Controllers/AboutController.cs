@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.Abouts;
 using EntityLayer.DTOs.Addresses;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)] // Rolu Admin olan kullanicilar erisebilecek
     public class AboutController : Controller
     {
         private readonly IAboutService _aboutService;

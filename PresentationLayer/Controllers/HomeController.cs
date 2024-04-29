@@ -49,6 +49,11 @@ namespace PresentationLayer.Controllers
 
             return View(reports);
         }
+        public async Task<IActionResult> ErrorPage(int code) // Hata meydana geldiginde calisacak olan sayfa
+        {
+            ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

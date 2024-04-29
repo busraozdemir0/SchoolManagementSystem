@@ -9,6 +9,7 @@ using EntityLayer.DTOs.Grades;
 using EntityLayer.DTOs.Lessons;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Security.Claims;
@@ -17,6 +18,7 @@ using System.Security.Claims;
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = RoleConsts.Teacher)]
     public class GradeController : Controller
     {
         private readonly IGradeService _gradeService;

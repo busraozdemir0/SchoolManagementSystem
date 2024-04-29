@@ -1,0 +1,365 @@
+/*--
+Author: W3layouts
+Author URL: http://w3layouts.com
+--*/
+
+/* reset code */
+:root {
+    --primary-color: #fcc752;
+    --secondary-color: #c4876c;
+    --font-color: #666;
+    --bg-color: #fff;
+    --heading-color: #3f3a64;
+    --border-radius: 8px;
+    --border-color-light: #eee;
+    --bg-grey: #f7f7f7;
+    --bg-lightgrey: #f8f9fa;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    color: #585858;
+}
+
+p {
+    font-size: 18px;
+    line-height: 28px;
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*  wrapper */
+.wrapper {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .wrapper {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .wrapper {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .wrapper {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .wrapper {
+        max-width: 1140px;
+    }
+}
+
+/*  /wrapper */
+
+.d-grid {
+    display: grid;
+}
+
+button,
+input,
+select {
+    -webkit-appearance: none;
+    outline: none;
+}
+
+button,
+.btn,
+select {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #f1f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+form,
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/*-- //Reset-Code --*/
+
+/*-- form styling --*/
+.signinform {
+    background: url(../images/bg.jpg) no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    min-height: calc(100vh - 0px);
+    position: relative;
+    z-index: 0;
+    display: grid;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.signinform:before {
+    content: "";
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+
+.footer {
+    text-align: center;
+}
+
+.logo {
+    text-align: center;
+}
+
+a.brand-logo {
+    color: #fff;
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 600;
+}
+
+
+h4.cover-para.w3ls {
+    letter-spacing: 2px;
+    font-size: 170px;
+    line-height: 1;
+    text-align: center;
+    flex-basis: 100%;
+    color: transparent;
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: none;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: var(--primary-color);
+}
+
+h5.error {
+    font-size: 26px;
+    font-weight: 600;
+    text-transform: capitalize;
+    line-height: 36px;
+    margin: 20px 0;
+    color: #fff;
+}
+
+.main-cover {
+    max-width: 500px;
+    margin: 30px auto;
+}
+
+.main-cover.w3 p,
+.footer p {
+    color: #eee;
+}
+
+.footer p a {
+    color: var(--primary-color);
+}
+
+.footer p a:hover {
+    color: #fff;
+}
+
+.form-control {
+    max-width: 600px;
+    width: 345px;
+    margin-right: 5px;
+    color: var(--font-color);
+    background: var(--bg-lightgrey);
+    padding: 12px 25px;
+    font-size: 18px;
+    line-height: 28px;
+    height: 55px;
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--border-radius);
+    display: block;
+    font-weight: 500;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1px solid var(--secondary-color);
+    background: var(--bg-color);
+}
+
+button.btn.search {
+    color: #fff;
+    background: var(--secondary-color);
+    font-size: 18px;
+    padding: 0 40px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    border: none;
+    height: 55px;
+    display: inline-block;
+    border-radius: var(--border-radius);
+}
+
+button.btn.search:hover {
+    background: #c07452;
+}
+
+.form-inline.search-form {
+    position: relative;
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    margin-top: 30px;
+}
+
+.back-button {
+    font-weight: 600;
+    display: inline-block;
+    font-size: 17px;
+    color: #fff;
+    letter-spacing: 0;
+    margin-top: 40px;
+}
+
+.back-button:hover {
+    color: var(--primary-color);
+}
+
+.back-button span.fa {
+    margin-right: 7px;
+    font-size: 15px;
+}
+
+/** Responsive **/
+@media (max-width: 991px) {
+    a.brand-logo {
+        font-size: 30px;
+        line-height: 40px;
+    }
+    h4.cover-para.w3ls {
+        font-size: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    h4.cover-para.w3ls {
+        font-size: 140px;
+    }
+}
+
+@media (max-width: 568px) {
+    h4.cover-para.w3ls {
+        font-size: 120px;
+    }
+
+    h5.error {
+        font-size: 22px;
+        line-height: 34px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-control {
+        width: 100%;
+        margin-right: 0px;
+    }
+
+    button.btn.search {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .form-inline.search-form {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 415px) {
+    h4.cover-para.w3ls {
+        font-size: 100px;
+    }
+    .signinform {
+        padding: 30px 15px;
+    }
+
+    .main-cover {
+        margin: 40px auto;
+    }
+}
+
+@media screen and (max-width: 384px) {
+    p {
+        font-size: 17px;
+    }
+
+    a.brand-logo {
+        font-size: 26px;
+        line-height: 36px;
+    }
+}
+
+@media (max-width: 375px) {
+    h4.cover-para.w3ls {
+        font-size: 90px;
+        letter-spacing: 0px;
+    }
+
+    h5.error {
+        font-size: 20px;
+        line-height: 32px;
+        margin: 5px 0 20px;
+    }
+}
+/** /Responsive **/
+
+/*-- //form styling --*/

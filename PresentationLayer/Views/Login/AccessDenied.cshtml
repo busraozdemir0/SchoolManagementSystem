@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>@ViewBag.SchoolName - Erişim Hatası</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="~/icons/error.png" />
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="~/ErrorPage/css/style.css" type="text/css" media="all" />
+
+</head>
+
+<body>
+    <div class="w3l-loginblock signinform">
+        <!-- main content -->
+        <!-- /404-->
+        <section class="w3l-errorblock text-center">
+            <div class="container">
+                <div class="main-cover w3">
+                    <h4 class="cover-para w3ls">403</h4>
+                    <h5 class="error">Üzgünüm, Bu sayfaya erişiminiz yok!</h5>
+                    <p class="">
+                      Aradığınız sayfaya yetkiniz yok. Lütfen tekrar deneyin.
+                    </p>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn back-button"> <span class="fa fa-arrow-left mr-2"></span> Ana Sayfa</a>
+                </div>
+            </div>
+        </section>
+        <!-- //404-->
+        <!-- //main content -->
+        <!-- footer -->
+        <div class="footer">
+            <p>
+                &copy; @DateTime.Now.Year @ViewBag.SchoolName. Tüm Hakları Saklıdır | Design by <a href="https://w3layouts.com/"
+                                                                                                  target="blank">W3layouts</a>
+            </p>
+        </div>
+        <!-- footer -->
+    </div>
+
+    <!-- fontawesome v5-->
+    <script src="~/ErrorPage/js/fontawesome.js"></script>
+
+</body>
+
+</html>

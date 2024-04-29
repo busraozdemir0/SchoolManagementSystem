@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.LessonDocuments;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
@@ -12,6 +14,7 @@ using PresentationLayer.ResultMessages;
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class LessonDocumentController : Controller
     {
         private readonly IAboutService _aboutService;

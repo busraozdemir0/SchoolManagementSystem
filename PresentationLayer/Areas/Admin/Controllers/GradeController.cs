@@ -2,6 +2,7 @@
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using ClosedXML.Excel;
+using DataAccessLayer.Consts;
 using DocumentFormat.OpenXml.Wordprocessing;
 using EntityLayer.DTOs.Grades;
 using EntityLayer.DTOs.Lessons;
@@ -9,6 +10,7 @@ using EntityLayer.DTOs.Roles;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
@@ -16,6 +18,7 @@ using PresentationLayer.ResultMessages;
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class GradeController : Controller
     {
         private readonly IAboutService _aboutService;

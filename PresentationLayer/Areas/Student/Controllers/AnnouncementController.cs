@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Announcements;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Areas.Student.Controllers
 {
 	[Area("Student")]
-	public class AnnouncementController : Controller
+    [Authorize(Roles = RoleConsts.Student)] // Rolu Student olan kullanicilar erisebilecek
+    public class AnnouncementController : Controller
 	{
 		private readonly IAboutService _aboutService;
 		private readonly IAnnouncementService _announcementService;

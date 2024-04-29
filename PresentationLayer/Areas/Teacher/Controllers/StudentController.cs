@@ -10,6 +10,7 @@ using EntityLayer.DTOs.LessonScores;
 using EntityLayer.DTOs.Reports;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
@@ -17,6 +18,7 @@ using PresentationLayer.ResultMessages;
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = RoleConsts.Teacher)]
     public class StudentController : Controller
     {
         private readonly IAboutService _aboutService;

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Addresses;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System.Reflection;
@@ -12,6 +14,7 @@ using System.Reflection;
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class AddressController : Controller
     {
         private readonly IAboutService _aboutService;

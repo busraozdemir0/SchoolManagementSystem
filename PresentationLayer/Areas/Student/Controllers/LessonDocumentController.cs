@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.LessonDocuments;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = RoleConsts.Student)]
     public class LessonDocumentController : Controller
     {
         private readonly IAboutService _aboutService;

@@ -41,5 +41,7 @@ namespace DataAccessLayer.Abstract
             bool>> filter = null, params Expression<Func<AppUser, object>>[] includeProperties);
 
         Task<HashSet<UserListDto>> StudentInClassListAsync(List<UserListDto> users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
+
+        Guid GetUserIdByUserName(string userName); // Gelen kullanici adina gore user id bilgisini dondurme
     }
 }

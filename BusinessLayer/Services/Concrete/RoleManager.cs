@@ -34,6 +34,11 @@ namespace BusinessLayer.Services.Concrete
             return await _roleDal.FindByIdRoleAsync(roleId);
         }
 
+        public async Task<AppRole> TFindByUserRoleAsync(Guid userId)
+        {
+            return await _roleDal.FindByUserRoleAsync(userId);
+        }
+
         public async Task<List<AppRole>> TGetAllRolesAsync()
         {
             return await _roleDal.GetAllRolesAsync();

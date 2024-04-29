@@ -42,6 +42,6 @@ namespace BusinessLayer.Services.Abstract
 
         Task<HashSet<UserListDto>> TStudentInClassListAsync(List<UserListDto> users); // Giren ogretmenin ders verdigi siniflarda bulunan ogrenciler listesi
 
-
+        Guid GetUserIdByUserName(string userName); // Gelen kullanici adina gore user id bilgisini dondurme
     }
 }

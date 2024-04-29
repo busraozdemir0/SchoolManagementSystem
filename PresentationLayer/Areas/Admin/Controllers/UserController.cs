@@ -10,10 +10,12 @@ using NToastNotify;
 using DataAccessLayer.Consts;
 using PresentationLayer.ResultMessages;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class UserController : Controller
     {
         private readonly IAboutService _aboutService;

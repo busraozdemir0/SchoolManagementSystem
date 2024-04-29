@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.Helpers.Search;
 using DataAccessLayer.UnitOfWorks;
@@ -7,6 +8,7 @@ using EntityLayer.DTOs.Grades;
 using EntityLayer.DTOs.Lessons;
 using EntityLayer.DTOs.Search;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System.Security.Claims;
@@ -15,6 +17,7 @@ using X.PagedList;
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = RoleConsts.Teacher)]
     public class HomeController : Controller
     {
         private readonly ISearchProcess _searchProcess;

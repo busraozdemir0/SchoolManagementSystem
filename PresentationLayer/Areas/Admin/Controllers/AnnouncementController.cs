@@ -8,6 +8,7 @@ using EntityLayer.DTOs.Lessons;
 using EntityLayer.DTOs.Roles;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
@@ -15,7 +16,8 @@ using PresentationLayer.ResultMessages;
 namespace PresentationLayer.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	public class AnnouncementController : Controller
+    [Authorize(Roles = RoleConsts.Admin)]
+    public class AnnouncementController : Controller
 	{
 		private readonly IAboutService _aboutService;
 		private readonly IAnnouncementService _announcementService;

@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.Grades;
 using EntityLayer.DTOs.Lessons;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class LessonController : Controller
     {
         private readonly IAboutService _aboutService;

@@ -15,6 +15,7 @@ namespace BusinessLayer.Services.Abstract
         Task<AppRole> TGetStudentRoleAsync();
         Task<Guid> TGetByIdRoleAsync(string roleName);
         Task<AppRole> TFindByIdRoleAsync(Guid roleId);
+        Task<AppRole> TFindByUserRoleAsync(Guid userId); // Gelen user id'ye gore kullanicinin rolunu dondurme.
         Task<IdentityResult> TCreateRoleAsync(RoleAddDto roleAddDto);
         Task<IdentityResult> TUpdateRoleAsync(RoleUpdateDto roleUpdateDto);
         Task<(IdentityResult identityResult, string? roleName)> TDeleteRoleAsync(Guid roleId);

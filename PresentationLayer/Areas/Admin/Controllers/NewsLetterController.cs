@@ -2,8 +2,10 @@
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
 using BusinessLayer.Services.Concrete;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.NewsLetters;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System.Net;
@@ -13,6 +15,7 @@ using System.Reflection;
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class NewsLetterController : Controller
     {
         private readonly IAboutService _aboutService;

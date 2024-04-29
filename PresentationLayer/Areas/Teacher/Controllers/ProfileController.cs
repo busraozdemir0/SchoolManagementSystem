@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.Users;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
 	[Area("Teacher")]
-	public class ProfileController : Controller
+    [Authorize(Roles = RoleConsts.Teacher)]
+    public class ProfileController : Controller
 	{
         private readonly IAboutService _aboutService;
         private readonly IUserService _userService;

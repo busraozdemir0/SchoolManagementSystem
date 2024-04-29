@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using EntityLayer.DTOs.Contacts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using NToastNotify;
@@ -9,6 +11,7 @@ using PresentationLayer.ResultMessages;
 namespace PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = RoleConsts.Admin)]
     public class ContactController : Controller
     {
         private readonly IAboutService _aboutService;

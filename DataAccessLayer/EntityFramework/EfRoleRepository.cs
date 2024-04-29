@@ -94,6 +94,10 @@ namespace DataAccessLayer.EntityFramework
                 return (result, null);
         }
 
-       
+        public async Task<AppRole> FindByUserRoleAsync(Guid userId)
+        {
+            var roleId =  _context.UserRoles.Where(x => x.UserId.Equals(userId)).Select(y => y.RoleId).FirstOrDefault(); // Gelen userId bilgisine gore roleId'sini cekme
+            return await FindByIdRoleAsync(roleId); // role id'sine gore o kaydi dondurme
+        }
     }
 }

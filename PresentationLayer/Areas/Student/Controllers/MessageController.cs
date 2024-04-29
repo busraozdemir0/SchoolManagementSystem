@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using BusinessLayer.Extensions;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.UnitOfWorks;
 using EntityLayer.DTOs.Messages;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -16,6 +18,7 @@ using X.PagedList;
 namespace PresentationLayer.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = RoleConsts.Student)]
     public class MessageController : Controller
     {
         private readonly IAboutService _aboutService;

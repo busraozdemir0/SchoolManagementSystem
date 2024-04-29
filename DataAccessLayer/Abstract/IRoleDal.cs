@@ -15,6 +15,7 @@ namespace DataAccessLayer.Abstract
         Task<AppRole> GetStudentRoleAsync();
         Task<Guid> GetByIdRoleAsync(string roleName); // Gelen rol adinin id'sini cekme
         Task<AppRole> FindByIdRoleAsync(Guid roleId); // Gelen id'ye gore rolu dondurme.
+        Task<AppRole> FindByUserRoleAsync(Guid userId); // Gelen user id'ye gore kullanicinin rolunu dondurme.
         Task<IdentityResult> CreateRoleAsync(RoleAddDto roleAddDto);
         Task<IdentityResult> UpdateRoleAsync(RoleUpdateDto roleUpdateDto);
         Task<(IdentityResult identityResult, string? roleName)> DeleteRoleAsync(Guid roleId);

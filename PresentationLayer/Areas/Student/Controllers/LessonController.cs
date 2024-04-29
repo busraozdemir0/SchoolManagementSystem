@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using EntityLayer.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = RoleConsts.Student)]
     public class LessonController : Controller
     {
         private readonly IAboutService _aboutService;

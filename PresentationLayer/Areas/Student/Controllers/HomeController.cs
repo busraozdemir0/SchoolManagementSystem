@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Services.Abstract;
+using DataAccessLayer.Consts;
 using DataAccessLayer.Extensions;
 using DataAccessLayer.Helpers.Search;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using System.Security.Claims;
@@ -8,6 +10,7 @@ using System.Security.Claims;
 namespace PresentationLayer.Areas.Student.Controllers
 {
     [Area("Student")]
+    [Authorize(Roles = RoleConsts.Student)]
     public class HomeController : Controller
     {
 		private readonly IAboutService _aboutService;

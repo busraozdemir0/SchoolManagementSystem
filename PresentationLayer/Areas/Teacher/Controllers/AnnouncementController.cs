@@ -7,6 +7,7 @@ using EntityLayer.DTOs.Announcements;
 using EntityLayer.DTOs.Roles;
 using EntityLayer.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using PresentationLayer.ResultMessages;
@@ -15,6 +16,7 @@ using System.Security.Claims;
 namespace PresentationLayer.Areas.Teacher.Controllers
 {
     [Area("Teacher")]
+    [Authorize(Roles = RoleConsts.Teacher)] // Rolu Teacher olan kullanicilar erisebilecek
     public class AnnouncementController : Controller
     {
         private readonly IAnnouncementService _announcementService;

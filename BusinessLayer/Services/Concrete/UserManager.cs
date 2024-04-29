@@ -146,5 +146,10 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _userDal.GetAllDeletedUserAsync();
         }
+
+        public Guid GetUserIdByUserName(string userName)
+        {
+            return _userDal.GetUserIdByUserName(userName);
+        }
     }
 }

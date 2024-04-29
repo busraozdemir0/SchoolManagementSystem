@@ -483,5 +483,10 @@ namespace DataAccessLayer.EntityFramework
             }
             return mapUser;
         }
+
+        public Guid GetUserIdByUserName(string userName)
+        {
+            return _context.Users.Where(x => x.UserName.Equals(userName)).Select(y => y.Id).FirstOrDefault();
+        }
     }
 }

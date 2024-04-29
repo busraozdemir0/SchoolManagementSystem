@@ -4,6 +4,7 @@ using DataAccessLayer.Context;
 using DataAccessLayer.Extensions;
 using EntityLayer.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using NToastNotify;
@@ -58,7 +59,7 @@ builder.Services.AddIdentity<AppUser, AppRole>(option =>
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
 
-// Session yapilandirmasi
+// * Session ve Cookie yapilandirmasi
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.LoginPath = new PathString("/Login/Index");  // Kisi belli sayfalar icin oturum acmamissa otomatikmen bu dizine yonlendirilecektir.
@@ -72,8 +73,9 @@ builder.Services.ConfigureApplicationCookie(config =>
     };
     config.SlidingExpiration = true;
     config.ExpireTimeSpan = TimeSpan.FromDays(1);  // Oturumun 1 gun boyunca acik kalacagi anlamina geliyor - cookie 1 gun boyunca tutulacaktir.
-    config.AccessDeniedPath = new PathString("/Login/AccessDenied");
+    config.AccessDeniedPath = new PathString("/Login/AccessDenied"); // Erisim hatasi oldugunda karsimiza cikacak sayfa
 });
+// *
 
 var app = builder.Build();
 
@@ -85,6 +87,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Web sitemizde hata meydana geldiginde Home controller'daki ErrorPage sayfasi calistirilacak
+app.UseStatusCodePagesWithReExecute("/Home/ErrorPage/","?code={0}"); // Kullanici ornegin var olmayan bir sayfaya gitmek istediginde karsisina hata sayfasi cikaracagiz
+
 app.UseNToastNotify();  // Ornegin haber eklendiginde bicimli bir sekilde bildirim mesaji verebilmek icin NToastNotify adli kutuphaneyi kullaniyoruz.
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -94,11 +99,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 app.UseEndpoints(endpoints =>
 {
