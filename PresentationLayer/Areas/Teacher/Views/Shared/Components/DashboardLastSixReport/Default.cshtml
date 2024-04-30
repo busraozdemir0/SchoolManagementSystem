@@ -1,10 +1,22 @@
 ﻿@model List<ReportDto>
 
 <div class="col-md-6 chit-chat-layer1-left">
-    <div class="work-progres">
+    <div class="work-progres">       
         <div class="chit-chat-heading">
-            Okulumuzdan Haberler
+            Okulumuzdan Haberler   
         </div>
+        @if (ViewBag.ThereisaComment != true) // Eger onceden yorum yapmamissa bu alan gosterilsin
+        {
+            <a asp-area="Teacher" asp-controller="Comment" asp-action="Add" style="text-decoration:underline; font-size:12px;">
+                "Okulumuz Hakkında Düşüncelerinizi Paylaşabilmek İçin Lütfen Tıklayın."
+            </a>
+        }
+        else
+        {
+            <a asp-area="" asp-controller="Report" asp-action="Index" style="text-decoration:underline; font-size:12px;">
+                "Tüm Haberleri Görmek İçin Tıklayın."
+            </a>
+        }
         <div class="table-responsive" style="height:18.7em; overflow:auto;">
             <table class="table table-hover">
                 <thead>
@@ -19,14 +31,15 @@
                     {
                         <tr>
 
-                            <td><a data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@report.Title</a></td>
-                            <td>@Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 15)...</td>
+                            <td><a style="color:black;" data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@report.Title</a></td>
+                            <td><a style="color:black;" data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 15)...</a></td>
                             <td><span class="label label-info">@(((DateTime)report.CreatedDate).ToString("dd-MM-yyyy"))</span></td>
                         </tr>
                     }
 
                 </tbody>
             </table>
+         
         </div>
     </div>
 </div>

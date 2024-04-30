@@ -26,5 +26,6 @@ namespace EntityLayer.Entities
         public ICollection<Announcement> Announcements { get; set; }
         public virtual ICollection<Message> SenderUserMessages { get; set; }
         public virtual ICollection<Message> ReceiverUserMessages { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

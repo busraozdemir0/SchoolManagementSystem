@@ -1,0 +1,45 @@
+﻿@model List<CommentHomeListDto>
+@{
+    var count = 1;
+}
+@if (Model.Count != 0)  // Eger hic yorum yapilmamissa bu alan ana sayfada gosterilmeyecek
+{
+    <section class="w3l-index4 py-5" id="testimonials">
+        <div class="container py-md-5 py-4">
+            <div class="content-slider text-center">
+                <div class="clients-slider">
+                    <div class="mask">
+                        <ul>
+                            @foreach (var comment in Model)
+                            {
+                                var countClass = "anim" + count;
+
+                                <li class="@countClass">
+                                    @* Kac tane yorum yapilmissa ona gore anim1, anim2 ... seklinde ilerlemesi icin *@
+                                    @if (comment.User.ImageId is not null)
+                                    {
+                                        <img src="~/images/@comment.User.Image.FileName" class="img-fluid rounded-circle"
+                                             alt="client image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/icons/user-avatar-profile.png" class="img-fluid rounded-circle"
+                                             alt="client image" />
+                                    }
+                                    <blockquote class="quote">
+                                        <q>
+                                            @Html.Raw(comment.Content)
+                                        </q>
+                                    </blockquote>
+                                    <div class="source">- @comment.User.Name @comment.User.Surname</div>
+                                </li>
+
+                                count++;
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
