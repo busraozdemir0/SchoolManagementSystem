@@ -10,5 +10,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface ICommentDal : IRepository<Comment>
     {
+        Task SafeDeleteCommentAsync(Guid commentId);
+        Task UndoDeleteCommentAsync(Guid commentId);
     }
 }

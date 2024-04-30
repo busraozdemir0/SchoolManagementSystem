@@ -1,0 +1,74 @@
+﻿@model List<CommentListDto>
+
+@{
+    ViewData["Title"] = "Yorumlar";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Yorumlar</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Yapılan Yorum Listesi</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="text-nowrap m-5">
+
+                        <table class="table table-striped" id="commentsTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Yorum Yapan</th>
+                                    <th>İçerik</th>
+                                    <th>Yapılma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Yorum Yapan</th>
+                                    <th>İçerik</th>
+                                    <th>Yapılma Tarihi</th>
+                                    <th>Durum</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var comment in Model)
+                                {
+                                    <tr name="@comment.Id">
+                                        <td>@comment.User.Name @comment.User.Surname</td>
+                                        <td>@Html.Raw(comment.Content)</td>
+                                        <td>@comment.CreatedDate.ToShortDateString()</td>
+                                        <td>@(comment.IsDeleted ? "Aktif Değil" : "Aktif")</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-danger btn-sm" data-id="@comment.Id" asp-area="Admin" asp-controller="Comment" asp-action="SafeDelete" asp-route-commentId="@comment.Id"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/commentIndex.js" type="application/ecmascript"></script>
+}

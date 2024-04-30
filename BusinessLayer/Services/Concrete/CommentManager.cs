@@ -61,6 +61,16 @@ namespace BusinessLayer.Services.Concrete
             return await _commentDal.GetByGuidAsync(id);
         }
 
+        public async Task TSafeDeleteCommentAsync(Guid commentId)
+        {
+            await _commentDal.SafeDeleteCommentAsync(commentId);
+        }
+
+        public async Task TUndoDeleteCommentAsync(Guid commentId)
+        {
+            await _commentDal.UndoDeleteCommentAsync(commentId);
+        }
+
         public async Task TUpdateAsync(Comment t)
         {
             await _commentDal.UpdateAsync(t);

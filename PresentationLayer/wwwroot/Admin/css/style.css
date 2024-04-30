@@ -1552,30 +1552,30 @@ button:focus {
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 .btn-primary {
-  color: #fff;
-  background-color: #1ab394;
-  border-color: #1ab394;
+    color: #fff;
+    background-color: #1a74b3;
+    border-color: #1a74b3;
 }
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary.focus {
-  background-color: #18a689;
-  border-color: #18a689;
-  color: #FFFFFF;
-}
-.btn-primary.disabled,
-.btn-primary:disabled {
-  color: #fff;
-  background-color: #18a689;
-  border-color: #18a689;
-}
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled).active,
-.show > .btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #18a689;
-  border-color: #18a689;
-}
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary.focus {
+        background-color: #1a5db3;
+        border-color: #1a5db3;
+        color: #FFFFFF;
+    }
+    .btn-primary.disabled,
+    .btn-primary:disabled {
+        color: #fff;
+        background-color: #1a5db3;
+        border-color: #1a5db3;
+    }
+    .btn-primary:not(:disabled):not(.disabled):active,
+    .btn-primary:not(:disabled):not(.disabled).active,
+    .show > .btn-primary.dropdown-toggle {
+        color: #fff;
+        background-color: #1a5db3;
+        border-color: #1a5db3;
+    }
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-primary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-primary.dropdown-toggle:focus {
@@ -2128,8 +2128,8 @@ button.dim:active:before {
   text-decoration: none;
 }
 .page-item.active .page-link {
-  background-color: #1ab394;
-  border-color: #1ab394;
+    background-color: #1a74b3;
+    border-color: #1a74b3;
 }
 .page-link:focus {
   box-shadow: none;
@@ -2138,9 +2138,9 @@ button.dim:active:before {
   color: #676a6c;
 }
 .pagination .footable-page.active a {
-  background-color: #1ab394;
-  border-color: #1ab394;
-  color: white;
+    background-color: #1a74b3;
+    border-color: #1a74b3;
+    color: white;
 }
 /* TOOLTIPS */
 .tooltip-inner {
@@ -5027,18 +5027,18 @@ table.table-mail tr td {
 }
 .navy-bg,
 .bg-primary {
-  background-color: #1ab394 !important;
-  color: #ffffff;
+    background-color: #1a74b3 !important;
+    color: #ffffff;
 }
 .lazur-bg,
 .bg-info {
-  background-color: #23c6c8 !important;
-  color: #ffffff;
+    background-color: #76bbf4 !important;
+    color: #ffffff;
 }
 .yellow-bg,
 .bg-warning {
-  background-color: #f8ac59 !important;
-  color: #ffffff;
+    background-color: #61bd87e6 !important;
+    color: #ffffff;
 }
 .red-bg,
 .bg-danger {

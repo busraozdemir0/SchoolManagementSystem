@@ -9,5 +9,7 @@ namespace BusinessLayer.Services.Abstract
 {
     public interface ICommentService : IGenericService<Comment>
     {
+        Task TSafeDeleteCommentAsync(Guid commentId);
+        Task TUndoDeleteCommentAsync(Guid commentId);
     }
 }

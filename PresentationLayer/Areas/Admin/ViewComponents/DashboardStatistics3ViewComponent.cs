@@ -28,8 +28,8 @@ namespace PresentationLayer.Areas.Admin.ViewComponents
             var totalContactCount = await _unitOfWork.GetRepository<Contact>().CountAsync(x => !x.IsDeleted);
             ViewBag.TotalContactCount = totalContactCount;
 
-            var totalNewsLetterCount = await _unitOfWork.GetRepository<NewsLetter>().CountAsync(x => !x.IsDeleted);
-            ViewBag.TotalNewsLetterCount = totalNewsLetterCount;
+            var totalCommentCount = await _unitOfWork.GetRepository<Comment>().CountAsync(x => !x.IsDeleted);
+            ViewBag.TotalCommentCount = totalCommentCount;
 
             var totalRoleCount = await _unitOfWork.GetRepository<AppRole>().CountAsync();
             ViewBag.TotalRoleCount = totalRoleCount;

@@ -8,29 +8,29 @@
             <div class="col-md-3 col-6">
                 <div class="counter">
                     <img src="~/EduSchool/assets/images/icon-1.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-sm-1" data-to="36076" data-speed="1500">125</div>
+                    <div class="timer count-title count-number mt-sm-1" data-to="@ViewBag.studentCount" data-speed="1500">@ViewBag.studentCount</div>
                     <p class="count-text">Kayıtlı Öğrenciler</p>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="counter">
                     <img src="~/icons/teachers.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-3" data-to="786" data-speed="1500">20</div>
+                    <div class="timer count-title count-number mt-3" data-to="@ViewBag.teacherCount" data-speed="1500">@ViewBag.teacherCount</div>
                     <p class="count-text">Uzman Öğretmenler</p>
                 </div>
             </div>
             <div class="col-md-3 col-6 mt-md-0 mt-5">
                 <div class="counter">
                     <img src="~/EduSchool/assets/images/icon-3.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-3" data-to="3630" data-speed="1500">60</div>
-                    <p class="count-text">Toplam Dersler</p>
+                    <div class="timer count-title count-number mt-3" data-to="@ViewBag.gradeCount" data-speed="1500">@ViewBag.gradeCount</div>
+                    <p class="count-text">Toplam Derslik</p>
                 </div>
             </div>
             <div class="col-md-3 col-6 mt-md-0 mt-5">
                 <div class="counter">
-                    <img src="~/EduSchool/assets/images/icon-4.png" alt="" class="img-fluid">
-                    <div class="timer count-title count-number mt-3" data-to="6300" data-speed="1500">50</div>
-                    <p class="count-text">Kazanılan Ödüller</p>
+                    <img src="~/icons/newsIcon.png" alt="" class="img-fluid">
+                    <div class="timer count-title count-number mt-3" data-to="@ViewBag.reportCount" data-speed="1500">@ViewBag.reportCount</div>
+                    <p class="count-text">Toplam Haber</p>
                 </div>
             </div>
         </div>
