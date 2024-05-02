@@ -71,6 +71,10 @@ namespace DataAccessLayer.EntityFramework
                             mapUser.StudentNo = randomStudentNo.Next(1000, 9999);
                     }
                 }
+                else if (!findRole.Name.Equals(RoleConsts.Student)) // Eger rol ogrenci disinda bir rol ise GradeId bilgisi NULL olarak birakilsin (Arkaplanda GradeId atadigi icin bu kosulu koyduk)
+                {
+                    mapUser.GradeId = null;
+                }
                 await _userManager.AddToRoleAsync(mapUser, findRole.ToString());
                 await _unitOfWork.SaveAsync();
 
