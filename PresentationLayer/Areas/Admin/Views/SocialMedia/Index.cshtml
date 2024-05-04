@@ -1,0 +1,70 @@
+﻿@model List<SocialMediaListDto>
+
+@{
+    ViewData["Title"] = "Sosyal Medya";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Sosyal Medya Bilgileri</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Sosyal Medya</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Sosyal Medya Bilgileri Listesi</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="card">
+                    <div class="text-nowrap m-5">
+
+                        <table class="table table-striped" id="socialMediasTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>Url</th>
+                                    <th>Sosyal Medya'nın İkonu</th>
+                                    <th>Güncelle</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>Url</th>
+                                    <th>Sosyal Medya'nın İkonu</th>
+                                    <th>Güncelle</th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="table-border-bottom-0">
+                                @foreach (var socialMedia in Model)
+                                {
+                                    <tr name="@socialMedia.Id">
+                                        <td>@socialMedia.Title</td>
+                                        <td>@socialMedia.Url</td>
+                                        <td>@socialMedia.IconInfo</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-primary btn-sm" data-id="@socialMedia.Id" asp-area="Admin" asp-controller="SocialMedia" asp-action="Update" asp-route-socialMediaId="@socialMedia.Id"><i class="fa fa-edit"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/socialMediaIndex.js" type="application/ecmascript"></script>
+}

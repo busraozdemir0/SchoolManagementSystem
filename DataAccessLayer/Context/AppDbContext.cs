@@ -34,6 +34,7 @@ namespace DataAccessLayer.Context
         public DbSet<LessonVideoVisitor> LessonVideoVisitors { get; set; } // Videoya tiklayan ogrenci id'sini ve o videonun id'sini tutacak tablo
         public DbSet<Message> Messages { get; set; }
         public DbSet<Comment> Comment { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

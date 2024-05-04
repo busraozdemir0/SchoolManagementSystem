@@ -16,26 +16,12 @@
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4">
-                    @*   <ul>
-                    <h6 class="footer-title-29">Explore</h6>
-                    <li><a href="#blog">Blog Posts</a></li>
-                    <li><a href="#privacy">Privacy policy</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="#license">License & uses</a></li>
-                    <li><a href="#tutorials">Tutorials</a></li>
-                    </ul> *@
 
                     <h6 class="footer-title-29">Bizi Takip Edin</h6>
 
-                    <ul style="text-align:center;">
-                        <li><a href="https://busraozdemir.netlify.app/" target="_blank" title="WebSite"><i class="fab"><img src="~/icons/web.png" /></i></a></li>
-                        <li><a href="https://www.instagram.com/busra.0zdemir/  " target="_blank" title="İnstagram"><i class="fab fa-instagram fa-2x"></i></a></li>
-                        <li><a href="https://www.linkedin.com/in/busra0zdemir/" target="_blank" title="Linkedin"><i class="fab fa-linkedin fa-2x"></i></a></li>
-                        <li><a href="https://github.com/busraozdemir0" target="_blank" title="GitHub"><i class="fab fa-github fa-2x"></i></a></li>
-                    </ul>
+                    @await Component.InvokeAsync("SocialMediaList")
+
                 </div>
-
-
 
                 @await Html.PartialAsync("~/Views/NewsLetter/NewsLetterMail.cshtml")
 

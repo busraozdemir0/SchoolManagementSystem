@@ -1,0 +1,76 @@
+﻿@model SocialMediaUpdateDto
+
+@{
+    ViewData["Title"] = "Sosyal Medya Bilgisi Güncelleme";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Sosyal Medya</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-area="Admin" asp-controller="SocialMedia" asp-action="Index">Sosyal Medya Listesi</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>@Model.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <form asp-controller="SocialMedia" asp-action="Update" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <div class="card-body">
+                                <input type="hidden" asp-for="Id" />
+
+                                <div class="form-group">
+                                    <label asp-for="Title" class="form-label">Sosyal Medya Başlığı/Adı</label>
+                                    <input asp-for="Title" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen sosyal medya başlığını/adını giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Url" class="form-label">Sosyal Medya Url</label>
+                                    <input asp-for="Url" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen sosyal medya url'sini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="Url" class="text-danger"></span>
+                                    <small class="text-muted">Örnek: https://github.com/busraozdemir0</small>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="IconInfo" class="form-label">Sosyal Medya İkon Bilgisi</label>
+                                    <input asp-for="IconInfo" type="text"
+                                           class="form-control mb-1"
+                                           id="defaultFormControlInput"
+                                           placeholder="Lütfen sosyal medya ikon bilgisini giriniz."
+                                           aria-describedby="defaultFormControlHelp" />
+                                    <span asp-validation-for="IconInfo" class="text-danger"></span>
+                                    <small class="text-muted">İkon bilgileri icin <a href="https://fontawesome.com/icons" class="text-muted" target="_blank"><u>https://fontawesome.com/icons</u></a> sitesinden faydalanabilirsiniz.</small>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

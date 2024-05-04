@@ -1,0 +1,8 @@
+﻿@model List<SocialMediaListDto>
+
+<ul style="text-align:center;">
+    @foreach (var socialMedia in Model)
+    {
+        <li><a href="@socialMedia.Url" target="_blank" title="@socialMedia.Title"><i class="@socialMedia.IconInfo fa-2x"></i></a></li>
+    }
+</ul>
