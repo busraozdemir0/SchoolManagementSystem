@@ -86,6 +86,11 @@ namespace BusinessLayer.Services.Concrete
             return await _lessonScoreDal.GetListLoginTeacherLessonScore();
         }
 
+        public async Task<string> TIsThereTheSameLessonScore(LessonScore lessonScore)
+        {
+            return await _lessonScoreDal.IsThereTheSameLessonScore(lessonScore);
+        }
+
         public async Task TSafeDeleteLessonScoreAsync(Guid lessonScoreId)
         {
             await _lessonScoreDal.SafeDeleteLessonScoreAsync(lessonScoreId);

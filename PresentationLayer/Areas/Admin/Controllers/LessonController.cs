@@ -40,7 +40,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var lessons = await _lessonService.GetListAsync();
-            var mapLessons=_mapper.Map<List<LessonListDto>>(lessons);
+            var mapLessons = _mapper.Map<List<LessonListDto>>(lessons);
             return View(mapLessons);
         }
         public async Task<IActionResult> DeletedLessons()
@@ -56,12 +56,12 @@ namespace PresentationLayer.Areas.Admin.Controllers
         {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
-            var grades =await _gradeService.GetListAsync();
+            var grades = await _gradeService.GetListAsync();
             var mapGrades = _mapper.Map<List<GradeDto>>(grades);
 
             var teachers = await _userService.TGetAllTeachersWithRoleAsync(); // Ogretmen kullanicilari listeleniyor.
-            
-            return View(new LessonAddDto { Grades= mapGrades, Users=teachers });
+
+            return View(new LessonAddDto { Grades = mapGrades, Users = teachers });
         }
         [HttpPost]
         public async Task<IActionResult> Add(LessonAddDto lessonAddDto)
@@ -73,9 +73,16 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             if (result.IsValid)
             {
-                await _lessonService.TAddAsync(mapLesson);
-                _toast.AddSuccessToastMessage(lessonAddDto.LessonName + " adlı ders başarıyla eklendi.", new ToastrOptions { Title = "Başarılı!" });
-                return RedirectToAction("Index", "Lesson", new { Area = "Admin" });
+                var message = await _lessonService.TIsThereTheSameLessonName(mapLesson); // Ayni sinif adi var mi diye kontrol ediliyor.
+                if (message is not null) // Eger null deger donmuyorsa ayni ders adi vardir. Bu sebepten view tarafinda uyari mesaji verdiriyoruz.
+                    ViewData["ErrorMessage"] = message;
+
+                else // Eger null donuyorsa ayni ders adina sahip deger yoktur bu yuzden ekleme islemleri gerceklestirilir.
+                {
+                    await _lessonService.TAddAsync(mapLesson);
+                    _toast.AddSuccessToastMessage(lessonAddDto.LessonName + " adlı ders başarıyla eklendi.", new ToastrOptions { Title = "Başarılı!" });
+                    return RedirectToAction("Index", "Lesson", new { Area = "Admin" });
+                }
             }
             else
             {
@@ -87,7 +94,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             var teachers = await _userService.TGetAllTeachersWithRoleAsync(); // Ogretmen kullanicilari listeleniyor.
 
-            return View(new LessonAddDto { Grades = mapGrades,Users=teachers });
+            return View(new LessonAddDto { Grades = mapGrades, Users = teachers });
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid lessonId)
@@ -97,7 +104,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
             var lesson = await _lessonService.TGetByGuidAsync(lessonId); // Id'ye gore dersi getir
 
             var grades = await _gradeService.GetListAsync(); // Tum siniflari getir
-            var mapGrades=_mapper.Map<List<GradeDto>>(grades);
+            var mapGrades = _mapper.Map<List<GradeDto>>(grades);
 
             var mapLesson = _mapper.Map<LessonUpdateDto>(lesson);
             mapLesson.Grades = mapGrades;
@@ -121,7 +128,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                 _toast.AddSuccessToastMessage(lessonUpdateDto.LessonName + " adlı ders başarıyla güncellendi.", new ToastrOptions { Title = "Başarılı!" });
                 return RedirectToAction("Index", "Lesson", new { Area = "Admin" });
             }
-            else if(lessonUpdateDto.GradeId.ToString() is null)
+            else if (lessonUpdateDto.GradeId.ToString() is null)
             {
                 _toast.AddErrorToastMessage(lessonUpdateDto.LessonName + " adlı ders güncellenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
                 result.AddToModelState(this.ModelState);
@@ -136,7 +143,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             var teachers = await _userService.TGetAllTeachersWithRoleAsync(); // Ogretmen kullanicilari listeleniyor.
 
-            return View(new LessonUpdateDto { Grades = mapGrades,Users=teachers });
+            return View(new LessonUpdateDto { Grades = mapGrades, Users = teachers });
         }
         public async Task<IActionResult> SafeDelete(Guid lessonId)
         {
@@ -155,14 +162,14 @@ namespace PresentationLayer.Areas.Admin.Controllers
             return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
         }
         [HttpPost]
-		public async Task<IActionResult> HardDelete(Guid lessonId) // Tablodan tamamen silme islemi icin
-		{
+        public async Task<IActionResult> HardDelete(Guid lessonId) // Tablodan tamamen silme islemi icin
+        {
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var lesson = await _lessonService.TGetByGuidAsync(lessonId);
-			await _lessonService.TDeleteAsync(lesson);
-			_toast.AddSuccessToastMessage("Ders tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
-			return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
-		}
-	}
+            await _lessonService.TDeleteAsync(lesson);
+            _toast.AddSuccessToastMessage("Ders tamamen silindi.", new ToastrOptions { Title = "Başarılı!" });
+            return RedirectToAction("DeletedLessons", "Lesson", new { Area = "Admin" });
+        }
+    }
 }

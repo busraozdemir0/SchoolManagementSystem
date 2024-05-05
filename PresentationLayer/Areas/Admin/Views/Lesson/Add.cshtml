@@ -31,6 +31,13 @@
                             <div asp-validation-summary="ModelOnly"></div>
                             <div class="card-body">
 
+                                @if (ViewData["ErrorMessage"] != null) @* Eger tabloda var olan ve silinmemis bir ders adi girilmisse(ayni sinifa ait) uyari verdirilecek *@
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["ErrorMessage"]
+                                    </div>
+                                }
+
                                 <div class="form-group">
                                     <label asp-for="LessonCode" class="form-label">Ders Kodu</label>
                                     <input asp-for="LessonCode" type="text"

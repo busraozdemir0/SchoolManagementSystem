@@ -9,6 +9,7 @@ using EntityLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -34,9 +35,9 @@ namespace DataAccessLayer.EntityFramework
             var userId = _user.GetLoggedInUserId();
 
             var lessons = await _unitOfWork.GetRepository<Lesson>()
-                .GetAllAsync(x => x.UserId == userId && !x.IsDeleted , u => u.User, g => g.Grade);
+                .GetAllAsync(x => x.UserId == userId && !x.IsDeleted, u => u.User, g => g.Grade);
 
-            return lessons.OrderBy(x=>x.Grade.Name).ToList(); // Sinif adina gore artan bicimde sirali olarak donduruluyor.
+            return lessons.OrderBy(x => x.Grade.Name).ToList(); // Sinif adina gore artan bicimde sirali olarak donduruluyor.
         }
         public async Task<string> SafeDeleteLessonAsync(Guid lessonId)
         {
@@ -98,6 +99,21 @@ namespace DataAccessLayer.EntityFramework
 
             return lessonsInTheStudentsGrade; // Giris yapan ogrencinin bulundugu siniftaki tum dersler listeleniyor.
 
+        }
+
+        public async Task<string> IsThereTheSameLessonName(Lesson lesson)
+        {
+            var lessons = await _unitOfWork.GetRepository<Lesson>().GetAllAsync(x => !x.IsDeleted);
+
+            foreach (var item in lessons)
+            {
+                if (item.LessonName == lesson.LessonName && item.GradeId == lesson.GradeId)
+                {
+                    return "Eklemeye çalıştığınız ders ilgili sınıfta zaten mevcut.";
+                }
+            }
+
+            return null;
         }
     }
 }

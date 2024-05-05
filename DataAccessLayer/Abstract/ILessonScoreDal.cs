@@ -15,5 +15,7 @@ namespace DataAccessLayer.Abstract
         Task<List<LessonScore>> GetListLoginStudentLessonScore(); // Giris yapan ogrencinin not bilgileri listelenecek
         Task SafeDeleteLessonScoreAsync(Guid lessonScoreId);
         Task UndoDeleteLessonScoreAsync(Guid lessonScoreId);
+        Task<string> IsThereTheSameLessonScore(LessonScore lessonScore); // Gelen ders notu nesnesindeki Ogrenci bilgisi(UserId) ve ders bilgisi(LessonId) ile eslesen kayit eklenmis mi diye kontrol edecegimiz eger varsa hata mesaji dondurecegimiz metod.
+
     }
 }

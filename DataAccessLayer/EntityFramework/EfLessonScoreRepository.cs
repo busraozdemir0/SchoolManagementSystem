@@ -81,5 +81,20 @@ namespace DataAccessLayer.EntityFramework
 
             return loginStudentLessonScores;
         }
+
+        public async Task<string> IsThereTheSameLessonScore(LessonScore lessonScore)
+        {
+            var lessonScores = await _unitOfWork.GetRepository<LessonScore>().GetAllAsync(x => !x.IsDeleted); // Silinmemis olan ders notlarini getir.
+
+            foreach (var item in lessonScores)
+            {
+                if (item.UserId == lessonScore.UserId & item.LessonId==lessonScore.LessonId)
+                {
+                    return "Eklemeye çalıştığınız ders puanı bilgisi ilgili öğrencide zaten mevcut.";
+                }
+            }
+
+            return null;
+        }
     }
 }

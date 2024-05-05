@@ -16,5 +16,7 @@ namespace DataAccessLayer.Abstract
         Task<string> UndoDeleteLessonAsync(Guid lessonId);
         Task<List<LessonListDto>> LessonsInTheStudentsGrade(Guid userId);  // Ogrencinin bulundugu siniftaki dersler listelencek (sadece o ogretmenin verdigi dersler)
         Task<List<LessonListDto>> LessonsInTheStudent(List<Lesson> lessons);  // Giris yapan ogrencinin bulundugu siniftaki tum dersler listeleniyor.
+        Task<string> IsThereTheSameLessonName(Lesson lesson); // Gelen ders nesnesi ile ayni ders ayni sinifa eklenmis mi diye kontrol edecegimiz eger varsa hata mesaji dondurecegimiz metod.
+
     }
 }

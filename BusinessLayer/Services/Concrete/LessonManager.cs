@@ -88,5 +88,10 @@ namespace BusinessLayer.Services.Concrete
         {
             return await _lessonDal.LessonsInTheStudent(lessons);
         }
+
+        public async Task<string> TIsThereTheSameLessonName(Lesson lesson)
+        {
+            return await _lessonDal.IsThereTheSameLessonName(lesson);
+        }
     }
 }

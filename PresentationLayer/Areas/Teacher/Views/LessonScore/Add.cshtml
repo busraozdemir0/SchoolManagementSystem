@@ -21,6 +21,13 @@
                         <div asp-validation-summary="ModelOnly"></div>
                         <div class="card-body">
 
+                            @if (ViewData["ErrorMessage"] != null) @* Eger tabloda var olan ve silinmemis bir ders notu girilmisse(ayni derse ve ogrenciye ait) uyari verdirilecek *@
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["ErrorMessage"]
+                                </div>
+                            }
+
                             <input type="hidden" asp-for="UserId" value="@ViewBag.StudentId" />
 
                             <div class="form-group">

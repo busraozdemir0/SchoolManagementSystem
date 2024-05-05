@@ -30,6 +30,14 @@
                         <form asp-controller="Grade" asp-action="Add" method="post" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly"></div>
                             <div class="card-body">
+
+                                @if (ViewData["ErrorMessage"] != null) @* Eger tabloda var olan ve silinmemis bir sinif adi girilmisse uyari verdirilecek *@
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["ErrorMessage"]
+                                    </div>
+                                }
+
                                 <div class="form-group">
                                     <label asp-for="Name" class="form-label">Sınıf Adı</label>
                                     <input asp-for="Name" type="text"
@@ -45,6 +53,7 @@
                             </div>
                         </form>
 
+                        
                     </div>
                 </div>
 

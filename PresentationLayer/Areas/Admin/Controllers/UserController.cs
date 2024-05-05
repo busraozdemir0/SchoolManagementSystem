@@ -253,7 +253,7 @@ namespace PresentationLayer.Areas.Admin.Controllers
                     }
                 }
             }
-            return NotFound(); // User'ı bulamazsa NotFound donecek.
+            return View(); // User'ı bulamazsa NotFound donecek.
         }
 
         [HttpGet]

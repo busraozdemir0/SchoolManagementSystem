@@ -43,9 +43,9 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             var lessonScores = await _lessonScoreService.GetListAsync();
             var mapLessonScores = _mapper.Map<List<LessonScoreListDto>>(lessonScores);
-            foreach(var lessonScore in mapLessonScores)
+            foreach (var lessonScore in mapLessonScores)
             {
-                var teacher=await _userService.TGetAppUserByIdAsync(lessonScore.CreatedBy);
+                var teacher = await _userService.TGetAppUserByIdAsync(lessonScore.CreatedBy);
                 lessonScore.LessonTeacher = teacher.Name + " " + teacher.Surname; // Dersi veren ogretmenin ad soyad bilgisini view'da gosterebilmek icin
             }
             return View(mapLessonScores);
@@ -95,7 +95,6 @@ namespace PresentationLayer.Areas.Admin.Controllers
             {
                 await _lessonScoreService.TUpdateAsync(mapLessonScore);
                 _toast.AddSuccessToastMessage("Not bilgileri başarıyla güncellendi.", new ToastrOptions { Title = "Başarılı!" });
-
                 return RedirectToAction("Index", "LessonScore", new { Area = "Admin" });
             }
             else

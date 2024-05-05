@@ -55,6 +55,11 @@ namespace BusinessLayer.Services.Concrete
             return await _gradeDal.GetGradeByIdAsync(id);
         }
 
+        public async Task<string> TIsThereTheSameGradeName(string gradeName)
+        {
+            return await _gradeDal.IsThereTheSameGradeName(gradeName);
+        }
+
         public async Task<string> TSafeDeleteGradeAsync(int gradeId)
         {
             return await _gradeDal.SafeDeleteGradeAsync(gradeId);

@@ -80,10 +80,16 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var result = await _validator.ValidateAsync(mapLessonScore);
             if (result.IsValid)
             {
-                await _lessonScoreService.TAddAsync(mapLessonScore);
-                _toast.AddSuccessToastMessage("Not bilgileri başarıyla eklendi.", new ToastrOptions { Title = "Başarılı!" });
+                var message = await _lessonScoreService.TIsThereTheSameLessonScore(mapLessonScore); // Ayni derse ve ogrenciye ait puan bilgisi var mi diye kontrol ediliyor.
+                if (message is not null) // Eger null deger donmuyorsa ayni ders notu vardir. Bu sebepten view tarafinda uyari mesaji verdiriyoruz.
+                    ViewData["ErrorMessage"] = message;
 
-                return RedirectToAction("Index", "Student", new { Area = "Teacher" });
+                else // Eger null donuyorsa ayni ders notuna sahip kayit yoktur bu yuzden ekleme islemleri gerceklestirilir.
+                {
+                    await _lessonScoreService.TAddAsync(mapLessonScore);
+                    _toast.AddSuccessToastMessage("Not bilgileri başarıyla eklendi.", new ToastrOptions { Title = "Başarılı!" });
+                    return RedirectToAction("Index", "Student", new { Area = "Teacher" });
+                }
             }
             else
             {
@@ -105,7 +111,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             ViewBag.SchoolName = await _aboutService.TGetSchoolNameAsync();
 
             var lessonScore = await _lessonScoreService.TGetByGuidAsync(lessonScoreId);
-            var mapLessonScore=_mapper.Map<LessonScoreUpdateDto>(lessonScore);
+            var mapLessonScore = _mapper.Map<LessonScoreUpdateDto>(lessonScore);
 
             var lessons = await _lessonService.TLessonsInTheStudentsGrade(mapLessonScore.UserId);  // Ogrencinin bulundugu siniftaki dersler listelencek (sadece o ogretmenin verdigi dersler)
             mapLessonScore.Lessons = lessons;
@@ -126,7 +132,6 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             {
                 await _lessonScoreService.TUpdateAsync(mapLessonScore);
                 _toast.AddSuccessToastMessage("Not bilgileri başarıyla güncellendi.", new ToastrOptions { Title = "Başarılı!" });
-
                 return RedirectToAction("Index", "LessonScore", new { Area = "Teacher" });
             }
             else

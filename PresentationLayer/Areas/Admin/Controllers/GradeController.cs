@@ -75,13 +75,21 @@ namespace PresentationLayer.Areas.Admin.Controllers
 
             if (result.IsValid)
             {
-                await _gradeService.TAddAsync(mapGrade);
-                _toast.AddSuccessToastMessage(Messages.Grade.Add(gradeAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
-                return RedirectToAction("Index", "Grade", new { Area = "Admin" });
+                var message = await _gradeService.TIsThereTheSameGradeName(mapGrade.Name); // Ayni sinif adi var mi diye kontrol ediliyor.
+                if (message is not null) // Eger null deger donmuyorsa ayni sinif adi vardir. Bu sebepten view tarafinda uyari mesaji verdiriyoruz.
+                    ViewData["ErrorMessage"] = message;
+
+                else // Eger null donuyorsa ayni sinif adina sahip deger yoktur bu yuzden ekleme islemleri gerceklestirilir.
+                {
+                    await _gradeService.TAddAsync(mapGrade);
+
+                    _toast.AddSuccessToastMessage(Messages.Grade.Add(gradeAddDto.Name), new ToastrOptions { Title = "Başarılı!" });
+                    return RedirectToAction("Index", "Grade", new { Area = "Admin" });
+                }
             }
             else
             {
-                _toast.AddSuccessToastMessage("Sınıf eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
+                _toast.AddErrorToastMessage("Sınıf eklenirken bir sorun oluştu.", new ToastrOptions { Title = "Başarısız!" });
                 result.AddToModelState(this.ModelState);
             }
             return View();

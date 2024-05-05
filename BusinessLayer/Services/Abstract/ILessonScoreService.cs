@@ -14,6 +14,8 @@ namespace BusinessLayer.Services.Abstract
         Task<List<LessonScore>> TGetListLoginStudentLessonScore(); // Giris yapan ogrencinin not bilgileri listelenecek
         Task TSafeDeleteLessonScoreAsync(Guid lessonScoreId);
         Task TUndoDeleteLessonScoreAsync(Guid lessonScoreId);
+        Task<string> TIsThereTheSameLessonScore(LessonScore lessonScore); // Gelen ders notu nesnesindeki Ogrenci bilgisi(UserId) ve ders bilgisi(LessonId) ile eslesen kayit eklenmis mi diye kontrol edecegimiz eger varsa hata mesaji dondurecegimiz metod.
+
 
     }
 }

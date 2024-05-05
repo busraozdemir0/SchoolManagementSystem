@@ -2,6 +2,7 @@
 using DataAccessLayer.Context;
 using DataAccessLayer.Repository.Concrete;
 using DataAccessLayer.UnitOfWorks;
+using EntityLayer.DTOs.Grades;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -24,6 +25,21 @@ namespace DataAccessLayer.EntityFramework
         public async Task<Grade> GetGradeByIdAsync(int? id)
         {
             return await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == id && !x.IsDeleted);
+        }
+
+        public async Task<string> IsThereTheSameGradeName(string gradeName)
+        {
+            var grades = await _unitOfWork.GetRepository<Grade>().GetAllAsync(x => !x.IsDeleted); // Silinmemis olan siniflari getir.
+
+            foreach (var grade in grades)
+            {
+                if (grade.Name == gradeName)
+                {
+                    return "Eklemeye çalıştığınız sınıf zaten mevcut.";
+                }
+            }
+
+            return null;
         }
 
         public async Task<string> SafeDeleteGradeAsync(int gradeId)
