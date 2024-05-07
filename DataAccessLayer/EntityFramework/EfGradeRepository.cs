@@ -24,7 +24,7 @@ namespace DataAccessLayer.EntityFramework
 
         public async Task<Grade> GetGradeByIdAsync(int? id)
         {
-            return await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == id && !x.IsDeleted);
+            return await _unitOfWork.GetRepository<Grade>().GetAsync(x => x.Id == id);
         }
 
         public async Task<string> IsThereTheSameGradeName(string gradeName)

@@ -60,10 +60,20 @@
 
                                 }
                             </h4>
-                            <p>
-                                @Regex.Replace(HttpUtility.HtmlDecode(item.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 30)...
+                            @if (Regex.Replace(HttpUtility.HtmlDecode(item.Content), @"<[^>]*>|&nbsp;", "").Length >= 30)
+                            {
+                                <p>
+                                    @Regex.Replace(HttpUtility.HtmlDecode(item.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 30)...
 
+                                </p>
+                            }
+                            else
+                            {
+                            <p>
+                                @Regex.Replace(HttpUtility.HtmlDecode(item.Content), @"<[^>]*>|&nbsp;", "")
                             </p>
+                            }
+
                             <div class="top-content-border d-flex align-items-center justify-content-between mt-4 pt-4">
                                 <h6></h6>
                                 <a class="btn btn-style-primary" data-id="@item.Id" asp-controller="Report" asp-action="Detail" asp-route-reportId="@item.Id">

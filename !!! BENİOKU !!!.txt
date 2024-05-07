@@ -1,0 +1,28 @@
+
+~~~ VERİ TABANI DOSYASINI YÜKLEME ADIMLARI ~~~
+
+1 - Proje dosyası içerisinde yer alan SchoolManagementDB.bak adlı veri tabanı dosyasını C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\Backup
+dizinin içerisine kopyalanmalıdır.
+2 - SQL Server Management Studio programında Databases üzerine sağ tık yapılır. Ardından
+Restore Database > Device yazan kısım seçildikten sonra Device yazan satırın sağ kısmında 3 nokta yazılı (...) butona tıklanır.
+3 - Açılan ekran üzerinde Add yazılı butona tıklanır ve karşımıza gelen ekrandan daha önce ilgili dizine kopyalanılan veri tabanı dosyası (SchoolManagementDB.bak) seçilir.
+4 - Ardından sırasıyla OK yazılı butonlara tıklanılır. "Database 'SchoolManagementDB' restored successfully" yazılı mesaj gördüğümüzde veri tabanı dosyası başarılı olarak yüklenmiştir.
+5 - Proje içerisinde yer alan SchoolManagementSystem.sln dosyası Visual Studio üzerinde açıldıktan sonra PresentationLayer yazılı katmana tıklanılır.
+6 - Ardından appsettings.json dosyası içerisinde DefaultConnection adlı bağlantıda Server yazan kısmı kendi Server name'iniz ile değiştirmelisiniz 
+("Server=DESKTOP-43HIK1B ... " => Yalnızca DESKTOP-43HIK1B yazan kısma kendi Server adınızı yapıştırın).
+
+
+
+~~~ GİRİŞ İŞLEMLERİ İÇİN ÖRNEK KULLANICILAR ~~~
+
+• Admin Kullanıcısı
+Kullanıcı Adı: admin
+Şifre: 123456
+ 
+• Öğretmen Kullanıcısı
+Kullanıcı Adı: ogretmen
+Şifre: 123456
+
+• Öğrenci Kullanıcısı
+Kullanıcı Adı: ogrenci
+Şifre: 123456

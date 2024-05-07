@@ -32,7 +32,15 @@
                         <tr>
 
                             <td><a style="color:black;" data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@report.Title</a></td>
-                            <td><a style="color:black;" data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 15)...</a></td>
+                            @if (Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "").Length <= 15)
+                            {
+                                <td><a style="color:black;" data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "")</a></td>
+                            }
+                            else
+                            {
+                                <td><a style="color:black;" data-id="@report.Id" asp-area="" asp-controller="Report" asp-action="Detail" asp-route-reportId="@report.Id">@Regex.Replace(HttpUtility.HtmlDecode(report.Content), @"<[^>]*>|&nbsp;", "").Substring(0, 15)...</a></td>
+
+                            }
                             <td><span class="label label-info">@(((DateTime)report.CreatedDate).ToString("dd-MM-yyyy"))</span></td>
                         </tr>
                     }

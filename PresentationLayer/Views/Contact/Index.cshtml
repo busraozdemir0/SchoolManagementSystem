@@ -33,7 +33,7 @@
                             <div class="row">
                                 <div class="form-group col-sm-6">
                                     <input asp-for="NameSurname" type="text" id="w3lName" placeholder="Ad Soyad"
-                                           class="contact-input" />
+                                           class="contact-input" required />
                                     <span asp-validation-for="NameSurname" class="text-danger"></span>
                                 </div>
                                 <div class="form-group col-sm-6">
@@ -43,8 +43,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input asp-for="Subject" type="text" id="w3lSubect" placeholder="Konu"
-                                       class="contact-input" />
+                                <input asp-for="Subject" type="text" id="w3lSubect" placeholder="Konu" 
+                                       class="contact-input" required />
                                 <span asp-validation-for="Subject" class="text-danger"></span>
                             </div>
 

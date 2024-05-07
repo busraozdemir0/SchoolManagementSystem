@@ -18,29 +18,32 @@ namespace DataAccessLayer.Mappings
                 Id = Guid.Parse("C54083A8-1FF1-43D0-9B51-C2FEA5B3E60D"),
                 Name = "Admin",
                 NormalizedName = "ADMIN",
-                ConcurrencyStamp = Guid.NewGuid().ToString() // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
+                ConcurrencyStamp = Guid.NewGuid().ToString() 
+                // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
             },
             new AppRole
             {
                 Id = Guid.Parse("23420044-C9AE-462E-8317-88DB8C734DE1"),
                 Name = "Öğretmen",
                 NormalizedName = "ÖĞRETMEN",
-                ConcurrencyStamp = Guid.NewGuid().ToString() // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
+                ConcurrencyStamp = Guid.NewGuid().ToString() 
+                // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
             },
             new AppRole
             {
                 Id = Guid.Parse("2157A98D-0223-4AE6-AFB9-5F586E9BA4AE"),
                 Name = "Öğrenci",
                 NormalizedName = "ÖĞRENCI",
-                ConcurrencyStamp = Guid.NewGuid().ToString() // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
-            }
-            ,
+                ConcurrencyStamp = Guid.NewGuid().ToString() 
+                // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
+            },
             new AppRole
             {
                 Id = Guid.Parse("8DB4507C-EE16-4F5F-82A6-D187A2ACB21D"),
                 Name = "Kullanıcı",
                 NormalizedName = "KULLANICI",
-                ConcurrencyStamp = Guid.NewGuid().ToString() // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
+                ConcurrencyStamp = Guid.NewGuid().ToString() 
+                // ayni anda iki farkli islem yapiliyorsa bunlarin cakismasini engeller (ayni anda ayni verinin guncellenme islemi gibi)
             });
         }
     }

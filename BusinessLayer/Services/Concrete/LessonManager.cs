@@ -60,7 +60,7 @@ namespace BusinessLayer.Services.Concrete
 
         public async Task<Lesson> TGetByGuidAsync(Guid id)
         {
-            return await _unitOfWork.GetRepository<Lesson>().GetAsync(x => x.Id == id && !x.IsDeleted, g => g.Grade, u => u.User);
+            return await _unitOfWork.GetRepository<Lesson>().GetAsync(x => x.Id == id, g => g.Grade, u => u.User);
         }
 
         public async Task<string> TSafeDeleteLessonAsync(Guid lessonId)
