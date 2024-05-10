@@ -35,7 +35,8 @@ namespace DataAccessLayer.Helpers.Documents
 
             DateTime dateTime = DateTime.Now;
 
-            string newFileName = $"{name}_{dateTime.Millisecond}{fileExtension}"; // Ayni dokuman adlari olmamasi icin suanki tarihin mili saniye bilgisiyle isim olusturuldu.
+            // Ayni dokuman adlari olmamasi icin suanki tarihin mili saniye bilgisiyle isim olusturuldu.
+            string newFileName = $"{name}_{dateTime.Millisecond}{fileExtension}"; 
 
             var path = Path.Combine($"{_wwwroot}/{folderName}", newFileName);
 
@@ -44,8 +45,7 @@ namespace DataAccessLayer.Helpers.Documents
             await documentFile.CopyToAsync(stream);
             await stream.FlushAsync();
 
-            string message = $"{newFileName} isimli doküman başarıyla yüklendi.";
-                                                       
+            string message = $"{newFileName} isimli doküman başarıyla yüklendi.";                                                      
 
             return new DocumentUploadedDto()
             {

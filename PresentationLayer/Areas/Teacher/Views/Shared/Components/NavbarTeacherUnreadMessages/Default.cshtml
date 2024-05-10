@@ -37,7 +37,14 @@
                     }
                     <div class="notification_desc">
                         <strong>@message.SenderUser.Name @message.SenderUser.Surname</strong>
-                        <p style="font-weight:bold;">@message.Subject</p>
+                        @if (message.Subject.Length <= 23)
+                        {
+                            <p style="font-weight:bold;">@message.Subject</p>
+                        }
+                        else
+                        {
+                            <p style="font-weight:bold;">@message.Subject.Substring(0, 23)...</p>
+                        }
                         @if (message.Content.Length < 20)
                         {
                             <small class="text-muted">@Html.Raw(message.Content)</small>

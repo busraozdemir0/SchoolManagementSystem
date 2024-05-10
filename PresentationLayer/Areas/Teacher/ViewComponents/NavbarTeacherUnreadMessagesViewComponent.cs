@@ -20,7 +20,10 @@ namespace PresentationLayer.Areas.Teacher.ViewComponents
         {
             // Mesaj bildirimleri kisminda sadece okunmamis mesajlar listelenecek.
             var unreadMessageList = await _messageService.TGetUnreadMessagesByLoginUser();
-            var mapMessages = _mapper.Map<List<MessageListDto>>(unreadMessageList);
+
+            var messages= unreadMessageList.OrderByDescending(x => x.CreatedDate); // Mesajlari tarihe gore azalan bir sekilde sirala
+
+            var mapMessages = _mapper.Map<List<MessageListDto>>(messages);
 
             ViewBag.UnreadMessagesCount = mapMessages.Count();
             return View(mapMessages);

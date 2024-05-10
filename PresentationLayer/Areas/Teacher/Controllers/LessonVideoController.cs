@@ -52,6 +52,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lessonVideos = await _lessonVideoService.TGetAllVideosByLesson(lesson);
             var mapLessonVideos = _mapper.Map<List<LessonVideoListDto>>(lessonVideos);
             ViewBag.LessonName = lesson.LessonName;
+            ViewBag.GradeName = lesson.Grade.Name;
 
             return View(mapLessonVideos);
         }
@@ -65,8 +66,9 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             ViewBag.LessonId = lessonVideo.LessonId;
             ViewBag.LessonName = lesson.LessonName;
             ViewBag.LessonVideoTitle = lessonVideo.Title;
-            
-            
+            ViewBag.GradeName = lesson.Grade.Name;
+
+
             //İlgili dersteki videolari ve ilgili videoyu izleyen ogrenciler listeleniyor.
             var studentsWatchingTheLessonVideo = await _lessonVideoService.TStudentsWatchingTheLessonVideo(lessonVideoId);
             var mapStudentsWatchingTheLessonVideo = _mapper.Map<HashSet<UserListDto>>(studentsWatchingTheLessonVideo);
@@ -82,6 +84,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lesson = await _lessonService.TGetByGuidAsync(lessonId);
             ViewBag.LessonId = lessonId;
             ViewBag.LessonName = lesson.LessonName;
+            ViewBag.GradeName = lesson.Grade.Name;
             return View(new LessonVideoAddDto { LessonId = lessonId });
         }
 
@@ -124,6 +127,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
             ViewBag.LessonId = lessonVideo.LessonId;
             ViewBag.LessonName = lesson.LessonName;
+            ViewBag.GradeName = lesson.Grade.Name;
             ViewBag.CreatedBy = lessonVideo.CreatedBy;
 
             mapLessonVideo.LessonId = lesson.Id;

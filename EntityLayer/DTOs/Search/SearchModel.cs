@@ -1,10 +1,4 @@
-﻿using EntityLayer.DTOs.Announcements;
-using EntityLayer.DTOs.Contacts;
-using EntityLayer.DTOs.Grades;
-using EntityLayer.DTOs.Lessons;
-using EntityLayer.DTOs.Reports;
-using EntityLayer.DTOs.Roles;
-using EntityLayer.DTOs.Users;
+﻿
 using EntityLayer.Entities;
 using X.PagedList;
 
@@ -21,6 +15,7 @@ namespace EntityLayer.DTOs.Search
         public IPagedList<AppRole> Roles { get; set; }
         public IPagedList<AppUser> Users { get; set; }
         public IPagedList<Message> Messages { get; set; }
-
+        public IPagedList<Comment> Comments { get; set; }
+        public IPagedList<SocialMedia> SocialMedias { get; set; }
     }
 }

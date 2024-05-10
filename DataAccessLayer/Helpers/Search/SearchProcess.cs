@@ -85,6 +85,13 @@ namespace DataAccessLayer.Helpers.Search
                     messages.Add(message);
                 }
             }
+
+            var comments = await _unitOfWork.GetRepository<Comment>()
+                .GetAllAsync(x => !x.IsDeleted && keyword.ToLower().Contains("yorum"), u => u.User); // Silinmemis olan yorumlar
+
+            var socialMedias = await _unitOfWork.GetRepository<SocialMedia>()
+                .GetAllAsync(x => x.Title.ToLower().Contains(keyword) || keyword.ToLower().Contains("sosyal medya"));
+
             return new SearchModel
             {
                 Announcements = announcement.ToPagedList(page, 5),
@@ -96,30 +103,34 @@ namespace DataAccessLayer.Helpers.Search
                 Roles = role.ToPagedList(page, 5),
                 Users = user.ToPagedList(page, 5),
                 Messages = messages.ToPagedList(page, 5),
+                Comments = comments.ToPagedList(page, 5),
+                SocialMedias = socialMedias.ToPagedList(page, 5),
             };
 
         }
 
-        public async Task<SearchModel> SearchMessageAdminAsync(string keyword, int page = 1)
+        // Admin panelindeki mesaj aramalari icin kullanilmaktadir.
+        public async Task<SearchModel> SearchMessageAdminAsync(string keyword, int page = 1) 
         {
             var loginUserId = _user.GetLoggedInUserId(); // Giris yapan kisinin id bilgisi
 
-            // Giren kisiye ait gonderdigi ve kendisine ait gelen mesajlarin tumu-cop kutusundakiler de dahil (ReceiverIsDeleted ve SenderIsDeleted true ise yani mesaji silmisse gosterilmeyecek)
+            // Aranan ifadeyle eslesen hangi kayit varsa - giren kisiye ait gelen mesajlar ve gonderdigi mesajlarin tumu cop kutusundakiler de+
+            //dahil listelenecektir (ReceiverIsDeleted ve SenderIsDeleted true ise yani mesaji tamamen silmisse gosterilmeyecek)
             var loginUserMessages = await _unitOfWork.GetRepository<Message>()
                 .GetAllAsync(x => x.ReceiverUserId == loginUserId && x.ReceiverIsDeleted == false ||
-                x.SenderUserId == loginUserId && x.SenderIsDeleted == false, r=>r.ReceiverUser, s=>s.SenderUser);
+                x.SenderUserId == loginUserId && x.SenderIsDeleted == false, r => r.ReceiverUser, s => s.SenderUser);
 
             List<Message> messages = new();
             foreach (var message in loginUserMessages)
             {
-                if (message.Subject.ToLower().Contains(keyword)) // Eger gonderilen keyword mesajin konusuna esitse ilgili listeye ekle
+                if (message.Subject.ToLower().Contains(keyword)) // Eger gonderilen keyword mesajin konusuna esitse ilgili listeye ekle.
                 {
                     messages.Add(message);
                 }
             }
             return new SearchModel
             {
-                Messages = messages.ToPagedList(page, 5),
+                Messages = messages.ToPagedList(page, 5), // Her sayfada 5 veri olmasi icin sayfalama islemi
             };
         }
 

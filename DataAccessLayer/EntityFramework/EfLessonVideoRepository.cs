@@ -159,7 +159,8 @@ namespace DataAccessLayer.EntityFramework
 
             var userId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
             string getIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(); // Giren kullanicinin ip adresini aliyoruz
-            string getUserAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"]; // Giren kullanicinin tarayici turu, surumu ve isletim sistemi gibi bilgileri iceren UserAgent bilgisini alir.
+            // Giren kullanicinin tarayici turu, surumu ve isletim sistemi gibi bilgileri iceren UserAgent bilgisini alir.
+            string getUserAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"]; 
             Visitor visitor = new(userId, getIp, getUserAgent);
 
             // Bir kullanici vt'ye sadece bir defa kaydedilecek. Bu yuzden eger giren kullanici LessonVideoVisitor tablosunda kayitli ise tekrar kaydetmemeliyiz.
@@ -175,10 +176,12 @@ namespace DataAccessLayer.EntityFramework
 
             var loginVisitor = await _unitOfWork.GetRepository<Visitor>().GetAsync(x => x.UserId == userId);
 
-            var addLessonVideoVisitors = new LessonVideoVisitor(lessonVideo.Id, loginVisitor.Id); // Kullanicinin tikladigi ders videosu ve kullanicinin bilgileri eklenecek olan degerler
+            // Kullanicinin tikladigi ders videosu ve kullanicinin bilgileri eklenecek olan degerler
+            var addLessonVideoVisitors = new LessonVideoVisitor(lessonVideo.Id, loginVisitor.Id); 
 
             if (!lessonVideoVisitors.Any(x => x.VisitorId == addLessonVideoVisitors.VisitorId     // Eger ayni kullanici ayni videoya tekrar tiklamissa ViewCount artmayacak
-                                    && x.LessonVideoId == addLessonVideoVisitors.LessonVideoId))  // Bu satir ile kullanici ayni videoya tekrar tiklamadigi vakit o videonun ViewCount sayisini bir arttirma islemi gerceklestiriyoruz.
+                                    && x.LessonVideoId == addLessonVideoVisitors.LessonVideoId))  
+                                    // Bu satir ile kullanici ayni videoya tekrar tiklamadigi vakit o videonun ViewCount sayisini bir arttirma islemi gerceklestiriyoruz.
 
             {
                 await _unitOfWork.GetRepository<LessonVideoVisitor>().AddAsync(addLessonVideoVisitors); // LessonVideoVisitor tablosuna kayit ekleme

@@ -52,7 +52,8 @@
                                         <div class="row" style="display:flex; justify-content:space-between;">
                                             <a class="btn btn-warning btn-sm" data-id="@announcement.Id" style="margin-right:0.5em;" asp-area="Teacher" asp-controller="Announcement" asp-action="UndoDelete" asp-route-announcementId="@announcement.Id"><i class="fa fa-undo"></i></a>
 
-                                            <form id="deleteForm" asp-area="Teacher" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id" method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
+                                            <form id="deleteForm" asp-area="Teacher" asp-controller="Announcement" asp-action="HardDelete" asp-route-announcementId="@announcement.Id"
+                                                        method="post" onsubmit="event.preventDefault(); confirmDelete(event)">
                                                 <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-minus-circle"></i></button>
                                             </form>
 

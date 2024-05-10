@@ -163,7 +163,7 @@
             }
             public static string Delete(string messageSubject)
             {
-                return $"{messageSubject} konulu mesaj başarıyla kaldırıldı.";
+                return $"{messageSubject} konulu mesaj başarıyla çöp kutusuna taşındı.";
             }
             public static string UndoDelete(string messageSubject)
             {

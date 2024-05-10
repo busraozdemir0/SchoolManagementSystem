@@ -26,6 +26,16 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="form-label">Sınıf</label>
+                                <input type="text"
+                                       class="form-control mb-1"
+                                       id="defaultFormControlInput"
+                                       value="@ViewBag.GradeName"
+                                       readonly
+                                       aria-describedby="defaultFormControlHelp" />
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-label">Ders</label>
                                 <input type="text"
                                        class="form-control mb-1"
@@ -33,7 +43,7 @@
                                        value="@ViewBag.LessonName"
                                        readonly
                                        aria-describedby="defaultFormControlHelp" />
-                            </div>
+                            </div>            
 
                             <div class="form-group">
                                 <label asp-for="Title" class="form-label">Ders Materyali Başlığı</label>

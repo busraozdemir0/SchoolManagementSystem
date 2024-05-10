@@ -53,6 +53,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lessonDocuments = await _lessonDocumentService.TGetAllDocumentsByLesson(lesson);
             var mapLessonDocuments = _mapper.Map<List<LessonDocumentListDto>>(lessonDocuments);
             ViewBag.LessonName = lesson.LessonName;
+            ViewBag.GradeName = lesson.Grade.Name;
 
             return View(mapLessonDocuments);
         }
@@ -65,6 +66,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
             var lesson = await _lessonService.TGetByGuidAsync(lessonId);
             ViewBag.LessonId = lessonId;
             ViewBag.LessonName = lesson.LessonName;
+            ViewBag.GradeName = lesson.Grade.Name;
             return View(new LessonDocumentAddDto { LessonId = lessonId });
         }
 
@@ -108,6 +110,7 @@ namespace PresentationLayer.Areas.Teacher.Controllers
 
             ViewBag.LessonId = lessonDocument.LessonId;
             ViewBag.LessonName = lesson.LessonName;
+            ViewBag.GradeName = lesson.Grade.Name;
             ViewBag.CreatedBy = lessonDocument.CreatedBy;
 
             mapLessonDocument.LessonId = lesson.Id;
