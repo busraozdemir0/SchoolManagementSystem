@@ -20,5 +20,8 @@ namespace BusinessLayer.Services.Abstract
         Task TIncreaseTheCountOfViewsOfTheLessonVideo(LessonVideo lessonVideo); // Student panelinde ogrenci videonun detayina basarak o videoyu izlemeye basladigi an
                                                                                 // Visitor ve LessonVideoVisitor tablolarina ilgili bilgiler kaydedilecek ve O videonun goruntulenme sayisi bir arttirilacak.
         Task<HashSet<AppUser>> TStudentsWatchingTheLessonVideo(Guid lessonVideoId); // Derse ait ilgili videoyu izleyen ogrenci listesi
+
+        Task<HashSet<LessonVideo>> TLessonVideosByLoginStudent(); // Giris yapan ogrencinin derslerine ait yuklenmis videolar
+        Task<HashSet<LessonVideo>> TUnwatchedVideosByLoginStudent(); // Giris yapmis olan ogrencinin izlememis oldugu ders videolari listelenecek.
     }
 }

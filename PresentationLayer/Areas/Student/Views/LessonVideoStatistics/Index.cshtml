@@ -1,0 +1,87 @@
+﻿@model List<LessonVideoListDto>
+
+@{
+    ViewData["Title"] = "İstatistikler";
+}
+
+<div class="inner-block wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="text-nowrap m-5">
+                    <nav aria-label="breadcrumb" style="margin-bottom:3.5em;">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page" style="font-size:25px;">
+                                <b>Ders Videosu İstatistikleriniz</b>
+                            </li>
+
+                        </ol>
+                    </nav>
+                    @if (Model.Count == 0) // Eger izlenmemis hic ders videosu yoksa
+                    {
+                        <p style="color: green; font-weight: bold; font-size:26px; margin-bottom:1em; margin-left:2.5em; font-style:italic;">
+                            Harika! Tüm ders videolarınızı izlediniz. 👏
+                        </p>
+                    }
+                    <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6" style="margin-bottom:1.5em;">
+
+                            <canvas id="myChart"></canvas> @* Grafigin gelecegi alan *@
+
+                        </div>
+                        <div class="col-md-6">
+                            @if (Model.Count != 0) // İzlenmemis video sayisi 0'dan farkliysa (yani en az bir tane izlenmemis video varsa)
+                            {
+                                <p style="color: red; font-weight: bold; font-size:26px; font-style:italic;">
+                                    İzlenmemiş @Model.Count adet ders videonuz var!
+                                </p>
+                            }
+
+                            @if (Model.Count != 0) // İzlenmemis video sayisi 0'dan farkliysa (yani en az bir tane izlenmemis video varsa)
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th style="background-color:black; color:#fff;">Ders Adı</th>
+                                                <th style="background-color:black; color:#fff;">Başlık</th>
+                                                <th style="background-color:black; color:#fff;">Yüklenme Tarihi</th>
+                                                <th style="background-color:black; color:#fff; text-align:center;">Videoyu İzle</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (var lessonVideo in Model)
+                                            {
+                                                <tr name="@lessonVideo.Id">
+                                                    <td scope="row">@lessonVideo.Lesson.LessonName</td>
+                                                    <td>@lessonVideo.Title</td>
+                                                    <td>@lessonVideo.CreatedDate.ToShortDateString()</td>
+                                                    <td>
+                                                        <a style="font-size:17px; color:black;" data-id="@lessonVideo.Id" asp-area="Student" asp-controller="LessonVideo" asp-action="Detail" asp-route-lessonVideoId="@lessonVideo.Id" class="btn btn-link">
+                                                            <i class="fa fa-play"></i> <u>Videoyu İzlemek İçin Tıklayın</u>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="~/js/chart.js"></script>
+}
+

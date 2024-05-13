@@ -64,27 +64,30 @@ namespace BusinessLayer.Services.Concrete
             return await _unitOfWork.GetRepository<LessonVideo>().
                 GetAsync(x => x.Id == id, d => d.Video, l => l.Lesson);
         }
-
         public async Task TIncreaseTheCountOfViewsOfTheLessonVideo(LessonVideo lessonVideo)
         {
              await _lessonVideoDal.IncreaseTheCountOfViewsOfTheLessonVideo(lessonVideo);
         }
-
         public async Task<string> TSafeDeleteLessonVideoAsync(Guid lessonVideoId)
         {
             return await _lessonVideoDal.SafeDeleteLessonVideoAsync(lessonVideoId);
         }
-
         public async Task<HashSet<AppUser>> TStudentsWatchingTheLessonVideo(Guid lessonVideoId)
         {
             return await _lessonVideoDal.StudentsWatchingTheLessonVideo(lessonVideoId);
         }
-
         public async Task<string> TUndoDeleteLessonVideoAsync(Guid lessonVideoId)
         {
             return await _lessonVideoDal.UndoDeleteLessonVideoAsync(lessonVideoId);
         }
-
+        public async Task<HashSet<LessonVideo>> TLessonVideosByLoginStudent() // Giris yapan ogrencinin derslerine yuklenmis tum videolar.
+        {
+            return await _lessonVideoDal.LessonVideosByLoginStudent();
+        }
+        public async Task<HashSet<LessonVideo>> TUnwatchedVideosByLoginStudent() // Giris yapan ogrencinin derslerine yuklenmis tum videolardan izlemedikleri.
+        {
+            return await _lessonVideoDal.UnwatchedVideosByLoginStudent();
+        }
         public Task TUpdateAsync(LessonVideo t)
         {
             throw new NotImplementedException();

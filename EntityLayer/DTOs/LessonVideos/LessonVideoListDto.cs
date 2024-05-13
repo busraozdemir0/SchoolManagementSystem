@@ -15,7 +15,6 @@ namespace EntityLayer.DTOs.LessonVideos
         public string? YoutubeVideoPath { get; set; }
         public DateTime CreatedDate { get; set; }
         public int ViewCount { get; set; } // Video goruntulenme sayisi (ogrenciler tarafindan video detayina tiklandiginda bu sayi artacak)
-       // public HashSet<UserListDto>? StudentsWatchingTheLessonVideo { get; set; } // Videoyu izleyen ogrencilerin listesi tutulacak
         public Guid LessonId { get; set; }
         public Lesson Lesson { get; set; }
         public Guid? VideoId { get; set; }

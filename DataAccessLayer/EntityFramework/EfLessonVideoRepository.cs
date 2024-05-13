@@ -148,7 +148,7 @@ namespace DataAccessLayer.EntityFramework
         public async Task<List<LessonVideo>> GetAllVideosByLessonId(Guid lessonId)
         {
             var videos = await _unitOfWork.GetRepository<LessonVideo>()
-               .GetAllAsync(x => x.LessonId == lessonId && !x.IsDeleted, l => l.Lesson, d => d.Video, v=>v.LessonVideoVisitors);
+               .GetAllAsync(x => x.LessonId == lessonId && !x.IsDeleted, l => l.Lesson, d => d.Video, v => v.LessonVideoVisitors);
 
             return videos;
         }
@@ -160,7 +160,7 @@ namespace DataAccessLayer.EntityFramework
             var userId = _user.GetLoggedInUserId(); // Giris yapan kisinin id'si
             string getIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString(); // Giren kullanicinin ip adresini aliyoruz
             // Giren kullanicinin tarayici turu, surumu ve isletim sistemi gibi bilgileri iceren UserAgent bilgisini alir.
-            string getUserAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"]; 
+            string getUserAgent = _httpContextAccessor.HttpContext.Request.Headers["User-Agent"];
             Visitor visitor = new(userId, getIp, getUserAgent);
 
             // Bir kullanici vt'ye sadece bir defa kaydedilecek. Bu yuzden eger giren kullanici LessonVideoVisitor tablosunda kayitli ise tekrar kaydetmemeliyiz.
@@ -177,11 +177,11 @@ namespace DataAccessLayer.EntityFramework
             var loginVisitor = await _unitOfWork.GetRepository<Visitor>().GetAsync(x => x.UserId == userId);
 
             // Kullanicinin tikladigi ders videosu ve kullanicinin bilgileri eklenecek olan degerler
-            var addLessonVideoVisitors = new LessonVideoVisitor(lessonVideo.Id, loginVisitor.Id); 
+            var addLessonVideoVisitors = new LessonVideoVisitor(lessonVideo.Id, loginVisitor.Id);
 
             if (!lessonVideoVisitors.Any(x => x.VisitorId == addLessonVideoVisitors.VisitorId     // Eger ayni kullanici ayni videoya tekrar tiklamissa ViewCount artmayacak
-                                    && x.LessonVideoId == addLessonVideoVisitors.LessonVideoId))  
-                                    // Bu satir ile kullanici ayni videoya tekrar tiklamadigi vakit o videonun ViewCount sayisini bir arttirma islemi gerceklestiriyoruz.
+                                    && x.LessonVideoId == addLessonVideoVisitors.LessonVideoId))
+            // Bu satir ile kullanici ayni videoya tekrar tiklamadigi vakit o videonun ViewCount sayisini bir arttirma islemi gerceklestiriyoruz.
 
             {
                 await _unitOfWork.GetRepository<LessonVideoVisitor>().AddAsync(addLessonVideoVisitors); // LessonVideoVisitor tablosuna kayit ekleme
@@ -191,7 +191,7 @@ namespace DataAccessLayer.EntityFramework
             }
         }
 
-        public async Task<HashSet<AppUser>> StudentsWatchingTheLessonVideo(Guid lessonVideoId)
+        public async Task<HashSet<AppUser>> StudentsWatchingTheLessonVideo(Guid lessonVideoId) // İlgili ders videosunu izleyen ogrenciler
         {
             // Gelen lessonVideoId'ye esit olanlar LessonVideoVisitors kayitlarini listele
             var lessonVideoVisitors = await _unitOfWork.GetRepository<LessonVideoVisitor>()
@@ -211,13 +211,62 @@ namespace DataAccessLayer.EntityFramework
             }
 
             HashSet<AppUser> studentsWatchingTheLessonVideo = new(); // Videoyu izleyen ogrencilerin kaydedilecegi liste
-            foreach(var studentId in studentsId)
+            foreach (var studentId in studentsId)
             {
-                var user = await _unitOfWork.GetRepository<AppUser>().GetAsync(x=>x.Id==studentId, g=>g.Grade);
+                var user = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == studentId, g => g.Grade);
                 studentsWatchingTheLessonVideo.Add(user);
             }
 
             return studentsWatchingTheLessonVideo;
+        }
+        public async Task<HashSet<LessonVideo>> LessonVideosByLoginStudent() // Giris yapan ogrencinin derslerine ait yuklenmis videolar
+        {
+            var loginStudentId = _user.GetLoggedInUserId();
+            var student = await _unitOfWork.GetRepository<AppUser>().GetAsync(x => x.Id == loginStudentId);
+            var studentGradeId = student.GradeId; // Giris yapan ogrencinin hangi sinifta oldugu bilgisi(Id)
+
+            var studentLessons = await _unitOfWork.GetRepository<Lesson>()
+                    .GetAllAsync(x => !x.IsDeleted && x.GradeId == studentGradeId); // Giris yapan ogrencinin bulundugu siniftaki dersler
+            var lessonVideos = await _unitOfWork.GetRepository<LessonVideo>().GetAllAsync(x => !x.IsDeleted, v => v.Video, l => l.Lesson); // Yuklenmis tum ders videolari
+
+            HashSet<LessonVideo> studentLessonVideos = new(); // Ogrencinin derslerine ait yuklenmis ders videolari
+
+            foreach (var studentLesson in studentLessons)
+            {
+                foreach (var lessonVideo in lessonVideos)
+                {
+                    // Ogrencinin bulundugu siniftaki ders id'si ile lessonVideo'nun ders id'si esit ise listeye ekle.
+                    if (lessonVideo.LessonId == studentLesson.Id)  // Ogrencinin derslerine ait yuklenmis ders videolarini al.
+                    {
+                        studentLessonVideos.Add(lessonVideo); // Bu ders videosunu listeye kaydet
+                    }
+                }
+            }
+            return studentLessonVideos;
+        }
+        public async Task<HashSet<LessonVideo>> UnwatchedVideosByLoginStudent()
+        {
+            var loginStudentId = _user.GetLoggedInUserId();
+            var studentLessonVideos = await LessonVideosByLoginStudent(); // Giris yapan ogrencinin bulundugu siniftaki derslere ait yuklenmis tum ders videolari.
+
+            HashSet<LessonVideo> studentUnwatchedLessonVideo = new(); // Giris yapan ogrencinin izlememis oldugu ders videolari
+
+            // Ogrencinin izledigi ders videolarini belirlemek icin LessonVideoVisitor tablosunu kullaniyoruz.
+            var lessonVideoVisitors = await _unitOfWork.GetRepository<LessonVideoVisitor>()
+                .GetAllAsync(x => x.Visitor.UserId == loginStudentId); // LessonVideoVisitor tablosu uzerinden Visitor tablosuna ulasabildigimiz icin(iliskili oldugundan dolayi) Visitor tablosunda UserId'si giris yapan ogrencinin user id bilgisine esit ise
+
+            // Ogrencinin izlemis oldugu videolarin Ders Video Id bilgisini secelim ve listeleyelim.
+            var watchedLessonVideoIds = lessonVideoVisitors.Select(x => x.LessonVideoId).ToList();
+
+            // İzlenmemis ders videolarini belirleme islemi
+            foreach (var studentLessonVideo in studentLessonVideos) // Ogrencinin derslerine yuklenen tum ders videolari icinde don 
+            {
+                if (!watchedLessonVideoIds.Contains(studentLessonVideo.Id))
+                {
+                    studentUnwatchedLessonVideo.Add(studentLessonVideo); // izlemis oldugu video icinde bulunulan ders videosunun id'sini icermiyorsa listeye ekle.
+                }
+            }
+            return studentUnwatchedLessonVideo;
         }
     }
 }

@@ -22,5 +22,7 @@ namespace DataAccessLayer.Abstract
                                                                                // Visitor ve LessonVideoVisitor tablolarina ilgili bilgiler kaydedilecek ve O videonun goruntulenme sayisi bir arttirilacak.
 
         Task<HashSet<AppUser>> StudentsWatchingTheLessonVideo(Guid lessonVideoId); // Derse ait ilgili videoyu izleyen ogrenci listesi
+        Task<HashSet<LessonVideo>> LessonVideosByLoginStudent(); // Giris yapan ogrencinin derslerine ait yuklenmis videolar
+        Task<HashSet<LessonVideo>> UnwatchedVideosByLoginStudent(); // Giris yapmis olan ogrencinin izlememis oldugu ders videolari listelenecek.
     }
 }
